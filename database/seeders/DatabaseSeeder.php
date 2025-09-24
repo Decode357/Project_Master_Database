@@ -15,6 +15,10 @@ use App\Models\Effect;
 use App\Models\Customer;
 use App\Models\Requestor;
 use App\Models\Department;
+use App\Models\ItemGroup;
+use App\Models\ShapeType;
+use App\Models\ShapeCollection;
+use App\Models\Process;
 
 class DatabaseSeeder extends Seeder
 {
@@ -48,6 +52,10 @@ DB::statement('SET FOREIGN_KEY_CHECKS=1;');
             DepartmentSeeder::class,
             CustomerSeeder::class,
             RequestorSeeder::class,
+            ItemGroupSeeder::class,
+            ShapeTypeSeeder::class,
+            ShapeCollectionSeeder::class,
+            ProcessSeeder::class,
         ]);
     }
 }
