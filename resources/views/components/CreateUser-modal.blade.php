@@ -5,14 +5,11 @@
         <hr class="mb-3">
 
         <form method="POST" action="{{ route('user.store') }}" class="space-y-4" x-data="{
-            newUser: {
-                department_id: '',
-                requestor_id: '',
-                customer_id: ''
-            },
+            newUser: { department_id: '', requestor_id: '', customer_id: '' },
             role: 'user',
-            permissions: ['view'], 
+            permissions: ['view'],
             allPermissions: ['view', 'edit', 'delete', 'create', 'file import', 'manage users'],
+            currentUserRole: '{{ Auth::user()->roles->pluck('name')->first() }}', // <-- เพิ่มตรงนี้
             updatePermissions() {
                 if (!this.permissions.includes('view')) this.permissions.push('view');
                 if (this.role === 'user') this.permissions = ['view'];
@@ -27,7 +24,9 @@
             getRingColor(permission) {
                 return permission === 'view' ? 'ring-red-500' : (this.role === 'superadmin' ? 'ring-red-500' : 'ring-blue-500');
             }
-        }" x-init="updatePermissions()">
+        }"
+            x-init="updatePermissions()">
+
 
             @csrf
 
@@ -66,7 +65,7 @@
                     <label class="block text-sm font-medium mb-1">Department</label>
                     <select x-model="newUser.department_id" class="w-full border rounded px-2 py-1">
                         <option value="">-</option>
-                        @foreach($departments as $dep)
+                        @foreach ($departments as $dep)
                             <option value="{{ $dep->id }}">{{ $dep->name }}</option>
                         @endforeach
                     </select>
@@ -77,7 +76,7 @@
                     <label class="block text-sm font-medium mb-1">Requestor</label>
                     <select x-model="newUser.requestor_id" class="w-full border rounded px-2 py-1">
                         <option value="">-</option>
-                        @foreach($requestors as $req)
+                        @foreach ($requestors as $req)
                             <option value="{{ $req->id }}">{{ $req->name }}</option>
                         @endforeach
                     </select>
@@ -88,7 +87,7 @@
                     <label class="block text-sm font-medium mb-1">Customer</label>
                     <select x-model="newUser.customer_id" class="w-full border rounded px-2 py-1">
                         <option value="">-</option>
-                        @foreach($customers as $cust)
+                        @foreach ($customers as $cust)
                             <option value="{{ $cust->id }}">{{ $cust->name }}</option>
                         @endforeach
                     </select>
@@ -101,9 +100,15 @@
                 <label class="block text-sm font-medium text-gray-700">Role</label>
                 <div class="flex items-center justify-center rounded-full bg-gray-100 p-1">
                     <template x-for="r in ['user','admin','superadmin']" :key="r">
-                        <label :class="role === r ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500'"
-                            class="flex-1 cursor-pointer items-center justify-center rounded-full px-4 py-2 text-sm font-medium transition-colors flex">
+                        <label
+                            :class="{
+                                'bg-white text-gray-900 shadow-sm': role === r,
+                                'text-gray-500 cursor-not-allowed opacity-50': r === 'superadmin' &&
+                                    currentUserRole === 'admin'
+                            }"
+                            class="flex-1 items-center justify-center rounded-full px-4 py-2 text-sm font-medium transition-colors flex cursor-pointer">
                             <input type="radio" name="role" :value="r" class="sr-only" x-model="role"
+                                :disabled="r === 'superadmin' && currentUserRole === 'admin'"
                                 @change="updatePermissions()" />
                             <span x-text="r.charAt(0).toUpperCase() + r.slice(1)"></span>
                         </label>
@@ -132,7 +137,7 @@
                                 x-model="permissions" :disabled="isDisabled('{{ $perm }}')" />
                             <span
                                 class="inline-block {{ $permColors[$perm] }} text-xs font-medium px-2.5 py-0.5 rounded-full
-                    peer-checked:ring-2 cursor-pointer"
+                                peer-checked:ring-2 cursor-pointer"
                                 :class="getRingColor('{{ $perm }}')">
                                 {{ $perm }}
                             </span>

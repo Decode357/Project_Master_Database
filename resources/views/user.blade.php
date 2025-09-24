@@ -89,8 +89,14 @@
                             <td class="px-3 py-3">{{ $user->department?->name ?? '' }}</td>
                             <td class="px-3 py-3">{{ $user->requestor?->name ?? '' }}</td>
                             <td class="px-3 py-3">{{ $user->customer?->name ?? '' }}</td>
-                            @if ($hasManageUsers)
-                                <td class="px-3 py-3 text-right space-x-2 max-w-[80px]">
+                            @php
+                                $currentUser = Auth::user();
+                                $currentRole = $currentUser->roles->pluck('name')->first(); // สมมติผู้ใช้มี role แค่ role เดียว
+                                $rowRole = $user->roles->pluck('name')->first();
+                            @endphp
+
+                            @if ($hasManageUsers && ($currentRole === 'superadmin' || $rowRole !== 'superadmin') && $user->id !== auth()->id())
+                                <td class="text-right space-x-2 max-w-[80px]">
                                     <button
                                         @click="
                                             EditUserModal = true; 
@@ -110,14 +116,16 @@
                                         <span class="material-symbols-outlined">edit</span>
                                     </button>
 
-                                    <!-- Delete Button -->
                                     <button
                                         @click="DeleteUserModal = true; userIdToDelete = {{ $user->id }}; userNameToDelete = '{{ $user->name }}'"
                                         class="text-red-500 hoverScale hover:text-red-700">
                                         <span class="material-symbols-outlined">delete</span>
                                     </button>
                                 </td>
+                            @else
+                                <td class="text-right max-w-[80px]"></td>
                             @endif
+
                         </tr>
                     @endforeach
                 </tbody>

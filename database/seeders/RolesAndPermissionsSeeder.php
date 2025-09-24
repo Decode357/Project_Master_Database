@@ -28,12 +28,12 @@ class RolesAndPermissionsSeeder extends Seeder
             Permission::firstOrCreate(['name' => $perm, 'guard_name' => 'web']);
         }
 
-        // 2) สร้าง roles (ไม่ assign permission ให้ role ใด ๆ)
+        // 2) สร้าง roles
         $userRole  = Role::firstOrCreate(['name' => 'user', 'guard_name' => 'web']);
         $adminRole = Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
         $superRole = Role::firstOrCreate(['name' => 'superadmin', 'guard_name' => 'web']);
 
-        // 3) สร้าง user เริ่มต้น
+        // 3) สร้าง user admin เริ่มต้น
         $adminUser = User::firstOrCreate(
             ['email' => 'dear0850568134@gmail.com'],
             [
@@ -42,12 +42,10 @@ class RolesAndPermissionsSeeder extends Seeder
             ]
         );
 
-        // assign role (แค่จัดกลุ่ม ไม่ได้กำหนดสิทธิ์อัตโนมัติ)
         if (! $adminUser->hasRole('admin')) {
             $adminUser->assignRole($adminRole);
         }
 
-        // assign permission แบบราย user เท่านั้น
         $adminUser->syncPermissions([
             'view',
             'create',
@@ -56,6 +54,22 @@ class RolesAndPermissionsSeeder extends Seeder
             'file import',
             'manage users',
         ]);
+
+        // 4) สร้าง user superadmin เริ่มต้น
+        $superUser = User::firstOrCreate(
+            ['email' => 'SA@gmail.com'],
+            [
+                'name' => 'SA',
+                'password' => bcrypt('11111111'),
+            ]
+        );
+
+        if (! $superUser->hasRole('superadmin')) {
+            $superUser->assignRole($superRole);
+        }
+
+        // superadmin มีทุก permission
+        $superUser->syncPermissions(Permission::all());
 
         // ล้าง cache อีกครั้ง
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
