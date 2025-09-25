@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 use App\Models\{
     Shape,
     Pattern,
@@ -22,33 +21,38 @@ use App\Models\{
     Process,
     Status,
     Designer,
-    Image
+    Image,
+    GlazeInside,
+    GlazeOuter,
 };
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-                // ลบข้อมูลตามลำดับความสัมพันธ์
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        // ปิด FK constraints ชั่วคราว
+        Schema::disableForeignKeyConstraints();
+
+        // truncate pivot tables ก่อน (ต้องลบก่อน parent)
+        \DB::table('color_glaze_insides')->truncate();
+        \DB::table('color_glaze_outers')->truncate();
+
+        // truncate หลัก
         User::truncate();
         Customer::truncate();
         Requestor::truncate();
         Department::truncate();
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         Color::truncate();
         Effect::truncate();
         Glaze::truncate();
         Backstamp::truncate();
         Pattern::truncate();
         Shape::truncate();
-        // เรียกใช้ seeders ตามลำดับความสัมพันธ์
+
+        Schema::enableForeignKeyConstraints();
+
+        // เรียกใช้ seeders ตามลำดับ
         $this->call([
-            
-            
             RolesAndPermissionsSeeder::class,
             ColorSeeder::class,
             EffectSeeder::class,
@@ -62,9 +66,9 @@ class DatabaseSeeder extends Seeder
             StatusSeeder::class,
             DesignerSeeder::class,
             ImageSeeder::class,
-            
-            
-            // table ที่มี foreign key ไปยัง table อื่นๆ ควรอยู่ท้ายสุด
+            GlazeOuterSeeder::class,
+            GlazeInsideSeeder::class,
+            // FK-heavy tables
             BackstampSeeder::class,
             PatternSeeder::class,
             GlazeSeeder::class,

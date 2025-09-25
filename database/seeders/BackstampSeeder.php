@@ -13,6 +13,6 @@ class BackstampSeeder extends Seeder
      */
     public function run(): void
     {
-        Backstamp::factory(244)->create();
+        Backstamp::factory(144)->create();
     }
 }

@@ -4,6 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\{
+    GlazeInside,
+    GlazeOuter,
+};
 
 class Glaze extends Model
 {
@@ -31,4 +35,14 @@ class Glaze extends Model
         'effect_id' => 'integer',
         'image_id' => 'integer',
     ];
+
+    public function glazeInside()
+    {
+        return $this->belongsTo(GlazeInside::class, 'glaze_inside_id');
+    }
+    public function glazeOuter()
+    {
+        return $this->belongsTo(GlazeOuter::class, 'glaze_outer_id');
+    }
+
 }

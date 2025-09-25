@@ -4,6 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\{
+    GlazeInside,
+    GlazeOuter,
+};
 
 class Color extends Model
 {
@@ -14,4 +18,24 @@ class Color extends Model
         'color_name',
         'customer_id',
     ];
+    public function glazeInsides()
+    {
+        return $this->belongsToMany(
+            GlazeInside::class,
+            'color_glaze_insides',
+            'color_id',
+            'glaze_inside_id'
+        );
+    }
+
+    public function glazeOuters()
+    {   
+        return $this->belongsToMany(
+            GlazeOuter::class, 
+            'color_glaze_outer',
+            'color_id',
+            'glaze_outer_id'
+        );
+    }
+    
 }

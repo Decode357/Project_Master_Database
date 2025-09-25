@@ -14,6 +14,6 @@ class ShapeSeeder extends Seeder
     public function run(): void
     {
         Shape::truncate();
-        Shape::factory(144)->create();
+        Shape::factory(44)->create();
     }
 }
