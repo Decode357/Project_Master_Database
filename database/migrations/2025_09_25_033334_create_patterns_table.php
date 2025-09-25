@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('pattern_code');
             $table->string('pattern_name');
-            $table->unsignedBigInteger('requestor_id');
-            $table->unsignedBigInteger('customer_id');
-            $table->unsignedBigInteger('status_id');
-            $table->unsignedBigInteger('designer_id');
+            $table->unsignedBigInteger('requestor_id')->nullable();
+            $table->unsignedBigInteger('customer_id')->nullable();
+            $table->unsignedBigInteger('status_id')->nullable();
+            $table->unsignedBigInteger('designer_id')->nullable();
             $table->integer('duration')->nullable();
             $table->boolean('in_glaze')->default(false);
             $table->boolean('on_glaze')->default(false);
@@ -26,6 +26,13 @@ return new class extends Migration
             $table->date('approval_date')->nullable();
             $table->unsignedBigInteger('image_id')->nullable();
             $table->timestamps();
+
+            // เพิ่ม foreign key constraints
+            $table->foreign('status_id')->references('id')->on('statuses')->onDelete('set null');
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('set null');
+            $table->foreign('requestor_id')->references('id')->on('requestors')->onDelete('set null');
+            $table->foreign('image_id')->references('id')->on('images')->onDelete('set null');
+            $table->foreign('designer_id')->references('id')->on('designers')->onDelete('set null');
         });
     }
 

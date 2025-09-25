@@ -38,4 +38,26 @@ class Pattern extends Model
     protected $casts = [
     'approval_date' => 'datetime',
     ];
+
+    // ความสัมพันธ์กับตารางอื่นๆ
+    public function requestor()
+    {
+        return $this->belongsTo(Requestor::class, 'requestor_id');
+    }
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id');
+    }
+    public function status()
+    {
+        return $this->belongsTo(Status::class, 'status_id');
+    }
+    public function image()
+    {
+        return $this->belongsTo(Image::class, 'image_id');
+    }
+    public function designer()
+    {
+        return $this->belongsTo(Designer::class, 'designer_id');
+    }
 }

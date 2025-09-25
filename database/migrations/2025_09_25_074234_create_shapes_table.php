@@ -40,7 +40,6 @@ return new class extends Migration
 
             // วันอนุมัติ
             $table->date('approval_date')->nullable();
-
             $table->timestamps();
 
             // เพิ่ม foreign key constraints
@@ -48,8 +47,6 @@ return new class extends Migration
             $table->foreign('shape_collection_id')->references('id')->on('shape_collections')->onDelete('set null');
             $table->foreign('process_id')->references('id')->on('processes')->onDelete('set null');
             $table->foreign('item_group_id')->references('id')->on('item_groups')->onDelete('set null');
-
-            // เพิ่มเติม (ถ้ามีตาราง)
             $table->foreign('status_id')->references('id')->on('statuses')->onDelete('set null');
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('set null');
             $table->foreign('designer_id')->references('id')->on('designers')->onDelete('set null');
