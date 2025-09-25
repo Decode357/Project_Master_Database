@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('shapes', function (Blueprint $table) {
-            $table->id(); // INT id PK
+            $table->id(); // PK
 
-            $table->string('item_code')->unique(); // VARCHAR item_code
-            $table->string('item_description_thai')->nullable(); // VARCHAR
-            $table->string('item_description_eng')->nullable(); // VARCHAR
+            $table->string('item_code')->unique(); 
+            $table->string('item_description_thai')->nullable();
+            $table->string('item_description_eng')->nullable();
 
-            // FK ต่าง ๆ
+            // FK
             $table->unsignedBigInteger('shape_type_id')->nullable();
             $table->unsignedBigInteger('status_id')->nullable();
             $table->unsignedBigInteger('shape_collection_id')->nullable();
@@ -42,6 +42,19 @@ return new class extends Migration
             $table->date('approval_date')->nullable();
 
             $table->timestamps();
+
+            // เพิ่ม foreign key constraints
+            $table->foreign('shape_type_id')->references('id')->on('shape_types')->onDelete('set null');
+            $table->foreign('shape_collection_id')->references('id')->on('shape_collections')->onDelete('set null');
+            $table->foreign('process_id')->references('id')->on('processes')->onDelete('set null');
+            $table->foreign('item_group_id')->references('id')->on('item_groups')->onDelete('set null');
+
+            // เพิ่มเติม (ถ้ามีตาราง)
+            // $table->foreign('status_id')->references('id')->on('statuses')->onDelete('set null');
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('set null');
+            // $table->foreign('designer_id')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('requestor_id')->references('id')->on('requestors')->onDelete('set null');
+            // $table->foreign('image_id')->references('id')->on('images')->onDelete('set null');
         });
     }
 

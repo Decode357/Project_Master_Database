@@ -42,7 +42,6 @@ DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         Shape::truncate();
         // เรียกใช้ seeders ตามลำดับความสัมพันธ์
         $this->call([
-            ShapeSeeder::class,
             PatternSeeder::class,
             BackstampSeeder::class,
             GlazeSeeder::class,
@@ -56,6 +55,8 @@ DB::statement('SET FOREIGN_KEY_CHECKS=1;');
             ShapeTypeSeeder::class,
             ShapeCollectionSeeder::class,
             ProcessSeeder::class,
+            ShapeSeeder::class,
+        
         ]);
     }
 }

@@ -3,6 +3,12 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\ShapeType;
+use App\Models\ShapeCollection;
+use App\Models\Customer;
+use App\Models\ItemGroup;
+use App\Models\Process;
+use App\Models\Requestor;
 
 class ShapeFactory extends Factory
 {
@@ -12,14 +18,16 @@ class ShapeFactory extends Factory
             'item_code' => $this->faker->unique()->bothify('SH-###'),
             'item_description_thai' => $this->faker->words(3, true),
             'item_description_eng' => $this->faker->sentence(3),
-            'shape_type_id' => 1,
-            'status_id' => 1,
-            'shape_collection_id' => null,
-            'customer_id' => null,
-            'item_group_id' => null,
-            'process_id' => null,
+
+'shape_type_id' => ShapeType::inRandomOrder()->value('id'),
+'shape_collection_id' => ShapeCollection::inRandomOrder()->value('id'),
+'customer_id' => Customer::inRandomOrder()->value('id'),
+'item_group_id' => ItemGroup::inRandomOrder()->value('id'),
+'process_id' => Process::inRandomOrder()->value('id'),
+'requestor_id' => Requestor::inRandomOrder()->value('id'),
+
+            'status_id' => null,
             'designer_id' => null,
-            'requestor_id' => null,
             'image_id' => null,
             'volume' => $this->faker->numberBetween(100, 1000),
             'weight' => $this->faker->numberBetween(10, 500),

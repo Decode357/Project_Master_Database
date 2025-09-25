@@ -31,4 +31,29 @@ class Shape extends Model
         'body',
         'approval_date',
     ];
+
+    public function shapeType()
+    {
+        return $this->belongsTo(ShapeType::class, 'shape_type_id');
+    }
+    public function shapeCollection()
+    {
+        return $this->belongsTo(ShapeCollection::class, 'shape_collection_id');
+    }
+    public function process()
+    {
+        return $this->belongsTo(Process::class, 'process_id');
+    }
+    public function itemGroup()
+    {
+        return $this->belongsTo(ItemGroup::class, 'item_group_id');
+    }
+    public function requestor()
+    {
+        return $this->belongsTo(Requestor::class, 'requestor_id');
+    }
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id');
+    }
 }
