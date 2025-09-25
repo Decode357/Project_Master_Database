@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ItemGroup>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Status>
  */
-class ItemGroupFactory extends Factory
+class StatusFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,8 @@ class ItemGroupFactory extends Factory
     public function definition(): array
     {
         return [
-            'item_group_name' => $this->faker->unique()->word(),
+            'status' => $this->faker->unique()->word(),
+            'updated_by' => $this->faker->name(),
         ];
     }
 }

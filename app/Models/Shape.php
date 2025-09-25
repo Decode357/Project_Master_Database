@@ -56,4 +56,16 @@ class Shape extends Model
     {
         return $this->belongsTo(Customer::class, 'customer_id');
     }
+    public function designer()
+    {
+        return $this->belongsTo(Designer::class, 'designer_id');
+    }
+    public function status()
+    {
+        return $this->belongsTo(Status::class, 'status_id');
+    }
+    public function image()
+    {
+        return $this->belongsTo(Image::class, 'image_id');
+    }
 }
