@@ -32,7 +32,7 @@ class Color extends Model
     {   
         return $this->belongsToMany(
             GlazeOuter::class, 
-            'color_glaze_outer',
+            'color_glaze_outers',
             'color_id',
             'glaze_outer_id'
         );
