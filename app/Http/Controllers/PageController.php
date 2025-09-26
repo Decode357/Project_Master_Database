@@ -18,7 +18,43 @@ use App\Models\{
 class PageController extends Controller
 {
     public function dashboard() {
-        return view('dashboard');
+        // ดึงรายการล่าสุด 5 รายการของแต่ละโมเดล พร้อม updater
+        $latestShapes = Shape::with(['updater'])
+            ->orderBy('updated_at', 'desc')
+            ->take(5)
+            ->get();
+
+        $latestPatterns = Pattern::with(['updater'])
+            ->orderBy('updated_at', 'desc')
+            ->take(5)
+            ->get();
+
+        $latestBackstamps = Backstamp::with(['updater'])
+            ->orderBy('updated_at', 'desc')
+            ->take(5)
+            ->get();
+
+        $latestGlazes = Glaze::with(['updater'])
+            ->orderBy('updated_at', 'desc')
+            ->take(5)
+            ->get();
+
+        // เพิ่ม count ของแต่ละ table
+        $shapeCount = Shape::count();
+        $patternCount = Pattern::count();
+        $backstampCount = Backstamp::count();
+        $glazeCount = Glaze::count();
+
+        return view('dashboard', compact(
+            'latestShapes',
+            'latestPatterns',
+            'latestBackstamps',
+            'latestGlazes',
+            'shapeCount',
+            'patternCount',
+            'backstampCount',
+            'glazeCount'
+        ));
     }
 
     public function shapeindex()
