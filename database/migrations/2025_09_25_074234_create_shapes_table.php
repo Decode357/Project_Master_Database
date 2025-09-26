@@ -29,6 +29,9 @@ return new class extends Migration
             $table->unsignedBigInteger('requestor_id')->nullable();
             $table->unsignedBigInteger('image_id')->nullable();
 
+            // NEW: updated_by
+            $table->unsignedBigInteger('updated_by')->nullable();
+
             // ข้อมูลเชิงตัวเลข
             $table->integer('volume')->nullable();
             $table->integer('weight')->nullable();
@@ -52,7 +55,11 @@ return new class extends Migration
             $table->foreign('designer_id')->references('id')->on('designers')->onDelete('set null');
             $table->foreign('requestor_id')->references('id')->on('requestors')->onDelete('set null');
             $table->foreign('image_id')->references('id')->on('images')->onDelete('set null');
+
+            // NEW: foreign key updated_by → users.id
+            $table->foreign('updated_by')->references('id')->on('users')->onDelete('set null');
         });
+
     }
 
     /**

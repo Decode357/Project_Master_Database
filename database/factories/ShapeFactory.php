@@ -12,7 +12,8 @@ use App\Models\{
     Process,
     Status,
     Designer,
-    Image
+    Image,
+    User,
 };
 
 class ShapeFactory extends Factory
@@ -41,6 +42,7 @@ class ShapeFactory extends Factory
             'height_short' => $this->faker->numberBetween(10, 100),
             'body' => $this->faker->numberBetween(1, 10),
             'approval_date' => $this->faker->date(),
+            'updated_by' => User::inRandomOrder()->value('id'),
         ];
     }
 }

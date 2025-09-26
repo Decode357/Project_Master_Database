@@ -30,6 +30,7 @@ class Shape extends Model
         'height_short',
         'body',
         'approval_date',
+        'updated_by',
     ];
 
     public function shapeType()
@@ -67,5 +68,9 @@ class Shape extends Model
     public function image()
     {
         return $this->belongsTo(Image::class, 'image_id');
+    }
+    public function updater()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
     }
 }

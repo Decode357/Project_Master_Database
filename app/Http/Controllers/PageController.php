@@ -1,21 +1,19 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\Shape;
-use App\Models\Pattern;
-use App\Models\Backstamp;
-use App\Models\Glaze;
-use App\Models\Color;
-use App\Models\Effect;
-use App\Models\Department;
-use App\Models\Requestor;
-use App\Models\Customer;
+
+use App\Models\{
+    Shape,Pattern,Backstamp,
+    Glaze,Color,Effect,User,
+    Department,Requestor,Customer,
+    ShapeType,Status,Process,
+};
+
 
 class PageController extends Controller
 {
@@ -25,8 +23,12 @@ class PageController extends Controller
 
     public function shapeindex()
     {
-        // ดึงข้อมูลจาก DB ทั้งหมด
-        $shapes = Shape::orderBy('id', 'desc')->paginate(10);
+        $shapes = Shape::with([
+        'shapeType', 'status', 'process', 'itemGroup', 'requestor', 
+        'customer', 'designer', 'shapeCollection', 'image', 'updater'])
+        ->orderBy('id', 'desc')
+        ->paginate(10);
+
         return view('shape', compact('shapes'));
     }
 

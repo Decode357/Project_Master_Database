@@ -51,39 +51,12 @@
                     <!--Test table-->
 
                     <tbody class="bg-white divide-y divide-gray-200">
-                        @php
-                            // Mapping สำหรับ status, type, process, updatedBy
-                            $statusMap = [
-                                1 => 'Approved',
-                                2 => 'Pending',
-                                3 => 'Rejected',
-                            ];
-
-                            $typeMap = [
-                                1 => 'Ceramic',
-                                2 => 'Glass',
-                                3 => 'Metal',
-                            ];
-
-                            $processMap = [
-                                1 => 'Hand-made',
-                                2 => 'Machine',
-                                3 => '3D Print',
-                            ];
-
-                            $userMap = [
-                                1 => 'IS',
-                                2 => 'QA',
-                                3 => 'Admin',
-                            ];
-                        @endphp
-
                         @foreach ($shapes as $shape)
                             @php
-                                $status = $statusMap[$shape->status_id] ?? 'Unknown';
-                                $type = $typeMap[$shape->shape_type_id] ?? 'Unknown';
-                                $process = $processMap[$shape->process_id] ?? 'Unknown';
-                                $updatedBy = $userMap[$shape->designer_id] ?? 'System';
+                                $status = $shape->status->status ?? 'Unknown';
+                                $type = $shape->shapeType->name ?? 'Unknown';
+                                $process = $shape->process->process_name ?? 'Unknown';
+                                $updatedBy = $shape->updater->name ?? 'System';
 
                                 $statusColor = match ($status) {
                                     'Approved' => 'bg-green-100 text-green-800',
@@ -104,16 +77,14 @@
                                         {{ $status }}
                                     </span>
                                 </td>
-
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $process }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $updatedBy }}</td>
-
                                 <td class="px-6 py-4">
                                     <div class="flex justify-end gap-2">
                                         <button @click="ShapeDetailModal = true"
                                             class="flex items-center gap-1 px-2 py-1 text-sm font-medium text-white 
-                            bg-blue-500 rounded-lg shadow-sm hover:bg-green-600 hover:shadow-md 
-                            transition-all duration-200 hoverScale">
+                                            bg-blue-500 rounded-lg shadow-sm hover:bg-green-600 hover:shadow-md 
+                                            transition-all duration-200 hoverScale">
                                             <span class="material-symbols-outlined text-white">feature_search</span>
                                             <span>Detail</span>
                                         </button>
@@ -132,19 +103,15 @@
                             </tr>
                         @endforeach
                     </tbody>
-
                 </table>
                 <!-- Pagination -->
                 <div class="mt-4 flex justify-end">
                     {{ $shapes->links('vendor.pagination.tailwind-custom') }}
                 </div>
-
-
             </div>
         </div>
         @include('components.ShapeDetail-modal')
         @include('components.CreateShape-modal')
         @include('components.Delete-modal')
-
     </main>
 @endsection
