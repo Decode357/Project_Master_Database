@@ -7,7 +7,7 @@ return [
         'layout'  => 'dot',
 
         // การจัดเรียงทิศทาง: TB = Top→Bottom, LR = Left→Right
-        'rankdir' => 'LR',
+        'rankdir' => 'TB',
 
         // ระยะห่าง
         'nodesep' => 1.2,   // default ~0.25 (เพิ่มระยะ node ให้โปร่ง)

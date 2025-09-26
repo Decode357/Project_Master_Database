@@ -19,10 +19,6 @@ class EffectFactory extends Factory
         return [
             'effect_code' => 'EF-' . $this->faker->unique()->numerify('###'),
             'effect_name' => $this->faker->word(),
-            'colors' => $this->faker->randomElements(
-                ['#FF0000', '#00FF00', '#0000FF', '#FFA500', '#800080', '#FFFF00'],
-                rand(1, 3) // เลือกสุ่ม 1-3 สี
-            ),
         ];
     }
 }

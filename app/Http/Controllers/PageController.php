@@ -52,10 +52,16 @@ class PageController extends Controller
         return view('color',compact('colors'));
     }
 
-    public function effectindex() {
-        $effects = Effect::orderBy('id', 'asc')->paginate(10);
-        return view('effect',compact('effects'));
-    }
+public function effectindex()
+{
+    // Eager load colors เพื่อลด query และ join pivot table
+    $effects = Effect::with('colors')
+                     ->orderBy('id', 'asc')
+                     ->paginate(10);
+
+    return view('effect', compact('effects'));
+}
+
 
     // 🔹 User Management Controller
     public function user()

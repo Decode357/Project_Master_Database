@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('effect_code')->unique();  // EF-001, EF-002 ...
             $table->string('effect_name');
-            $table->json('colors')->nullable();
             $table->timestamps();
         });
     }

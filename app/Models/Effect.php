@@ -13,11 +13,6 @@ class Effect extends Model
         protected $fillable = [
         'effect_code',
         'effect_name',
-        'colors',
-    ];
-    
-    protected $casts = [
-        'colors' => 'array', // แปลง JSON เป็น array อัตโนมัติ
     ];
 
     public function colors()
