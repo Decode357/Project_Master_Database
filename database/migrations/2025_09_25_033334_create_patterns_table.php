@@ -25,6 +25,7 @@ return new class extends Migration
             $table->boolean('under_glaze')->default(false);
             $table->date('approval_date')->nullable();
             $table->unsignedBigInteger('image_id')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
 
             // เพิ่ม foreign key constraints
@@ -33,6 +34,7 @@ return new class extends Migration
             $table->foreign('requestor_id')->references('id')->on('requestors')->onDelete('set null');
             $table->foreign('image_id')->references('id')->on('images')->onDelete('set null');
             $table->foreign('designer_id')->references('id')->on('designers')->onDelete('set null');
+            $table->foreign('updated_by')->references('id')->on('users')->onDelete('set null');
         });
     }
 

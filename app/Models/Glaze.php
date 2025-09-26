@@ -59,5 +59,8 @@ class Glaze extends Model
     {
         return $this->belongsTo(Status::class, 'status_id');
     }
-
+    public function updater()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
 }

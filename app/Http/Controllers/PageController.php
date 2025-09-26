@@ -34,18 +34,26 @@ class PageController extends Controller
 
     public function patternindex()
     {
-        $patterns = Pattern::orderBy('id', 'desc')->paginate(10);
+        $patterns = Pattern::with(['requestor', 'customer', 'status', 
+        'designer', 'image', 'updater'])
+        ->orderBy('id', 'desc')
+        ->paginate(10);
         return view('pattern', compact('patterns'));
     }
 
 
     public function backstampindex() {
-        $backstamps = Backstamp::orderBy('id', 'desc')->paginate(10);
+        $backstamps = Backstamp::with(['requestor', 'customer', 'status', 
+        'image', 'updater'])
+        ->orderBy('id', 'desc')
+        ->paginate(10);
         return view('backstamp', compact('backstamps'));
     }
     
     public function glazeindex() {        
-        $glazes = Glaze::orderBy('id', 'desc')->paginate(10);
+        $glazes = Glaze::with(['status', 'updater'])
+        ->orderBy('id', 'desc')
+        ->paginate(10);
         return view('glaze',compact('glazes'));
     }
 

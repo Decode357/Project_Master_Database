@@ -21,6 +21,7 @@ class Backstamp extends Model
         'air_dry',
         'approval_date',
         'image_id',
+        'updated_by',
     ];
 
     protected $casts = [
@@ -46,5 +47,9 @@ class Backstamp extends Model
     public function image()
     {
         return $this->belongsTo(Image::class, 'image_id');
+    }
+    public function updater()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
     }
 }

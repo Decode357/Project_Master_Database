@@ -60,4 +60,8 @@ class Pattern extends Model
     {
         return $this->belongsTo(Designer::class, 'designer_id');
     }
+    public function updater()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
 }

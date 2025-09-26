@@ -49,15 +49,7 @@
                     <tbody class="bg-white divide-y divide-gray-200">
                         @foreach ($patterns as $pattern)
                             @php
-                                // กำหนดสี status
-                                $status = $pattern->status_id ?? 0;
-                                $statusText = match ($status) {
-                                    1 => 'Approved',
-                                    2 => 'Pending',
-                                    3 => 'Rejected',
-                                    default => 'Unknown',
-                                };
-
+                                $statusText = $pattern->status->status ?? 'Unknown';
                                 $statusColor = match ($statusText) {
                                     'Approved' => 'bg-green-100 text-green-800',
                                     'Pending' => 'bg-yellow-100 text-yellow-800',
@@ -100,11 +92,12 @@
                                     </span>
                                 </td>
 
-                                <!-- Approval Date + User -->
+                                <!-- Approval Date -->
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     {{ $pattern->approval_date?->format('d/m/Y') ?? '-' }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">User {{ $pattern->updated_by ?? 1 }}</td>
+                                <!-- UPDATED BY -->
+                                <td class="px-6 py-4 whitespace-nowrap">{{ $pattern->updater->name ?? 'System' }}</td>
 
                                 <!-- Action -->
                                 <td class="px-6 py-4">
@@ -143,3 +136,4 @@
         @include('components.CreatePattern-modal')
     </main>
 @endsection
+

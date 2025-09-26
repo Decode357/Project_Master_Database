@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\{Requestor, Customer, Status, Image};
+use App\Models\{Requestor, Customer, Status, Image, User};
 
 
 class BackstampFactory extends Factory
@@ -28,6 +28,7 @@ class BackstampFactory extends Factory
             'air_dry' => $this->faker->boolean(),
             'approval_date' => $this->faker->optional()->date(),
             'image_id' => Image::inRandomOrder()->value('id'),
+            'updated_by' => User::inRandomOrder()->value('id'),
         ];
     }
 }

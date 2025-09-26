@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\{Requestor, Customer, Status, Designer, Image};
+use App\Models\{Requestor, Customer, Status, Designer, Image, User};
 
 class PatternFactory extends Factory
 {
@@ -27,6 +27,7 @@ class PatternFactory extends Factory
             'under_glaze' => $this->faker->boolean(),
             'approval_date' => $this->faker->optional()->date(),
             'image_id' => Image::inRandomOrder()->value('id'),
+            'updated_by' => User::inRandomOrder()->value('id'),
         ];
     }
 }

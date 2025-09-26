@@ -56,7 +56,7 @@
                                 $status = $shape->status->status ?? 'Unknown';
                                 $type = $shape->shapeType->name ?? 'Unknown';
                                 $process = $shape->process->process_name ?? 'Unknown';
-                                $updatedBy = $shape->updater->name ?? 'System';
+                                $updatedBy = $shape->updater->name ?? 'Unknown';
 
                                 $statusColor = match ($status) {
                                     'Approved' => 'bg-green-100 text-green-800',

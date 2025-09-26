@@ -9,5 +9,5 @@ class Status extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['status','updated_by'];
+    protected $fillable = ['status'];
 }

@@ -46,10 +46,11 @@
                 <tbody class="bg-white divide-y divide-gray-200">
                     @foreach ($backstamps as $backstamp)
                         @php
-                            $statusColor = match ($backstamp->status_id) {
-                                1 => 'bg-green-100 text-green-800', // Approved
-                                2 => 'bg-yellow-100 text-yellow-800', // Pending
-                                3 => 'bg-red-100 text-red-800', // Rejected
+                            $statusText = $backstamp->status->status ?? 'Unknown';
+                            $statusColor = match ($statusText) {
+                                'Approved' => 'bg-green-100 text-green-800',
+                                'Pending' => 'bg-yellow-100 text-yellow-800',
+                                'Rejected' => 'bg-red-100 text-red-800',
                                 default => 'bg-gray-100 text-gray-800',
                             };
                         @endphp
@@ -86,13 +87,13 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <span class="{{ $statusColor }} px-2 py-1 rounded-full text-xs font-semibold">
-                                    {{ $backstamp->status_id == 1 ? 'Approved' : ($backstamp->status_id == 2 ? 'Pending' : 'Rejected') }}
+                                    {{ $statusText }}
                                 </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 {{ $backstamp->approval_date?->format('d/m/Y') ?? '-' }}
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $backstamp->updated_by ?? '-' }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $backstamp->updater->name ?? '-' }}</td>
                             <td class="px-6 py-4">
                                 <div class="flex justify-end gap-2">
                                     <button class="flex items-center gap-1 px-2 py-1 text-sm font-medium text-white 

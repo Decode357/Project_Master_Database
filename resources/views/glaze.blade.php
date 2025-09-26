@@ -52,27 +52,34 @@
                         </tr>
                     </thead>
 
-                    <!--Test table-->
-
                     <tbody class="bg-white divide-y divide-gray-200">
                         @forelse ($glazes as $glaze)
+                            @php
+                                $statusText = $glaze->status->status ?? 'Unknown';
+                                $statusColor = match ($statusText) {
+                                    'Approved' => 'bg-green-100 text-green-800',
+                                    'Pending' => 'bg-yellow-100 text-yellow-800',
+                                    'Rejected' => 'bg-red-100 text-red-800',
+                                    default => 'bg-gray-100 text-gray-800',
+                                };
+                            @endphp
                             <tr class="bg-white border-b hover:bg-gray-50">
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $glaze->glaze_code }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $glaze->glaze_inside_id ?? '-' }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $glaze->glaze_outer_id ?? '-' }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $glaze->effect_id ?? '-' }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ $glaze->glazeInside->glaze_inside_code ?? '-' }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ $glaze->glazeOuter->glaze_outer_code ?? '-' }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ $glaze->effect->effect_code ?? '-' }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     {{ $glaze->fire_temp ? $glaze->fire_temp . ' °C' : '-' }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-semibold">
-                                        {{ $glaze->status_id ?? 'N/A' }}
+                                    <span class="{{ $statusColor }} px-2 py-1 rounded-full text-xs font-semibold">
+                                        {{ $statusText }}
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     {{ $glaze->approval_date ? \Carbon\Carbon::parse($glaze->approval_date)->format('d/m/Y') : '-' }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    {{ $glaze->updated_by ?? 'System' }}
+                                    {{ $glaze->updater->name ?? 'System' }}
                                 </td>
                                 <td class="px-6 py-4 ">
                                     <div class="flex justify-end gap-2">
