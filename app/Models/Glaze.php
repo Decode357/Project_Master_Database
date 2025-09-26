@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\{
     GlazeInside,
     GlazeOuter,
+    Effect,
+    Image,
+    Status,
 };
 
 class Glaze extends Model
@@ -43,6 +46,18 @@ class Glaze extends Model
     public function glazeOuter()
     {
         return $this->belongsTo(GlazeOuter::class, 'glaze_outer_id');
+    }
+    public function effect()
+    {
+        return $this->belongsTo(Effect::class, 'effect_id');
+    }
+    public function image()
+    {
+        return $this->belongsTo(Image::class, 'image_id');
+    }
+    public function status()
+    {
+        return $this->belongsTo(Status::class, 'status_id');
     }
 
 }
