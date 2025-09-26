@@ -14,9 +14,21 @@ class PatternFactory extends Factory
      */
     public function definition(): array
     {
+        $ceramicPatterns = [
+            'Floral',
+            'Geometric',
+            'Abstract',
+            'Traditional Thai',
+            'Mandala',
+            'Blue & White',
+            'Minimalist',
+            'Rustic Texture',
+            'Gold Trim',
+        ];
+
         return [
             'pattern_code' => 'PT-' . $this->faker->unique()->numberBetween(1000, 9999),
-            'pattern_name' => $this->faker->word(),
+            'pattern_name' => $this->faker->randomElement($ceramicPatterns),
             'requestor_id' => Requestor::inRandomOrder()->value('id'),
             'customer_id' => Customer::inRandomOrder()->value('id'),
             'status_id' => Status::inRandomOrder()->value('id'),

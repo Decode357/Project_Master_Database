@@ -15,9 +15,21 @@ class BackstampFactory extends Factory
      */
     public function definition(): array
     {
+        $backstamps = [
+            'Royal Porcelain',
+            'Blue Elephant',
+            'Thai Heritage',
+            'Lotus Mark',
+            'Golden Crown',
+            'Celadon Classic',
+            'Siam Ceramic Co.',
+            'Chakri Collection',
+            'Handmade Thailand',
+        ];
+
         return [
             'backstamp_code' => 'BS-' . $this->faker->unique()->numberBetween(1000, 9999),
-            'name' => $this->faker->word(),
+            'name' => $this->faker->randomElement($backstamps),
             'requestor_id' => Requestor::inRandomOrder()->value('id'),
             'customer_id' => Customer::inRandomOrder()->value('id'),
             'status_id' => Status::inRandomOrder()->value('id'),

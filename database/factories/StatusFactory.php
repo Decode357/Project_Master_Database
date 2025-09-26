@@ -16,19 +16,6 @@ class StatusFactory extends Factory
      */
     public function definition(): array
     {
-        $statuses = [
-            'Approved',
-            'Pending',
-            'Rejected',
-            'In Progress',
-            'On Hold',
-            'Cancelled',
-            'Completed',
-            'Draft',
-        ];
 
-        return [
-            'status' => $this->faker->unique()->randomElement($statuses),
-        ];
     }
 }

@@ -13,6 +13,18 @@ class StatusSeeder extends Seeder
      */
     public function run(): void
     {
-        Status::factory(7)->create();
+        $statuses = [
+            'Approved',
+            'Pending',
+            'Rejected',
+            'In Progress',
+            'On Hold',
+            'Cancelled',
+            'Completed',
+            'Draft',
+        ];
+        foreach ($statuses as $status) {
+            Status::firstOrCreate(['status' => $status]);
+        }
     }
 }

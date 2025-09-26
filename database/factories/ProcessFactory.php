@@ -16,8 +16,6 @@ class ProcessFactory extends Factory
      */
     public function definition(): array
     {
-        return [
-            'process_name' => $this->faker->unique()->word(),
-        ];
+
     }
 }

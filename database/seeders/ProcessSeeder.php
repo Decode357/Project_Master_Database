@@ -13,9 +13,19 @@ class ProcessSeeder extends Seeder
      */
     public function run(): void
     {
-        // หรือสร้างกำหนดเอง
-        Process::create(['process_name'=>'Cutting']);
-        Process::factory()->count(5)->create();
-
+        $processes = [
+            'Clay Preparation',
+            'Shaping',
+            'Drying',
+            'Bisque Firing',
+            'Glazing',
+            'Glaze Firing',
+            'Decoration',
+            'Quality Control',
+            'Packing',
+        ];
+        foreach ($processes as $process) {
+            Process::firstOrCreate(['process_name' => $process]);
+        }
     }
 }
