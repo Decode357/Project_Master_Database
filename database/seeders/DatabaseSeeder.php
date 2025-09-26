@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
         // truncate pivot tables ก่อน (ต้องลบก่อน parent)
         \DB::table('color_glaze_insides')->truncate();
         \DB::table('color_glaze_outers')->truncate();
+        \DB::table('color_effects')->truncate();
 
         // truncate หลัก
         User::truncate();

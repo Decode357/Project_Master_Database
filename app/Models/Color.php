@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\{
     GlazeInside,
     GlazeOuter,
+    Effect,
 };
 
 class Color extends Model
@@ -37,5 +38,13 @@ class Color extends Model
             'glaze_outer_id'
         );
     }
-    
+    public function effects()
+    {
+        return $this->belongsToMany(
+            Effect::class,
+            'color_effects',
+            'color_id',
+            'effect_id'
+        );
+    }
 }
