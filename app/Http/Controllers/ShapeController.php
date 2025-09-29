@@ -85,4 +85,11 @@ class ShapeController extends Controller
 
         return redirect()->back()->with('success', 'Shape created successfully!');
     }
+
+    public function destroyShape(Shape $shape)
+    {
+        $shape->delete();
+
+        return redirect()->route('shape.index')->with('success', 'Shape deleted successfully.');
+    }
 }

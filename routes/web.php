@@ -48,6 +48,7 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/user/{user}', [PageController::class, 'destroyUser'])->name('user.destroy')->middleware(['auth', 'permission:manage users']);
         Route::put('/user/{user}', [PageController::class, 'updateUser'])->name('user.update')->middleware(['auth', 'permission:manage users']);
         Route::post('/shape', [ShapeController::class, 'storeShape'])->name('shape.store')->middleware(['auth', 'role:admin|superadmin', 'permission:create']);
+        Route::delete('/shape/{shape}', [ShapeController::class, 'destroyShape'])->name('shape.destroy')->middleware(['auth', 'permission:delete']);
     });
 });
 

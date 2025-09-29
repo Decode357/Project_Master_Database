@@ -2,7 +2,13 @@
 @section('title', 'Shape')
 @section('header', 'Shape')
 @section('content')
-    <main x-data="{ ShapeDetailModal: false, CreateShapeModal: @json($errors->any()), DeleteModal: false }">
+    <main x-data="{ 
+        ShapeDetailModal: false, 
+        CreateShapeModal: @json($errors->any()), 
+        DeleteShapeModal: false,
+        shapeIdToDelete: null,
+        itemCodeToDelete: '',
+        }">
         <!-- Filters -->
         <div class="bg-white p-6 rounded-lg shadow-md mb-3">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -94,7 +100,7 @@
                                             <span class="material-symbols-outlined">edit</span>
                                         </button>
 
-                                        <button @click="DeleteModal = true"
+                                        <button @click="DeleteShapeModal = true; shapeIdToDelete = {{ $shape->id }}; itemCodeToDelete = '{{ $shape->item_code }}'"
                                             class="text-red-500 hoverScale hover:text-red-700">
                                             <span class="material-symbols-outlined">delete</span>
                                         </button>
