@@ -12,6 +12,9 @@ use App\Models\{
     Glaze,Color,Effect,User,
     Department,Requestor,Customer,
     ShapeType,Status,Process,
+    GlazeOuter,GlazeInside,
+    ItemGroup,Designer,ShapeCollection,
+    Image
 };
 
 
@@ -44,6 +47,7 @@ class PageController extends Controller
         $patternCount = Pattern::count();
         $backstampCount = Backstamp::count();
         $glazeCount = Glaze::count();
+        $userCount = User::count();
 
         return view('dashboard', compact(
             'latestShapes',
@@ -53,19 +57,9 @@ class PageController extends Controller
             'shapeCount',
             'patternCount',
             'backstampCount',
-            'glazeCount'
+            'glazeCount',
+            'userCount'
         ));
-    }
-
-    public function shapeindex()
-    {
-        $shapes = Shape::with([
-        'shapeType', 'status', 'process', 'itemGroup', 'requestor', 
-        'customer', 'designer', 'shapeCollection', 'image', 'updater'])
-        ->orderBy('id', 'desc')
-        ->paginate(10);
-
-        return view('shape', compact('shapes'));
     }
 
     public function patternindex()
@@ -98,16 +92,15 @@ class PageController extends Controller
         return view('color',compact('colors'));
     }
 
-public function effectindex()
-{
-    // Eager load colors เพื่อลด query และ join pivot table
-    $effects = Effect::with('colors')
-                     ->orderBy('id', 'asc')
-                     ->paginate(10);
+    public function effectindex()
+    {
+        // Eager load colors เพื่อลด query และ join pivot table
+        $effects = Effect::with('colors')
+                        ->orderBy('id', 'asc')
+                        ->paginate(10);
 
-    return view('effect', compact('effects'));
-}
-
+        return view('effect', compact('effects'));
+    }
 
     // 🔹 User Management Controller
     public function user()
@@ -141,47 +134,47 @@ public function effectindex()
     }
 
 
-public function storeUser(Request $request)
-{
-    $data = $request->validate([
-        'name'        => 'required|string|max:255',
-        'email'       => 'required|email|unique:users,email',
-        'password'    => 'required|string|min:6',
-        'role'        => 'required|string|in:user,admin,superadmin',
-        'permissions' => 'array',
-        'department_id' => 'nullable|exists:departments,id',
-        'requestor_id'  => 'nullable|exists:requestors,id',
-        'customer_id'   => 'nullable|exists:customers,id',
-    ]);
+    public function storeUser(Request $request)
+    {
+        $data = $request->validate([
+            'name'        => 'required|string|max:255',
+            'email'       => 'required|email|unique:users,email',
+            'password'    => 'required|string|min:6',
+            'role'        => 'required|string|in:user,admin,superadmin',
+            'permissions' => 'array',
+            'department_id' => 'nullable|exists:departments,id',
+            'requestor_id'  => 'nullable|exists:requestors,id',
+            'customer_id'   => 'nullable|exists:customers,id',
+        ]);
 
-    // สร้าง user ก่อน
-    $user = User::create([
-        'name'          => $data['name'],
-        'email'         => $data['email'],
-        'password'      => Hash::make($data['password']),
-        'department_id' => $data['department_id'] ?? null,
-        'requestor_id'  => $data['requestor_id'] ?? null,
-        'customer_id'   => $data['customer_id'] ?? null,
-    ]);
+        // สร้าง user ก่อน
+        $user = User::create([
+                'name'          => $data['name'],
+                'email'         => $data['email'],
+                'password'      => Hash::make($data['password']),
+                'department_id' => $data['department_id'] ?? null,
+                'requestor_id'  => $data['requestor_id'] ?? null,
+                'customer_id'   => $data['customer_id'] ?? null,
+            ]);
 
-    // Assign role
-    $user->assignRole($data['role']);
+        // Assign role
+        $user->assignRole($data['role']);
 
-    // Sync permissions
-    $permissionsToAssign = $data['permissions'] ?? [];
-    if (!in_array('view', $permissionsToAssign)) {
-        $permissionsToAssign[] = 'view';
+        // Sync permissions
+        $permissionsToAssign = $data['permissions'] ?? [];
+        if (!in_array('view', $permissionsToAssign)) {
+            $permissionsToAssign[] = 'view';
+        }
+
+        if ($data['role'] === 'superadmin') {
+            $allPermissions = Permission::pluck('name')->toArray();
+            $permissionsToAssign = array_unique(array_merge($permissionsToAssign, $allPermissions));
+        }
+
+        $user->syncPermissions($permissionsToAssign);
+
+        return redirect()->back()->with('success', 'User created successfully!');
     }
-
-    if ($data['role'] === 'superadmin') {
-        $allPermissions = Permission::pluck('name')->toArray();
-        $permissionsToAssign = array_unique(array_merge($permissionsToAssign, $allPermissions));
-    }
-
-    $user->syncPermissions($permissionsToAssign);
-
-    return redirect()->back()->with('success', 'User created successfully!');
-}
 
 
 
@@ -192,50 +185,50 @@ public function storeUser(Request $request)
         return redirect()->route('user')->with('success', 'User deleted successfully.');
     }
 
-public function updateUser(Request $request, User $user)
-{
-    $data = $request->validate([
-        'name'          => 'required|string|max:255',
-        'email'         => 'required|email|max:255',
-        'password'      => 'nullable|string|min:8',
-        'role'          => 'required|string|in:user,admin,superadmin',
-        'permissions'   => 'nullable|array',
-        'department_id' => 'nullable|exists:departments,id',
-        'requestor_id'  => 'nullable|exists:requestors,id',
-        'customer_id'   => 'nullable|exists:customers,id',
-    ]);
+    public function updateUser(Request $request, User $user)
+    {
+        $data = $request->validate([
+            'name'          => 'required|string|max:255',
+            'email'         => 'required|email|max:255',
+            'password'      => 'nullable|string|min:8',
+            'role'          => 'required|string|in:user,admin,superadmin',
+            'permissions'   => 'nullable|array',
+            'department_id' => 'nullable|exists:departments,id',
+            'requestor_id'  => 'nullable|exists:requestors,id',
+            'customer_id'   => 'nullable|exists:customers,id',
+        ]);
 
-    // อัปเดตข้อมูลพื้นฐาน
-    $user->name          = $data['name'];
-    $user->email         = $data['email'];
-    $user->department_id = $data['department_id'] ?? null;
-    $user->requestor_id  = $data['requestor_id'] ?? null;
-    $user->customer_id   = $data['customer_id'] ?? null;
+        // อัปเดตข้อมูลพื้นฐาน
+        $user->name          = $data['name'];
+        $user->email         = $data['email'];
+        $user->department_id = $data['department_id'] ?? null;
+        $user->requestor_id  = $data['requestor_id'] ?? null;
+        $user->customer_id   = $data['customer_id'] ?? null;
 
-    // ถ้ามี password ใหม่ ให้ hash
-    if (!empty($data['password'])) {
-        $user->password = bcrypt($data['password']);
+        // ถ้ามี password ใหม่ ให้ hash
+        if (!empty($data['password'])) {
+            $user->password = bcrypt($data['password']);
+        }
+
+        $user->save();
+
+        // อัปเดต role และ permissions
+        $user->syncRoles([$data['role']]);
+
+        $permissionsToAssign = $data['permissions'] ?? [];
+        if (!in_array('view', $permissionsToAssign)) {
+            $permissionsToAssign[] = 'view';
+        }
+
+        if ($data['role'] === 'superadmin') {
+            $allPermissions = Permission::pluck('name')->toArray();
+            $permissionsToAssign = array_unique(array_merge($permissionsToAssign, $allPermissions));
+        }
+
+        $user->syncPermissions($permissionsToAssign);
+
+        return redirect()->back()->with('success', 'User updated successfully!');
     }
-
-    $user->save();
-
-    // อัปเดต role และ permissions
-    $user->syncRoles([$data['role']]);
-
-    $permissionsToAssign = $data['permissions'] ?? [];
-    if (!in_array('view', $permissionsToAssign)) {
-        $permissionsToAssign[] = 'view';
-    }
-
-    if ($data['role'] === 'superadmin') {
-        $allPermissions = Permission::pluck('name')->toArray();
-        $permissionsToAssign = array_unique(array_merge($permissionsToAssign, $allPermissions));
-    }
-
-    $user->syncPermissions($permissionsToAssign);
-
-    return redirect()->back()->with('success', 'User updated successfully!');
-}
 
 
 

@@ -2,7 +2,7 @@
 @section('title', 'Shape')
 @section('header', 'Shape')
 @section('content')
-    <main x-data="{ ShapeDetailModal: false, CreateShapeModal: false, DeleteModal: false }">
+    <main x-data="{ ShapeDetailModal: false, CreateShapeModal: @json($errors->any()), DeleteModal: false }">
         <!-- Filters -->
         <div class="bg-white p-6 rounded-lg shadow-md mb-3">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -111,7 +111,16 @@
             </div>
         </div>
         @include('components.ShapeDetail-modal')
-        @include('components.CreateShape-modal')
+        @include('components.CreateShape-modal', [
+            'shapeTypes' => $shapeTypes,
+            'statuses' => $statuses,
+            'shapeCollections' => $shapeCollections,
+            'customers' => $customers,
+            'itemGroups' => $itemGroups,
+            'processes' => $processes,
+            'designers' => $designers,
+            'requestors' => $requestors,
+        ])
         @include('components.Delete-modal')
     </main>
 @endsection

@@ -1,71 +1,154 @@
 <div x-show="CreateShapeModal" x-transition.opacity
-    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-    style="display: none;">
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="display: none;">
     <div class="bg-white rounded-lg shadow-lg w-full max-w-2xl p-6 overflow-y-auto max-h-[90vh]">
         <h2 class="text-xl font-semibold mb-4">Create Shape</h2>
         <hr class="mb-3">
-        <form class="space-y-4">
-            <!--form content-->
-            
+
+        <!-- ERROR SUMMARY -->
+        @if ($errors->any())
+            <div class="mb-4 p-3 rounded-md bg-red-100 text-red-700">
+                <ul class="list-disc list-inside text-sm">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+
+        <form method="POST" action="{{ route('shape.store') }}" class="space-y-4">
+            @csrf
             <!-- ITEM CODE -->
             <div>
                 <label class="block text-sm font-medium text-gray-700">ITEM CODE</label>
-                <input type="text" placeholder="Enter item code"
+                <input name="item_code" type="text" placeholder="Enter item code"
                     class="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 
                            focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    value="ABC123" />
+                    value="{{ old('item_code') }}" required />
             </div>
 
             <!-- Description TH & EN -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Description (TH)</label>
-                    <input type="text" value="ชามเล็ก"
+                    <input name="item_description_thai" type="text" value="{{ old('item_description_thai') }}"
                         class="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Description (EN)</label>
-                    <input type="text" value="Small Bowl"
+                    <input name="item_description_eng" type="text" value="{{ old('item_description_eng') }}"
                         class="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                 </div>
             </div>
 
-            <!-- TYPE, STATUS, COLLECTION -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- TYPE, STATUS, COLLECTION, PROCESS -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Type</label>
-                    <input type="text" value="Ceramic"
-                        class="mt-1 w-full border rounded-md px-3 py-2 border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                    <select name="shape_type_id" required
+                        class="select2 w-full mt-1 border rounded-md px-3 py-2 border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <option value="">-</option>
+                        @foreach ($shapeTypes as $type)
+                            <option value="{{ $type->id }}"
+                                {{ old('shape_type_id') == $type->id ? 'selected' : '' }}>
+                                {{ $type->name }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Status</label>
-                    <input type="text" value="Active"
-                        class="mt-1 w-full border rounded-md px-3 py-2 border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                    <select name="status_id" required
+                        class="select2 w-full mt-1 border rounded-md px-3 py-2 border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <option value="">-</option>
+                        @foreach ($statuses as $status)
+                            <option value="{{ $status->id }}" {{ old('status_id') == $status->id ? 'selected' : '' }}>
+                                {{ $status->status }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Collection</label>
-                    <input type="text" value="Classic"
-                        class="mt-1 w-full border rounded-md px-3 py-2 border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                </div>
-            </div>
-
-            <!-- CUSTOMER, GROUP, PROCESS, DESIGNER -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Customer</label>
-                    <input type="text" value="Acme Corp" class="mt-1 w-full border rounded-md px-3 py-2 border-gray-300" />
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Group</label>
-                    <input type="text" value="Kitchenware" class="mt-1 w-full border rounded-md px-3 py-2 border-gray-300" />
+                    <select name="shape_collection_id" required
+                        class="select2 w-full mt-1 border rounded-md px-3 py-2 border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <option value="">-</option>
+                        @foreach ($shapeCollections as $collection)
+                            <option value="{{ $collection->id }}"
+                                {{ old('shape_collection_id') == $collection->id ? 'selected' : '' }}>
+                                {{ $collection->collection_code }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Process</label>
-                    <input type="text" value="Hand-made" class="mt-1 w-full border rounded-md px-3 py-2 border-gray-300" />
+                    <select name="process_id" required
+                        class="select2 w-full mt-1 border rounded-md px-3 py-2 border-gray-300">
+                        <option value="">-</option>
+                        @foreach ($processes as $process)
+                            <option value="{{ $process->id }}"
+                                {{ old('process_id') == $process->id ? 'selected' : '' }}>
+                                {{ $process->process_name }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
+            </div>
+
+            <!-- CUSTOMER, GROUP, DESIGNER, Requestor -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Group</label>
+                    <select name="item_group_id"
+                        class="select2 w-full mt-1 border rounded-md px-3 py-2 border-gray-300">
+                        <option value="">-</option>
+                        @foreach ($itemGroups as $group)
+                            <option value="{{ $group->id }}"
+                                {{ old('item_group_id') == $group->id ? 'selected' : '' }}>
+                                {{ $group->item_group_name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Customer</label>
+                    <select name="customer_id" class="select2 w-full mt-1 border rounded-md px-3 py-2 border-gray-300">
+                        <option value="">-</option>
+                        @foreach ($customers as $customer)
+                            <option value="{{ $customer->id }}"
+                                {{ old('customer_id') == $customer->id ? 'selected' : '' }}>
+                                {{ $customer->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Requestor</label>
+                    <select name="requestor_id" class="select2 w-full mt-1 border rounded-md px-3 py-2 border-gray-300">
+                        <option value="">-</option>
+                        @foreach ($requestors as $requestor)
+                            <option value="{{ $requestor->id }}"
+                                {{ old('requestor_id') == $requestor->id ? 'selected' : '' }}>
+                                {{ $requestor->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Designer</label>
-                    <input type="text" value="John Doe" class="mt-1 w-full border rounded-md px-3 py-2 border-gray-300" />
+                    <select name="designer_id" class="select2 w-full mt-1 border rounded-md px-3 py-2 border-gray-300">
+                        <option value="">-</option>
+                        @foreach ($designers as $designer)
+                            <option value="{{ $designer->id }}"
+                                {{ old('designer_id') == $designer->id ? 'selected' : '' }}>
+                                {{ $designer->designer_name }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
 
@@ -73,11 +156,13 @@
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Volume</label>
-                    <input type="text" value="250ml" class="mt-1 w-full border rounded-md px-3 py-2 border-gray-300" />
+                    <input name="volume" type="text" value="{{ old('volume') }}"
+                        class="mt-1 w-full border rounded-md px-3 py-2 border-gray-300" />
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Weight</label>
-                    <input type="text" value="180g" class="mt-1 w-full border rounded-md px-3 py-2 border-gray-300" />
+                    <input name="weight" type="text" value="{{ old('weight') }}"
+                        class="mt-1 w-full border rounded-md px-3 py-2 border-gray-300" />
                 </div>
             </div>
 
@@ -85,35 +170,38 @@
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Long Diameter</label>
-                    <input type="text" value="12cm" class="mt-1 w-full border rounded-md px-3 py-2 border-gray-300" />
+                    <input name="long_diameter" type="text" value="{{ old('long_diameter') }}"
+                        class="mt-1 w-full border rounded-md px-3 py-2 border-gray-300" />
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Short Diameter</label>
-                    <input type="text" value="10cm" class="mt-1 w-full border rounded-md px-3 py-2 border-gray-300" />
+                    <input name="short_diameter" type="text" value="{{ old('short_diameter') }}"
+                        class="mt-1 w-full border rounded-md px-3 py-2 border-gray-300" />
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Height Long</label>
-                    <input type="text" value="8cm" class="mt-1 w-full border rounded-md px-3 py-2 border-gray-300" />
+                    <input name="height_long" type="text" value="{{ old('height_long') }}"
+                        class="mt-1 w-full border rounded-md px-3 py-2 border-gray-300" />
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Height Short</label>
-                    <input type="text" value="7cm" class="mt-1 w-full border rounded-md px-3 py-2 border-gray-300" />
+                    <input name="height_short" type="text" value="{{ old('height_short') }}"
+                        class="mt-1 w-full border rounded-md px-3 py-2 border-gray-300" />
                 </div>
             </div>
 
-            <!-- Body, Requestor, Approval Date -->
+            <!-- Body, Approval Date -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Body</label>
-                    <input type="text" value="Porcelain" class="mt-1 w-full border rounded-md px-3 py-2 border-gray-300" />
+                    <input name="body" type="text" value="{{ old('body') }}"
+                        class="mt-1 w-full border rounded-md px-3 py-2 border-gray-300" />
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Requestor</label>
-                    <input type="text" value="Alice" class="mt-1 w-full border rounded-md px-3 py-2 border-gray-300" />
-                </div>
+
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Approval Date</label>
-                    <input type="date" value="2025-09-15" class="mt-1 w-full border rounded-md px-3 py-2 border-gray-300" />
+                    <input name="approval_date" type="date" value="{{ old('approval_date') }}"
+                        class="mt-1 w-full border rounded-md px-3 py-2 border-gray-300" />
                 </div>
             </div>
 
@@ -127,3 +215,29 @@
         </form>
     </div>
 </div>
+
+<!-- Select2 CSS & JS CDN -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        $('.select2').select2({
+            dropdownParent: $('.max-w-2xl').last(),
+            width: '100%' // ทำให้ dropdown ยาวเท่ากัน
+        });
+    });
+
+    // Re-init select2 when modal is opened (Alpine)
+    document.addEventListener('alpine:init', () => {
+        window.addEventListener('open-create-shape-modal', () => {
+            setTimeout(function() {
+                $('.select2').select2({
+                    dropdownParent: $('.max-w-2xl').last(),
+                    width: '100%' // ทำให้ dropdown ยาวเท่ากัน
+                });
+            }, 100);
+        });
+    });
+</script>

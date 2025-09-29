@@ -4,7 +4,7 @@
 @section('content')
 <main class="flex-1 bg-gray-50" x-data="{ CreateEffectModal: false, DeleteModal: false }">
     <!-- Summary Bar -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+    <div class="grid grid-cols-3 md:grid-cols-5 gap-4 mb-6">
         <div class="bg-white rounded-lg shadow p-4 flex flex-col items-center">
             <span class="text-2xl font-bold text-blue-600">{{ $shapeCount }}</span>
             <span class="text-xs text-gray-500 mt-1 uppercase tracking-wider">Shapes</span>
@@ -20,6 +20,10 @@
         <div class="bg-white rounded-lg shadow p-4 flex flex-col items-center">
             <span class="text-2xl font-bold text-purple-600">{{ $glazeCount }}</span>
             <span class="text-xs text-gray-500 mt-1 uppercase tracking-wider">Glazes</span>
+        </div>
+        <div class="bg-white rounded-lg shadow p-4 flex flex-col items-center">
+            <span class="text-2xl font-bold text-purple-600">{{ $userCount }}</span>
+            <span class="text-xs text-gray-500 mt-1 uppercase tracking-wider">Users</span>
         </div>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -118,8 +122,8 @@
                     @forelse ($latestGlazes as $glaze)
                         <tr class="border-b">
                             <td class="px-4 py-2">{{ $glaze->glaze_code }}</td>
-                            <td class="px-4 py-2">{{ $glaze->glazeInside->name ?? '-' }}</td>
-                            <td class="px-4 py-2">{{ $glaze->glazeOuter->name ?? '-' }}</td>
+                            <td class="px-4 py-2">{{ $glaze->glazeInside->glaze_inside_code ?? '-' }}</td>
+                            <td class="px-4 py-2">{{ $glaze->glazeOuter->glaze_outer_code ?? '-' }}</td>
                             <td class="px-4 py-2">{{ $glaze->updater->name ?? 'System' }}</td>
                             <td class="px-4 py-2">{{ $glaze->updated_at->format('d/m/Y H:i') }}</td>
                         </tr>

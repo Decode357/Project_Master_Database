@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\ShapeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,7 +33,7 @@ Route::middleware(['auth'])->group(function () {
         ->name('dashboard');
 
     // เมนูทั่วไปสำหรับทุก role
-    Route::get('/shape', [PageController::class, 'shapeindex'])->name('shape.index');
+    Route::get('/shape', [ShapeController::class, 'shapeindex'])->name('shape.index');
     Route::get('/pattern', [PageController::class, 'patternindex'])->name('pattern.index');
     Route::get('/backstamp', [PageController::class, 'backstampindex'])->name('backstamp.index');
     Route::get('/glaze', [PageController::class, 'glazeindex'])->name('glaze.index');
@@ -46,6 +47,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/user', [PageController::class, 'storeUser'])->name('user.store')->middleware(['auth', 'role:admin|superadmin', 'permission:manage users']);
         Route::delete('/user/{user}', [PageController::class, 'destroyUser'])->name('user.destroy')->middleware(['auth', 'permission:manage users']);
         Route::put('/user/{user}', [PageController::class, 'updateUser'])->name('user.update')->middleware(['auth', 'permission:manage users']);
+        Route::post('/shape', [ShapeController::class, 'storeShape'])->name('shape.store')->middleware(['auth', 'role:admin|superadmin', 'permission:create']);
     });
 });
 
