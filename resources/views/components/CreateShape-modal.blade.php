@@ -1,5 +1,9 @@
-<div x-show="CreateShapeModal" x-transition.opacity
-    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="display: none;">
+<!-- Edit Shape Modal -->
+<div id="CreateShapeModal" 
+     x-show="CreateShapeModal" 
+     x-transition.opacity
+     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" 
+     style="display: none;">
     <div class="bg-white rounded-lg shadow-lg w-full max-w-2xl p-6 overflow-y-auto max-h-[90vh]">
         <h2 class="text-xl font-semibold mb-4">Create Shape</h2>
         <hr class="mb-3">
@@ -221,23 +225,3 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        $('.select2').select2({
-            dropdownParent: $('.max-w-2xl').last(),
-            width: '100%' // ทำให้ dropdown ยาวเท่ากัน
-        });
-    });
-
-    // Re-init select2 when modal is opened (Alpine)
-    document.addEventListener('alpine:init', () => {
-        window.addEventListener('open-create-shape-modal', () => {
-            setTimeout(function() {
-                $('.select2').select2({
-                    dropdownParent: $('.max-w-2xl').last(),
-                    width: '100%' // ทำให้ dropdown ยาวเท่ากัน
-                });
-            }, 100);
-        });
-    });
-</script>
