@@ -140,7 +140,7 @@
 
         {{-- include modal --}}
         @include('components.Delete-modal')
-        @include('components.CreateUser-modal')
+        @include('components.Create-modals.CreateUser-modal')
         @include('components.Edit-modal')
     </main>
 @endsection

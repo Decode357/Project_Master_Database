@@ -13,8 +13,7 @@
         <form @submit.prevent="submitCreateForm" class="space-y-4" 
               x-data="{
                   errors: {},
-                  loading: false,
-                  generalErrors: []
+                  loading: false
               }">
             @csrf
 
@@ -35,8 +34,8 @@
                     :class="errors.item_code ? 'border-red-500' : 'border-gray-300'"
                     class="mt-1 w-full border rounded-md px-3 py-2 
                            focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    value="{{ old('item_code') }}" required />
-                <p x-show="errors.item_code" x-text="errors.item_code ? (Array.isArray(errors.item_code) ? errors.item_code[0] : errors.item_code) : ''" class="text-red-500 text-xs mt-1"></p>
+                    required />
+                <p x-show="errors.item_code" x-text="Array.isArray(errors.item_code) ? errors.item_code[0] : errors.item_code" class="text-red-500 text-xs mt-1"></p>
             </div>
 
             <!-- Description TH & EN -->
@@ -269,116 +268,5 @@
         </form>
     </div>
 </div>
-
-<script>
-function submitCreateForm() {
-    this.loading = true;
-    this.errors = {};
-
-    const formData = new FormData();
-    formData.append('_token', document.querySelector('meta[name="csrf-token"]').content);
-    
-    // Get form element
-    const form = document.querySelector('#CreateShapeModal form');
-    const formElements = form.elements;
-    
-    // Add all form fields to FormData
-    for (let element of formElements) {
-        if (element.name && element.type !== 'submit') {
-            formData.append(element.name, element.value || '');
-        }
-    }
-
-    fetch('{{ route("shape.store") }}', {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest'
-        }
-    })
-    .then(response => {
-        if (response.ok) {
-            return response.json();
-        }
-        return response.json().then(data => Promise.reject(data));
-    })
-    .then(data => {
-        // Success - ปิด modal และ refresh data
-        this.CreateShapeModal = false;
-        this.errors = {};
-        
-        // Reset form
-        const form = document.querySelector('#CreateShapeModal form');
-        form.reset();
-        
-        // Reset Select2 values
-        $('#CreateShapeModal .select2').val(null).trigger('change');
-        
-        // Refresh page หรือ emit event to parent component
-        window.location.reload();
-    })
-    .catch(error => {
-        if (error.errors) {
-            // Validation errors - แสดง error แต่ไม่ปิด modal
-            this.errors = error.errors;
-        } else {
-            console.error('Error:', error);
-            alert('เกิดข้อผิดพลาดในการบันทึกข้อมูล');
-        }
-    })
-    .finally(() => {
-        this.loading = false;
-    });
-}
-
-// Initialize Select2 สำหรับ Create Modal
-document.addEventListener('alpine:init', () => {
-    Alpine.data('createShapeModal', () => ({
-        init() {
-            // รอให้ DOM พร้อมแล้วค่อย initialize Select2
-            this.$nextTick(() => {
-                this.initSelect2();
-            });
-        },
-        
-        initSelect2() {
-            // Initialize Select2 สำหรับทุก select field ใน Create Modal
-            $('#CreateShapeModal .select2').select2({
-                dropdownParent: $('#CreateShapeModal'),
-                width: '100%'
-            });
-        }
-    }));
-});
-
-// Initialize Select2 เมื่อ modal เปิด
-document.addEventListener('DOMContentLoaded', function() {
-    // Observer สำหรับดูการเปลี่ยนแปลงของ CreateShapeModal
-    const observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-            if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-                const modal = document.getElementById('CreateShapeModal');
-                if (modal && modal.style.display !== 'none') {
-                    // Modal เปิด - initialize Select2
-                    setTimeout(() => {
-                        $('#CreateShapeModal .select2').select2({
-                            dropdownParent: $('#CreateShapeModal'),
-                            width: '100%'
-                        });
-                    }, 100);
-                }
-            }
-        });
-    });
-    
-    const modal = document.getElementById('CreateShapeModal');
-    if (modal) {
-        observer.observe(modal, {
-            attributes: true,
-            attributeFilter: ['style']
-        });
-    }
-});
-</script>
 
 

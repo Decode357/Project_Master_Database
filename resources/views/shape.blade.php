@@ -101,7 +101,7 @@
 
     @include('components.Edit-modals.edit-shape')
     @include('components.ShapeDetail-modal')
-    @include('components.CreateShape-modal')
+    @include('components.Create-modals.CreateShape-modal')
     @include('components.Delete-modal')
 </main>
 
@@ -147,22 +147,7 @@
 
             openCreateModal() {
                 this.CreateShapeModal = true;
-
-                this.$nextTick(() => {
-                    let $modal = $('#CreateShapeModal');
-                    $modal.find('.select2').each(function () {
-                        let $this = $(this);
-
-                        $this.select2({
-                            dropdownParent: $modal,
-                            width: '100%'
-                        });
-
-                        $this.on('change', function () {
-                            // ถ้าอยาก sync Alpine ก็ทำได้ แต่ create ใช้ old() อยู่แล้ว
-                        });
-                    });
-                });
+                // Select2 initialization is handled by create-shape-modal.js
             }
         }
     }
