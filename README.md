@@ -1,66 +1,202 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Master Data Management System
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="https://img.shields.io/badge/Laravel-11.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel">
+  <img src="https://img.shields.io/badge/PHP-8.2+-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP">
+  <img src="https://img.shields.io/badge/MySQL-8.0+-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL">
+  <img src="https://img.shields.io/badge/Alpine.js-8BC34A?style=for-the-badge&logo=alpine.js&logoColor=white" alt="Alpine.js">
+  <img src="https://img.shields.io/badge/TailwindCSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="TailwindCSS">
 </p>
 
-## About Laravel
+## 📖 About This Project
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Master Data Management System เป็นระบบจัดการข้อมูลหลัก (Master Data) สำหรับองค์กร ที่พัฒนาด้วย Laravel Framework โดยมีจุดประสงค์เพื่อจัดการข้อมูลพื้นฐานต่างๆ เช่น ข้อมูลรูปทรง (Shape), สี (Color), ลูกค้า (Customer), และข้อมูลอื่นๆ ที่เกี่ยวข้อง
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### ✨ Key Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- 🎨 **Modern UI/UX** - ใช้ TailwindCSS และ Alpine.js สำหรับ Interactive UI
+- 📊 **CRUD Operations** - ระบบจัดการข้อมูลแบบครบครัน (Create, Read, Update, Delete)
+- 🔍 **Advanced Search & Filter** - ค้นหาและกรองข้อมูลได้อย่างรวดเร็ว
+- ✅ **Real-time Validation** - ตรวจสอบข้อมูลแบบ Real-time ด้วย AJAX
+- 📱 **Responsive Design** - รองรับการใช้งานบนทุกอุปกรณ์
+- 🔐 **User Authentication & Authorization** - ระบบจัดการผู้ใช้และสิทธิ์การเข้าถึง
+- 📈 **Data Relationships** - จัดการความสัมพันธ์ของข้อมูลแบบซับซ้อน
 
-## Learning Laravel
+### 🛠️ Technology Stack
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+**Backend:**
+- Laravel 11.x (PHP Framework)
+- MySQL 8.0+ (Database)
+- Eloquent ORM (Database Relationships)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+**Frontend:**
+- TailwindCSS (CSS Framework)
+- Alpine.js (JavaScript Framework)
+- Select2 (Enhanced Select Dropdowns)
+- Blade Templates (Laravel Templating Engine)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+**Additional Tools:**
+- Laragon (Local Development Environment)
+- Composer (PHP Package Manager)
+- NPM/Node.js (Frontend Package Manager)
 
-## Laravel Sponsors
+## 📋 Data Models
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+ระบบจัดการข้อมูลหลักต่างๆ ดังนี้:
 
-### Premium Partners
+### Core Models
+- **Shape** - ข้อมูลรูปทรงสินค้า
+- **Color** - ข้อมูลสีและการเคลือบ
+- **Customer** - ข้อมูลลูกค้า
+- **Department** - ข้อมูลแผนก
+- **Designer** - ข้อมูลนักออกแบบ
+- **Pattern** - ข้อมูลลวดลาย
+- **Process** - ข้อมูลกระบวนการผลิต
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### Supporting Models
+- **ShapeType** - ประเภทรูปทรง
+- **Status** - สถานะต่างๆ
+- **ItemGroup** - กลุ่มสินค้า
+- **Effect** - เอฟเฟกต์พิเศษ
+- **Glaze** - ข้อมูลการเคลือบ
 
-## Contributing
+## 🚀 Installation
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Prerequisites
+- PHP 8.2 หรือสูงกว่า
+- Composer
+- Node.js & NPM
+- MySQL 8.0+
+- Laragon (แนะนำสำหรับ Windows)
 
-## Code of Conduct
+### Setup Instructions
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+1. **Clone Repository**
+```bash
+git clone https://github.com/Decode357/Project_Master_Database.git
+cd MasterDataDemo
+```
 
-## Security Vulnerabilities
+2. **Install Dependencies**
+```bash
+# Install PHP dependencies
+composer install
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# Install Node.js dependencies
+npm install
+```
 
-## License
+3. **Environment Configuration**
+```bash
+# Copy environment file
+cp .env.example .env
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# Generate application key
+php artisan key:generate
+```
+
+4. **Database Setup**
+```bash
+# Configure database in .env file
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=master_data_demo
+DB_USERNAME=root
+DB_PASSWORD=
+
+# Run migrations
+php artisan migrate
+
+# Seed database (optional)
+php artisan db:seed
+```
+
+5. **Build Assets**
+```bash
+# Development
+npm run dev
+
+# Production
+npm run build
+```
+
+6. **Start Development Server**
+```bash
+php artisan serve
+```
+
+## 📁 Project Structure
+
+```
+MasterDataDemo/
+├── app/
+│   ├── Http/Controllers/     # Controllers
+│   ├── Models/              # Eloquent Models
+│   └── Providers/           # Service Providers
+├── database/
+│   ├── migrations/          # Database Migrations
+│   ├── seeders/            # Database Seeders
+│   └── factories/          # Model Factories
+├── resources/
+│   ├── views/              # Blade Templates
+│   ├── css/                # Stylesheets
+│   └── js/                 # JavaScript Files
+├── routes/
+│   ├── web.php             # Web Routes
+│   └── api.php             # API Routes
+└── public/                 # Public Assets
+```
+
+## 🎯 Usage
+
+### Basic Operations
+
+1. **การจัดการข้อมูล Shape**
+   - เพิ่ม/แก้ไข/ลบข้อมูลรูปทรง
+   - กำหนดประเภท สถานะ และข้อมูลเทคนิค
+   - ผูกข้อมูลกับลูกค้า นักออกแบบ และแผนก
+
+2. **ระบบ Validation**
+   - ตรวจสอบข้อมูลแบบ Real-time
+   - แสดงข้อผิดพลาดที่ชัดเจน
+   - Modal จะไม่ปิดเมื่อมี validation errors
+
+3. **การค้นหาและกรอง**
+   - ค้นหาด้วย Item Code
+   - กรองตามประเภท สถานะ หรือลูกค้า
+   - รองรับ Pagination
+
+## 🔧 Configuration
+
+### Environment Variables
+
+```env
+# Application
+APP_NAME="Master Data Demo"
+APP_ENV=local
+APP_KEY=base64:...
+APP_DEBUG=true
+APP_URL=http://localhost
+
+# Database
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=master_data_demo
+DB_USERNAME=root
+DB_PASSWORD=
+
+# Cache & Session
+CACHE_DRIVER=file
+SESSION_DRIVER=file
+SESSION_LIFETIME=120
+```
+
+
+## 👥 Team
+
+- **Developer**: [Decode357](https://github.com/Decode357)
+- **Project Type**: Master Data Management System
+- **Framework**: Laravel 11.x
+
