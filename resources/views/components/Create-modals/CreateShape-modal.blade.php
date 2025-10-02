@@ -19,7 +19,7 @@
 
             <!-- Dynamic Error Display Area -->
             <div x-show="Object.keys(errors).length > 0" class="p-4 bg-red-100 border border-red-400 rounded-md">
-                <h4 class="text-red-800 font-semibold">กรุณาแก้ไขข้อผิดพลาดต่อไปนี้:</h4>
+                <h4 class="text-red-800 font-semibold">Please correct the following errors</h4>
                 <ul class="mt-2 text-red-700 text-sm list-disc list-inside">
                     <template x-for="(error, field) in errors" :key="field">
                         <li x-text="error[0] || error"></li>
@@ -268,5 +268,3 @@
         </form>
     </div>
 </div>
-
-

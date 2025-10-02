@@ -17,16 +17,20 @@
 
 <body class="bg-gray-50" x-data="{ sidebarOpen: false }" style='font-family: "Public Sans", "Noto Sans", sans-serif;'>
 
-    <!-- Overlay สำหรับมือถือ -->
-    <div class="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden" x-show="sidebarOpen" x-transition.opacity
-        @click="sidebarOpen = false" style="display: none;"></div>
+    <!-- ✅ แก้ไข: Overlay ใช้เฉพาะมือถือและซ่อนเมื่อขยายจอ -->
+    <div class="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden" 
+         x-show="sidebarOpen" 
+         x-transition.opacity
+         @click="sidebarOpen = false" 
+         @resize.window="if (window.innerWidth >= 768) sidebarOpen = false"
+         style="display: none;"></div>
 
     <div class="flex h-screen overflow-hidden">
 
-        <!-- Sidebar -->
+        <!-- ✅ แก้ไข: Sidebar ปรับ z-index และ responsive behavior -->
         <aside
             class="fixed inset-y-0 left-0 z-50 w-64 flex-col gap-y-4 border-r border-gray-200 bg-white p-4 shadow-xl
-                   transform transition-transform duration-300 ease-in-out md:static md:flex"
+                   transform transition-transform duration-300 ease-in-out md:static md:flex md:z-auto"
             :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'">
 
             <h1 class="text-4xl font-bold ml-3">PATRA</h1>
@@ -190,12 +194,22 @@
             </div>
         </aside>
 
-        <!-- Main -->
-        <main class="flex-1 flex flex-col w-full">
-            <!-- Header -->
+        <!-- ✅ แก้ไข: Main content area -->
+        <main class="flex-1 flex flex-col w-full md:ml-0">
+            <!-- ✅ แก้ไข: Header responsive positioning -->
             <header
-                class="fixed top-0 left-0 right-0 h-16 bg-white shadow-md flex items-center justify-between px-6 z-30"
-                :class="sidebarOpen ? 'md:ml-0' : 'md:pl-[270px]'">
+                class="flex top-0 right-0 h-16 bg-white shadow-md items-center justify-between px-6 z-30 transition-all duration-300"
+                :class="{
+                    'left-64': window.innerWidth >= 768,
+                    'left-0': window.innerWidth < 768
+                }"
+                x-init="$watch('sidebarOpen', value => {
+                    if (window.innerWidth < 768 && value) {
+                        document.body.style.overflow = 'hidden';
+                    } else {
+                        document.body.style.overflow = 'auto';
+                    }
+                })">
                 <div class="flex items-center gap-4">
                     <button @click="sidebarOpen = !sidebarOpen"
                         class="rounded-full p-2 text-gray-500 hoverScale hover:text-gray-700 md:hidden">
@@ -234,9 +248,8 @@
                 </div>
             </header>
 
-            <!-- Content -->
-            <section class="flex-1 p-6 mt-16 overflow-y-auto"
-                :class="sidebarOpen && window.innerWidth >= 768 ? 'md:ml-64' : 'md:ml-0'">
+            <!-- ✅ แก้ไข: Content section -->
+            <section class="flex-1 p-6  overflow-y-auto ml-0 md:ml-0 transition-all duration-300">
                 <div>
                     @yield('content')
                 </div>
@@ -244,6 +257,25 @@
         </main>
 
     </div>
+
+    <!-- ✅ เพิ่ม: JavaScript สำหรับจัดการ responsive behavior -->
+    <script>
+        // จัดการ sidebar behavior เมื่อขนาดหน้าจอเปลี่ยน
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 768) {
+                // Desktop - ปิด mobile sidebar และเปิด body scroll
+                Alpine.store('sidebar', { open: false });
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // เพิ่ม Alpine store สำหรับจัดการ sidebar state
+        document.addEventListener('alpine:init', () => {
+            Alpine.store('sidebar', {
+                open: false
+            });
+        });
+    </script>
 
     <script src="//unpkg.com/alpinejs" defer></script>
     <!-- Select2 CSS & JS CDN -->
