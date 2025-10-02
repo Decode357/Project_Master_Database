@@ -1,10 +1,5 @@
 <!-- Create Shape Modal -->
 <div id="CreateShapeModal" 
-     x-init="
-         @if ($errors->hasBag('createShape') && $errors->createShape->any()) 
-            CreateShapeModal = true; 
-         @endif
-     "
      x-show="CreateShapeModal" 
      x-transition.opacity
      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" 
@@ -14,17 +9,6 @@
      <div class="bg-white rounded-lg shadow-lg w-full max-w-2xl p-6 overflow-y-auto max-h-[90vh]">
          <h2 class="text-xl font-semibold mb-4">Create Shape</h2>
         <hr class="mb-3">
-        
-         @if ($errors->hasBag('createShape') && $errors->createShape->any())
-             <div class="mb-4 p-3 rounded-md bg-red-100 text-red-700">
-                 <ul class="list-disc list-inside text-sm">
-                     @foreach ($errors->createShape->all() as $error)
-                         <li>{{ $error }}</li>
-                     @endforeach
-                 </ul>
-             </div>
-         @endif
-
 
         <form method="POST" action="{{ route('shape.store') }}" class="space-y-4">
             @csrf
