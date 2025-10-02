@@ -1,23 +1,29 @@
-<!-- Edit Shape Modal -->
+<!-- Create Shape Modal -->
 <div id="CreateShapeModal" 
+     x-init="
+         @if ($errors->hasBag('createShape') && $errors->createShape->any()) 
+            CreateShapeModal = true; 
+         @endif
+     "
      x-show="CreateShapeModal" 
      x-transition.opacity
      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" 
      style="display: none;">
-    <div class="bg-white rounded-lg shadow-lg w-full max-w-2xl p-6 overflow-y-auto max-h-[90vh]">
-        <h2 class="text-xl font-semibold mb-4">Create Shape</h2>
+     
+     <!-- Modal Content -->
+     <div class="bg-white rounded-lg shadow-lg w-full max-w-2xl p-6 overflow-y-auto max-h-[90vh]">
+         <h2 class="text-xl font-semibold mb-4">Create Shape</h2>
         <hr class="mb-3">
-
-        <!-- ERROR SUMMARY -->
-        @if ($errors->any())
-            <div class="mb-4 p-3 rounded-md bg-red-100 text-red-700">
-                <ul class="list-disc list-inside text-sm">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+        
+         @if ($errors->hasBag('createShape') && $errors->createShape->any())
+             <div class="mb-4 p-3 rounded-md bg-red-100 text-red-700">
+                 <ul class="list-disc list-inside text-sm">
+                     @foreach ($errors->createShape->all() as $error)
+                         <li>{{ $error }}</li>
+                     @endforeach
+                 </ul>
+             </div>
+         @endif
 
 
         <form method="POST" action="{{ route('shape.store') }}" class="space-y-4">
@@ -220,8 +226,4 @@
     </div>
 </div>
 
-<!-- Select2 CSS & JS CDN -->
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 

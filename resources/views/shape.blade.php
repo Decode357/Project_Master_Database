@@ -109,7 +109,7 @@
 function shapePage() {
     return {
         ShapeDetailModal: false,
-        CreateShapeModal: @json($errors->any()),
+        CreateShapeModal: false,
         EditShapeModal: false,
         DeleteShapeModal: false,
         shapeIdToDelete: null,
