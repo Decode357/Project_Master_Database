@@ -40,14 +40,14 @@ class ShapeController extends Controller
             'item_code'      => 'required|string|max:255|unique:shapes,item_code',
             'item_description_thai' => 'nullable|string|max:255',
             'item_description_eng' => 'nullable|string|max:255',
-            'shape_type_id'   => 'required|exists:shape_types,id',
-            'status_id'       => 'required|exists:statuses,id',
-            'process_id'      => 'required|exists:processes,id',
+            'shape_type_id'   => 'nullable|exists:shape_types,id',
+            'status_id'       => 'nullable|exists:statuses,id',
+            'process_id'      => 'nullable|exists:processes,id',
             'item_group_id'   => 'nullable|exists:item_groups,id',
             'requestor_id'    => 'nullable|exists:requestors,id',
             'customer_id'     => 'nullable|exists:customers,id',
             'designer_id'     => 'nullable|exists:designers,id',
-            'shape_collection_id' => 'required|exists:shape_collections,id',
+            'shape_collection_id' => 'nullable|exists:shape_collections,id',
             'image_id'        => 'nullable|exists:images,id',
             'volume'         => 'nullable|numeric',
             'weight'         => 'nullable|numeric',
@@ -83,7 +83,11 @@ class ShapeController extends Controller
             'approval_date' => $data['approval_date'] ?? null,
         ]);
 
-        return redirect()->back()->with('success', 'Shape created successfully!');
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Shape created successfully!',
+            'shape'   => $shape
+        ], 200);
     }
 
     public function destroyShape(Shape $shape)
@@ -99,14 +103,14 @@ class ShapeController extends Controller
             'item_code'      => 'required|string|max:255|unique:shapes,item_code,' . $shape->id,
             'item_description_thai' => 'nullable|string|max:255',
             'item_description_eng' => 'nullable|string|max:255',
-            'shape_type_id'   => 'required|exists:shape_types,id',
-            'status_id'       => 'required|exists:statuses,id',
-            'process_id'      => 'required|exists:processes,id',
+            'shape_type_id'   => 'nullable|exists:shape_types,id',
+            'status_id'       => 'nullable|exists:statuses,id',
+            'process_id'      => 'nullable|exists:processes,id',
             'item_group_id'   => 'nullable|exists:item_groups,id',
             'requestor_id'    => 'nullable|exists:requestors,id',
             'customer_id'     => 'nullable|exists:customers,id',
             'designer_id'     => 'nullable|exists:designers,id',
-            'shape_collection_id' => 'required|exists:shape_collections,id',
+            'shape_collection_id' => 'nullable|exists:shape_collections,id',
             'image_id'        => 'nullable|exists:images,id',
             'volume'         => 'nullable|numeric',
             'weight'         => 'nullable|numeric',
@@ -144,7 +148,12 @@ class ShapeController extends Controller
 
         $shape->save();
         
-        return redirect()->back()->with('success', 'Shape updated successfully!');
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Shape updated successfully!',
+            'shape'   => $shape
+        ], 200);
+
     }
 
 

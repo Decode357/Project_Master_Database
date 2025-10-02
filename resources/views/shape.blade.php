@@ -106,65 +106,65 @@
 </main>
 
 <script>
-function shapePage() {
-    return {
-        ShapeDetailModal: false,
-        CreateShapeModal: false,
-        EditShapeModal: false,
-        DeleteShapeModal: false,
-        shapeIdToDelete: null,
-        shapeToEdit: {},
-        itemCodeToDelete: '',
+    function shapePage() {
+        return {
+            ShapeDetailModal: false,
+            CreateShapeModal: false,
+            EditShapeModal: false,
+            DeleteShapeModal: false,
+            shapeIdToDelete: null,
+            shapeToEdit: {},
+            itemCodeToDelete: '',
 
-        openEditModal(shape) {
-            this.shapeToEdit = JSON.parse(JSON.stringify(shape)); // clone กัน reactive bug
-            this.EditShapeModal = true;
+            openEditModal(shape) {
+                this.shapeToEdit = JSON.parse(JSON.stringify(shape)); // clone กัน reactive bug
+                this.EditShapeModal = true;
 
-            this.$nextTick(() => {
-                let $modal = $('#EditShapeModal');
-                $modal.find('.select2').each(function () {
-                    let $this = $(this);
-                    let name = $this.attr('name');
+                this.$nextTick(() => {
+                    let $modal = $('#EditShapeModal');
+                    $modal.find('.select2').each(function () {
+                        let $this = $(this);
+                        let name = $this.attr('name');
 
-                    // init select2 ใหม่ทุกครั้ง
-                    $this.select2({
-                        dropdownParent: $modal,
-                        width: '100%'
-                    });
+                        // init select2 ใหม่ทุกครั้ง
+                        $this.select2({
+                            dropdownParent: $modal,
+                            width: '100%'
+                        });
 
-                    // set ค่า default ตาม shapeToEdit
-                    if (shape[name] !== undefined && shape[name] !== null) {
-                        $this.val(shape[name]).trigger('change');
-                    }
+                        // set ค่า default ตาม shapeToEdit
+                        if (shape[name] !== undefined && shape[name] !== null) {
+                            $this.val(shape[name]).trigger('change');
+                        }
 
-                    // sync กลับ Alpine
-                    $this.on('change', function () {
-                        shape[name] = $(this).val();
-                    });
-                });
-            });
-        },
-
-        openCreateModal() {
-            this.CreateShapeModal = true;
-
-            this.$nextTick(() => {
-                let $modal = $('#CreateShapeModal');
-                $modal.find('.select2').each(function () {
-                    let $this = $(this);
-
-                    $this.select2({
-                        dropdownParent: $modal,
-                        width: '100%'
-                    });
-
-                    $this.on('change', function () {
-                        // ถ้าอยาก sync Alpine ก็ทำได้ แต่ create ใช้ old() อยู่แล้ว
+                        // sync กลับ Alpine
+                        $this.on('change', function () {
+                            shape[name] = $(this).val();
+                        });
                     });
                 });
-            });
+            },
+
+            openCreateModal() {
+                this.CreateShapeModal = true;
+
+                this.$nextTick(() => {
+                    let $modal = $('#CreateShapeModal');
+                    $modal.find('.select2').each(function () {
+                        let $this = $(this);
+
+                        $this.select2({
+                            dropdownParent: $modal,
+                            width: '100%'
+                        });
+
+                        $this.on('change', function () {
+                            // ถ้าอยาก sync Alpine ก็ทำได้ แต่ create ใช้ old() อยู่แล้ว
+                        });
+                    });
+                });
+            }
         }
     }
-}
 </script>
 @endsection
