@@ -1,9 +1,8 @@
 @extends('layouts.sidebar')
 @section('title', 'Pattern')
 @section('header', 'Pattern')
-
 @section('content')
-    <main x-data="{ DeleteModal: false, CreatePatternModal: false }">
+    <main x-data="patternPage()" x-init="initSelect2()">
         <!-- Filters -->
         <div class="bg-white p-6 rounded-lg shadow-md mb-3">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -114,7 +113,7 @@
                                             <span class="material-symbols-outlined">edit</span>
                                         </button>
 
-                                        <button @click="DeleteModal = true"
+                                        <button @click="DeletePatternModal = true; patternIdToDelete = {{ $pattern->id }}; itemCodeToDelete = '{{ $pattern->pattern_code }}'"
                                             class="text-red-500 hoverScale hover:text-red-700">
                                             <span class="material-symbols-outlined">delete</span>
                                         </button>

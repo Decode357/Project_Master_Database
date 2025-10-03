@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -79,7 +78,6 @@
                     $hasFileImport = $user->getDirectPermissions()->pluck('name')->contains('file import');
                 @endphp
                 @role('admin|superadmin')
-
                     <hr class="my-2" />
                     <span class="text-center text-sm text-gray-400">Admin console</span>
 
@@ -221,7 +219,6 @@
                             $permissionLabel = 'Super Admin : all permissions';
                         }
                     @endphp
-
                     <h2>
                         <span class="text-xl font-semibold">@yield('header', 'Title')</span>
                         <span class="text-gray-500">| {{ $permissionLabel }}</span>
@@ -284,6 +281,11 @@
 
     <!-- Page Specific Scripts -->
     <script src="{{ asset('js/pages/shape-page.js') }}"></script>
+    <script src="{{ asset('js/pages/pattern-page.js') }}"></script>
+    <script src="{{ asset('js/pages/backstamp-page.js') }}"></script>
+    <script src="{{ asset('js/pages/glaze-page.js') }}"></script>
+    <script src="{{ asset('js/pages/color-page.js') }}"></script>
+    <script src="{{ asset('js/pages/effect-page.js') }}"></script>
 </body>
 
 </html>

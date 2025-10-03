@@ -2,7 +2,7 @@
 @section('title', 'Effect')
 @section('header', 'Effect')
 @section('content')
-    <main class="flex-1 bg-gray-50" x-data="{ CreateEffectModal: false, DeleteModal: false }">
+    <main class="flex-1 bg-gray-50" x-data="effectPage()" x-init="initSelect2()">
 
         <!-- Filters -->
         <div class="bg-white p-6 rounded-lg shadow-md mb-6">
@@ -53,15 +53,15 @@
                                     @empty
                                         <span class="text-gray-400 text-sm">No colors</span>
                                     @endforelse
-
-
                                 </div>
                             </td>
                             <td class="px-6 py-4 text-right space-x-2">
                                 <button class="text-blue-600 hoverScale hover:text-blue-700">
                                     <span class="material-symbols-outlined">edit</span>
                                 </button>
-                                <button @click="DeleteModal = true" class="text-red-500 hoverScale hover:text-red-700">
+
+                                <button @click="DeleteEffectModal = true; effectIdToDelete = {{ $effect->id }}; itemCodeToDelete = '{{ $effect->effect_code }}'"
+                                class="text-red-500 hoverScale hover:text-red-700">
                                     <span class="material-symbols-outlined">delete</span>
                                 </button>
                             </td>

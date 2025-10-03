@@ -4,7 +4,7 @@
     @click.self="ShapeDetailModal = false" style="display: none;"
     x-data="{ zoomImage: false, activeTab: 'basic' }">
     
-    <!-- Modal Content - เพิ่ม fixed height และจัดการ overflow -->
+    <!-- Modal Content -->
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-6xl mx-4 relative overflow-hidden h-[90vh] flex flex-col">
         
         <!-- Header -->
@@ -19,12 +19,12 @@
             </button>
         </div>
 
-        <!-- Content Area - ปรับ flex และ overflow -->
+        <!-- Content Area -->
         <div class="flex-1 overflow-hidden">
             <!-- Image and Basic Info Section -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 p-6 h-full">
                 
-                <!-- Image Section - ปรับให้มี fixed height -->
+                <!-- Image Section -->
                 <div class="lg:col-span-1 flex flex-col">
                     <div class="bg-gray-50 rounded-xl p-4 text-center flex-shrink-0">
                         <template x-if="shapeToView?.image?.file_path">
@@ -64,10 +64,10 @@
                     </div>
                 </div>
 
-                <!-- Tabs Content - ปรับ overflow -->
+                <!-- Tabs Content -->
                 <div class="lg:col-span-2 flex flex-col overflow-hidden">
                     
-                    <!-- Tab Navigation - ปรับให้ flex-shrink-0 -->
+                    <!-- Tab Navigation -->
                     <div class="border-b border-gray-200 mb-6 flex-shrink-0">
                         <nav class="flex space-x-8">
                             <button @click="activeTab = 'basic'"
@@ -91,15 +91,10 @@
                         </nav>
                     </div>
 
-                    <!-- Tab Content Container - ปรับให้มี fixed height และ overflow -->
+                    <!-- Tab Content Container -->
                     <div class="flex-1 min-h-0">
-                        <!-- Basic Information Tab - ✅ เปลี่ยนเป็น overflow-y-auto และปิด overflow-x -->
-                        <div x-show="activeTab === 'basic'" x-transition:enter="transition ease-out duration-300"
-                             x-transition:enter-start="opacity-0 transform translate-x-4"
-                             x-transition:enter-end="opacity-100 transform translate-x-0"
-                             x-transition:leave="transition ease-in duration-200"
-                             x-transition:leave-start="opacity-100"
-                             x-transition:leave-end="opacity-0"
+                        <!-- Basic Information Tab -->
+                        <div x-show="activeTab === 'basic'" 
                              class="h-full overflow-y-auto overflow-x-hidden">
                             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                 <!-- Item Code -->
@@ -152,7 +147,7 @@
                                     </div>
                                     <p class="text-gray-900" x-text="shapeToView?.approval_date ? new Date(shapeToView.approval_date).toLocaleDateString('th-TH') : '-'"></p>
                                 </div>
-                                <!-- ✅ Description Thai - เปลี่ยนเป็น textarea style -->
+                                <!-- Description Thai -->
                                 <div class="bg-gray-50 rounded-lg p-4 sm:col-span-3">
                                     <div class="flex items-center mb-2">
                                         <span class="material-symbols-outlined text-blue-600 mr-2">translate</span>
@@ -163,7 +158,7 @@
                                        x-text="shapeToView?.item_description_thai || '-'"></p>
                                 </div>
 
-                                <!-- ✅ Description English - เปลี่ยนเป็น textarea style  -->
+                                <!-- Description English -->
                                 <div class="bg-gray-50 rounded-lg p-4 sm:col-span-3">
                                     <div class="flex items-center mb-2">
                                         <span class="material-symbols-outlined text-blue-600 mr-2">language</span>
@@ -176,13 +171,8 @@
                             </div>
                         </div>
 
-                        <!-- ✅ Dimensions Tab - ปิด scroll bar -->
-                        <div x-show="activeTab === 'dimensions'" x-transition:enter="transition ease-out duration-300"
-                             x-transition:enter-start="opacity-0 transform translate-x-4"
-                             x-transition:enter-end="opacity-100 transform translate-x-0"
-                             x-transition:leave="transition ease-in duration-200"
-                             x-transition:leave-start="opacity-100"
-                             x-transition:leave-end="opacity-0"
+                        <!-- Dimensions Tab -->
+                        <div x-show="activeTab === 'dimensions'"
                              class="h-full overflow-y-auto overflow-x-hidden">
                             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
                                 <!-- Volume -->
@@ -279,13 +269,8 @@
                             </div>
                         </div>
 
-                        <!-- ✅ Relations Tab - ปิด scroll bar -->
-                        <div x-show="activeTab === 'relations'" x-transition:enter="transition ease-out duration-300"
-                             x-transition:enter-start="opacity-0 transform translate-x-4"
-                             x-transition:enter-end="opacity-100 transform translate-x-0"
-                             x-transition:leave="transition ease-in duration-200"
-                             x-transition:leave-start="opacity-100"
-                             x-transition:leave-end="opacity-0"
+                        <!-- Relations Tab -->
+                        <div x-show="activeTab === 'relations'" 
                              class="h-full overflow-y-auto overflow-x-hidden">
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                                 <!-- Customer -->

@@ -3,6 +3,11 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ShapeController;
+use App\Http\Controllers\PatternController;
+use App\Http\Controllers\BackstampController;
+use App\Http\Controllers\GlazeController;
+use App\Http\Controllers\ColorController;
+use App\Http\Controllers\EffectController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,15 +39,15 @@ Route::middleware(['auth'])->group(function () {
 
     // เมนูทั่วไปสำหรับทุก role
     Route::get('/shape', [ShapeController::class, 'shapeindex'])->name('shape.index');
-    Route::get('/pattern', [PageController::class, 'patternindex'])->name('pattern.index');
-    Route::get('/backstamp', [PageController::class, 'backstampindex'])->name('backstamp.index');
-    Route::get('/glaze', [PageController::class, 'glazeindex'])->name('glaze.index');
+    Route::get('/pattern', [PatternController::class, 'patternindex'])->name('pattern.index');
+    Route::get('/backstamp', [BackstampController::class, 'backstampindex'])->name('backstamp.index');
+    Route::get('/glaze', [GlazeController::class, 'glazeindex'])->name('glaze.index');
 
     // เมนูสำหรับ admin และ superadmin
     Route::middleware('role:admin|superadmin')->group(function () {
         // เมนูสำหรับแสดงข้อมูล
-        Route::get('/color', [PageController::class, 'colorindex'])->name('color.index');
-        Route::get('/effect', [PageController::class, 'effectindex'])->name('effect.index');
+        Route::get('/color', [ColorController::class, 'colorindex'])->name('color.index');
+        Route::get('/effect', [EffectController::class, 'effectindex'])->name('effect.index');
         Route::get('/csv-import', [PageController::class, 'csvImport'])->name('csvImport')->middleware(['auth', 'role:admin|superadmin', 'permission:file import']);
         Route::get('/user', [PageController::class, 'user'])->name('user');
 
@@ -57,6 +62,11 @@ Route::middleware(['auth'])->group(function () {
         // เมนูสำหรับลบข้อมูล
         Route::delete('/user/{user}', [PageController::class, 'destroyUser'])->name('user.destroy')->middleware(['auth', 'permission:manage users']);
         Route::delete('/shape/{shape}', [ShapeController::class, 'destroyShape'])->name('shape.destroy')->middleware(['auth', 'permission:delete']);
+        Route::delete('/pattern/{pattern}', [PatternController::class, 'destroyPattern'])->name('pattern.destroy')->middleware(['auth', 'permission:delete']);
+        Route::delete('/backstamp/{backstamp}', [BackstampController::class, 'destroyBackstamp'])->name('backstamp.destroy')->middleware(['auth', 'permission:delete']);
+        Route::delete('/glaze/{glaze}', [GlazeController::class, 'destroyGlaze'])->name('glaze.destroy')->middleware(['auth', 'permission:delete']);
+        Route::delete('/color/{color}', [ColorController::class, 'destroyColor'])->name('color.destroy')->middleware(['auth', 'permission:delete']);
+        Route::delete('/effect/{effect}', [EffectController::class, 'destroyEffect'])->name('effect.destroy')->middleware(['auth', 'permission:delete']);
     });
 });
 

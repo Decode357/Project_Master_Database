@@ -43,7 +43,7 @@
                     @forelse ($latestShapes as $shape)
                         <tr class="border-b">
                             <td class="px-4 py-2">{{ $shape->item_code }}</td>
-                            <td class="px-4 py-2">{{ $shape->item_description_eng ?? '-' }}</td>
+                            <td class="px-4 py-2">{{ Str::limit($shape->item_description_eng ?? '-',20) }}</td>
                             <td class="px-4 py-2">{{ $shape->updater->name ?? 'System' }}</td>
                             <td class="px-4 py-2">{{ $shape->updated_at->format('d/m/Y H:i') }}</td>
                         </tr>

@@ -2,7 +2,7 @@
 @section('title', 'Glaze')
 @section('header', 'Glaze')
 @section('content')
-    <main x-data="{ CreateGlazeModal: false, DeleteModal: false }">
+    <main x-data="glazePage()" x-init="initSelect2()">
         <!-- Filters -->
         <div class="bg-white p-6 rounded-lg shadow-md mb-3 ">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 ">
@@ -95,7 +95,7 @@
                                             <span class="material-symbols-outlined">edit</span>
                                         </button>
 
-                                        <button @click="DeleteModal = true"
+                                        <button @click="DeleteGlazeModal = true; glazeIdToDelete = {{ $glaze->id }}; itemCodeToDelete = '{{ $glaze->glaze_code }}'"
                                             class="text-red-500 hoverScale hover:text-red-700">
                                             <span class="material-symbols-outlined">delete</span>
                                         </button>

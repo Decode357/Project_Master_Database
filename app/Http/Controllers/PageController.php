@@ -62,45 +62,6 @@ class PageController extends Controller
         ));
     }
 
-    public function patternindex()
-    {
-        $patterns = Pattern::with(['requestor', 'customer', 'status', 
-        'designer', 'image', 'updater'])
-        ->orderBy('id', 'desc')
-        ->paginate(10);
-        return view('pattern', compact('patterns'));
-    }
-
-
-    public function backstampindex() {
-        $backstamps = Backstamp::with(['requestor', 'customer', 'status', 
-        'image', 'updater'])
-        ->orderBy('id', 'desc')
-        ->paginate(10);
-        return view('backstamp', compact('backstamps'));
-    }
-    
-    public function glazeindex() {        
-        $glazes = Glaze::with(['status', 'updater'])
-        ->orderBy('id', 'desc')
-        ->paginate(10);
-        return view('glaze',compact('glazes'));
-    }
-
-    public function colorindex() {
-        $colors = Color::orderBy('id', 'desc')->paginate(10);
-        return view('color',compact('colors'));
-    }
-
-    public function effectindex()
-    {
-        // Eager load colors เพื่อลด query และ join pivot table
-        $effects = Effect::with('colors')
-                        ->orderBy('id', 'asc')
-                        ->paginate(10);
-
-        return view('effect', compact('effects'));
-    }
 
     // 🔹 User Management Controller
     public function user()

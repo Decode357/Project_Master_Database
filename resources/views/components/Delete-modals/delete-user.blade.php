@@ -4,27 +4,21 @@
     @click.self="DeleteUserModal = false" style="display: none;">
     <div x-show="DeleteUserModal" x-transition
         class="bg-white rounded-xl shadow-xl w-full max-w-md p-6 md:p-8 relative overflow-y-auto max-h-[90vh]">
-
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-xl font-semibold text-gray-800">Confirm Delete</h2>
             <button @click="DeleteUserModal = false" class="text-gray-400 hover:text-gray-700 rounded-full p-2">
                 <span class="material-symbols-outlined">close</span>
             </button>
         </div>
-
         <hr class="mb-4 border-gray-200">
-
         <p class="text-gray-700 mb-6">
             Are you sure you want to delete <span class="font-semibold" x-text="userNameToDelete"></span>?
         </p>
-
-
         <div class="flex justify-end gap-3">
             <button @click="DeleteUserModal = false"
                 class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">
                 Cancel
             </button>
-
             <form :action="`/user/${userIdToDelete}`" method="POST">
                 @csrf
                 @method('DELETE')

@@ -11,7 +11,8 @@ use App\Models\{
     Shape, ShapeType, Status, 
     ShapeCollection, Customer, ItemGroup, 
     Process, Designer, Requestor, 
-    Image};
+    Image
+};
 
 class ShapeController extends Controller
 {

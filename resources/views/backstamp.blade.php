@@ -2,7 +2,7 @@
 @section('title', 'Backstamp')
 @section('header', 'Backstamp')
 @section('content')
-<main x-data="{ CreateBackstampModal: false, DeleteModal: false }">
+<main x-data="backstampPage()" x-init="initSelect2()">
     <!-- Filters -->
     <div class="bg-white p-6 rounded-lg shadow-md mb-3">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -42,7 +42,6 @@
                         <th class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase tracking-wider">ACTION</th>
                     </tr>
                 </thead>
-
                 <tbody class="bg-white divide-y divide-gray-200">
                     @foreach ($backstamps as $backstamp)
                         @php
@@ -104,7 +103,7 @@
                                     <button class="text-blue-600 hoverScale hover:text-blue-700">
                                         <span class="material-symbols-outlined">edit</span>
                                     </button>
-                                    <button @click="DeleteModal = true" class="text-red-500 hoverScale hover:text-red-700">
+                                    <button @click="DeleteBackstampModal = true; backstampIdToDelete = {{ $backstamp->id }}; itemCodeToDelete = '{{ $backstamp->backstamp_code }}'" class="text-red-500 hoverScale hover:text-red-700">
                                         <span class="material-symbols-outlined">delete</span>
                                     </button>
                                 </div>

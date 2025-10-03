@@ -2,8 +2,8 @@
 @section('title', 'Effect')
 @section('header', 'Effect')
 @section('content')
-    <main class="flex-1 bg-gray-50" x-data="{ CreateColorModal: false, DeleteModal: false }">
-
+    <main class="flex-1 bg-gray-50" x-data="colorPage()" x-init="initSelect2()">
+        
         <!-- Filters -->
         <div class="bg-white p-6 rounded-lg shadow-md mb-3">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -37,7 +37,6 @@
                         <th class="px-6 py-3 text-right">Actions</th>
                     </tr>
                 </thead>
-
                 <tbody>
                     @foreach ($colors as $color)
                         <tr class="bg-white border-b hover:bg-gray-50">
@@ -52,7 +51,8 @@
                                 <button class="text-blue-600 hoverScale hover:text-blue-700">
                                     <span class="material-symbols-outlined">edit</span>
                                 </button>
-                                <button @click="DeleteModal = true" class="text-red-500 hoverScale hover:text-red-700">
+                                <button @click="DeleteColorModal = true; colorIdToDelete = {{ $color->id }}; itemCodeToDelete = '{{ $color->color_code }}'"
+                                    class="text-red-500 hoverScale hover:text-red-700">
                                     <span class="material-symbols-outlined">delete</span>
                                 </button>
                             </td>
