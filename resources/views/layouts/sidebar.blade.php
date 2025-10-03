@@ -64,6 +64,7 @@
                     <span class="material-symbols-outlined text-lg">verified</span>
                     <span>Backstamps</span>
                 </a>
+                
                 <a href="{{ route('glaze.index') }}"
                     class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium
                     {{ request()->routeIs('glaze.index') ? 'bg-primary-50 text-primary-600 font-semibold scale-110' : 'text-gray-700 hoverScale hover:bg-gray-100' }}">
@@ -274,10 +275,24 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-    <!-- Custom Modal Scripts -->
+    <!-- Modal common Scripts -->
     <script src="{{ asset('js/modals/modal-common.js') }}"></script>
+
+    <!-- Create Specific Scripts -->
     <script src="{{ asset('js/modals/create-shape-modal.js') }}"></script>
+    <script src="{{ asset('js/modals/create-pattern-modal.js') }}"></script>
+    <script src="{{ asset('js/modals/create-backstamp-modal.js') }}"></script>
+    <script src="{{ asset('js/modals/create-glaze-modal.js') }}"></script>
+    <script src="{{ asset('js/modals/create-color-modal.js') }}"></script>
+    <script src="{{ asset('js/modals/create-effect-modal.js') }}"></script>
+
+    <!-- Edit Specific Scripts -->
+    <script src="{{ asset('js/modals/edit-pattern-modal.js') }}"></script>
     <script src="{{ asset('js/modals/edit-shape-modal.js') }}"></script>
+    <script src="{{ asset('js/modals/edit-backstamp-modal.js') }}"></script>
+    <script src="{{ asset('js/modals/edit-glaze-modal.js') }}"></script>
+    <script src="{{ asset('js/modals/edit-color-modal.js') }}"></script>
+    <script src="{{ asset('js/modals/edit-effect-modal.js') }}"></script>
 
     <!-- Page Specific Scripts -->
     <script src="{{ asset('js/pages/shape-page.js') }}"></script>

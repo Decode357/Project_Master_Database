@@ -18,7 +18,7 @@
 
                 <!-- Add Button -->
                 <div class="md:col-span-2 flex justify-end items-center gap-4">
-                    <button @click="CreatePatternModal = true"
+                    <button @click="openCreateModal()"
                         class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hoverScale hover:bg-blue-700 transition">
                         <span class="material-symbols-outlined">add</span>
                         <span>Add Pattern</span>
@@ -113,7 +113,8 @@
                                             <span class="material-symbols-outlined">edit</span>
                                         </button>
 
-                                        <button @click="DeletePatternModal = true; patternIdToDelete = {{ $pattern->id }}; itemCodeToDelete = '{{ $pattern->pattern_code }}'"
+                                        <button
+                                            @click="DeletePatternModal = true; patternIdToDelete = {{ $pattern->id }}; itemCodeToDelete = '{{ $pattern->pattern_code }}'"
                                             class="text-red-500 hoverScale hover:text-red-700">
                                             <span class="material-symbols-outlined">delete</span>
                                         </button>
@@ -126,7 +127,7 @@
 
                 <!-- Pagination -->
                 <div class="mt-4 flex justify-end">
-                        {{ $patterns->links('vendor.pagination.tailwind-custom') }}
+                    {{ $patterns->links('vendor.pagination.tailwind-custom') }}
                 </div>
             </div>
         </div>
@@ -135,4 +136,3 @@
         @include('components.Create-modals.create-pattern')
     </main>
 @endsection
-
