@@ -17,17 +17,13 @@
 
 <body class="bg-gray-50" x-data="{ sidebarOpen: false }" style='font-family: "Public Sans", "Noto Sans", sans-serif;'>
 
-    <!-- ✅ แก้ไข: Overlay ใช้เฉพาะมือถือและซ่อนเมื่อขยายจอ -->
-    <div class="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden" 
-         x-show="sidebarOpen" 
-         x-transition.opacity
-         @click="sidebarOpen = false" 
-         @resize.window="if (window.innerWidth >= 768) sidebarOpen = false"
-         style="display: none;"></div>
-
+    <!-- Overlay ใช้เฉพาะมือถือและซ่อนเมื่อขยายจอ -->
+    <div class="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden" x-show="sidebarOpen" x-transition.opacity
+        @click="sidebarOpen = false" @resize.window="if (window.innerWidth >= 768) sidebarOpen = false"
+        style="display: none;">
+    </div>
+    <!-- Sidebar -->
     <div class="flex h-screen overflow-hidden">
-
-        <!-- ✅ แก้ไข: Sidebar ปรับ z-index และ responsive behavior -->
         <aside
             class="fixed inset-y-0 left-0 z-50 w-64 flex-col gap-y-4 border-r border-gray-200 bg-white p-4 shadow-xl
                    transform transition-transform duration-300 ease-in-out md:static md:flex md:z-auto"
@@ -118,10 +114,8 @@
 
                 @endrole
             </nav>
-
-
+            <!-- Sidebar User Info & Actions -->
             <div class="mt-auto flex flex-col gap-2" x-data="{ open: false }">
-
                 <!-- Sidebar User Info -->
                 @php
                     use Illuminate\Support\Str;
@@ -133,7 +127,7 @@
                         $roleInitial = 'SA';
                     }
                 @endphp
-
+                <!-- User Info Section -->
                 <div class="flex items-center gap-3 rounded-md p-3 shadow-md">
                     <div class="relative flex h-10 w-10 items-center justify-center rounded-full bg-gray-100">
                         <span class="text-lg font-bold text-gray-700">{{ $roleInitial }}</span>
@@ -165,11 +159,11 @@
                         <x-slot name="trigger">
                             <button
                                 class="flex items-center justify-center rounded-lg bg-white px-3  py-2
-                       text-gray-600 hoverScale hover:bg-gray-300 hover:text-gray-900">
+                                text-gray-600 hoverScale hover:bg-gray-300 hover:text-gray-900">
                                 <span class="material-symbols-outlined">settings</span>
                             </button>
                         </x-slot>
-
+                        <!-- Dropdown Content -->
                         <x-slot name="content">
                             <div
                                 class="origin-bottom-right absolute right-0 bottom-full mb-16 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
@@ -190,7 +184,6 @@
                         </x-slot>
                     </x-dropdown>
                 </div>
-
             </div>
         </aside>
 
@@ -255,7 +248,6 @@
                 </div>
             </section>
         </main>
-
     </div>
 
     <!-- ✅ เพิ่ม: JavaScript สำหรับจัดการ responsive behavior -->
@@ -264,11 +256,13 @@
         window.addEventListener('resize', function() {
             if (window.innerWidth >= 768) {
                 // Desktop - ปิด mobile sidebar และเปิด body scroll
-                Alpine.store('sidebar', { open: false });
+                Alpine.store('sidebar', {
+                    open: false
+                });
                 document.body.style.overflow = 'auto';
             }
         });
-        
+
         // เพิ่ม Alpine store สำหรับจัดการ sidebar state
         document.addEventListener('alpine:init', () => {
             Alpine.store('sidebar', {
@@ -282,11 +276,14 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    
+
     <!-- Custom Modal Scripts -->
     <script src="{{ asset('js/modals/modal-common.js') }}"></script>
     <script src="{{ asset('js/modals/create-shape-modal.js') }}"></script>
     <script src="{{ asset('js/modals/edit-shape-modal.js') }}"></script>
+
+    <!-- Page Specific Scripts -->
+    <script src="{{ asset('js/pages/shape-page.js') }}"></script>
 </body>
 
 </html>

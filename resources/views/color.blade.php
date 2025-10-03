@@ -69,6 +69,6 @@
 
         {{-- include modal --}}
         @include('components.Delete-modal')
-        @include('components.Create-modals.CreateColor-modal')
+        @include('components.Create-modals.create-color')
     </main>
 @endsection

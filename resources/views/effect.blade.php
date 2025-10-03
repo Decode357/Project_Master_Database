@@ -82,7 +82,7 @@
 
         {{-- include modal --}}
         @include('components.Delete-modal')
-        @include('components.Create-modals.CreateEffect-modal')
+        @include('components.Create-modals.create-effect')
 
     </main>
 @endsection

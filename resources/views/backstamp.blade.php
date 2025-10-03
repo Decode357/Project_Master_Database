@@ -123,6 +123,6 @@
 
     {{-- include modal --}}
     @include('components.Delete-modal')
-    @include('components.Create-modals.CreateBackstamp-modal')
+    @include('components.Create-modals.create-backstamp')
 </main>
 @endsection

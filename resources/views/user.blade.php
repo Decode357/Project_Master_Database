@@ -139,8 +139,8 @@
         </div>
 
         {{-- include modal --}}
-        @include('components.Delete-modal')
-        @include('components.Create-modals.CreateUser-modal')
-        @include('components.Edit-modal')
+        @include('components.Delete-modals.delete-user')
+        @include('components.Create-modals.create-user')
+        @include('components.Edit-modals.edit-user')
     </main>
 @endsection

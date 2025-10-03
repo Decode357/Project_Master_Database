@@ -133,7 +133,7 @@
         </div>
 
         @include('components.Delete-modal')
-        @include('components.Create-modals.CreatePattern-modal')
+        @include('components.Create-modals.create-pattern')
     </main>
 @endsection
 

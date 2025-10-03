@@ -120,6 +120,6 @@
         </div>
         {{-- include modal --}}
         @include('components.Delete-modal')
-        @include('components.Create-modals.CreateGlaze-modal')
+        @include('components.Create-modals.create-glaze')
     </main>
 @endsection

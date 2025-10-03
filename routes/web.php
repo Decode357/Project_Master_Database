@@ -40,16 +40,23 @@ Route::middleware(['auth'])->group(function () {
 
     // เมนูสำหรับ admin และ superadmin
     Route::middleware('role:admin|superadmin')->group(function () {
+        // เมนูสำหรับแสดงข้อมูล
         Route::get('/color', [PageController::class, 'colorindex'])->name('color.index');
         Route::get('/effect', [PageController::class, 'effectindex'])->name('effect.index');
         Route::get('/csv-import', [PageController::class, 'csvImport'])->name('csvImport')->middleware(['auth', 'role:admin|superadmin', 'permission:file import']);
         Route::get('/user', [PageController::class, 'user'])->name('user');
+
+        // เมนูสำหรับเก็บข้อมูล 
         Route::post('/user', [PageController::class, 'storeUser'])->name('user.store')->middleware(['auth', 'role:admin|superadmin', 'permission:manage users']);
-        Route::delete('/user/{user}', [PageController::class, 'destroyUser'])->name('user.destroy')->middleware(['auth', 'permission:manage users']);
-        Route::put('/user/{user}', [PageController::class, 'updateUser'])->name('user.update')->middleware(['auth', 'permission:manage users']);
         Route::post('/shape', [ShapeController::class, 'storeShape'])->name('shape.store')->middleware(['auth', 'role:admin|superadmin', 'permission:create']);
-        Route::delete('/shape/{shape}', [ShapeController::class, 'destroyShape'])->name('shape.destroy')->middleware(['auth', 'permission:delete']);
+
+        // เมนูสำหรับแก้ไขข้อมูล
+        Route::put('/user/{user}', [PageController::class, 'updateUser'])->name('user.update')->middleware(['auth', 'permission:manage users']);
         Route::put('/shape/{shape}', [ShapeController::class, 'updateShape'])->name('shape.update')->middleware(['auth', 'permission:edit']);
+
+        // เมนูสำหรับลบข้อมูล
+        Route::delete('/user/{user}', [PageController::class, 'destroyUser'])->name('user.destroy')->middleware(['auth', 'permission:manage users']);
+        Route::delete('/shape/{shape}', [ShapeController::class, 'destroyShape'])->name('shape.destroy')->middleware(['auth', 'permission:delete']);
     });
 });
 

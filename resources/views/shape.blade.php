@@ -20,7 +20,7 @@
             </div>
         </div>
     </div>
-
+    <!-- Table -->
     <div class="rounded-xl p-3 shadow-md bg-white">
         <div class="overflow-x-auto rounded-xl">
             <table class="min-w-full divide-y divide-gray-200">
@@ -44,7 +44,7 @@
                                 ACTION</th>
                         </tr>
                 </thead>
-
+                <!-- Table Body -->
                 <tbody class="bg-white divide-y divide-gray-200">
                     @foreach ($shapes as $shape)
                         @php
@@ -59,7 +59,7 @@
                                 default => 'bg-gray-100 text-gray-800',
                             };
                         @endphp
-
+                        <!-- Table Row -->
                         <tr class="hover:bg-gray-50">
                             <td class="px-6 py-4">{{ $shape->item_code }}</td>
                             <td class="px-6 py-4">{{ $shape->item_description_thai }}</td>
@@ -73,6 +73,7 @@
                             <td class="px-6 py-4">{{ $process }}</td>
                             <td class="px-6 py-4">{{ $updatedBy }}</td>
                             <td class="px-6 py-4">
+                                <!-- Action Buttons -->
                                 <div class="flex justify-end gap-2">
                                     <button @click="ShapeDetailModal = true" class="flex items-center gap-1 px-2 py-1 text-sm font-medium text-white bg-blue-500 rounded-lg shadow-sm hover:bg-green-600 hover:shadow-md transition-all duration-200 hoverScale">
                                         <span class="material-symbols-outlined text-white">feature_search</span>
@@ -92,64 +93,16 @@
                     @endforeach
                 </tbody>
             </table>
-
+            <!-- Pagination -->
             <div class="mt-4 flex justify-end">
                 {{ $shapes->links('vendor.pagination.tailwind-custom') }}
             </div>
         </div>
     </div>
-
+    <!-- Modals -->
     @include('components.Edit-modals.edit-shape')
-    @include('components.ShapeDetail-modal')
-    @include('components.Create-modals.CreateShape-modal')
-    @include('components.Delete-modal')
+    @include('components.Detail-modals.detail-shape')
+    @include('components.Create-modals.create-shape')
+    @include('components.Delete-modals.delete-shape')
 </main>
-
-<script>
-    function shapePage() {
-        return {
-            ShapeDetailModal: false,
-            CreateShapeModal: false,
-            EditShapeModal: false,
-            DeleteShapeModal: false,
-            shapeIdToDelete: null,
-            shapeToEdit: {},
-            itemCodeToDelete: '',
-
-            openEditModal(shape) {
-                this.shapeToEdit = JSON.parse(JSON.stringify(shape)); // clone กัน reactive bug
-                this.EditShapeModal = true;
-
-                this.$nextTick(() => {
-                    let $modal = $('#EditShapeModal');
-                    $modal.find('.select2').each(function () {
-                        let $this = $(this);
-                        let name = $this.attr('name');
-
-                        // init select2 ใหม่ทุกครั้ง
-                        $this.select2({
-                            dropdownParent: $modal,
-                            width: '100%'
-                        });
-
-                        // set ค่า default ตาม shapeToEdit
-                        if (shape[name] !== undefined && shape[name] !== null) {
-                            $this.val(shape[name]).trigger('change');
-                        }
-
-                        // sync กลับ Alpine
-                        $this.on('change', function () {
-                            shape[name] = $(this).val();
-                        });
-                    });
-                });
-            },
-
-            openCreateModal() {
-                this.CreateShapeModal = true;
-                // Select2 initialization is handled by create-shape-modal.js
-            }
-        }
-    }
-</script>
 @endsection
