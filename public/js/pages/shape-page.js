@@ -40,7 +40,10 @@ function shapePage() {
                 });
             });
         },
-
+        openDetailModal(shape) {
+            this.shapeToView = JSON.parse(JSON.stringify(shape)); // clone data
+            this.ShapeDetailModal = true;
+        },
         openCreateModal() {
             this.CreateShapeModal = true;
             // Select2 initialization is handled by create-shape-modal.js

@@ -122,7 +122,7 @@
     </div>
 
     {{-- include modal --}}
-    @include('components.Delete-modal')
+    @include('components.Delete-modals.delete-backstamp')
     @include('components.Create-modals.create-backstamp')
 </main>
 @endsection

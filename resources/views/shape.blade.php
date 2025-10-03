@@ -62,8 +62,8 @@
                         <!-- Table Row -->
                         <tr class="hover:bg-gray-50">
                             <td class="px-6 py-4">{{ $shape->item_code }}</td>
-                            <td class="px-6 py-4">{{ $shape->item_description_thai }}</td>
-                            <td class="px-6 py-4">{{ $shape->item_description_eng }}</td>
+                            <td class="px-6 py-4">{{ Str::limit($shape->item_description_thai, 15) }}</td>
+                            <td class="px-6 py-4">{{ Str::limit($shape->item_description_eng, 15) }}</td>
                             <td class="px-6 py-4">{{ $type }}</td>
                             <td class="px-6 py-4">
                                 <span class="{{ $statusColor }} px-2 py-1 rounded-full text-xs font-semibold">
@@ -75,7 +75,7 @@
                             <td class="px-6 py-4">
                                 <!-- Action Buttons -->
                                 <div class="flex justify-end gap-2">
-                                    <button @click="ShapeDetailModal = true" class="flex items-center gap-1 px-2 py-1 text-sm font-medium text-white bg-blue-500 rounded-lg shadow-sm hover:bg-green-600 hover:shadow-md transition-all duration-200 hoverScale">
+                                    <button @click="openDetailModal({{ $shape->toJson() }})" class="flex items-center gap-1 px-2 py-1 text-sm font-medium text-white bg-blue-500 rounded-lg shadow-sm hover:bg-green-600 hover:shadow-md transition-all duration-200 hoverScale">
                                         <span class="material-symbols-outlined text-white">feature_search</span>
                                         <span>Detail</span>
                                     </button>

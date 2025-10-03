@@ -81,7 +81,7 @@
         </div>
 
         {{-- include modal --}}
-        @include('components.Delete-modal')
+        @include('components.Delete-modals.delete-effect')
         @include('components.Create-modals.create-effect')
 
     </main>
