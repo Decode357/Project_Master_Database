@@ -101,7 +101,7 @@
                                 <!-- Action -->
                                 <td class="px-6 py-4">
                                     <div class="flex justify-end gap-2">
-                                        <button
+                                        <button @click="openDetailModal({{ $pattern->toJson() }})"
                                             class="flex items-center gap-1 px-2 py-1 text-sm font-medium text-white 
                                         bg-blue-500 rounded-lg shadow-sm hover:bg-green-600 hover:shadow-md 
                                         transition-all duration-200 hoverScale">
@@ -109,7 +109,8 @@
                                             <span>Detail</span>
                                         </button>
 
-                                        <button class="text-blue-600 hoverScale hover:text-blue-700">
+                                        <button @click="openEditModal({{ $pattern->toJson() }})"
+                                            class="text-blue-600 hoverScale hover:text-blue-700">
                                             <span class="material-symbols-outlined">edit</span>
                                         </button>
 
@@ -132,7 +133,10 @@
             </div>
         </div>
 
+        {{-- include modal --}}
         @include('components.Delete-modals.delete-pattern')
         @include('components.Create-modals.create-pattern')
+        @include('components.Detail-modals.detail-pattern')
+        @include('components.Edit-modals.edit-pattern')      
     </main>
 @endsection

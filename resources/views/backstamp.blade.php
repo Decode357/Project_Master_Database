@@ -95,12 +95,14 @@
                             <td class="px-6 py-4 whitespace-nowrap">{{ $backstamp->updater->name ?? '-' }}</td>
                             <td class="px-6 py-4">
                                 <div class="flex justify-end gap-2">
-                                    <button class="flex items-center gap-1 px-2 py-1 text-sm font-medium text-white 
+                                    <button @click="openDetailModal({{ $backstamp->toJson() }})"
+                                        class="flex items-center gap-1 px-2 py-1 text-sm font-medium text-white 
                                         bg-blue-500 rounded-lg shadow-sm hover:bg-green-600 hover:shadow-md transition-all duration-200 hoverScale">
                                         <span class="material-symbols-outlined text-white">feature_search</span>
                                         <span>Detail</span>
                                     </button>
-                                    <button class="text-blue-600 hoverScale hover:text-blue-700">
+                                    <button @click="openEditModal({{ $backstamp->toJson() }})"
+                                        class="text-blue-600 hoverScale hover:text-blue-700">
                                         <span class="material-symbols-outlined">edit</span>
                                     </button>
                                     <button @click="DeleteBackstampModal = true; backstampIdToDelete = {{ $backstamp->id }}; itemCodeToDelete = '{{ $backstamp->backstamp_code }}'" class="text-red-500 hoverScale hover:text-red-700">
@@ -123,5 +125,7 @@
     {{-- include modal --}}
     @include('components.Delete-modals.delete-backstamp')
     @include('components.Create-modals.create-backstamp')
+    @include('components.Edit-modals.edit-backstamp')
+    @include('components.Detail-modals.detail-backstamp')
 </main>
 @endsection

@@ -18,10 +18,14 @@ class BackstampController extends Controller
 {
     public function backstampindex() {
         $backstamps = Backstamp::with(['requestor', 'customer', 'status', 
-        'image', 'updater'])
-        ->orderBy('id', 'desc')
-        ->paginate(10);
-        return view('backstamp', compact('backstamps'));
+        'image', 'updater'])->orderBy('id', 'desc')->paginate(10);
+        
+        $statuses = Status::all();
+        $requestors = Requestor::all();
+        $customers = Customer::all();
+        $images = Image::all();
+
+        return view('backstamp', compact('backstamps', 'statuses', 'requestors', 'customers', 'images'));
     }
     
     public function destroyBackstamp(Backstamp $backstamp)

@@ -21,9 +21,15 @@ class PatternController extends Controller
     {
         $patterns = Pattern::with(['requestor', 'customer', 'status', 
         'designer', 'image', 'updater'])
-        ->orderBy('id', 'desc')
-        ->paginate(10);
-        return view('pattern', compact('patterns'));
+        ->orderBy('id', 'desc')->paginate(10);
+
+        $statuses = Status::all();
+        $designers = Designer::all();
+        $requestors = Requestor::all();
+        $customers = Customer::all();
+        $images = Image::all();
+
+        return view('pattern', compact('patterns', 'statuses', 'designers', 'requestors', 'customers', 'images'));
     }
 
     public function destroyPattern(Pattern $pattern)

@@ -19,8 +19,9 @@ class ShapeController extends Controller
     public function shapeindex()
     {
         $shapes = Shape::with(['shapeType', 'status', 'shapeCollection', 'customer',
-        'itemGroup', 'process', 'designer', 'requestor', 'image', 'updater'])
+        'itemGroup', 'process', 'designer', 'requestor', 'updater','image'])
         ->orderBy('id', 'desc')->paginate(10);
+
         $shapeTypes = ShapeType::all();
         $statuses = Status::all();
         $shapeCollections = ShapeCollection::all();
@@ -29,9 +30,10 @@ class ShapeController extends Controller
         $processes = Process::all();
         $designers = Designer::all();
         $requestors = Requestor::all();
+        $images = Image::all();
 
         return view('shape', compact('shapes', 'shapeTypes', 'statuses', 'shapeCollections',
-        'customers', 'itemGroups', 'processes', 'designers', 'requestors'));
+        'customers', 'itemGroups', 'processes', 'designers', 'requestors', 'images'));
     }
 
 

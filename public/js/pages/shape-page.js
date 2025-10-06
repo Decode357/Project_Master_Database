@@ -10,12 +10,12 @@ function shapePage() {
         DeleteShapeModal: false,
         shapeIdToDelete: null,
         shapeToEdit: {},
+        shapeToView: {},
         itemCodeToDelete: '',
 
         openEditModal(shape) {
             this.shapeToEdit = JSON.parse(JSON.stringify(shape)); // clone กัน reactive bug
             this.EditShapeModal = true;
-
             this.$nextTick(() => {
                 let $modal = $('#EditShapeModal');
                 $modal.find('.select2').each(function () {
@@ -48,7 +48,6 @@ function shapePage() {
             this.CreateShapeModal = true;
             // Select2 initialization is handled by create-shape-modal.js
         },
-
         initSelect2() {
             // Initialize any Select2 elements on page load if needed
             $('.select2').select2({

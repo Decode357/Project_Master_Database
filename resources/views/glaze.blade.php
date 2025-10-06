@@ -83,15 +83,16 @@
                                 </td>
                                 <td class="px-6 py-4 ">
                                     <div class="flex justify-end gap-2">
-                                        <button
+                                        <button @click="openDetailModal({{ $glaze->toJson() }})"
                                             class="flex items-center gap-1 px-2 py-1 text-sm font-medium text-white 
-                        bg-blue-500 rounded-lg shadow-sm hover:bg-green-600 hover:shadow-md 
-                        transition-all duration-200 hoverScale">
+                                                bg-blue-500 rounded-lg shadow-sm hover:bg-green-600 hover:shadow-md 
+                                                transition-all duration-200 hoverScale">
                                             <span class="material-symbols-outlined text-white">feature_search</span>
                                             <span>Detail</span>
                                         </button>
 
-                                        <button class="text-blue-600 hoverScale hover:text-blue-700">
+                                        <button @click="openEditModal({{ $glaze->toJson() }})"
+                                            class="text-blue-600 hoverScale hover:text-blue-700">
                                             <span class="material-symbols-outlined">edit</span>
                                         </button>
 
@@ -121,5 +122,7 @@
         {{-- include modal --}}
         @include('components.Delete-modals.delete-glaze')
         @include('components.Create-modals.create-glaze')
+        @include('components.Edit-modals.edit-glaze')
+        @include('components.Detail-modals.detail-glaze')
     </main>
 @endsection

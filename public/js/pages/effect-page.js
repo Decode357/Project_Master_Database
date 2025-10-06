@@ -11,7 +11,11 @@ function effectPage() {
         effectIdToDelete: null,
         effectToEdit: {},
         itemCodeToDelete: '',
-
+        
+        openDetailModal(effect) {
+            this.effectToView = JSON.parse(JSON.stringify(effect)); // clone data
+            this.EffectDetailModal = true;
+        },
         openCreateModal() {
             this.CreateEffectModal = true;
             // Select2 initialization is handled by create-shape-modal.js

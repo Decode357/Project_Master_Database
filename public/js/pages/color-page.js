@@ -11,7 +11,11 @@ function colorPage() {
         colorIdToDelete: null,
         colorToEdit: {},
         itemCodeToDelete: '',
-
+        
+        openDetailModal(color) {
+            this.colorToView = JSON.parse(JSON.stringify(color)); // clone data
+            this.ColorDetailModal = true;
+        },
         openCreateModal() {
             this.CreateColorModal = true;
             // Select2 initialization is handled by create-shape-modal.js
