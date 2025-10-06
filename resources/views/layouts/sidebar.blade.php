@@ -43,6 +43,13 @@
                     <span class="material-symbols-outlined text-lg">home</span>
                     <span>Dashboards</span>
                 </a>
+                
+                <a href="{{ route('product.index') }}"
+                    class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium
+                    {{ request()->routeIs('product.index') ? 'bg-primary-50 text-primary-600 font-semibold scale-110' : 'text-gray-700 hoverScale hover:bg-gray-100' }}">
+                    <span class="material-symbols-outlined text-lg">package_2</span>
+                    <span>Products</span>
+                </a>
 
                 <a href="{{ route('shape.index') }}"
                     class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium

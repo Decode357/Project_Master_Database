@@ -24,6 +24,9 @@ use App\Models\{
     Image,
     GlazeInside,
     GlazeOuter,
+    Product,
+    ProductPrice,
+    ProductCategory,
 };
 
 class DatabaseSeeder extends Seeder
@@ -49,6 +52,18 @@ class DatabaseSeeder extends Seeder
         Backstamp::truncate();
         Pattern::truncate();
         Shape::truncate();
+        ShapeType::truncate();
+        ShapeCollection::truncate();
+        Process::truncate();
+        Status::truncate();
+        Designer::truncate();
+        Image::truncate();
+        GlazeInside::truncate();
+        GlazeOuter::truncate();
+        ItemGroup::truncate();
+        ProductCategory::truncate();
+        Product::truncate();
+        ProductPrice::truncate();
 
         Schema::enableForeignKeyConstraints();
 
@@ -69,11 +84,13 @@ class DatabaseSeeder extends Seeder
             ImageSeeder::class,
             GlazeOuterSeeder::class,
             GlazeInsideSeeder::class,
-            // FK-heavy tables
             BackstampSeeder::class,
             PatternSeeder::class,
             GlazeSeeder::class,
             ShapeSeeder::class,
+            ProductCategorySeeder::class,
+            ProductSeeder::class,
+            ProductPriceSeeder::class,
         ]);
     }
 }

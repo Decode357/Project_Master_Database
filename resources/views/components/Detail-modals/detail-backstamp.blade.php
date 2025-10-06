@@ -201,7 +201,7 @@
                         </div>
 
                         <!-- Relations Section -->
-                        <div class="mb-8">
+                        <div class="mb-1">
                             <h3 class="text-sm font-medium text-blue-600 mb-4 flex items-center border-b pb-2">
                                 <span class="material-symbols-outlined text-sm mr-1">group</span>
                                 Relations

@@ -8,6 +8,7 @@ use App\Http\Controllers\BackstampController;
 use App\Http\Controllers\GlazeController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\EffectController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,6 +43,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/pattern', [PatternController::class, 'patternindex'])->name('pattern.index');
     Route::get('/backstamp', [BackstampController::class, 'backstampindex'])->name('backstamp.index');
     Route::get('/glaze', [GlazeController::class, 'glazeindex'])->name('glaze.index');
+    Route::get('/product', [ProductController::class, 'productindex'])->name('product.index');
+
 
     // เมนูสำหรับ admin และ superadmin
     Route::middleware('role:admin|superadmin')->group(function () {

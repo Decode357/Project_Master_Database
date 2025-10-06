@@ -4,15 +4,18 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Shape;
+use App\Models\Product;
 
-class ShapeSeeder extends Seeder
+class ProductSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Shape::factory(44)->create();
+        // Create 50 products with relationships
+        Product::factory(50)->create();
+
+        $this->command->info('Products created successfully!');
     }
 }
