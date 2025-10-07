@@ -293,6 +293,8 @@
     <script src="{{ asset('js/modals/modal-common.js') }}"></script>
 
     <!-- Create Specific Scripts -->
+    <script src="{{ asset('js/modals/create-product-price-modal.js') }}"></script>
+    <script src="{{ asset('js/modals/create-product-modal.js') }}"></script>
     <script src="{{ asset('js/modals/create-shape-modal.js') }}"></script>
     <script src="{{ asset('js/modals/create-pattern-modal.js') }}"></script>
     <script src="{{ asset('js/modals/create-backstamp-modal.js') }}"></script>
@@ -301,6 +303,8 @@
     <script src="{{ asset('js/modals/create-effect-modal.js') }}"></script>
 
     <!-- Edit Specific Scripts -->
+    <script src="{{ asset('js/modals/edit-product-price-modal.js') }}"></script>
+    <script src="{{ asset('js/modals/edit-product-modal.js') }}"></script>
     <script src="{{ asset('js/modals/edit-pattern-modal.js') }}"></script>
     <script src="{{ asset('js/modals/edit-shape-modal.js') }}"></script>
     <script src="{{ asset('js/modals/edit-backstamp-modal.js') }}"></script>
@@ -309,6 +313,8 @@
     <script src="{{ asset('js/modals/edit-effect-modal.js') }}"></script>
 
     <!-- Page Specific Scripts -->
+    <script src="{{ asset('js/pages/product-page.js') }}"></script>
+    <script src="{{ asset('js/pages/product-price-page.js') }}"></script>
     <script src="{{ asset('js/pages/shape-page.js') }}"></script>
     <script src="{{ asset('js/pages/pattern-page.js') }}"></script>
     <script src="{{ asset('js/pages/backstamp-page.js') }}"></script>

@@ -16,7 +16,7 @@ class ProductController extends Controller
             'status', 'category', 'shape', 'glaze', 'pattern', 
             'backstamp', 'creator', 'updater', 'image'
             ])->orderBy('id', 'desc')->paginate(10);
-            
+
         $statuses = Status::all();
         $categories = ProductCategory::all();
         $shapes = Shape::all();
@@ -28,5 +28,12 @@ class ProductController extends Controller
 
         return view('product', compact('products', 'statuses', 'categories', 'shapes', 'glazes', 
         'patterns', 'backstamps', 'users', 'images'));
+    }
+
+    public function destroyProduct(Product $product)
+    {
+        $product->delete();
+
+        return redirect()->route('product.index')->with('success', 'Product deleted successfully.');
     }
 }

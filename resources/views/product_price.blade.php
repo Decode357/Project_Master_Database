@@ -2,7 +2,7 @@
 @section('title', 'Product Price')
 @section('header', 'Product Price')
 @section('content')
-    <main x-data="shapePage()" x-init="initSelect2()">
+    <main x-data="productPricePage()" x-init="initSelect2()">
         <!-- Filters -->
         <div class="bg-white p-6 rounded-lg shadow-md mb-3">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -68,19 +68,19 @@
                                 <td class="px-6 py-4">
                                     <!-- Action Buttons -->
                                     <div class="flex justify-end gap-2">
-                                        <button @click=""
+                                        <button @click="openDetailModal({{ $productPrice->toJson() }})"
                                             class="flex items-center gap-1 px-2 py-1 text-sm font-medium text-white bg-blue-500 rounded-lg shadow-sm hover:bg-green-600 hover:shadow-md transition-all duration-200 hoverScale">
                                             <span class="material-symbols-outlined text-white">feature_search</span>
                                             <span>Detail</span>
                                         </button>
 
-                                        <button @click=""
+                                        <button @click="openEditModal({{ $productPrice->toJson() }})"
                                             class="text-blue-600 hoverScale hover:text-blue-700">
                                             <span class="material-symbols-outlined">edit</span>
                                         </button>
 
                                         <button
-                                            @click=""
+                                            @click="DeleteProductPriceModal = true; productPriceIdToDelete = {{ $productPrice->id }}; itemCodeToDelete = '{{ $productSKU }}'"
                                             class="text-red-500 hoverScale hover:text-red-700">
                                             <span class="material-symbols-outlined">delete</span>
                                         </button>
@@ -97,9 +97,9 @@
             </div>
         </div>
         <!-- Modals -->
-        {{-- @include('components.Edit-modals.edit-shape')
-        @include('components.Detail-modals.detail-shape')
-        @include('components.Create-modals.create-shape')
-        @include('components.Delete-modals.delete-shape') --}}
+        @include('components.Edit-modals.edit-product-price')
+        @include('components.Detail-modals.detail-product-price')
+        @include('components.Create-modals.create-product-price')
+        @include('components.Delete-modals.delete-product-price')
     </main>
 @endsection

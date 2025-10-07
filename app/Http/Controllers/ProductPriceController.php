@@ -19,4 +19,11 @@ class ProductPriceController extends Controller
 
         return view('product_price', compact('productPrices', 'product', 'users'));
     }
+
+    public function destroyProductPrice(ProductPrice $productPrice)
+    {
+        $productPrice->delete();
+
+        return redirect()->route('product-price.index')->with('success', 'Product Price deleted successfully.');
+    }
 }

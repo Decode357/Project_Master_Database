@@ -72,6 +72,8 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/glaze/{glaze}', [GlazeController::class, 'destroyGlaze'])->name('glaze.destroy')->middleware(['auth', 'permission:delete']);
         Route::delete('/color/{color}', [ColorController::class, 'destroyColor'])->name('color.destroy')->middleware(['auth', 'permission:delete']);
         Route::delete('/effect/{effect}', [EffectController::class, 'destroyEffect'])->name('effect.destroy')->middleware(['auth', 'permission:delete']);
+        Route::delete('/product/{product}', [ProductController::class, 'destroyProduct'])->name('product.destroy')->middleware(['auth', 'permission:delete']);
+        Route::delete('/product-price/{productPrice}', [ProductPriceController::class, 'destroyProductPrice'])->name('product-price.destroy')->middleware(['auth', 'permission:delete']);
     });
 });
 
