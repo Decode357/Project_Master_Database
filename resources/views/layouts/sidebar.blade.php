@@ -89,6 +89,13 @@
                     <hr class="my-2" />
                     <span class="text-center text-sm text-gray-400">Admin console</span>
 
+                    <a href="{{ route('product.price.index') }}"
+                        class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium
+                    {{ request()->routeIs('product.price.index') ? 'bg-primary-50 text-primary-600 font-semibold scale-110' : 'text-gray-700 hoverScale hover:bg-gray-100' }}">
+                        <span class="material-symbols-outlined text-lg">paid</span>
+                        <span>Product Price</span>
+                    </a>
+
                     <a href="{{ route('user') }}"
                         class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium
                     {{ request()->routeIs('user') ? 'bg-primary-50 text-primary-600 font-semibold scale-110' : 'text-gray-700 hoverScale hover:bg-gray-100' }}">

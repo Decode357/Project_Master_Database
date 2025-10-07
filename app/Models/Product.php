@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\{
     Status, ProductCategory, Shape, 
     Glaze, Pattern, Backstamp, 
-    User, ProductPrice
+    User, ProductPrice, Image
 };
 
 class Product extends Model
@@ -25,6 +25,7 @@ class Product extends Model
         'backstamp_id',
         'created_by',
         'updated_by',
+        'image_id',
     ];
 
     protected $casts = [
@@ -36,6 +37,7 @@ class Product extends Model
         'backstamp_id' => 'integer',
         'created_by' => 'integer',
         'updated_by' => 'integer',
+        'image_id' => 'integer',
     ];
 
     // Relationships
@@ -82,6 +84,12 @@ class Product extends Model
     public function prices()
     {
         return $this->hasMany(ProductPrice::class, 'product_id');
+    }
+
+
+    public function image()
+    {
+        return $this->belongsTo(Image::class, 'image_id');
     }
 
     public function currentPrice()

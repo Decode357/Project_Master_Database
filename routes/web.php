@@ -9,6 +9,7 @@ use App\Http\Controllers\GlazeController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\EffectController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductPriceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,6 +50,7 @@ Route::middleware(['auth'])->group(function () {
     // เมนูสำหรับ admin และ superadmin
     Route::middleware('role:admin|superadmin')->group(function () {
         // เมนูสำหรับแสดงข้อมูล
+        Route::get('/product-price', [ProductPriceController::class, 'productPriceIndex'])->name('product.price.index');
         Route::get('/color', [ColorController::class, 'colorindex'])->name('color.index');
         Route::get('/effect', [EffectController::class, 'effectindex'])->name('effect.index');
         Route::get('/csv-import', [PageController::class, 'csvImport'])->name('csvImport')->middleware(['auth', 'role:admin|superadmin', 'permission:file import']);

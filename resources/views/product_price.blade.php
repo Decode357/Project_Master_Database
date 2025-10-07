@@ -1,6 +1,6 @@
 @extends('layouts.sidebar')
-@section('title', 'Product')
-@section('header', 'Product')
+@section('title', 'Product Price')
+@section('header', 'Product Price')
 @section('content')
     <main x-data="shapePage()" x-init="initSelect2()">
         <!-- Filters -->
@@ -32,11 +32,11 @@
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 ProductSKU</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Name</th>
+                                Price Tier</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Category</th>
+                                Currency</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Status</th>
+                                Effective Date</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 UPDATED BY</th>
                             <th class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -45,36 +45,26 @@
                     </thead>
                     <!-- Table Body -->
                     <tbody class="bg-white divide-y divide-gray-200">
-                        @forelse ($products as $product)
+                        @foreach ($productPrices as $productPrice)
                             @php
-                                $statusText = $product->status->status ?? 'Unknown';
-                                $productSKU = $product->product_sku ?? 'N/A';
-                                $productName = $product->product_name ?? 'N/A';
-                                $productCategory = $product->category->category_name ?? 'N/A';
-                                $statusColor = match ($statusText) {
-                                    'Approved' => 'bg-green-100 text-green-800',
-                                    'Pending' => 'bg-yellow-100 text-yellow-800',
-                                    'Rejected' => 'bg-red-100 text-red-800',
-                                    default => 'bg-gray-100 text-gray-800',
-                                };
+                                $statusText = $productPrice->status->status ?? 'Unknown';
+                                $productSKU = $productPrice->product->product_sku ?? 'N/A';
+                                $priceTier = $productPrice->price_tier?? 'N/A';
+                                $currency = $productPrice->currency ?? 'N/A';
+                                $effectiveDate = $productPrice->effective_date ?? 'N/A';
+                                $updatedBy = $productPrice->updater->name ?? 'N/A';
                             @endphp
-                            <!-- Table Row -->
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-6 py-4  text-gray-900">
+                            <tr>
+                                <td class="px-6 py-4 ">
                                     {{ $productSKU }}</td>
-                                <td class="px-6 py-4  text-gray-900">
-                                    {{ $productName }}</td>
-                                <td class="px-6 py-4  text-gray-900">
-                                    {{ $productCategory }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span
-                                        class="inline-flex px-2 text-xs font-semibold leading-5 rounded-full {{ $statusColor }}">
-                                        {{ $statusText }}
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4  text-gray-900">
-                                    {{ $product->updater->name ?? 'N/A' }}
-                                </td>
+                                <td class="px-6 py-4 ">
+                                    {{ $priceTier }}</td>
+                                <td class="px-6 py-4 ">
+                                    {{ $currency }}</td>
+                                <td class="px-6 py-4 ">
+                                    {{ $effectiveDate }}</td>
+                                <td class="px-6 py-4 ">
+                                    {{ $updatedBy }}</td>
                                 <td class="px-6 py-4">
                                     <!-- Action Buttons -->
                                     <div class="flex justify-end gap-2">
@@ -97,19 +87,12 @@
                                     </div>
                                 </td>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="6" class="px-6 py-4 text-sm text-gray-500 text-center">
-                                    No products found.
-                                </td>
-                            </tr>
-                        @endforelse
-
+                        @endforeach
                     </tbody>
                 </table>
                 <!-- Pagination -->
                 <div class="mt-4 flex justify-end">
-                    {{ $products->links('vendor.pagination.tailwind-custom') }}
+                    {{ $productPrices->links('vendor.pagination.tailwind-custom') }}
                 </div>
             </div>
         </div>

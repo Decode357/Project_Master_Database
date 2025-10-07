@@ -24,6 +24,7 @@ return new class extends Migration
             $table->unsignedBigInteger('backstamp_id')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
+            $table->unsignedBigInteger('image_id')->nullable();
 
             $table->timestamps();
 
@@ -36,6 +37,7 @@ return new class extends Migration
             $table->foreign('backstamp_id')->references('id')->on('backstamps')->onDelete('set null');
             $table->foreign('created_by')->references('id')->on('users')->onDelete('set null');
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('image_id')->references('id')->on('images')->onDelete('set null');
         });
     }
 

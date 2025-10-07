@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\{Product, Status, ProductCategory, Shape, Glaze, Pattern, Backstamp, User};
+use App\Models\{Product, Status, ProductCategory, Shape, Glaze, Pattern, Backstamp, User, Image};
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
@@ -35,6 +35,7 @@ class ProductFactory extends Factory
             'backstamp_id' => Backstamp::inRandomOrder()->first()?->id ?? null,
             'created_by' => User::inRandomOrder()->first()?->id ?? 1,
             'updated_by' => User::inRandomOrder()->first()?->id ?? 1,
+            'image_id' => Image::inRandomOrder()->first()?->id ?? null,
         ];
     }
 }
