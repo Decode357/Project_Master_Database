@@ -61,8 +61,9 @@
                                     {{ $priceTier }}</td>
                                 <td class="px-6 py-4 ">
                                     {{ $currency }}</td>
-                                <td class="px-6 py-4 ">
-                                    {{ $effectiveDate }}</td>
+                                <td class="px-6 py-4">
+                                    {{ $effectiveDate ? \Carbon\Carbon::parse($effectiveDate)->locale('th')->translatedFormat('d/m/Y') : '-' }}
+                                </td>
                                 <td class="px-6 py-4 ">
                                     {{ $updatedBy }}</td>
                                 <td class="px-6 py-4">

@@ -6,15 +6,21 @@ use Illuminate\Http\Request;
 use App\Models\{
     Product, Status, ProductCategory, 
     Shape, Glaze, Pattern, Backstamp, 
-    User, Image};
+    User, Image, GlazeOuter, GlazeInside, 
+    Effect, Color
+};
 
 class ProductController extends Controller
 {
     public function productindex()
     {
         $products = Product::with([
-            'status', 'category', 'shape', 'glaze', 'pattern', 
-            'backstamp', 'creator', 'updater', 'image'
+            'status', 'category', 'shape', 'glaze', 'pattern', 'glaze.status',
+            'glaze.glazeOuter', 'glaze.glazeInside', 'glaze.effect',
+            'glaze.effect.colors',
+            'glaze.glazeInside.colors',
+            'glaze.glazeOuter.colors',
+            'backstamp', 'creator', 'updater', 'image',
             ])->orderBy('id', 'desc')->paginate(10);
 
         $statuses = Status::all();

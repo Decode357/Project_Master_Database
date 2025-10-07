@@ -5,7 +5,7 @@
     <main class="flex-1 bg-gray-50" x-data="effectPage()" x-init="initSelect2()">
 
         <!-- Filters -->
-        <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+        <div class="bg-white p-6 rounded-lg shadow-md mb-3">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <!-- Search -->
                 <div class="md:col-span-1">
@@ -27,7 +27,7 @@
         </div>
 
         <!-- Table -->
-        <div class="bg-white p-6 rounded-lg shadow-md overflow-x-auto">
+        <div class="bg-white p-3 rounded-xl shadow-md overflow-x-auto">
             <table class="w-full text-sm text-left text-gray-600">
                 <thead class="text-xs text-gray-500 uppercase bg-gray-50">
                     <tr>

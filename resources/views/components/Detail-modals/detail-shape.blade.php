@@ -168,6 +168,23 @@
                                     <p class="text-gray-900 break-words overflow-wrap-anywhere hyphens-auto" 
                                        x-text="shapeToView?.item_description_eng || '-'"></p>
                                 </div>
+                                <!-- Last Updated Info -->
+                                <div class="bg-gray-50 rounded-lg p-4 sm:col-span-3">
+                                    <h4 class="font-semibold text-gray-700 mb-3 flex items-center">
+                                        <span class="material-symbols-outlined mr-2">history</span>
+                                        Update Information
+                                    </h4>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                                        <div>
+                                            <p class="text-gray-600">Last Updated By:</p>
+                                            <p class="font-medium break-words" x-text="shapeToView?.updater?.name || 'System'"></p>
+                                        </div>
+                                        <div>
+                                            <p class="text-gray-600">Updated At:</p>
+                                            <p class="font-medium" x-text="shapeToView?.updated_at ? new Date(shapeToView.updated_at).toLocaleString('th-TH') : '-'"></p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -307,24 +324,6 @@
                                         <span class="font-semibold text-gray-700">Requestor</span>
                                     </div>
                                     <p class="text-lg font-medium text-red-800 break-words" x-text="shapeToView?.requestor?.name || '-'"></p>
-                                </div>
-                            </div>
-
-                            <!-- Last Updated Info -->
-                            <div class="bg-gray-50 rounded-lg p-4">
-                                <h4 class="font-semibold text-gray-700 mb-3 flex items-center">
-                                    <span class="material-symbols-outlined mr-2">history</span>
-                                    Update Information
-                                </h4>
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                                    <div>
-                                        <p class="text-gray-600">Last Updated By:</p>
-                                        <p class="font-medium break-words" x-text="shapeToView?.updater?.name || 'System'"></p>
-                                    </div>
-                                    <div>
-                                        <p class="text-gray-600">Updated At:</p>
-                                        <p class="font-medium" x-text="shapeToView?.updated_at ? new Date(shapeToView.updated_at).toLocaleString('th-TH') : '-'"></p>
-                                    </div>
                                 </div>
                             </div>
                         </div>
