@@ -2,7 +2,7 @@
  * Create Shape Modal Functions
  */
 
-function submitCreateForm() {
+function submitShapeForm() {
     this.loading = true;
     this.errors = {};
 

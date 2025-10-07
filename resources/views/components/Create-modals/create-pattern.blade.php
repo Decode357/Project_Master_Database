@@ -7,7 +7,12 @@
     <div class="bg-white rounded-lg shadow-lg w-full max-w-2xl p-6 overflow-y-auto max-h-[90vh]">
         <h2 class="text-xl font-semibold mb-4">Create Pattern</h2>
         <hr class="mb-3">
-        <form class="space-y-4">Pattern
+        <form @submit.prevent="submitPatternForm" class="space-y-4" 
+              x-data="{
+                  errors: {},
+                  loading: false
+              }">
+            @csrf
             <!--form content-->
 
 

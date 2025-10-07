@@ -10,7 +10,7 @@
          <h2 class="text-xl font-semibold mb-4">Create Shape</h2>
         <hr class="mb-3">
 
-        <form @submit.prevent="submitCreateForm" class="space-y-4" 
+        <form @submit.prevent="submitShapeForm" class="space-y-4" 
               x-data="{
                   errors: {},
                   loading: false

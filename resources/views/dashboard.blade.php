@@ -4,7 +4,11 @@
 @section('content')
 <main class="flex-1 bg-gray-50" x-data="{ CreateEffectModal: false, DeleteModal: false }">
     <!-- Summary Bar -->
-    <div class="grid grid-cols-3 md:grid-cols-5 gap-4 mb-6">
+    <div class="grid grid-cols-3 md:grid-cols-6 gap-4 mb-6">
+        <div class="bg-white rounded-lg shadow p-4 flex flex-col items-center">
+            <span class="text-2xl font-bold text-green-500">{{ $productCount }}</span>
+            <span class="text-xs text-gray-500 mt-1 uppercase tracking-wider">Products</span>
+        </div>
         <div class="bg-white rounded-lg shadow p-4 flex flex-col items-center">
             <span class="text-2xl font-bold text-blue-600">{{ $shapeCount }}</span>
             <span class="text-xs text-gray-500 mt-1 uppercase tracking-wider">Shapes</span>
@@ -22,11 +26,48 @@
             <span class="text-xs text-gray-500 mt-1 uppercase tracking-wider">Glazes</span>
         </div>
         <div class="bg-white rounded-lg shadow p-4 flex flex-col items-center">
-            <span class="text-2xl font-bold text-purple-600">{{ $userCount }}</span>
+            <span class="text-2xl font-bold text-purple-800">{{ $userCount }}</span>
             <span class="text-xs text-gray-500 mt-1 uppercase tracking-wider">Users</span>
         </div>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <!-- Latest Products -->
+        <div class="bg-white p-6 rounded-lg shadow-md md:col-span-2 overflow-x-auto">
+            <h2 class="text-lg font-semibold mb-4">Latest Products</h2>
+            <table class="w-full text-sm text-left text-gray-600 ">
+                <thead class="text-xs text-gray-500 uppercase bg-gray-50">
+                    <tr>
+                        <th class="px-4 py-2">Product SKU</th>
+                        <th class="px-4 py-2">Name</th>
+                        <th class="px-4 py-2 hidden md:table-cell">Shape</th>
+                        <th class="px-4 py-2 hidden md:table-cell">Pattern</th>
+                        <th class="px-4 py-2 hidden md:table-cell">Backstamp</th>
+                        <th class="px-4 py-2 hidden md:table-cell">Glaze</th>
+                        <th class="px-4 py-2">Updated By</th>
+                        <th class="px-4 py-2 text-end">Updated At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($latestProducts as $product)
+                        <tr class="border-b">
+                            <td class="px-4 py-2">{{ $product->product_sku }}</td>
+                            <td class="px-4 py-2">{{ Str::limit($product->product_name ?? '-', 20) }}</td>
+                            <td class="px-4 py-2 hidden md:table-cell">{{ $product->shape->item_code ?? '-' }}</td>
+                            <td class="px-4 py-2 hidden md:table-cell">{{ $product->pattern->pattern_code ?? '-' }}</td>
+                            <td class="px-4 py-2 hidden md:table-cell">{{ $product->backstamp->backstamp_code ?? '-' }}</td>
+                            <td class="px-4 py-2 hidden md:table-cell">{{ $product->glaze->glaze_code ?? '-' }}</td>
+                            <td class="px-4 py-2">{{ $product->updater->name ?? 'System' }}</td>
+                            <td class="px-4 py-2 text-end">{{ $product->updated_at->format('d/m/Y H:i') }}</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="8" class="px-4 py-2 text-center text-gray-400">No data</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+
         <!-- Latest Shapes -->
         <div class="bg-white p-6 rounded-lg shadow-md">
             <h2 class="text-lg font-semibold mb-4">Latest Shapes</h2>
@@ -36,7 +77,7 @@
                         <th class="px-4 py-2">Item Code</th>
                         <th class="px-4 py-2">Description</th>
                         <th class="px-4 py-2">Updated By</th>
-                        <th class="px-4 py-2">Updated At</th>
+                        <th class="px-4 py-2 text-end">Updated At</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,7 +86,7 @@
                             <td class="px-4 py-2">{{ $shape->item_code }}</td>
                             <td class="px-4 py-2">{{ Str::limit($shape->item_description_eng ?? '-',20) }}</td>
                             <td class="px-4 py-2">{{ $shape->updater->name ?? 'System' }}</td>
-                            <td class="px-4 py-2">{{ $shape->updated_at->format('d/m/Y H:i') }}</td>
+                            <td class="px-4 py-2 text-end">{{ $shape->updated_at->format('d/m/Y H:i') }}</td>
                         </tr>
                     @empty
                         <tr><td colspan="4" class="px-4 py-2 text-center text-gray-400">No data</td></tr>
@@ -62,7 +103,7 @@
                         <th class="px-4 py-2">Pattern Code</th>
                         <th class="px-4 py-2">Name</th>
                         <th class="px-4 py-2">Updated By</th>
-                        <th class="px-4 py-2">Updated At</th>
+                        <th class="px-4 py-2 text-end">Updated At</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -71,7 +112,7 @@
                             <td class="px-4 py-2">{{ $pattern->pattern_code }}</td>
                             <td class="px-4 py-2">{{ $pattern->pattern_name }}</td>
                             <td class="px-4 py-2">{{ $pattern->updater->name ?? 'System' }}</td>
-                            <td class="px-4 py-2">{{ $pattern->updated_at->format('d/m/Y H:i') }}</td>
+                            <td class="px-4 py-2 text-end">{{ $pattern->updated_at->format('d/m/Y H:i') }}</td>
                         </tr>
                     @empty
                         <tr><td colspan="4" class="px-4 py-2 text-center text-gray-400">No data</td></tr>
@@ -88,7 +129,7 @@
                         <th class="px-4 py-2">Backstamp Code</th>
                         <th class="px-4 py-2">Name</th>
                         <th class="px-4 py-2">Updated By</th>
-                        <th class="px-4 py-2">Updated At</th>
+                        <th class="px-4 py-2 text-end">Updated At</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -97,7 +138,7 @@
                             <td class="px-4 py-2">{{ $backstamp->backstamp_code }}</td>
                             <td class="px-4 py-2">{{ $backstamp->name }}</td>
                             <td class="px-4 py-2">{{ $backstamp->updater->name ?? 'System' }}</td>
-                            <td class="px-4 py-2">{{ $backstamp->updated_at->format('d/m/Y H:i') }}</td>
+                            <td class="px-4 py-2 text-end">{{ $backstamp->updated_at->format('d/m/Y H:i') }}</td>
                         </tr>
                     @empty
                         <tr><td colspan="4" class="px-4 py-2 text-center text-gray-400">No data</td></tr>
@@ -115,7 +156,7 @@
                         <th class="px-4 py-2">Glaze Inside</th>
                         <th class="px-4 py-2">Glaze Outside</th>
                         <th class="px-4 py-2">Updated By</th>
-                        <th class="px-4 py-2">Updated At</th>
+                        <th class="px-4 py-2 text-end">Updated At</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -125,7 +166,7 @@
                             <td class="px-4 py-2">{{ $glaze->glazeInside->glaze_inside_code ?? '-' }}</td>
                             <td class="px-4 py-2">{{ $glaze->glazeOuter->glaze_outer_code ?? '-' }}</td>
                             <td class="px-4 py-2">{{ $glaze->updater->name ?? 'System' }}</td>
-                            <td class="px-4 py-2">{{ $glaze->updated_at->format('d/m/Y H:i') }}</td>
+                            <td class="px-4 py-2 text-end">{{ $glaze->updated_at->format('d/m/Y H:i') }}</td>
                         </tr>
                     @empty
                         <tr><td colspan="5" class="px-4 py-2 text-center text-gray-400">No data</td></tr>

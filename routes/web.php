@@ -46,7 +46,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/glaze', [GlazeController::class, 'glazeindex'])->name('glaze.index');
     Route::get('/product', [ProductController::class, 'productindex'])->name('product.index');
 
-
     // เมนูสำหรับ admin และ superadmin
     Route::middleware('role:admin|superadmin')->group(function () {
         // เมนูสำหรับแสดงข้อมูล
@@ -59,11 +58,25 @@ Route::middleware(['auth'])->group(function () {
         // เมนูสำหรับเก็บข้อมูล 
         Route::post('/user', [PageController::class, 'storeUser'])->name('user.store')->middleware(['auth', 'role:admin|superadmin', 'permission:manage users']);
         Route::post('/shape', [ShapeController::class, 'storeShape'])->name('shape.store')->middleware(['auth', 'role:admin|superadmin', 'permission:create']);
+        Route::post('/pattern', [PatternController::class, 'storePattern'])->name('pattern.store')->middleware(['auth', 'role:admin|superadmin', 'permission:create']);
+        Route::post('/backstamp', [BackstampController::class, 'storeBackstamp'])->name('backstamp.store')->middleware(['auth', 'role:admin|superadmin', 'permission:create']);
+        Route::post('/glaze', [GlazeController::class, 'storeGlaze'])->name('glaze.store')->middleware(['auth', 'role:admin|superadmin', 'permission:create']);
+        Route::post('/color', [ColorController::class, 'storeColor'])->name('color.store')->middleware(['auth', 'role:admin|superadmin', 'permission:create']);
+        Route::post('/effect', [EffectController::class, 'storeEffect'])->name('effect.store')->middleware(['auth', 'role:admin|superadmin', 'permission:create']);
+        Route::post('/product', [ProductController::class, 'storeProduct'])->name('product.store')->middleware(['auth', 'role:admin|superadmin', 'permission:create']);
+        Route::post('/product-price', [ProductPriceController::class, 'storeProductPrice'])->name('product-price.store')->middleware(['auth', 'role:admin|superadmin', 'permission:create']);
 
         // เมนูสำหรับแก้ไขข้อมูล
         Route::put('/user/{user}', [PageController::class, 'updateUser'])->name('user.update')->middleware(['auth', 'permission:manage users']);
         Route::put('/shape/{shape}', [ShapeController::class, 'updateShape'])->name('shape.update')->middleware(['auth', 'permission:edit']);
-
+        Route::put('/pattern/{pattern}', [PatternController::class, 'updatePattern'])->name('pattern.update')->middleware(['auth', 'permission:edit']);
+        Route::put('/backstamp/{backstamp}', [BackstampController::class, 'updateBackstamp'])->name('backstamp.update')->middleware(['auth', 'permission:edit']);
+        Route::put('/glaze/{glaze}', [GlazeController::class, 'updateGlaze'])->name('glaze.update')->middleware(['auth', 'permission:edit']);
+        Route::put('/color/{color}', [ColorController::class, 'updateColor'])->name('color.update')->middleware(['auth', 'permission:edit']);
+        Route::put('/effect/{effect}', [EffectController::class, 'updateEffect'])->name('effect.update')->middleware(['auth', 'permission:edit']);
+        Route::put('/product/{product}', [ProductController::class, 'updateProduct'])->name('product.update')->middleware(['auth', 'permission:edit']); 
+        Route::put('/product-price/{productPrice}', [ProductPriceController::class, 'updateProductPrice'])->name('product-price.update')->middleware(['auth', 'permission:edit']);  
+        
         // เมนูสำหรับลบข้อมูล
         Route::delete('/user/{user}', [PageController::class, 'destroyUser'])->name('user.destroy')->middleware(['auth', 'permission:manage users']);
         Route::delete('/shape/{shape}', [ShapeController::class, 'destroyShape'])->name('shape.destroy')->middleware(['auth', 'permission:delete']);
@@ -76,7 +89,6 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/product-price/{productPrice}', [ProductPriceController::class, 'destroyProductPrice'])->name('product-price.destroy')->middleware(['auth', 'permission:delete']);
     });
 });
-
 
 // route สำหรับ auth (login/register/logout)
 require __DIR__ . '/auth.php';

@@ -14,7 +14,7 @@ use App\Models\{
     ShapeType,Status,Process,
     GlazeOuter,GlazeInside,
     ItemGroup,Designer,ShapeCollection,
-    Image
+    Image,Product,ProductCategory
 };
 
 
@@ -41,6 +41,10 @@ class PageController extends Controller
             ->orderBy('updated_at', 'desc')
             ->take(5)
             ->get();
+        $latestProducts = Product::with(['updater'])
+            ->orderBy('updated_at', 'desc')
+            ->take(5)
+            ->get();
 
         // เพิ่ม count ของแต่ละ table
         $shapeCount = Shape::count();
@@ -48,6 +52,7 @@ class PageController extends Controller
         $backstampCount = Backstamp::count();
         $glazeCount = Glaze::count();
         $userCount = User::count();
+        $productCount = Product::count();
 
         return view('dashboard', compact(
             'latestShapes',
@@ -58,7 +63,9 @@ class PageController extends Controller
             'patternCount',
             'backstampCount',
             'glazeCount',
-            'userCount'
+            'userCount',
+            'latestProducts',
+            'productCount'
         ));
     }
 
