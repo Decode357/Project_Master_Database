@@ -91,6 +91,7 @@
                         @foreach ($shapes as $shape)
                             <option value="{{ $shape->id }}">
                                 {{ $shape->item_code }}
+                                <p>{{ $shape->item_description_thai }}</p>
                             </option>
                         @endforeach
                     </select>
@@ -121,6 +122,7 @@
                         @foreach ($patterns as $pattern)
                             <option value="{{ $pattern->id }}">
                                 {{ $pattern->pattern_code }}
+                                <p>{{$pattern->pattern_name}}</p>
                             </option>
                         @endforeach
                     </select>
@@ -137,6 +139,7 @@
                         @foreach ($backstamps as $backstamp)
                             <option value="{{ $backstamp->id }}">
                                 {{ $backstamp->backstamp_code }}
+                                <p>{{ $backstamp->name }}</p>
                             </option>
                         @endforeach
                     </select>

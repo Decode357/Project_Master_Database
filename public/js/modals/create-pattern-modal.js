@@ -8,15 +8,18 @@ function submitPatternForm() {
 
     const formData = new FormData();
     formData.append('_token', getCSRFToken());
-    
-    // Get form element
+
     const form = document.querySelector('#CreatePatternModal form');
     const formElements = form.elements;
     
-    // Add all form fields to FormData
     for (let element of formElements) {
-        if (element.name && element.type !== 'submit') {
-            formData.append(element.name, element.value || '');
+        if (!element.name || element.type === 'submit') continue;
+
+        if (element.type === 'checkbox') {
+            // ส่งค่า "1" ถ้าเลือก, "0" ถ้าไม่เลือก
+            formData.set(element.name, element.checked ? "1" : "0");
+        } else {
+            formData.set(element.name, element.value || '');
         }
     }
 
@@ -82,4 +85,4 @@ function initCreatePatternModal() {
 document.addEventListener('DOMContentLoaded', initCreatePatternModal);
 
 // Make functions available globally
-window.submitCreateForm = submitCreateForm;
+window.submitPatternForm = submitPatternForm;

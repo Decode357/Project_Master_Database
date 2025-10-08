@@ -34,7 +34,7 @@
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Price Tier</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Currency</th>
+                                Price</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Effective Date</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -53,14 +53,16 @@
                                 $currency = $productPrice->currency ?? 'N/A';
                                 $effectiveDate = $productPrice->effective_date ?? 'N/A';
                                 $updatedBy = $productPrice->updater->name ?? 'N/A';
+                                $price = number_format($productPrice->price, 2);
                             @endphp
                             <tr>
                                 <td class="px-6 py-4 ">
                                     {{ $productSKU }}</td>
                                 <td class="px-6 py-4 ">
                                     {{ $priceTier }}</td>
-                                <td class="px-6 py-4 ">
-                                    {{ $currency }}</td>
+                                <td class="px-6 py-4">
+                                    {{ $price }} <span class="text-gray-500 text-sm">{{ $currency }}</span>
+                                </td>
                                 <td class="px-6 py-4">
                                     {{ $effectiveDate ? \Carbon\Carbon::parse($effectiveDate)->locale('th')->translatedFormat('d/m/Y') : '-' }}
                                 </td>
