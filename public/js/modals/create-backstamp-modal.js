@@ -2,7 +2,7 @@
  * Create Shape Modal Functions
  */
 
-function submitBackStampForm() {
+function submitBackstampForm() {
     this.loading = true;
     this.errors = {};
 
@@ -10,13 +10,18 @@ function submitBackStampForm() {
     formData.append('_token', getCSRFToken());
     
     // Get form element
-    const form = document.querySelector('#CreateBackStampModal form');
+    const form = document.querySelector('#CreateBackstampModal form');
     const formElements = form.elements;
     
     // Add all form fields to FormData
     for (let element of formElements) {
-        if (element.name && element.type !== 'submit') {
-            formData.append(element.name, element.value || '');
+        if (!element.name || element.type === 'submit') continue;
+
+        if (element.type === 'checkbox') {
+            // ส่งค่า "1" ถ้าเลือก, "0" ถ้าไม่เลือก
+            formData.set(element.name, element.checked ? "1" : "0");
+        } else {
+            formData.set(element.name, element.value || '');
         }
     }
 
@@ -35,12 +40,12 @@ function submitBackStampForm() {
     })
     .then(data => {
         // Success
-        this.CreateBackStampModal = false;
+        this.CreateBackstampModal = false;
         this.errors = {};
         
         // Reset form
         form.reset();
-        resetSelect2('#CreateBackStampModal');
+        resetSelect2('#CreateBackstampModal');
 
         window.location.reload();
     })
@@ -52,24 +57,24 @@ function submitBackStampForm() {
     });
 }
 
-// Initialize Create BackStamp Modal
-function initCreateBackStampModal() {
+// Initialize Create Backstamp Modal
+function initCreateBackstampModal() {
     // Observer สำหรับดูการเปลี่ยนแปลงของ modal
     const observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
             if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-                const modal = document.getElementById('CreateBackStampModal');
+                const modal = document.getElementById('CreateBackstampModal');
                 if (modal && modal.style.display !== 'none') {
                     // Modal เปิด - initialize Select2
                     setTimeout(() => {
-                        initializeSelect2('#CreateBackStampModal');
+                        initializeSelect2('#CreateBackstampModal');
                     }, 100);
                 }
             }
         });
     });
 
-    const modal = document.getElementById('CreateBackStampModal');
+    const modal = document.getElementById('CreateBackstampModal');
     if (modal) {
         observer.observe(modal, {
             attributes: true,
@@ -79,7 +84,7 @@ function initCreateBackStampModal() {
 }
 
 // Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', initCreateBackStampModal);
+document.addEventListener('DOMContentLoaded', initCreateBackstampModal);
 
 // Make functions available globally
-window.submitCreateForm = submitCreateForm;
+window.submitBackstampForm = submitBackstampForm;

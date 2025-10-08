@@ -127,17 +127,17 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div class="flex items-center">
 
-                        <input name="in_glaze" type="checkbox" id="in_glaze" value="1">
+                        <input name="in_glaze" type="checkbox" id="in_glaze" value="1" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                         <label for="in_glaze" class="ml-2 text-sm text-gray-700">In Glaze</label>
                     </div>
                     <div class="flex items-center">
-           
-                        <input name="on_glaze" type="checkbox" id="on_glaze" value="1">
+
+                        <input name="on_glaze" type="checkbox" id="on_glaze" value="1" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                         <label for="on_glaze" class="ml-2 text-sm text-gray-700">On Glaze</label>
                     </div>
                     <div class="flex items-center">
-                 
-                        <input name="under_glaze" type="checkbox" id="under_glaze" value="1">
+
+                        <input name="under_glaze" type="checkbox" id="under_glaze" value="1" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                         <label for="under_glaze" class="ml-2 text-sm text-gray-700">Under Glaze</label>
                     </div>
                 </div>

@@ -82,4 +82,4 @@ function initCreateEffectModal() {
 document.addEventListener('DOMContentLoaded', initCreateEffectModal);
 
 // Make functions available globally
-window.submitCreateForm = submitCreateForm;
+window.submitEffectForm = submitEffectForm;

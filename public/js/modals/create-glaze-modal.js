@@ -82,4 +82,4 @@ function initCreateGlazeModal() {
 document.addEventListener('DOMContentLoaded', initCreateGlazeModal);
 
 // Make functions available globally
-window.submitCreateForm = submitCreateForm;
+window.submitGlazeForm = submitGlazeForm;

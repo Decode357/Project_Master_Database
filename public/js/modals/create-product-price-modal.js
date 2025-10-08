@@ -81,4 +81,4 @@ function initCreateProductPriceModal() {
 document.addEventListener('DOMContentLoaded', initCreateProductPriceModal);
 
 // Make functions available globally
-window.submitCreateForm = submitCreateForm;
+window.submitProductPriceForm = submitProductPriceForm;

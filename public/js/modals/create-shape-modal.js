@@ -82,4 +82,4 @@ function initCreateShapeModal() {
 document.addEventListener('DOMContentLoaded', initCreateShapeModal);
 
 // Make functions available globally
-window.submitCreateForm = submitCreateForm;
+window.submitShapeForm = submitShapeForm;

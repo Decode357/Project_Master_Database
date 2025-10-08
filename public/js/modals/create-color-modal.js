@@ -82,4 +82,4 @@ function initCreateColorModal() {
 document.addEventListener('DOMContentLoaded', initCreateColorModal);
 
 // Make functions available globally
-window.submitCreateForm = submitCreateForm;
+window.submitColorForm = submitColorForm;
