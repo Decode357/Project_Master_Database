@@ -90,7 +90,7 @@
                         <option value="">-</option>
                         @foreach ($shapes as $shape)
                             <option value="{{ $shape->id }}">
-                                {{ $shape->item_code }}
+                                {{ $shape->item_code }} : 
                                 <p>{{ $shape->item_description_thai }}</p>
                             </option>
                         @endforeach
@@ -121,14 +121,13 @@
                         <option value="">-</option>
                         @foreach ($patterns as $pattern)
                             <option value="{{ $pattern->id }}">
-                                {{ $pattern->pattern_code }}
+                                {{ $pattern->pattern_code }} :
                                 <p>{{$pattern->pattern_name}}</p>
                             </option>
                         @endforeach
                     </select>
                     <p x-show="errors.pattern_id" x-text="errors.pattern_id ? (Array.isArray(errors.pattern_id) ? errors.pattern_id[0] : errors.pattern_id) : ''" class="text-red-500 text-xs mt-1"></p>
                 </div>
-
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Backstamp</label>
@@ -138,7 +137,7 @@
                         <option value="">-</option>
                         @foreach ($backstamps as $backstamp)
                             <option value="{{ $backstamp->id }}">
-                                {{ $backstamp->backstamp_code }}
+                                {{ $backstamp->backstamp_code }} : 
                                 <p>{{ $backstamp->name }}</p>
                             </option>
                         @endforeach
@@ -146,8 +145,6 @@
                     <p x-show="errors.backstamp_id" x-text="errors.backstamp_id ? (Array.isArray(errors.backstamp_id) ? errors.backstamp_id[0] : errors.backstamp_id) : ''" class="text-red-500 text-xs mt-1"></p>
                 </div>                
             </div>
-
-
 
             <!-- Buttons -->
             <div class="flex justify-end gap-2 mt-4">

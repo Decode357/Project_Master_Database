@@ -9,8 +9,8 @@ function submitGlazeForm() {
     const formData = new FormData();
     formData.append('_token', getCSRFToken());
     
-        // Get form element
-        const form = document.querySelector('#CreateGlazeModal form');
+    // Get form element
+    const form = document.querySelector('#CreateGlazeModal form');
     const formElements = form.elements;
     
     // Add all form fields to FormData

@@ -2,6 +2,7 @@
 @section('title', 'Effect')
 @section('header', 'Effect')
 @section('content')
+
     <main class="flex-1 bg-gray-50" x-data="colorPage()" x-init="initSelect2()">
 
         <!-- Filters -->
@@ -33,7 +34,7 @@
                         <th class="px-6 py-3">Preview</th>
                         <th class="px-6 py-3">Color Code</th>
                         <th class="px-6 py-3">Color Name</th>
-                        <th class="px-6 py-3">Customer ID</th>
+                        <th class="px-6 py-3">Customer</th>
                         <th class="px-6 py-3 text-right">Actions</th>
                     </tr>
                 </thead>
@@ -46,7 +47,9 @@
                             </td>
                             <td class="px-6 py-4 font-medium text-gray-900">{{ $color->color_code }}</td>
                             <td class="px-6 py-4 font-medium text-gray-900">{{ $color->color_name }}</td>
-                            <td class="px-6 py-4">{{ $color->customer_id }}</td>
+                            <td class="px-6 py-4">
+                                {{ $color->customer ? $color->customer->name : '-' }}
+                            </td>
                             <td class="px-6 py-4 text-right space-x-2">
                                 <button class="text-blue-600 hoverScale hover:text-blue-700">
                                     <span class="material-symbols-outlined">edit</span>

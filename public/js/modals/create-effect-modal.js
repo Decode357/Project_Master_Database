@@ -1,5 +1,5 @@
 /**
- * Create Shape Modal Functions
+ * Create Effect Modal Functions
  */
 
 function submitEffectForm() {
@@ -15,7 +15,18 @@ function submitEffectForm() {
     
     // Add all form fields to FormData
     for (let element of formElements) {
-        if (element.name && element.type !== 'submit') {
+        if (!element.name || element.type === 'submit') continue;
+
+        if (element.name === 'colors[]') {
+            // Handle multiple select for colors
+            const selectedOptions = Array.from(element.selectedOptions);
+            if (selectedOptions.length > 0) {
+                selectedOptions.forEach(option => {
+                    formData.append('colors[]', option.value);
+                });
+            }
+            // If no colors selected, don't append anything (nullable)
+        } else {
             formData.append(element.name, element.value || '');
         }
     }
@@ -69,7 +80,7 @@ function initCreateEffectModal() {
         });
     });
 
-    const modal = document.getElementById('CreateEffect Modal');
+    const modal = document.getElementById('CreateEffectModal'); // แก้ไข typo
     if (modal) {
         observer.observe(modal, {
             attributes: true,

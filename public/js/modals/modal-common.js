@@ -7,14 +7,12 @@
 function initializeSelect2(containerSelector, config = {}) {
     const defaultConfig = {
         width: '100%',
+        closeOnSelect: false,
+        dropdownParent: $(containerSelector), // กำหนด dropdown ให้อยู่ใน modal
     };
-    
+
     const finalConfig = { ...defaultConfig, ...config };
-    
-    if (containerSelector) {
-        finalConfig.dropdownParent = $(containerSelector);
-    }
-    
+
     $(`${containerSelector} .select2`).select2(finalConfig);
 }
 

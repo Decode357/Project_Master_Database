@@ -28,6 +28,11 @@ class Color extends Model
             'glaze_inside_id'
         );
     }
+    
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
 
     public function glazeOuters()
     {   

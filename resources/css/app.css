@@ -1,3 +1,49 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* ปรับ container ของ Select2 */
+.select2-container .select2-selection {
+    @apply  border border-gray-300 rounded-lg py-5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+}
+
+.select2-container .select2-selection {
+    @apply border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+    padding: 0.4rem 0.1rem; /* ปรับ padding ให้พอดี */
+    min-height: 2.5rem; /* ให้สูงพอสำหรับข้อความ */
+}
+
+.select2-container .select2-selection__rendered {
+    @apply text-base;
+    line-height: 1.25rem; /* ปรับให้ข้อความอยู่กึ่งกลาง */
+}
+
+.select2-container .select2-selection__arrow {
+    top: 50%;
+    transform: translateY(30%);
+}
+
+#CreateEffectModal .select2-container .select2-selection {
+    @apply border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+    padding: 0.4rem 0.1rem; /* ปรับ padding ให้พอดี */
+    min-height: 4rem; /* ให้สูงพอสำหรับข้อความ */
+}
+/* ปรับ hover */
+/* .select2-container .select2-selection:hover {
+    @apply border-gray-400;
+} */
+
+/* ปรับเมื่อมี focus */
+/* .select2-container--focus .select2-selection {
+    @apply border-blue-500 ring-2 ring-blue-500;
+} */
+
+/* ปรับ placeholder */
+/* .select2-container .select2-selection__placeholder {
+    @apply text-gray-400;
+} */
+
+/* ปรับ text ของตัวเลือก */
+/* .select2-container .select2-selection__rendered {
+    @apply text-sm;
+} */
+
