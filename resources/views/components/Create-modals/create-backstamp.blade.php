@@ -1,18 +1,14 @@
-<div id="CreateBackstampModal" 
-     x-show="CreateBackstampModal" 
-     x-transition.opacity
-     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" 
-     style="display: none;">
-     
+<div id="CreateBackstampModal" x-show="CreateBackstampModal" x-transition.opacity
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="display: none;">
+
     <div class="bg-white rounded-lg shadow-lg w-full max-w-2xl p-6 overflow-y-auto max-h-[90vh]">
         <h2 class="text-xl font-semibold mb-4">Create Backstamp</h2>
         <hr class="mb-3">
-        
-        <form @submit.prevent="submitBackstampForm" class="space-y-4" 
-              x-data="{
-                  errors: {},
-                  loading: false
-              }">
+
+        <form @submit.prevent="submitBackstampForm" class="space-y-4" x-data="{
+            errors: {},
+            loading: false
+        }">
             @csrf
 
             <!-- Dynamic Error Display Area -->
@@ -32,9 +28,11 @@
                     <input name="backstamp_code" type="text" placeholder="Enter backstamp code"
                         :class="errors.backstamp_code ? 'border-red-500' : 'border-gray-300'"
                         class="mt-1 w-full border rounded-md px-3 py-2 
-                               focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         required />
-                    <p x-show="errors.backstamp_code" x-text="Array.isArray(errors.backstamp_code) ? errors.backstamp_code[0] : errors.backstamp_code" class="text-red-500 text-xs mt-1"></p>
+                    <p x-show="errors.backstamp_code"
+                        x-text="Array.isArray(errors.backstamp_code) ? errors.backstamp_code[0] : errors.backstamp_code"
+                        class="text-red-500 text-xs mt-1"></p>
                 </div>
 
                 <div>
@@ -42,9 +40,10 @@
                     <input name="name" type="text" placeholder="Enter backstamp name"
                         :class="errors.name ? 'border-red-500' : 'border-gray-300'"
                         class="mt-1 w-full border rounded-md px-3 py-2 
-                               focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         required />
-                    <p x-show="errors.name" x-text="Array.isArray(errors.name) ? errors.name[0] : errors.name" class="text-red-500 text-xs mt-1"></p>
+                    <p x-show="errors.name" x-text="Array.isArray(errors.name) ? errors.name[0] : errors.name"
+                        class="text-red-500 text-xs mt-1"></p>
                 </div>
             </div>
 
@@ -52,8 +51,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Customer</label>
-                    <select name="customer_id" 
-                        :class="errors.customer_id ? 'border-red-500' : 'border-gray-300'"
+                    <select name="customer_id" :class="errors.customer_id ? 'border-red-500' : 'border-gray-300'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <option value="">-</option>
                         @foreach ($customers as $customer)
@@ -62,13 +60,14 @@
                             </option>
                         @endforeach
                     </select>
-                    <p x-show="errors.customer_id" x-text="errors.customer_id ? (Array.isArray(errors.customer_id) ? errors.customer_id[0] : errors.customer_id) : ''" class="text-red-500 text-xs mt-1"></p>
+                    <p x-show="errors.customer_id"
+                        x-text="errors.customer_id ? (Array.isArray(errors.customer_id) ? errors.customer_id[0] : errors.customer_id) : ''"
+                        class="text-red-500 text-xs mt-1"></p>
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Requestor</label>
-                    <select name="requestor_id" 
-                        :class="errors.requestor_id ? 'border-red-500' : 'border-gray-300'"
+                    <select name="requestor_id" :class="errors.requestor_id ? 'border-red-500' : 'border-gray-300'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <option value="">-</option>
                         @foreach ($requestors as $requestor)
@@ -77,13 +76,14 @@
                             </option>
                         @endforeach
                     </select>
-                    <p x-show="errors.requestor_id" x-text="errors.requestor_id ? (Array.isArray(errors.requestor_id) ? errors.requestor_id[0] : errors.requestor_id) : ''" class="text-red-500 text-xs mt-1"></p>
+                    <p x-show="errors.requestor_id"
+                        x-text="errors.requestor_id ? (Array.isArray(errors.requestor_id) ? errors.requestor_id[0] : errors.requestor_id) : ''"
+                        class="text-red-500 text-xs mt-1"></p>
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Status</label>
-                    <select name="status_id" 
-                        :class="errors.status_id ? 'border-red-500' : 'border-gray-300'"
+                    <select name="status_id" :class="errors.status_id ? 'border-red-500' : 'border-gray-300'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <option value="">-</option>
                         @foreach ($statuses as $status)
@@ -92,7 +92,9 @@
                             </option>
                         @endforeach
                     </select>
-                    <p x-show="errors.status_id" x-text="errors.status_id ? (Array.isArray(errors.status_id) ? errors.status_id[0] : errors.status_id) : ''" class="text-red-500 text-xs mt-1"></p>
+                    <p x-show="errors.status_id"
+                        x-text="errors.status_id ? (Array.isArray(errors.status_id) ? errors.status_id[0] : errors.status_id) : ''"
+                        class="text-red-500 text-xs mt-1"></p>
                 </div>
             </div>
 
@@ -102,26 +104,32 @@
                 <input name="duration" type="number" placeholder="Enter duration"
                     :class="errors.duration ? 'border-red-500' : 'border-gray-300'"
                     class="mt-1 w-full border rounded-md px-3 py-2 
-                           focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                <p x-show="errors.duration" x-text="errors.duration ? (Array.isArray(errors.duration) ? errors.duration[0] : errors.duration) : ''" class="text-red-500 text-xs mt-1"></p>
+                        focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                <p x-show="errors.duration"
+                    x-text="errors.duration ? (Array.isArray(errors.duration) ? errors.duration[0] : errors.duration) : ''"
+                    class="text-red-500 text-xs mt-1"></p>
             </div>
 
             <!-- Glaze Options -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div class="flex items-center">
-                    <input name="in_glaze" type="checkbox" id="in_glaze" value="1" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                    <input name="in_glaze" type="checkbox" id="in_glaze" value="1"
+                        class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                     <label for="in_glaze" class="ml-2 text-sm text-gray-700">In Glaze</label>
                 </div>
                 <div class="flex items-center">
-                    <input name="on_glaze" type="checkbox" id="on_glaze" value="1" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                    <input name="on_glaze" type="checkbox" id="on_glaze" value="1"
+                        class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                     <label for="on_glaze" class="ml-2 text-sm text-gray-700">On Glaze</label>
                 </div>
                 <div class="flex items-center">
-                    <input name="under_glaze" type="checkbox" id="under_glaze" value="1" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                    <input name="under_glaze" type="checkbox" id="under_glaze" value="1"
+                        class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                     <label for="under_glaze" class="ml-2 text-sm text-gray-700">Under Glaze</label>
                 </div>
                 <div class="flex items-center">
-                    <input name="air_dry" type="checkbox" id="air_dry" value="1" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                    <input name="air_dry" type="checkbox" id="air_dry" value="1"
+                        class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                     <label for="air_dry" class="ml-2 text-sm text-gray-700">Air Dry</label>
                 </div>
             </div>
@@ -133,8 +141,10 @@
                     <input name="approval_date" type="date"
                         :class="errors.approval_date ? 'border-red-500' : 'border-gray-300'"
                         class="mt-1 w-full border rounded-md px-3 py-2 
-                               focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                    <p x-show="errors.approval_date" x-text="errors.approval_date ? (Array.isArray(errors.approval_date) ? errors.approval_date[0] : errors.approval_date) : ''" class="text-red-500 text-xs mt-1"></p>
+                            focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                    <p x-show="errors.approval_date"
+                        x-text="errors.approval_date ? (Array.isArray(errors.approval_date) ? errors.approval_date[0] : errors.approval_date) : ''"
+                        class="text-red-500 text-xs mt-1"></p>
                 </div>
             </div>
             <!-- Buttons -->

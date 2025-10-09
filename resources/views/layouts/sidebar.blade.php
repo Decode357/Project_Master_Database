@@ -321,6 +321,7 @@
     <script src="{{ asset('js/pages/glaze-page.js') }}"></script>
     <script src="{{ asset('js/pages/color-page.js') }}"></script>
     <script src="{{ asset('js/pages/effect-page.js') }}"></script>
+    <script src="{{ asset('js/pages/user-page.js') }}"></script>
 </body>
 
 </html>

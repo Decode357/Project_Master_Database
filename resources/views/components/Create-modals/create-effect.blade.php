@@ -1,18 +1,14 @@
-<div id="CreateEffectModal" 
-     x-show="CreateEffectModal" 
-     x-transition.opacity
-     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" 
-     style="display: none;">
-     
+<div id="CreateEffectModal" x-show="CreateEffectModal" x-transition.opacity
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="display: none;">
+
     <div class="bg-white rounded-lg shadow-lg w-full max-w-2xl p-6 overflow-y-auto max-h-[90vh]">
         <h2 class="text-xl font-semibold mb-4">Create Effect</h2>
         <hr class="mb-3">
-        
-        <form @submit.prevent="submitEffectForm" class="space-y-4" 
-              x-data="{
-                  errors: {},
-                  loading: false
-              }">
+
+        <form @submit.prevent="submitEffectForm" class="space-y-4" x-data="{
+            errors: {},
+            loading: false
+        }">
             @csrf
 
             <!-- Dynamic Error Display Area -->
@@ -33,7 +29,9 @@
                     class="mt-1 w-full border rounded-md px-3 py-2 
                         focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     required />
-                <p x-show="errors.effect_code" x-text="Array.isArray(errors.effect_code) ? errors.effect_code[0] : errors.effect_code" class="text-red-500 text-xs mt-1"></p>
+                <p x-show="errors.effect_code"
+                    x-text="Array.isArray(errors.effect_code) ? errors.effect_code[0] : errors.effect_code"
+                    class="text-red-500 text-xs mt-1"></p>
             </div>
 
             <!-- Effect Name -->
@@ -44,14 +42,16 @@
                     class="mt-1 w-full border rounded-md px-3 py-2 
                         focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     required />
-                <p x-show="errors.effect_name" x-text="Array.isArray(errors.effect_name) ? errors.effect_name[0] : errors.effect_name" class="text-red-500 text-xs mt-1"></p>
+                <p x-show="errors.effect_name"
+                    x-text="Array.isArray(errors.effect_name) ? errors.effect_name[0] : errors.effect_name"
+                    class="text-red-500 text-xs mt-1"></p>
             </div>
 
             <!-- Select Colors -->
             <div>
-                <label class="block text-sm font-medium text-gray-700">Colors <span class="text-sm text-gray-500">(Optional)</span></label>
-                <select name="colors[]" multiple
-                    :class="errors.colors ? 'border-red-500' : 'border-gray-300'"
+                <label class="block text-sm font-medium text-gray-700">Colors <span
+                        class="text-sm text-gray-500">(Optional)</span></label>
+                <select name="colors[]" multiple :class="errors.colors ? 'border-red-500' : 'border-gray-300'"
                     class="select2 w-full mt-1 border rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     data-placeholder="Select colors">
                     @foreach ($colors as $color)
@@ -61,7 +61,8 @@
                     @endforeach
                 </select>
                 <p class="text-gray-500 text-xs mt-1">You can select multiple colors or leave empty</p>
-                <p x-show="errors.colors" x-text="Array.isArray(errors.colors) ? errors.colors[0] : errors.colors" class="text-red-500 text-xs mt-1"></p>
+                <p x-show="errors.colors" x-text="Array.isArray(errors.colors) ? errors.colors[0] : errors.colors"
+                    class="text-red-500 text-xs mt-1"></p>
             </div>
 
             <!-- Buttons -->

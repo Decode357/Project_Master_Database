@@ -57,7 +57,7 @@
             <div class="flex flex-row gap-4">
                 <div class="flex-1">
                     <label class="block text-sm font-medium mb-1">Department</label>
-                    <select x-model="userToEdit.department_id" class="w-full border rounded px-2 py-1">
+                    <select x-model="userToEdit.department_id" class="select2 w-full border rounded px-2 py-1">
                         <option value="">-</option>
                         @foreach ($departments as $dep)
                             <option value="{{ $dep->id }}">{{ $dep->name }}</option>
@@ -68,7 +68,7 @@
 
                 <div class="flex-1">
                     <label class="block text-sm font-medium mb-1">Requestor</label>
-                    <select x-model="userToEdit.requestor_id" class="w-full border rounded px-2 py-1">
+                    <select x-model="userToEdit.requestor_id" class="select2 w-full border rounded px-2 py-1">
                         <option value="">-</option>
                         @foreach ($requestors as $req)
                             <option value="{{ $req->id }}">{{ $req->name }}</option>
@@ -79,7 +79,7 @@
 
                 <div class="flex-1">
                     <label class="block text-sm font-medium mb-1">Customer</label>
-                    <select x-model="userToEdit.customer_id" class="w-full border rounded px-2 py-1">
+                    <select x-model="userToEdit.customer_id" class="select2 w-full border rounded px-2 py-1">
                         <option value="">-</option>
                         @foreach ($customers as $cust)
                             <option value="{{ $cust->id }}">{{ $cust->name }}</option>

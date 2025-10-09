@@ -1,18 +1,14 @@
-<div id="CreateProductPriceModal" 
-     x-show="CreateProductPriceModal" 
-     x-transition.opacity
-     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" 
-     style="display: none;">
-     
+<div id="CreateProductPriceModal" x-show="CreateProductPriceModal" x-transition.opacity
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="display: none;">
+
     <div class="bg-white rounded-lg shadow-lg w-full max-w-2xl p-6 overflow-y-auto max-h-[90vh]">
         <h2 class="text-xl font-semibold mb-4">Create Product Price</h2>
         <hr class="mb-3">
-        
-        <form @submit.prevent="submitProductPriceForm" class="space-y-4" 
-              x-data="{
-                  errors: {},
-                  loading: false
-              }">
+
+        <form @submit.prevent="submitProductPriceForm" class="space-y-4" x-data="{
+            errors: {},
+            loading: false
+        }">
             @csrf
 
             <!-- Dynamic Error Display Area -->
@@ -28,8 +24,7 @@
             <!-- Product -->
             <div>
                 <label class="block text-sm font-medium text-gray-700">Product</label>
-                <select name="product_id" 
-                    :class="errors.product_id ? 'border-red-500' : 'border-gray-300'"
+                <select name="product_id" :class="errors.product_id ? 'border-red-500' : 'border-gray-300'"
                     class="select2 w-full mt-1 border rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     required>
                     <option value="">-</option>
@@ -39,7 +34,9 @@
                         </option>
                     @endforeach
                 </select>
-                <p x-show="errors.product_id" x-text="Array.isArray(errors.product_id) ? errors.product_id[0] : errors.product_id" class="text-red-500 text-xs mt-1"></p>
+                <p x-show="errors.product_id"
+                    x-text="Array.isArray(errors.product_id) ? errors.product_id[0] : errors.product_id"
+                    class="text-red-500 text-xs mt-1"></p>
             </div>
 
             <!-- Price & Currency -->
@@ -49,14 +46,14 @@
                     <input name="price" type="number" step="0.01" placeholder="0.00"
                         :class="errors.price ? 'border-red-500' : 'border-gray-300'"
                         class="mt-1 w-full border rounded-md px-3 py-2 
-                               focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                    <p x-show="errors.price" x-text="Array.isArray(errors.price) ? errors.price[0] : errors.price" class="text-red-500 text-xs mt-1"></p>
+                            focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                    <p x-show="errors.price" x-text="Array.isArray(errors.price) ? errors.price[0] : errors.price"
+                        class="text-red-500 text-xs mt-1"></p>
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Currency</label>
-                    <select name="currency" 
-                        :class="errors.currency ? 'border-red-500' : 'border-gray-300'"
+                    <select name="currency" :class="errors.currency ? 'border-red-500' : 'border-gray-300'"
                         class="w-full mt-1 border rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <option value="">-</option>
                         <option value="THB">THB</option>
@@ -64,7 +61,9 @@
                         <option value="EUR">EUR</option>
                         <option value="GBP">GBP</option>
                     </select>
-                    <p x-show="errors.currency" x-text="errors.currency ? (Array.isArray(errors.currency) ? errors.currency[0] : errors.currency) : ''" class="text-red-500 text-xs mt-1"></p>
+                    <p x-show="errors.currency"
+                        x-text="errors.currency ? (Array.isArray(errors.currency) ? errors.currency[0] : errors.currency) : ''"
+                        class="text-red-500 text-xs mt-1"></p>
                 </div>
             </div>
 
@@ -72,8 +71,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Price Tier</label>
-                    <select name="price_tier" 
-                        :class="errors.price_tier ? 'border-red-500' : 'border-gray-300'"
+                    <select name="price_tier" :class="errors.price_tier ? 'border-red-500' : 'border-gray-300'"
                         class="w-full mt-1 border rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <option value="">-</option>
                         <option value="Standard">Standard</option>
@@ -82,7 +80,9 @@
                         <option value="Retail">Retail</option>
                         <option value="Discount">Discount</option>
                     </select>
-                    <p x-show="errors.price_tier" x-text="errors.price_tier ? (Array.isArray(errors.price_tier) ? errors.price_tier[0] : errors.price_tier) : ''" class="text-red-500 text-xs mt-1"></p>
+                    <p x-show="errors.price_tier"
+                        x-text="errors.price_tier ? (Array.isArray(errors.price_tier) ? errors.price_tier[0] : errors.price_tier) : ''"
+                        class="text-red-500 text-xs mt-1"></p>
                 </div>
 
                 <div>
@@ -91,7 +91,9 @@
                         :class="errors.effective_date ? 'border-red-500' : 'border-gray-300'"
                         class="mt-1 w-full border rounded-md px-3 py-2 
                                focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                    <p x-show="errors.effective_date" x-text="errors.effective_date ? (Array.isArray(errors.effective_date) ? errors.effective_date[0] : errors.effective_date) : ''" class="text-red-500 text-xs mt-1"></p>
+                    <p x-show="errors.effective_date"
+                        x-text="errors.effective_date ? (Array.isArray(errors.effective_date) ? errors.effective_date[0] : errors.effective_date) : ''"
+                        class="text-red-500 text-xs mt-1"></p>
                 </div>
             </div>
 

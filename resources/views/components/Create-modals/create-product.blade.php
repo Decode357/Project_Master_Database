@@ -1,18 +1,14 @@
-<div id="CreateProductModal" 
-     x-show="CreateProductModal" 
-     x-transition.opacity
-     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" 
-     style="display: none;">
-     
+<div id="CreateProductModal" x-show="CreateProductModal" x-transition.opacity
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="display: none;">
+
     <div class="bg-white rounded-lg shadow-lg w-full max-w-2xl p-6 overflow-y-auto max-h-[90vh]">
         <h2 class="text-xl font-semibold mb-4">Create Product</h2>
         <hr class="mb-3">
-        
-        <form @submit.prevent="submitProductForm" class="space-y-4" 
-              x-data="{
-                  errors: {},
-                  loading: false
-              }">
+
+        <form @submit.prevent="submitProductForm" class="space-y-4" x-data="{
+            errors: {},
+            loading: false
+        }">
             @csrf
 
             <!-- Dynamic Error Display Area -->
@@ -31,9 +27,11 @@
                 <input name="product_sku" type="text" placeholder="Enter product SKU"
                     :class="errors.product_sku ? 'border-red-500' : 'border-gray-300'"
                     class="mt-1 w-full border rounded-md px-3 py-2 
-                           focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     required />
-                <p x-show="errors.product_sku" x-text="Array.isArray(errors.product_sku) ? errors.product_sku[0] : errors.product_sku" class="text-red-500 text-xs mt-1"></p>
+                <p x-show="errors.product_sku"
+                    x-text="Array.isArray(errors.product_sku) ? errors.product_sku[0] : errors.product_sku"
+                    class="text-red-500 text-xs mt-1"></p>
             </div>
 
             <!-- Product Name -->
@@ -42,17 +40,18 @@
                 <input name="product_name" type="text" placeholder="Enter product name"
                     :class="errors.product_name ? 'border-red-500' : 'border-gray-300'"
                     class="mt-1 w-full border rounded-md px-3 py-2 
-                           focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     required />
-                <p x-show="errors.product_name" x-text="Array.isArray(errors.product_name) ? errors.product_name[0] : errors.product_name" class="text-red-500 text-xs mt-1"></p>
+                <p x-show="errors.product_name"
+                    x-text="Array.isArray(errors.product_name) ? errors.product_name[0] : errors.product_name"
+                    class="text-red-500 text-xs mt-1"></p>
             </div>
 
             <!-- Status & Category -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Status</label>
-                    <select name="status_id" 
-                        :class="errors.status_id ? 'border-red-500' : 'border-gray-300'"
+                    <select name="status_id" :class="errors.status_id ? 'border-red-500' : 'border-gray-300'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <option value="">-</option>
                         @foreach ($statuses as $status)
@@ -61,12 +60,14 @@
                             </option>
                         @endforeach
                     </select>
-                    <p x-show="errors.status_id" x-text="errors.status_id ? (Array.isArray(errors.status_id) ? errors.status_id[0] : errors.status_id) : ''" class="text-red-500 text-xs mt-1"></p>
+                    <p x-show="errors.status_id"
+                        x-text="errors.status_id ? (Array.isArray(errors.status_id) ? errors.status_id[0] : errors.status_id) : ''"
+                        class="text-red-500 text-xs mt-1"></p>
                 </div>
-                
+
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Category</label>
-                    <select name="product_category_id" 
+                    <select name="product_category_id"
                         :class="errors.product_category_id ? 'border-red-500' : 'border-gray-300'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <option value="">-</option>
@@ -76,7 +77,9 @@
                             </option>
                         @endforeach
                     </select>
-                    <p x-show="errors.product_category_id" x-text="errors.product_category_id ? (Array.isArray(errors.product_category_id) ? errors.product_category_id[0] : errors.product_category_id) : ''" class="text-red-500 text-xs mt-1"></p>
+                    <p x-show="errors.product_category_id"
+                        x-text="errors.product_category_id ? (Array.isArray(errors.product_category_id) ? errors.product_category_id[0] : errors.product_category_id) : ''"
+                        class="text-red-500 text-xs mt-1"></p>
                 </div>
             </div>
 
@@ -84,24 +87,24 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Shape</label>
-                    <select name="shape_id" 
-                        :class="errors.shape_id ? 'border-red-500' : 'border-gray-300'"
+                    <select name="shape_id" :class="errors.shape_id ? 'border-red-500' : 'border-gray-300'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <option value="">-</option>
                         @foreach ($shapes as $shape)
                             <option value="{{ $shape->id }}">
-                                {{ $shape->item_code }} : 
+                                {{ $shape->item_code }} :
                                 <p>{{ $shape->item_description_thai }}</p>
                             </option>
                         @endforeach
                     </select>
-                    <p x-show="errors.shape_id" x-text="errors.shape_id ? (Array.isArray(errors.shape_id) ? errors.shape_id[0] : errors.shape_id) : ''" class="text-red-500 text-xs mt-1"></p>
+                    <p x-show="errors.shape_id"
+                        x-text="errors.shape_id ? (Array.isArray(errors.shape_id) ? errors.shape_id[0] : errors.shape_id) : ''"
+                        class="text-red-500 text-xs mt-1"></p>
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Glaze</label>
-                    <select name="glaze_id" 
-                        :class="errors.glaze_id ? 'border-red-500' : 'border-gray-300'"
+                    <select name="glaze_id" :class="errors.glaze_id ? 'border-red-500' : 'border-gray-300'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <option value="">-</option>
                         @foreach ($glazes as $glaze)
@@ -110,40 +113,44 @@
                             </option>
                         @endforeach
                     </select>
-                    <p x-show="errors.glaze_id" x-text="errors.glaze_id ? (Array.isArray(errors.glaze_id) ? errors.glaze_id[0] : errors.glaze_id) : ''" class="text-red-500 text-xs mt-1"></p>
+                    <p x-show="errors.glaze_id"
+                        x-text="errors.glaze_id ? (Array.isArray(errors.glaze_id) ? errors.glaze_id[0] : errors.glaze_id) : ''"
+                        class="text-red-500 text-xs mt-1"></p>
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Pattern</label>
-                    <select name="pattern_id" 
-                        :class="errors.pattern_id ? 'border-red-500' : 'border-gray-300'"
+                    <select name="pattern_id" :class="errors.pattern_id ? 'border-red-500' : 'border-gray-300'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <option value="">-</option>
                         @foreach ($patterns as $pattern)
                             <option value="{{ $pattern->id }}">
                                 {{ $pattern->pattern_code }} :
-                                <p>{{$pattern->pattern_name}}</p>
+                                <p>{{ $pattern->pattern_name }}</p>
                             </option>
                         @endforeach
                     </select>
-                    <p x-show="errors.pattern_id" x-text="errors.pattern_id ? (Array.isArray(errors.pattern_id) ? errors.pattern_id[0] : errors.pattern_id) : ''" class="text-red-500 text-xs mt-1"></p>
+                    <p x-show="errors.pattern_id"
+                        x-text="errors.pattern_id ? (Array.isArray(errors.pattern_id) ? errors.pattern_id[0] : errors.pattern_id) : ''"
+                        class="text-red-500 text-xs mt-1"></p>
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Backstamp</label>
-                    <select name="backstamp_id" 
-                        :class="errors.backstamp_id ? 'border-red-500' : 'border-gray-300'"
+                    <select name="backstamp_id" :class="errors.backstamp_id ? 'border-red-500' : 'border-gray-300'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <option value="">-</option>
                         @foreach ($backstamps as $backstamp)
                             <option value="{{ $backstamp->id }}">
-                                {{ $backstamp->backstamp_code }} : 
+                                {{ $backstamp->backstamp_code }} :
                                 <p>{{ $backstamp->name }}</p>
                             </option>
                         @endforeach
                     </select>
-                    <p x-show="errors.backstamp_id" x-text="errors.backstamp_id ? (Array.isArray(errors.backstamp_id) ? errors.backstamp_id[0] : errors.backstamp_id) : ''" class="text-red-500 text-xs mt-1"></p>
-                </div>                
+                    <p x-show="errors.backstamp_id"
+                        x-text="errors.backstamp_id ? (Array.isArray(errors.backstamp_id) ? errors.backstamp_id[0] : errors.backstamp_id) : ''"
+                        class="text-red-500 text-xs mt-1"></p>
+                </div>
             </div>
 
             <!-- Buttons -->

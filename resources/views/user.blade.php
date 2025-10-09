@@ -2,15 +2,7 @@
 @section('title', 'User Management')
 @section('header', 'User Management')
 @section('content')
-    <main class="flex-1 bg-gray-50" x-data="{
-        CreateUserModal: false,
-        DeleteUserModal: false,
-        EditUserModal: false,
-        userIdToDelete: null,
-        userNameToDelete: '',
-        userToEdit: {}
-    }">
-
+    <main x-data="userPage()" x-init="initSelect2()">
         <!-- Filters -->
         <div class="bg-white p-6 rounded-lg shadow-md mb-3 ">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
