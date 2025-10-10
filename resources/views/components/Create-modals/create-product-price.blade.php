@@ -56,10 +56,11 @@
                     <select name="currency" :class="errors.currency ? 'border-red-500' : 'border-gray-300'"
                         class="w-full mt-1 border rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <option value="">-</option>
-                        <option value="THB">THB</option>
                         <option value="USD">USD</option>
+                        <option value="THB">THB</option>
                         <option value="EUR">EUR</option>
                         <option value="GBP">GBP</option>
+                        <option value="JPY">JPY</option>
                     </select>
                     <p x-show="errors.currency"
                         x-text="errors.currency ? (Array.isArray(errors.currency) ? errors.currency[0] : errors.currency) : ''"
@@ -79,6 +80,7 @@
                         <option value="Wholesale">Wholesale</option>
                         <option value="Retail">Retail</option>
                         <option value="Discount">Discount</option>
+                        <option value="Bulk">Bulk</option>
                     </select>
                     <p x-show="errors.price_tier"
                         x-text="errors.price_tier ? (Array.isArray(errors.price_tier) ? errors.price_tier[0] : errors.price_tier) : ''"

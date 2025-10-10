@@ -14,10 +14,21 @@ function productPricePage() {
         itemCodeToDelete: '',
 
         openEditModal(product_price) {
+            // แปลง Effective_date format
+            if (product_price.effective_date) {
+                const date = new Date(product_price.effective_date);
+                if (!isNaN(date.getTime())) {
+                    product_price.effective_date = date.toISOString().split('T')[0];
+                }
+            }
+            
             this.productPriceToEdit = JSON.parse(JSON.stringify(product_price)); // clone กัน reactive bug
             this.EditProductPriceModal = true;
+
             this.$nextTick(() => {
                 let $modal = $('#EditProductPriceModal');
+                let product_price = this.productPriceToEdit; // เก็บ reference ไว้
+
                 $modal.find('.select2').each(function () {
                     let $this = $(this);
                     let name = $this.attr('name');
