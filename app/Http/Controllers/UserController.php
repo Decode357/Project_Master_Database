@@ -1,75 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\DB;
+
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use Illuminate\Http\Request;
+use App\Models\{User, Department, Requestor, Customer};
 
-use App\Models\{
-    Shape,Pattern,Backstamp,
-    Glaze,Color,Effect,User,
-    Department,Requestor,Customer,
-    ShapeType,Status,Process,
-    GlazeOuter,GlazeInside,
-    ItemGroup,Designer,ShapeCollection,
-    Image,Product,ProductCategory
-};
-
-
-class PageController extends Controller
+class UserController extends Controller
 {
-    public function dashboard() {
-        // ดึงรายการล่าสุด 5 รายการของแต่ละโมเดล พร้อม updater
-        $latestShapes = Shape::with(['updater'])
-            ->orderBy('updated_at', 'desc')
-            ->take(5)
-            ->get();
-
-        $latestPatterns = Pattern::with(['updater'])
-            ->orderBy('updated_at', 'desc')
-            ->take(5)
-            ->get();
-
-        $latestBackstamps = Backstamp::with(['updater'])
-            ->orderBy('updated_at', 'desc')
-            ->take(5)
-            ->get();
-
-        $latestGlazes = Glaze::with(['updater'])
-            ->orderBy('updated_at', 'desc')
-            ->take(5)
-            ->get();
-        $latestProducts = Product::with(['updater'])
-            ->orderBy('updated_at', 'desc')
-            ->take(5)
-            ->get();
-
-        // เพิ่ม count ของแต่ละ table
-        $shapeCount = Shape::count();
-        $patternCount = Pattern::count();
-        $backstampCount = Backstamp::count();
-        $glazeCount = Glaze::count();
-        $userCount = User::count();
-        $productCount = Product::count();
-
-        return view('dashboard', compact(
-            'latestShapes',
-            'latestPatterns',
-            'latestBackstamps',
-            'latestGlazes',
-            'shapeCount',
-            'patternCount',
-            'backstampCount',
-            'glazeCount',
-            'userCount',
-            'latestProducts',
-            'productCount'
-        ));
-    }
-
-
     // 🔹 User Management Controller
     public function user()
     {
@@ -96,11 +36,8 @@ class PageController extends Controller
             $user->userPermissions = $user->getAllPermissions()->pluck('name')->toArray();
         }
 
-
-
         return view('user', compact('users', 'departments', 'requestors', 'customers', 'permissionColors'));
     }
-
 
     public function storeUser(Request $request)
     {
@@ -108,12 +45,15 @@ class PageController extends Controller
             'name'        => 'required|string|max:255',
             'email'       => 'required|email|unique:users,email',
             'password'    => 'required|string|min:6',
-            'role'        => 'required|string|in:user,admin,superadmin',
+            'role'        => 'nullable|string|in:user,admin,superadmin', // เปลี่ยนเป็น nullable
             'permissions' => 'array',
             'department_id' => 'nullable|exists:departments,id',
             'requestor_id'  => 'nullable|exists:requestors,id',
             'customer_id'   => 'nullable|exists:customers,id',
         ]);
+
+        // ถ้าไม่ได้ส่ง role มา ให้ default เป็น 'user'
+        $role = $data['role'] ?? 'user';
 
         // สร้าง user ก่อน
         $user = User::create([
@@ -126,7 +66,7 @@ class PageController extends Controller
             ]);
 
         // Assign role
-        $user->assignRole($data['role']);
+        $user->assignRole($role);
 
         // Sync permissions
         $permissionsToAssign = $data['permissions'] ?? [];
@@ -134,14 +74,18 @@ class PageController extends Controller
             $permissionsToAssign[] = 'view';
         }
 
-        if ($data['role'] === 'superadmin') {
+        if ($role === 'superadmin') {
             $allPermissions = Permission::pluck('name')->toArray();
             $permissionsToAssign = array_unique(array_merge($permissionsToAssign, $allPermissions));
         }
 
         $user->syncPermissions($permissionsToAssign);
 
-        return redirect()->back()->with('success', 'User created successfully!');
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'User created successfully!',
+            'user'    => $user
+        ], 201);
     }
 
 
@@ -156,29 +100,32 @@ class PageController extends Controller
     public function updateUser(Request $request, User $user)
     {
         $data = $request->validate([
-            'name'          => 'required|string|max:255',
-            'email'         => 'required|email|max:255',
-            'password'      => 'nullable|string|min:8',
-            'role'          => 'required|string|in:user,admin,superadmin',
-            'permissions'   => 'nullable|array',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'password' => 'nullable|string|min:8', // เปลี่ยนเป็น nullable
+            'role' => 'required|in:user,admin,superadmin',
+            'permissions' => 'nullable|array',
+            'permissions.*' => 'string',
             'department_id' => 'nullable|exists:departments,id',
-            'requestor_id'  => 'nullable|exists:requestors,id',
-            'customer_id'   => 'nullable|exists:customers,id',
+            'requestor_id' => 'nullable|exists:requestors,id',
+            'customer_id' => 'nullable|exists:customers,id',
         ]);
 
-        // อัปเดตข้อมูลพื้นฐาน
-        $user->name          = $data['name'];
-        $user->email         = $data['email'];
-        $user->department_id = $data['department_id'] ?? null;
-        $user->requestor_id  = $data['requestor_id'] ?? null;
-        $user->customer_id   = $data['customer_id'] ?? null;
+        // อัพเดทข้อมูลพื้นฐาน
+        $updateData = [
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'department_id' => $data['department_id'],
+            'requestor_id' => $data['requestor_id'],
+            'customer_id' => $data['customer_id'],
+        ];
 
-        // ถ้ามี password ใหม่ ให้ hash
+        // เพิ่ม password เฉพาะเมื่อมีการส่งมา
         if (!empty($data['password'])) {
-            $user->password = bcrypt($data['password']);
+            $updateData['password'] = Hash::make($data['password']);
         }
 
-        $user->save();
+        $user->update($updateData);
 
         // อัปเดต role และ permissions
         $user->syncRoles([$data['role']]);
@@ -195,10 +142,10 @@ class PageController extends Controller
 
         $user->syncPermissions($permissionsToAssign);
 
-        return redirect()->back()->with('success', 'User updated successfully!');
-    }
-
-    public function csvImport() {
-        return view('csvImport');
+        return response()->json([
+            'success' => 'User updated successfully.',
+            'user' => $user->load(['roles', 'department', 'requestor', 'customer'])
+        ]);
     }
 }
+

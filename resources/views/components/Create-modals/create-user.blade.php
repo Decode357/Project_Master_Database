@@ -4,12 +4,12 @@
         <h2 class="text-xl font-semibold mb-4">Create User</h2>
         <hr class="mb-3">
 
-        <form method="POST" action="{{ route('user.store') }}" class="space-y-4" x-data="{
+        <form id="CreateUserForm" @submit.prevent="submitUserForm" class="space-y-4" x-data="{
             newUser: { department_id: '', requestor_id: '', customer_id: '' },
             role: 'user',
             permissions: ['view'],
             allPermissions: ['view', 'edit', 'delete', 'create', 'file import', 'manage users'],
-            currentUserRole: '{{ Auth::user()->roles->pluck('name')->first() }}', // <-- เพิ่มตรงนี้
+            currentUserRole: '{{ Auth::user()->roles->pluck('name')->first() }}',
             updatePermissions() {
                 if (!this.permissions.includes('view')) this.permissions.push('view');
                 if (this.role === 'user') this.permissions = ['view'];
@@ -63,35 +63,32 @@
             <div class="flex flex-row gap-4">
                 <div class="flex-1">
                     <label class="block text-sm font-medium mb-1">Department</label>
-                    <select x-model="newUser.department_id" class="select2 w-full border rounded px-2 py-1">
+                    <select name="department_id" x-model="newUser.department_id" class="select2 w-full border rounded px-2 py-1">
                         <option value="">-</option>
                         @foreach ($departments as $dep)
                             <option value="{{ $dep->id }}">{{ $dep->name }}</option>
                         @endforeach
                     </select>
-                    <input type="hidden" name="department_id" :value="newUser.department_id">
                 </div>
 
                 <div class="flex-1">
                     <label class="block text-sm font-medium mb-1">Requestor</label>
-                    <select x-model="newUser.requestor_id" class="select2 w-full border rounded px-2 py-1">
+                    <select name="requestor_id" x-model="newUser.requestor_id" class="select2 w-full border rounded px-2 py-1">
                         <option value="">-</option>
                         @foreach ($requestors as $req)
                             <option value="{{ $req->id }}">{{ $req->name }}</option>
                         @endforeach
                     </select>
-                    <input type="hidden" name="requestor_id" :value="newUser.requestor_id">
                 </div>
 
                 <div class="flex-1">
                     <label class="block text-sm font-medium mb-1">Customer</label>
-                    <select x-model="newUser.customer_id" class="select2 w-full border rounded px-2 py-1">
+                    <select name="customer_id" x-model="newUser.customer_id" class="select2 w-full border rounded px-2 py-1">
                         <option value="">-</option>
                         @foreach ($customers as $cust)
                             <option value="{{ $cust->id }}">{{ $cust->name }}</option>
                         @endforeach
                     </select>
-                    <input type="hidden" name="customer_id" :value="newUser.customer_id">
                 </div>
             </div>
 

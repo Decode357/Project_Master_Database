@@ -301,7 +301,8 @@
     <script src="{{ asset('js/modals/create-glaze-modal.js') }}"></script>
     <script src="{{ asset('js/modals/create-color-modal.js') }}"></script>
     <script src="{{ asset('js/modals/create-effect-modal.js') }}"></script>
-
+    <script src="{{ asset('js/modals/create-user-modal.js') }}"></script>
+    
     <!-- Edit Specific Scripts -->
     <script src="{{ asset('js/modals/edit-product-price-modal.js') }}"></script>
     <script src="{{ asset('js/modals/edit-product-modal.js') }}"></script>
@@ -311,6 +312,7 @@
     <script src="{{ asset('js/modals/edit-glaze-modal.js') }}"></script>
     <script src="{{ asset('js/modals/edit-color-modal.js') }}"></script>
     <script src="{{ asset('js/modals/edit-effect-modal.js') }}"></script>
+    <script src="{{ asset('js/modals/edit-user-modal.js') }}"></script>
 
     <!-- Page Specific Scripts -->
     <script src="{{ asset('js/pages/product-page.js') }}"></script>

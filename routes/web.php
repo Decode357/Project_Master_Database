@@ -1,15 +1,13 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\PageController;
-use App\Http\Controllers\ShapeController;
-use App\Http\Controllers\PatternController;
-use App\Http\Controllers\BackstampController;
-use App\Http\Controllers\GlazeController;
-use App\Http\Controllers\ColorController;
-use App\Http\Controllers\EffectController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ProductPriceController;
+use App\Http\Controllers\{
+    ProfileController, PageController,
+    ShapeController, PatternController,
+    BackstampController, GlazeController,
+    ColorController, EffectController,
+    ProductController, ProductPriceController,
+    UserController
+};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -53,10 +51,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/color', [ColorController::class, 'colorindex'])->name('color.index');
         Route::get('/effect', [EffectController::class, 'effectindex'])->name('effect.index');
         Route::get('/csv-import', [PageController::class, 'csvImport'])->name('csvImport')->middleware(['auth', 'role:admin|superadmin', 'permission:file import']);
-        Route::get('/user', [PageController::class, 'user'])->name('user');
+        Route::get('/user', [UserController::class, 'user'])->name('user');
 
         // เมนูสำหรับเก็บข้อมูล 
-        Route::post('/user', [PageController::class, 'storeUser'])->name('user.store')->middleware(['auth', 'role:admin|superadmin', 'permission:manage users']);
+        Route::post('/user', [UserController::class, 'storeUser'])->name('user.store')->middleware(['auth', 'role:admin|superadmin', 'permission:manage users']);
         Route::post('/shape', [ShapeController::class, 'storeShape'])->name('shape.store')->middleware(['auth', 'role:admin|superadmin', 'permission:create']);
         Route::post('/pattern', [PatternController::class, 'storePattern'])->name('pattern.store')->middleware(['auth', 'role:admin|superadmin', 'permission:create']);
         Route::post('/backstamp', [BackstampController::class, 'storeBackstamp'])->name('backstamp.store')->middleware(['auth', 'role:admin|superadmin', 'permission:create']);
@@ -67,7 +65,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/product-price', [ProductPriceController::class, 'storeProductPrice'])->name('product-price.store')->middleware(['auth', 'role:admin|superadmin', 'permission:create']);
 
         // เมนูสำหรับแก้ไขข้อมูล
-        Route::put('/user/{user}', [PageController::class, 'updateUser'])->name('user.update')->middleware(['auth', 'permission:manage users']);
+        Route::put('/user/{user}', [UserController::class, 'updateUser'])->name('user.update')->middleware(['auth', 'permission:manage users']);
         Route::put('/shape/{shape}', [ShapeController::class, 'updateShape'])->name('shape.update')->middleware(['auth', 'permission:edit']);
         Route::put('/pattern/{pattern}', [PatternController::class, 'updatePattern'])->name('pattern.update')->middleware(['auth', 'permission:edit']);
         Route::put('/backstamp/{backstamp}', [BackstampController::class, 'updateBackstamp'])->name('backstamp.update')->middleware(['auth', 'permission:edit']);
@@ -78,7 +76,7 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/product-price/{productPrice}', [ProductPriceController::class, 'updateProductPrice'])->name('product-price.update')->middleware(['auth', 'permission:edit']);  
         
         // เมนูสำหรับลบข้อมูล
-        Route::delete('/user/{user}', [PageController::class, 'destroyUser'])->name('user.destroy')->middleware(['auth', 'permission:manage users']);
+        Route::delete('/user/{user}', [UserController::class, 'destroyUser'])->name('user.destroy')->middleware(['auth', 'permission:manage users']);
         Route::delete('/shape/{shape}', [ShapeController::class, 'destroyShape'])->name('shape.destroy')->middleware(['auth', 'permission:delete']);
         Route::delete('/pattern/{pattern}', [PatternController::class, 'destroyPattern'])->name('pattern.destroy')->middleware(['auth', 'permission:delete']);
         Route::delete('/backstamp/{backstamp}', [BackstampController::class, 'destroyBackstamp'])->name('backstamp.destroy')->middleware(['auth', 'permission:delete']);

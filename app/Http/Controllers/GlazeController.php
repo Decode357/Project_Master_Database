@@ -2,76 +2,83 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 use Illuminate\Http\Request;
-
+use Illuminate\Validation\Rule;
 use App\Models\{
-    Glaze, Status, 
-    Effect, GlazeInside, GlazeOuter, 
-    Image
+    Glaze, Status, Effect, 
+    GlazeInside, GlazeOuter, Image
 };
  
 class GlazeController extends Controller
 {
-    public function storeGlaze(Request $request)
+    public function glazeindex()
+    {        
+        $relations = [
+            'status', 'updater', 'effect.colors',        
+            'glazeInside.colors', 'glazeOuter.colors', 'image'
+        ];
+
+        $glazes = Glaze::with($relations)->latest()->paginate(10);
+
+        $data = [
+            'statuses'     => Status::all(),
+            'effects'      => Effect::all(),
+            'glazeOuters'  => GlazeOuter::all(),
+            'glazeInsides' => GlazeInside::all(),
+            'images'       => Image::all(),
+        ];
+        
+        return view('glaze', array_merge($data, compact('glazes')));
+    }
+
+    private function rules($id = null)
     {
-        $data = $request->validate([
-            'glaze_code'      => 'required|string|max:255|unique:glazes,glaze_code',
+        return [
+            'glaze_code'      => [
+                'required', 'string', 'max:255',
+                Rule::unique('glazes', 'glaze_code')->ignore($id),
+            ],
             'status_id'       => 'nullable|exists:statuses,id',
-            'fire_temp'      => 'nullable|integer',
-            'approval_date'  => 'nullable|date',
+            'fire_temp'       => 'nullable|integer',
+            'approval_date'   => 'nullable|date',
             'glaze_inside_id' => 'nullable|exists:glaze_insides,id',
             'glaze_outer_id'  => 'nullable|exists:glaze_outers,id',
-            'effect_id'      => 'nullable|exists:effects,id',
-            'image_id'       => 'nullable|exists:images,id',
-        ]);
+            'effect_id'       => 'nullable|exists:effects,id',
+            'image_id'        => 'nullable|exists:images,id',
+        ];
+    }
 
-        $glaze = Glaze::create([
-            'glaze_code'      => $data['glaze_code'],
-            'status_id'       => $data['status_id'] ?? null,
-            'fire_temp'      => $data['fire_temp'] ?? null,
-            'approval_date'  => $data['approval_date'] ?? null,
-            'glaze_inside_id' => $data['glaze_inside_id'] ?? null,
-            'glaze_outer_id'  => $data['glaze_outer_id'] ?? null,
-            'effect_id'      => $data['effect_id'] ?? null,
-            'image_id'       => $data['image_id'] ?? null,
-            'updated_by'     => auth()->id(),
-        ]);
+    public function storeGlaze(Request $request)
+    {
+        $data = $request->validate($this->rules());
+        $data['updated_by'] = auth()->id();
+
+        $glaze = Glaze::create($data);
         
         return response()->json([
             'status'  => 'success',
             'message' => 'Glaze created successfully!',
             'glaze'   => $glaze
+        ], 201);
+    }
+
+    public function updateGlaze(Request $request, Glaze $glaze)
+    {
+        $data = $request->validate($this->rules($glaze->id));
+        $data['updated_by'] = auth()->id();
+
+        $glaze->update($data);
+
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Glaze updated successfully!',
+            'glaze'   => $glaze
         ], 200);
     }
-    public function glazeindex() {        
-        $glazes = Glaze::with([
-            'status', 
-            'updater',
-            'effect.colors',        // เพิ่ม colors ของ effect
-            'glazeInside.colors',  // เพิ่ม colors ของ glaze_inside
-            'glazeOuter.colors',   // เพิ่ม colors ของ glaze_outer
-            'image'
-        ])
-        ->orderBy('id', 'desc')
-        ->paginate(10);
 
-        $statuses = Status::all();
-        $effects = Effect::all();
-        $glazeOuters = GlazeOuter::all();
-        $glazeInsides = GlazeInside::all();
-        $images = Image::all();
-        
-        return view('glaze',compact('glazes', 'statuses', 'effects', 'glazeOuters', 'glazeInsides', 'images'));
-    }
-    
     public function destroyGlaze(Glaze $glaze)
     {
         $glaze->delete();
-
-        return redirect()->route('glaze.index')->with('success', 'Glaze deleted successfully.');
+        return redirect()->route('glaze.index')->with('success', 'Glaze deleted successfully.',200);
     }
 }

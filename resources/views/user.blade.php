@@ -25,7 +25,7 @@
 
                 @if ($hasManageUsers)
                     <div class="md:col-span-2 flex flex-wrap items-center justify-end gap-4">
-                        <button @click="CreateUserModal = true"
+                        <button @click="openCreateModal()"
                             class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hoverScale hover:bg-blue-700 transition">
                             <span class="material-symbols-outlined">add</span>
                             <span>Create User</span>
@@ -90,20 +90,7 @@
                             @if ($hasManageUsers && ($currentRole === 'superadmin' || $rowRole !== 'superadmin') && $user->id !== auth()->id())
                                 <td class="text-right space-x-2 max-w-[80px]">
                                     <button
-                                        @click="
-                                            EditUserModal = true; 
-                                            userToEdit = { 
-                                                id: {{ $user->id }}, 
-                                                name: '{{ addslashes($user->name) }}', 
-                                                email: '{{ addslashes($user->email) }}', 
-                                                role: '{{ $user->roles->pluck('name')->first() ?? 'user' }}',
-                                                permissions: {{ $user->getDirectPermissions()->pluck('name')->toJson() }},
-                                                department_id: {{ $user->department_id ?? 'null' }},
-                                                requestor_id: {{ $user->requestor_id ?? 'null' }},
-                                                customer_id: {{ $user->customer_id ?? 'null' }}
-                                            }; 
-                                            $nextTick(() => { updatePermissions(); });
-                                        "
+                                        @click="openEditModal({{ $user->toJson() }})"
                                         class="text-blue-600 hoverScale hover:text-blue-700">
                                         <span class="material-symbols-outlined">edit</span>
                                     </button>
