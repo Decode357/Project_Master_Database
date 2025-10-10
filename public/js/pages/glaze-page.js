@@ -14,10 +14,21 @@ function glazePage() {
         itemCodeToDelete: '',
 
         openEditModal(glaze) {
+            // แปลง approval_date format
+            if (glaze.approval_date) {
+                const date = new Date(glaze.approval_date);
+                if (!isNaN(date.getTime())) {
+                    glaze.approval_date = date.toISOString().split('T')[0];
+                }
+            }
+
             this.glazeToEdit = JSON.parse(JSON.stringify(glaze)); // clone กัน reactive bug
             this.EditGlazeModal = true;
-            this.$nextTick(() => {
-                let $modal = $('#EditGlazeModal');
+            
+            this.$nextTick(() => {  
+                let $modal = $('#EditGlazeModal');      
+                let glazeToEdit = this.glazeToEdit; // เก็บ reference ไว้
+                
                 $modal.find('.select2').each(function () {
                     let $this = $(this);
                     let name = $this.attr('name');
@@ -29,13 +40,13 @@ function glazePage() {
                     });
 
                     // set ค่า default ตาม glazeToEdit
-                    if (this.glazeToEdit[name] !== undefined && this.glazeToEdit[name] !== null) {
-                        $this.val(this.glazeToEdit[name]).trigger('change');
+                    if (glazeToEdit[name] !== undefined && glazeToEdit[name] !== null) {
+                        $this.val(glazeToEdit[name]).trigger('change');
                     }
 
                     // sync กลับ Alpine
                     $this.on('change', function () {
-                        glaze[name] = $(this).val();
+                        glazeToEdit[name] = $(this).val();
                     });
                 });
             });
