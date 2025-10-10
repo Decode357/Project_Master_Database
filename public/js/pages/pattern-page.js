@@ -14,6 +14,14 @@ function patternPage() {
         itemCodeToDelete: '',
 
         openEditModal(pattern) {
+            // แปลง approval_date format
+            if (pattern.approval_date) {
+                const date = new Date(pattern.approval_date);
+                if (!isNaN(date.getTime())) {
+                    pattern.approval_date = date.toISOString().split('T')[0];
+                }
+            }
+            
             this.patternToEdit = JSON.parse(JSON.stringify(pattern)); // clone กัน reactive bug
             this.EditPatternModal = true;
             this.$nextTick(() => {

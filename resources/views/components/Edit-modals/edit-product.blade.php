@@ -12,7 +12,7 @@
             loading: false,
             generalErrors: []
         }" x-init="init()">
-
+            
             <!-- Dynamic Error Display Area -->
             <div x-show="Object.keys(errors).length > 0" class="p-4 bg-red-100 border border-red-400 rounded-md">
                 <h4 class="text-red-800 font-semibold">Please correct the following errors</h4>
@@ -45,8 +45,22 @@
                     class="text-red-500 text-xs mt-1"></p>
             </div>
 
-            <!-- Selects Row 1 -->
+            <!-- Status, Category, Shape, Glaze, Pattern, Backstamp -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Status</label>
+                    <select name="status_id" x-model="productToEdit.status_id"
+                        :class="errors.status_id ? 'border-red-500' : 'border-gray-300'"
+                        class="select2 w-full mt-1 border rounded-md px-3 py-2">
+                        <option value="">-</option>
+                        @foreach ($statuses as $status)
+                            <option value="{{ $status->id }}">{{ $status->status }}</option>
+                        @endforeach
+                    </select>
+                    <p x-show="errors.status_id"
+                        x-text="errors.status_id ? (Array.isArray(errors.status_id) ? errors.status_id[0] : errors.status_id) : ''"
+                        class="text-red-500 text-xs mt-1"></p>
+                </div>                
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Category</label>
                     <select name="product_category_id" x-model="productToEdit.product_category_id"
@@ -61,20 +75,7 @@
                         x-text="errors.product_category_id ? (Array.isArray(errors.product_category_id) ? errors.product_category_id[0] : errors.product_category_id) : ''"
                         class="text-red-500 text-xs mt-1"></p>
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Status</label>
-                    <select name="status_id" x-model="productToEdit.status_id"
-                        :class="errors.status_id ? 'border-red-500' : 'border-gray-300'"
-                        class="select2 w-full mt-1 border rounded-md px-3 py-2">
-                        <option value="">-</option>
-                        @foreach ($statuses as $status)
-                            <option value="{{ $status->id }}">{{ $status->status }}</option>
-                        @endforeach
-                    </select>
-                    <p x-show="errors.status_id"
-                        x-text="errors.status_id ? (Array.isArray(errors.status_id) ? errors.status_id[0] : errors.status_id) : ''"
-                        class="text-red-500 text-xs mt-1"></p>
-                </div>
+
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Shape</label>
                     <select name="shape_id" x-model="productToEdit.shape_id"

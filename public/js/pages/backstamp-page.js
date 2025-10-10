@@ -14,10 +14,21 @@ function backstampPage() {
         itemCodeToDelete: '',
 
         openEditModal(backstamp) {
+            // แปลง approval_date format
+            if (backstamp.approval_date) {
+                const date = new Date(backstamp.approval_date);
+                if (!isNaN(date.getTime())) {
+                    backstamp.approval_date = date.toISOString().split('T')[0];
+                }
+            }
+            
             this.backstampToEdit = JSON.parse(JSON.stringify(backstamp)); // clone กัน reactive bug
             this.EditBackstampModal = true;
+            
             this.$nextTick(() => {
                 let $modal = $('#EditBackstampModal');
+                let backstampToEdit = this.backstampToEdit; // เก็บ reference ไว้
+                
                 $modal.find('.select2').each(function () {
                     let $this = $(this);
                     let name = $this.attr('name');
@@ -29,13 +40,13 @@ function backstampPage() {
                     });
 
                     // set ค่า default ตาม backstampToEdit
-                    if (this.backstampToEdit[name] !== undefined && this.backstampToEdit[name] !== null) {
-                        $this.val(this.backstampToEdit[name]).trigger('change');
+                    if (backstampToEdit[name] !== undefined && backstampToEdit[name] !== null) {
+                        $this.val(backstampToEdit[name]).trigger('change');
                     }
 
                     // sync กลับ Alpine
                     $this.on('change', function () {
-                        backstamp[name] = $(this).val();
+                        backstampToEdit[name] = $(this).val(); // ใช้ backstampToEdit แทน backstamp
                     });
                 });
             });
