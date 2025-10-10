@@ -15,7 +15,7 @@ class UserController extends Controller
     {
         // ดึง user ทั้งหมดพร้อม roles + paginate
         $users = User::with(['roles','department', 'requestor', 'customer'])
-            ->orderBy('id', 'asc')
+            ->orderBy('id', 'desc')
             ->paginate(10);
 
         // สีแต่ละ permission
