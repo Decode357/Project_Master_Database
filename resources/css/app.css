@@ -22,11 +22,15 @@
     transform: translateY(30%);
 }
 
-#CreateEffectModal .select2-container .select2-selection {
-    @apply border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+#CreateEffectModal .select2-container .select2-selection,
+#EditEffectModal .select2-container .select2-selection {
+    @apply border border-gray-300 rounded-lg;
     padding: 0.4rem 0.1rem; /* ปรับ padding ให้พอดี */
     min-height: 4rem; /* ให้สูงพอสำหรับข้อความ */
 }
+
+    
+
 /* ปรับ hover */
 /* .select2-container .select2-selection:hover {
     @apply border-gray-400;

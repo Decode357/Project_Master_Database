@@ -51,7 +51,8 @@
                                 {{ $color->customer ? $color->customer->name : '-' }}
                             </td>
                             <td class="px-6 py-4 text-right space-x-2">
-                                <button class="text-blue-600 hoverScale hover:text-blue-700">
+                                <button @click="openEditModal({{ $color->toJson() }})"
+                                    class="text-blue-600 hoverScale hover:text-blue-700">
                                     <span class="material-symbols-outlined">edit</span>
                                 </button>
                                 <button @click="DeleteColorModal = true; colorIdToDelete = {{ $color->id }}; itemCodeToDelete = '{{ $color->color_code }}'"
@@ -71,6 +72,7 @@
         </div>
 
         {{-- include modal --}}
+        @include('components.Edit-modals.edit-color')
         @include('components.Delete-modals.delete-color')
         @include('components.Create-modals.create-color')
     </main>

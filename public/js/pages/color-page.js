@@ -12,6 +12,44 @@ function colorPage() {
         colorToEdit: {},
         itemCodeToDelete: '',
         
+        openEditModal(color) {
+            // แปลง approval_date format
+            if (color.approval_date) {
+                const date = new Date(color.approval_date);
+                if (!isNaN(date.getTime())) {
+                    color.approval_date = date.toISOString().split('T')[0];
+                }
+            }
+
+            this.colorToEdit = JSON.parse(JSON.stringify(color)); // clone กัน reactive bug
+            this.EditColorModal = true;
+
+            this.$nextTick(() => {
+                let $modal = $('#EditColorModal');
+                let colorToEdit = this.colorToEdit; // เก็บ reference ไว้
+
+                $modal.find('.select2').each(function () {
+                    let $this = $(this);
+                    let name = $this.attr('name');
+
+                    // init select2 ใหม่ทุกครั้ง
+                    $this.select2({
+                        dropdownParent: $modal,
+                        width: '100%'
+                    });
+
+                    // set ค่า default ตาม colorToEdit
+                    if (colorToEdit[name] !== undefined && colorToEdit[name] !== null) {
+                        $this.val(colorToEdit[name]).trigger('change');
+                    }
+
+                    // sync กลับ Alpine
+                    $this.on('change', function () {
+                        colorToEdit[name] = $(this).val();
+                    });
+                });
+            });
+        },
         openDetailModal(color) {
             this.colorToView = JSON.parse(JSON.stringify(color)); // clone data
             this.ColorDetailModal = true;
@@ -25,7 +63,7 @@ function colorPage() {
             $('.select2').select2({
                 width: '100%'
             });
-        }
+        },
     }
 }
 

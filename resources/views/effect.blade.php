@@ -56,7 +56,8 @@
                                 </div>
                             </td>
                             <td class="px-6 py-4 text-right space-x-2">
-                                <button class="text-blue-600 hoverScale hover:text-blue-700">
+                                <button @click="openEditModal({{ $effect->toJson() }})"
+                                    class="text-blue-600 hoverScale hover:text-blue-700">
                                     <span class="material-symbols-outlined">edit</span>
                                 </button>
 
@@ -81,6 +82,7 @@
         </div>
 
         {{-- include modal --}}
+        @include('components.Edit-modals.edit-effect')
         @include('components.Delete-modals.delete-effect')
         @include('components.Create-modals.create-effect')
 
