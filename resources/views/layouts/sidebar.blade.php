@@ -25,7 +25,7 @@
     <div class="flex h-screen overflow-hidden">
         <aside
             class="fixed inset-y-0 left-0 z-50 w-64 flex-col gap-y-4 border-r border-gray-200 bg-white p-4 shadow-xl
-                   transform transition-transform duration-300 ease-in-out md:static md:flex md:z-auto"
+                transform transition-transform duration-300 ease-in-out md:static md:flex md:z-auto"
             :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'">
 
             <h1 class="text-4xl font-bold ml-3">PATRA</h1>
@@ -116,6 +116,12 @@
                         <span class="material-symbols-outlined text-lg">auto_awesome</span>
                         <span>Effects</span>
                     </a>
+                    <a href="{{ route('glaze.inside.outer.index') }}"
+                        class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium
+                    {{ request()->routeIs('glaze.inside.outer.index') ? 'bg-primary-50 text-primary-600 font-semibold scale-110' : 'text-gray-700 hoverScale hover:bg-gray-100' }}">
+                        <span class="material-symbols-outlined text-lg">opacity</span>
+                        <span>Glaze inside/outer</span>
+                    </a>
                     @if ($hasFileImport)
                         <a href="{{ route('csvImport') }}"
                             class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium
@@ -160,8 +166,8 @@
                         @csrf
                         <button type="submit"
                             class="btn w-full flex justify-center rounded-lg bg-gray-500
-                       py-2 px-3 text-sm font-semibold text-white shadow-sm hoverScale hover:bg-red-500
-                       focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                            py-2 px-3 text-sm font-semibold text-white shadow-sm hoverScale hover:bg-red-500
+                            focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
                             <span class="material-symbols-outlined text-lg">logout</span>
                             <span class="mt-1 ml-1">Logout</span>
                         </button>
@@ -302,6 +308,7 @@
     <script src="{{ asset('js/modals/create-color-modal.js') }}"></script>
     <script src="{{ asset('js/modals/create-effect-modal.js') }}"></script>
     <script src="{{ asset('js/modals/create-user-modal.js') }}"></script>
+    <script src="{{ asset('js/modals/create-glazeInsideOuter-modal.js') }}"></script>
     
     <!-- Edit Specific Scripts -->
     <script src="{{ asset('js/modals/edit-product-price-modal.js') }}"></script>
@@ -313,6 +320,7 @@
     <script src="{{ asset('js/modals/edit-color-modal.js') }}"></script>
     <script src="{{ asset('js/modals/edit-effect-modal.js') }}"></script>
     <script src="{{ asset('js/modals/edit-user-modal.js') }}"></script>
+    <script src="{{ asset('js/modals/edit-glazeInsideOuter-modal.js') }}"></script>
 
     <!-- Page Specific Scripts -->
     <script src="{{ asset('js/pages/product-page.js') }}"></script>
@@ -324,6 +332,7 @@
     <script src="{{ asset('js/pages/color-page.js') }}"></script>
     <script src="{{ asset('js/pages/effect-page.js') }}"></script>
     <script src="{{ asset('js/pages/user-page.js') }}"></script>
+    <script src="{{ asset('js/pages/glazeInsideOuter-page.js') }}"></script>
 </body>
 
 </html>

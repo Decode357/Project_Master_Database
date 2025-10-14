@@ -6,7 +6,7 @@ use App\Http\Controllers\{
     BackstampController, GlazeController,
     ColorController, EffectController,
     ProductController, ProductPriceController,
-    UserController
+    UserController, GlazeInsideOuterController
 };
 use Illuminate\Support\Facades\Route;
 
@@ -52,6 +52,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/effect', [EffectController::class, 'effectindex'])->name('effect.index');
         Route::get('/csv-import', [PageController::class, 'csvImport'])->name('csvImport')->middleware(['auth', 'role:admin|superadmin', 'permission:file import']);
         Route::get('/user', [UserController::class, 'user'])->name('user');
+        Route::get('/glaze-inside-outer', [GlazeInsideOuterController::class, 'index'])->name('glaze.inside.outer.index');
 
         // เมนูสำหรับเก็บข้อมูล 
         Route::post('/user', [UserController::class, 'storeUser'])->name('user.store')->middleware(['auth', 'role:admin|superadmin', 'permission:manage users']);
@@ -63,6 +64,9 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/effect', [EffectController::class, 'storeEffect'])->name('effect.store')->middleware(['auth', 'role:admin|superadmin', 'permission:create']);
         Route::post('/product', [ProductController::class, 'storeProduct'])->name('product.store')->middleware(['auth', 'role:admin|superadmin', 'permission:create']);
         Route::post('/product-price', [ProductPriceController::class, 'storeProductPrice'])->name('product-price.store')->middleware(['auth', 'role:admin|superadmin', 'permission:create']);
+        Route::post('/glaze-inside', [GlazeInsideOuterController::class, 'storeGlazeInside'])->name('glaze-inside.store')->middleware(['auth', 'role:admin|superadmin', 'permission:create']);
+        Route::post('/glaze-outer', [GlazeInsideOuterController::class, 'storeGlazeOuter'])->name('glaze-outer.store')->middleware(['auth', 'role:admin|superadmin', 'permission:create']);
+
 
         // เมนูสำหรับแก้ไขข้อมูล
         Route::put('/user/{user}', [UserController::class, 'updateUser'])->name('user.update')->middleware(['auth', 'permission:manage users']);
@@ -73,8 +77,10 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/color/{color}', [ColorController::class, 'updateColor'])->name('color.update')->middleware(['auth', 'permission:edit']);
         Route::put('/effect/{effect}', [EffectController::class, 'updateEffect'])->name('effect.update')->middleware(['auth', 'permission:edit']);
         Route::put('/product/{product}', [ProductController::class, 'updateProduct'])->name('product.update')->middleware(['auth', 'permission:edit']); 
-        Route::put('/product-price/{productPrice}', [ProductPriceController::class, 'updateProductPrice'])->name('product-price.update')->middleware(['auth', 'permission:edit']);  
-        
+        Route::put('/product-price/{productPrice}', [ProductPriceController::class, 'updateProductPrice'])->name('product-price.update')->middleware(['auth', 'permission:edit']); 
+        Route::put('/glaze-inside/{glazeInside}', [GlazeInsideOuterController::class, 'updateGlazeInside'])->name('glaze-inside.update')->middleware(['auth', 'permission:edit']); 
+        Route::put('/glaze-outer/{glazeOuter}', [GlazeInsideOuterController::class, 'updateGlazeOuter'])->name('glaze-outer.update')->middleware(['auth', 'permission:edit']);
+
         // เมนูสำหรับลบข้อมูล
         Route::delete('/user/{user}', [UserController::class, 'destroyUser'])->name('user.destroy')->middleware(['auth', 'permission:manage users']);
         Route::delete('/shape/{shape}', [ShapeController::class, 'destroyShape'])->name('shape.destroy')->middleware(['auth', 'permission:delete']);
@@ -85,6 +91,8 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/effect/{effect}', [EffectController::class, 'destroyEffect'])->name('effect.destroy')->middleware(['auth', 'permission:delete']);
         Route::delete('/product/{product}', [ProductController::class, 'destroyProduct'])->name('product.destroy')->middleware(['auth', 'permission:delete']);
         Route::delete('/product-price/{productPrice}', [ProductPriceController::class, 'destroyProductPrice'])->name('product-price.destroy')->middleware(['auth', 'permission:delete']);
+        Route::delete('/glaze-inside/{glazeInside}', [GlazeInsideOuterController::class, 'destroyGlazeInside'])->name('glaze-inside.destroy')->middleware(['auth', 'permission:delete']);
+        Route::delete('/glaze-outer/{glazeOuter}', [GlazeInsideOuterController::class, 'destroyGlazeOuter'])->name('glaze-outer.destroy')->middleware(['auth', 'permission:delete']);
     });
 });
 
