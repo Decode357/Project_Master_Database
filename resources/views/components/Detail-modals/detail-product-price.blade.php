@@ -10,7 +10,7 @@
         <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-6 flex justify-between items-center">
             <div>
                 <h2 class="text-2xl font-bold">Product Price Details</h2>
-                <p class="text-blue-100 text-sm mt-1" x-text="productPriceToView?.price_tier + ' (' + productPriceToView?.currency + ')'"></p>
+                <p class="text-blue-100 text-sm mt-1" x-text="productPriceToView?.tier?.name + ' (' + productPriceToView?.currency?.code + ')'"></p>
             </div>
             <button @click="ProductPriceDetailModal = false"
                 class="text-white hover:bg-white hover:bg-opacity-20 rounded-full p-2 transition-all">
@@ -26,14 +26,14 @@
                         <span class="material-symbols-outlined text-green-600 mr-2">attach_money</span>
                         <span class="font-semibold text-gray-700">Price</span>
                     </div>
-                    <p class="text-2xl font-bold text-green-700" x-text="Number(productPriceToView?.price).toLocaleString('en-US', {minimumFractionDigits:2}) + ' ' + (productPriceToView?.currency || '')"></p>
+                    <p class="text-2xl font-bold text-green-700" x-text="Number(productPriceToView?.price).toLocaleString('en-US', {minimumFractionDigits:2}) + ' ' + (productPriceToView?.currency?.code || '')"></p>
                 </div>
                 <div class="bg-gray-50 rounded-lg p-4">
                     <div class="flex items-center mb-2">
                         <span class="material-symbols-outlined text-blue-600 mr-2">sell</span>
                         <span class="font-semibold text-gray-700">Tier</span>
                     </div>
-                    <p class="text-lg font-medium text-blue-800" x-text="productPriceToView?.price_tier || '-'"></p>
+                    <p class="text-lg font-medium text-blue-800" x-text="productPriceToView?.tier?.name || '-'"></p>
                 </div>
                 <div class="bg-gray-50 rounded-lg p-4">
                     <div class="flex items-center mb-2">

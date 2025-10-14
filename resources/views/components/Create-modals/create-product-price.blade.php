@@ -40,7 +40,7 @@
             </div>
 
             <!-- Price & Currency -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
                 <div class="md:col-span-2">
                     <label class="block text-sm font-medium text-gray-700">Price</label>
                     <input name="price" type="number" step="0.01" placeholder="0.00"
@@ -53,37 +53,38 @@
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Currency</label>
-                    <select name="currency" :class="errors.currency ? 'border-red-500' : 'border-gray-300'"
-                        class="w-full mt-1 border rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <select name="currency_id" :class="errors.currency_id ? 'border-red-500' : 'border-gray-300'"
+                        class="select2 w-full mt-1 border rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        required>
                         <option value="">-</option>
-                        <option value="USD">USD</option>
-                        <option value="THB">THB</option>
-                        <option value="EUR">EUR</option>
-                        <option value="GBP">GBP</option>
-                        <option value="JPY">JPY</option>
+                        @foreach ($currencies as $currency)
+                            <option value="{{ $currency->id }}">
+                                {{ $currency->code }}
+                            </option>
+                        @endforeach
                     </select>
-                    <p x-show="errors.currency"
-                        x-text="errors.currency ? (Array.isArray(errors.currency) ? errors.currency[0] : errors.currency) : ''"
+                    <p x-show="errors.currency_id"
+                        x-text="errors.currency_id ? (Array.isArray(errors.currency_id) ? errors.currency_id[0] : errors.currency_id) : ''"
                         class="text-red-500 text-xs mt-1"></p>
                 </div>
             </div>
 
             <!-- Price Tier & Effective Date -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Price Tier</label>
-                    <select name="price_tier" :class="errors.price_tier ? 'border-red-500' : 'border-gray-300'"
-                        class="w-full mt-1 border rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <select name="tier_id" :class="errors.tier_id ? 'border-red-500' : 'border-gray-300'"
+                        class="select2 w-full mt-1 border rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        required>
                         <option value="">-</option>
-                        <option value="Standard">Standard</option>
-                        <option value="Premium">Premium</option>
-                        <option value="Wholesale">Wholesale</option>
-                        <option value="Retail">Retail</option>
-                        <option value="Discount">Discount</option>
-                        <option value="Bulk">Bulk</option>
+                        @foreach ($tiers as $tier)
+                            <option value="{{ $tier->id }}">
+                                {{ $tier->name }}
+                            </option>
+                        @endforeach
                     </select>
-                    <p x-show="errors.price_tier"
-                        x-text="errors.price_tier ? (Array.isArray(errors.price_tier) ? errors.price_tier[0] : errors.price_tier) : ''"
+                    <p x-show="errors.tier"
+                        x-text="errors.tier ? (Array.isArray(errors.tier) ? errors.tier[0] : errorstier) : ''"
                         class="text-red-500 text-xs mt-1"></p>
                 </div>
 

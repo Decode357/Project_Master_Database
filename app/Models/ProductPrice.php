@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\{Product, User};
+use App\Models\{Product, User, Currency, Tier};
 
 class ProductPrice extends Model
 {
@@ -12,8 +12,8 @@ class ProductPrice extends Model
 
     protected $fillable = [
         'price',
-        'price_tier',
-        'currency',
+        'tier_id',
+        'currency_id',
         'effective_date',
         'product_id',
         'created_by',
@@ -23,6 +23,8 @@ class ProductPrice extends Model
     protected $casts = [
         'price' => 'decimal:2',
         'effective_date' => 'date',
+        'tier_id' => 'integer',
+        'currency_id' => 'integer',
         'product_id' => 'integer',
         'created_by' => 'integer',
         'updated_by' => 'integer',
@@ -44,26 +46,13 @@ class ProductPrice extends Model
         return $this->belongsTo(User::class, 'updated_by');
     }
 
-    // Scopes
-    public function scopeCurrent($query)
+    public function currency()
     {
-        return $query->whereDate('effective_date', '<=', now())
-                    ->orderBy('effective_date', 'desc');
+        return $this->belongsTo(Currency::class, 'currency_id');
     }
 
-    public function scopeByTier($query, $tier)
+    public function tier()
     {
-        return $query->where('price_tier', $tier);
-    }
-
-    public function scopeByCurrency($query, $currency)
-    {
-        return $query->where('currency', $currency);
-    }
-
-    // Accessors
-    public function getFormattedPriceAttribute()
-    {
-        return number_format($this->price, 2) . ' ' . ($this->currency ?? 'THB');
+        return $this->belongsTo(Tier::class, 'tier_id');
     }
 }

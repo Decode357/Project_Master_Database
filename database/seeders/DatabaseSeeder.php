@@ -27,6 +27,8 @@ use App\Models\{
     Product,
     ProductPrice,
     ProductCategory,
+    Tier,
+    Currency
 };
 
 class DatabaseSeeder extends Seeder
@@ -64,6 +66,8 @@ class DatabaseSeeder extends Seeder
         ProductCategory::truncate();
         Product::truncate();
         ProductPrice::truncate();
+        Tier::truncate();
+        Currency::truncate();
 
         Schema::enableForeignKeyConstraints();
 
@@ -90,6 +94,8 @@ class DatabaseSeeder extends Seeder
             ShapeSeeder::class,
             ProductCategorySeeder::class,
             ProductSeeder::class,
+            CurrencySeeder::class,
+            TierSeeder::class,
             ProductPriceSeeder::class,
         ]);
     }

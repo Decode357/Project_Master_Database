@@ -41,7 +41,7 @@
             </div>
 
             <!-- Price & Currency -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
                 <div class="md:col-span-2">
                     <label class="block text-sm font-medium text-gray-700">Price</label>
                     <input type="number" step="0.01" name="price" x-model="productPriceToEdit.price"
@@ -53,39 +53,35 @@
                 </div>
                 <div class="md:col-span-1">
                     <label class="block text-sm font-medium text-gray-700">Currency</label>
-                    <select name="currency" x-model="productPriceToEdit.currency"
-                        :class="errors.currency ? 'border-red-500' : 'border-gray-300'"
-                        class="mt-1 w-full border rounded-md px-3 py-2" required>
+                    <select name="currency_id" x-model="productPriceToEdit.currency_id"
+                        :class="errors.currency_id ? 'border-red-500' : 'border-gray-300'"
+                        class="select2 w-full mt-1 border rounded-md px-3 py-2" required>
                         <option value="">Select Currency</option>
-                        <option value="USD">USD</option>
-                        <option value="THB">THB</option>
-                        <option value="EUR">EUR</option>
-                        <option value="GBP">GBP</option>
-                        <option value="JPY">JPY</option>
+                        @foreach ($currencies as $currency)
+                            <option value="{{ $currency->id }}">{{ $currency->code }}
+                            </option>
+                        @endforeach
                     </select>
-                    <p x-show="errors.currency"
-                        x-text="errors.currency ? (Array.isArray(errors.currency) ? errors.currency[0] : errors.currency) : ''"
+                    <p x-show="errors.currency_id"
+                        x-text="errors.currency_id ? (Array.isArray(errors.currency_id) ? errors.currency_id[0] : errors.currency_id) : ''"
                         class="text-red-500 text-xs mt-1"></p>
                 </div>
             </div>
 
             <!-- Price Tier & Effective Date -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Price Tier</label>
-                    <select name="price_tier" x-model="productPriceToEdit.price_tier"
-                        :class="errors.price_tier ? 'border-red-500' : 'border-gray-300'"
-                        class="mt-1 w-full border rounded-md px-3 py-2" required>
-                        <option value="">-</option>
-                        <option value="Standard">Standard</option>
-                        <option value="Premium">Premium</option>
-                        <option value="Wholesale">Wholesale</option>
-                        <option value="Retail">Retail</option>
-                        <option value="Discount">Discount</option>
-                        <option value="Bulk">Bulk</option>
+                    <select name="tier_id" x-model="productPriceToEdit.tier_id"
+                        :class="errors.tier_id ? 'border-red-500' : 'border-gray-300'"
+                        class="select2 w-full mt-1 border rounded-md px-3 py-2" required>
+                        <option value="">Select Tier</option>
+                        @foreach ($tiers as $tier)
+                            <option value="{{ $tier->id }}">{{ $tier->name }}</option>
+                        @endforeach
                     </select>
-                    <p x-show="errors.price_tier"
-                        x-text="errors.price_tier ? (Array.isArray(errors.price_tier) ? errors.price_tier[0] : errors.price_tier) : ''"
+                    <p x-show="errors.tier_id"
+                        x-text="errors.tier_id ? (Array.isArray(errors.tier_id) ? errors.tier_id[0] : errors.tier_id) : ''"
                         class="text-red-500 text-xs mt-1"></p>
                 </div>
                 <div>

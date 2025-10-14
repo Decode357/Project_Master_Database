@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\{
-    ProductPrice, Product, User
+    ProductPrice, Product, User, Currency, Tier
 };
 
 class ProductPriceController extends Controller
@@ -12,7 +12,7 @@ class ProductPriceController extends Controller
     public function productPriceIndex()
     {
         $relations = [
-            'product', 'creator', 'updater'
+            'product', 'creator', 'updater', 'currency', 'tier'
         ];
 
         $productPrices = ProductPrice::with($relations)->latest()->paginate(10);
@@ -20,6 +20,8 @@ class ProductPriceController extends Controller
         $data = [
             'products' => Product::all(),
             'users'    => User::all(),
+            'currencies' => Currency::all(),
+            'tiers' => Tier::all(),
         ];
 
         return view('product_price', array_merge($data, compact('productPrices')));
@@ -29,9 +31,9 @@ class ProductPriceController extends Controller
     {
         return [
             'product_id'     => 'required|exists:products,id',
-            'price'          => 'required|numeric|min:0',
-            'currency'       => 'required|string|max:10',
-            'price_tier'     => 'nullable|string|max:50',
+            'price'          => 'required|numeric|min:0', 
+            'currency_id'    => 'required|exists:currencies,id',
+            'tier_id'        => 'nullable|exists:tiers,id',
             'effective_date' => 'nullable|date',
         ];
     }
@@ -67,6 +69,6 @@ class ProductPriceController extends Controller
     public function destroyProductPrice(ProductPrice $productPrice)
     {
         $productPrice->delete();
-        return redirect()->route('product-price.index')->with('success', 'Product Price deleted successfully.',200);
+        return redirect()->route('product.price.index')->with('success', 'Product Price deleted successfully.',200);
     }
 }

@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\{ProductPrice, Product, User};
+use App\Models\{ProductPrice, Product, User, Currency, Tier};
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ProductPrice>
@@ -17,15 +17,12 @@ class ProductPriceFactory extends Factory
      */
     public function definition(): array
     {
-        $tiers = ['Retail', 'Wholesale', 'Premium', 'Bulk'];
-        $currencies = ['THB', 'USD', 'EUR'];
-
         return [
-            'price' => $this->faker->randomFloat(2, 50, 2000), // ราคา 50-2000
-            'price_tier' => $this->faker->randomElement($tiers),
-            'currency' => $this->faker->randomElement($currencies),
+            'price' => $this->faker->randomFloat(2, 50, 20000), // ราคา 50-2000
+            'currency_id' => Currency::inRandomOrder()->first()?->id ?? Currency::factory(),
+            'tier_id' => Tier::inRandomOrder()->first()?->id ?? Tier::factory(),
             'effective_date' => $this->faker->dateTimeBetween('-1 year', '+6 months'),
-            'product_id' => Product::factory(), // จะสร้าง Product ใหม่ถ้าไม่มี
+            'product_id' => Product::inRandomOrder()->first()?->id ?? Product::factory(),
             'created_by' => User::inRandomOrder()->first()?->id ?? 1,
             'updated_by' => User::inRandomOrder()->first()?->id ?? 1,
         ];

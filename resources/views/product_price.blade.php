@@ -49,8 +49,8 @@
                             @php
                                 $statusText = $productPrice->status->status ?? 'Unknown';
                                 $productSKU = $productPrice->product->product_sku ?? 'N/A';
-                                $priceTier = $productPrice->price_tier?? 'N/A';
-                                $currency = $productPrice->currency ?? 'N/A';
+                                $priceTier = $productPrice->tier->name ?? 'N/A';
+                                $currency = $productPrice->currency->code ?? 'N/A';
                                 $effectiveDate = $productPrice->effective_date ?? 'N/A';
                                 $updatedBy = $productPrice->updater->name ?? 'N/A';
                                 $price = number_format($productPrice->price, 2);

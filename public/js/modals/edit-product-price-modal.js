@@ -16,20 +16,9 @@ document.addEventListener('alpine:init', () => {
             formData.append('_method', 'PUT');
             
             // Add all form fields
-            // formData.append('backstamp_code', this.backstampToEdit.backstamp_code || '');
-            // formData.append('name', this.backstampToEdit.name || '');
-            // formData.append('requestor_id', this.backstampToEdit.requestor_id || '');
-            // formData.append('customer_id', this.backstampToEdit.customer_id || '');
-            // formData.append('status_id', this.backstampToEdit.status_id || '');
-            // formData.append('duration', this.backstampToEdit.duration || '');
-            // formData.append('in_glaze', this.backstampToEdit.in_glaze ? '1' : '0');
-            // formData.append('on_glaze', this.backstampToEdit.on_glaze ? '1' : '0');
-            // formData.append('under_glaze', this.backstampToEdit.under_glaze ? '1' : '0');
-            // formData.append('air_dry', this.backstampToEdit.air_dry ? '1' : '0');
-            // formData.append('approval_date', this.backstampToEdit.approval_date || '');
             formData.append('price', this.productPriceToEdit.price || '');
-            formData.append('price_tier', this.productPriceToEdit.price_tier || '');
-            formData.append('currency', this.productPriceToEdit.currency || '');
+            formData.append('tier_id', this.productPriceToEdit.tier_id || '');
+            formData.append('currency_id', this.productPriceToEdit.currency_id || '');
             formData.append('effective_date', this.productPriceToEdit.effective_date || '');
             formData.append('product_id', this.productPriceToEdit.product_id || '');
             
