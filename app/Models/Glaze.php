@@ -27,6 +27,7 @@ class Glaze extends Model
         'glaze_outer_id',
         'effect_id',
         'image_id',
+        'updated_by',
     ];
 
     protected $casts = [

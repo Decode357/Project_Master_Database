@@ -26,6 +26,7 @@ class Pattern extends Model
         'under_glaze',
         'approval_date',
         'image_id',
+        'updated_by',
     ];
 
     // ถ้า column เป็น date
