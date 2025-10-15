@@ -1,3 +1,6 @@
+<!-- Create Product Price Modal -->
+<script src="{{ asset('js/modals/create-product-price-modal.js') }}"></script>
+
 <div id="CreateProductPriceModal" x-show="CreateProductPriceModal" x-transition.opacity
     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="display: none;">
 

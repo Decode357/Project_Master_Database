@@ -1,4 +1,6 @@
 <!-- Edit User Modal -->
+<script src="{{ asset('js/modals/edit-user-modal.js') }}"></script>
+
 <div id="EditUserModal" 
     x-show="EditUserModal" 
     x-transition.opacity

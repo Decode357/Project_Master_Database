@@ -1,4 +1,6 @@
 <!-- Create Glaze Inside Modal -->
+<script src="{{ asset('js/modals/create-glazeInsideOuter-modal.js') }}"></script>
+
 <div id="CreateGlazeInsideModal" x-show="CreateGlazeInsideModal" x-transition.opacity
     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="display: none;">
 

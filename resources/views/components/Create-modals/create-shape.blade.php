@@ -1,4 +1,6 @@
 <!-- Create Shape Modal -->
+<script src="{{ asset('js/modals/create-shape-modal.js') }}"></script>
+
 <div id="CreateShapeModal" x-show="CreateShapeModal" x-transition.opacity
     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="display: none;">
 

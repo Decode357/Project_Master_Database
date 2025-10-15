@@ -296,32 +296,8 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <!-- Modal common Scripts -->
-    <script src="{{ asset('js/modals/modal-common.js') }}"></script>
-
-    <!-- Create Specific Scripts -->
-    <script src="{{ asset('js/modals/create-product-price-modal.js') }}"></script>
-    <script src="{{ asset('js/modals/create-product-modal.js') }}"></script>
-    <script src="{{ asset('js/modals/create-shape-modal.js') }}"></script>
-    <script src="{{ asset('js/modals/create-pattern-modal.js') }}"></script>
-    <script src="{{ asset('js/modals/create-backstamp-modal.js') }}"></script>
-    <script src="{{ asset('js/modals/create-glaze-modal.js') }}"></script>
-    <script src="{{ asset('js/modals/create-color-modal.js') }}"></script>
-    <script src="{{ asset('js/modals/create-effect-modal.js') }}"></script>
-    <script src="{{ asset('js/modals/create-user-modal.js') }}"></script>
-    <script src="{{ asset('js/modals/create-glazeInsideOuter-modal.js') }}"></script>
+    <script src="{{ asset('js/modals/modal-common.js') }}"></script> 
     
-    <!-- Edit Specific Scripts -->
-    <script src="{{ asset('js/modals/edit-product-price-modal.js') }}"></script>
-    <script src="{{ asset('js/modals/edit-product-modal.js') }}"></script>
-    <script src="{{ asset('js/modals/edit-pattern-modal.js') }}"></script>
-    <script src="{{ asset('js/modals/edit-shape-modal.js') }}"></script>
-    <script src="{{ asset('js/modals/edit-backstamp-modal.js') }}"></script>
-    <script src="{{ asset('js/modals/edit-glaze-modal.js') }}"></script>
-    <script src="{{ asset('js/modals/edit-color-modal.js') }}"></script>
-    <script src="{{ asset('js/modals/edit-effect-modal.js') }}"></script>
-    <script src="{{ asset('js/modals/edit-user-modal.js') }}"></script>
-    <script src="{{ asset('js/modals/edit-glazeInsideOuter-modal.js') }}"></script>
-
     <!-- Page Specific Scripts -->
     <script src="{{ asset('js/pages/product-page.js') }}"></script>
     <script src="{{ asset('js/pages/product-price-page.js') }}"></script>

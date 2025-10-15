@@ -1,4 +1,6 @@
 <!-- Edit Backstamp Modal -->
+<script src="{{ asset('js/modals/edit-backstamp-modal.js') }}"></script>
+
 <div id="EditBackstampModal" x-show="EditBackstampModal" x-transition.opacity
     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="display: none;">
 

@@ -1,3 +1,6 @@
+<!-- Create User Modal -->
+<script src="{{ asset('js/modals/create-user-modal.js') }}"></script>
+
 <div x-show="CreateUserModal" x-transition.opacity
     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="display: none;">
     <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
