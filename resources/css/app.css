@@ -21,7 +21,8 @@
     top: 50%;
     transform: translateY(30%);
 }
-
+#CreateGlazeOuterModal .select2-container .select2-selection,
+#CreateGlazeInsideModal .select2-container .select2-selection,
 #CreateEffectModal .select2-container .select2-selection,
 #EditEffectModal .select2-container .select2-selection {
     @apply border border-gray-300 rounded-lg;
