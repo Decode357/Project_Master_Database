@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Http\Request;
-
+use Carbon\Carbon;
 use App\Models\{
     Shape,Pattern,Backstamp,
     Glaze,Color,Effect,User,
@@ -54,6 +54,75 @@ class PageController extends Controller
         $userCount = User::count();
         $productCount = Product::count();
 
+        // ---------- สร้างข้อมูลสำหรับกราฟ 30 วันล่าสุด ----------
+        $today = Carbon::today();
+        $start = $today->copy()->subDays(29); // รวมวันนี้ = 30 วันล่าสุด
+
+        // นับจำนวนที่ถูกสร้างในแต่ละวันสำหรับแต่ละ model
+        $productCountsByDate = Product::whereBetween('created_at', [$start->startOfDay(), $today->endOfDay()])
+            ->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as count'))
+            ->groupBy('date')
+            ->orderBy('date')
+            ->pluck('count', 'date')
+            ->toArray();
+
+        $shapeCountsByDate = Shape::whereBetween('created_at', [$start->startOfDay(), $today->endOfDay()])
+            ->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as count'))
+            ->groupBy('date')
+            ->orderBy('date')
+            ->pluck('count', 'date')
+            ->toArray();
+
+        $patternCountsByDate = Pattern::whereBetween('created_at', [$start->startOfDay(), $today->endOfDay()])
+            ->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as count'))
+            ->groupBy('date')
+            ->orderBy('date')
+            ->pluck('count', 'date')
+            ->toArray();
+
+        $backstampCountsByDate = Backstamp::whereBetween('created_at', [$start->startOfDay(), $today->endOfDay()])
+            ->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as count'))
+            ->groupBy('date')
+            ->orderBy('date')
+            ->pluck('count', 'date')
+            ->toArray();
+
+        $glazeCountsByDate = Glaze::whereBetween('created_at', [$start->startOfDay(), $today->endOfDay()])
+            ->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as count'))
+            ->groupBy('date')
+            ->orderBy('date')
+            ->pluck('count', 'date')
+            ->toArray();
+
+        $userCountsByDate = User::whereBetween('created_at', [$start->startOfDay(), $today->endOfDay()])
+            ->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as count'))
+            ->groupBy('date')
+            ->orderBy('date')
+            ->pluck('count', 'date')
+            ->toArray();
+
+        // เตรียม labels ($dates) และ values สำหรับแต่ละ dataset
+        $dates = [];
+        $productCounts = [];
+        $shapeCounts = [];
+        $patternCounts = [];
+        $backstampCounts = [];
+        $glazeCounts = [];
+        $userCounts = [];
+
+        for ($i = 0; $i < 30; $i++) {
+            $d = $start->copy()->addDays($i);
+            $key = $d->format('Y-m-d');
+            $dates[] = $d->format('d/m'); // label สำหรับแกน X
+            
+            $productCounts[] = $productCountsByDate[$key] ?? 0;
+            $shapeCounts[] = $shapeCountsByDate[$key] ?? 0;
+            $patternCounts[] = $patternCountsByDate[$key] ?? 0;
+            $backstampCounts[] = $backstampCountsByDate[$key] ?? 0;
+            $glazeCounts[] = $glazeCountsByDate[$key] ?? 0;
+            $userCounts[] = $userCountsByDate[$key] ?? 0;
+        }
+
         return view('dashboard', compact(
             'latestShapes',
             'latestPatterns',
@@ -65,7 +134,14 @@ class PageController extends Controller
             'glazeCount',
             'userCount',
             'latestProducts',
-            'productCount'
+            'productCount',
+            'dates',
+            'productCounts',
+            'shapeCounts',
+            'patternCounts',
+            'backstampCounts',
+            'glazeCounts',
+            'userCounts'
         ));
     }
 

@@ -2,6 +2,19 @@
 @section('title', 'Dashboard')
 @section('header', 'Dashboard')
 @section('content')
+
+<!-- ส่งข้อมูลผ่าน data attributes -->
+<div id="chart-data" 
+    data-dates="{{ json_encode($dates) }}" 
+    data-product-counts="{{ json_encode($productCounts) }}"
+    data-shape-counts="{{ json_encode($shapeCounts) }}"
+    data-pattern-counts="{{ json_encode($patternCounts) }}"
+    data-backstamp-counts="{{ json_encode($backstampCounts) }}"
+    data-glaze-counts="{{ json_encode($glazeCounts) }}"
+    data-user-counts="{{ json_encode($userCounts) }}"
+    style="display: none;">
+</div>
+
 <main class="flex-1 bg-gray-50" x-data="{ CreateEffectModal: false, DeleteModal: false }">
     <!-- Summary Bar -->
     <div class="grid grid-cols-3 md:grid-cols-6 gap-4 mb-6">
@@ -30,6 +43,14 @@
             <span class="text-xs text-gray-500 mt-1 uppercase tracking-wider">Users</span>
         </div>
     </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-md md:col-span-2 mb-6">
+        <h2 class="text-lg font-semibold mb-4">Items Created (Last 30 Days)</h2>
+        <div class="relative h-80 w-full">
+            <canvas id="productChart"></canvas>
+        </div>
+    </div>
+
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <!-- Latest Products -->
         <div class="bg-white p-6 rounded-lg shadow-md md:col-span-2 overflow-x-auto">
@@ -177,3 +198,4 @@
     </div>
 </main>
 @endsection
+
