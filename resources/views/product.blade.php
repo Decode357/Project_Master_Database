@@ -4,25 +4,52 @@
 @section('content')
     <main x-data="productPage()" x-init="initSelect2()">
         <!-- Filters -->
-        <div class="bg-white p-6 rounded-lg shadow-md mb-3">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="md:col-span-1">
+        <div class="bg-white p-6 rounded-lg shadow-md mb-3 ">
+            <form method="GET" action="{{ route('product.index') }}" class="flex flex-wrap items-end gap-4">
+                <!-- Search Input -->
+                <div class="flex-1 min-w-64">
                     <div class="relative">
-                        <span
-                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
-                        <input type="text" placeholder="Search by ITEM CODE or etc.."
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by ITEM CODE or etc.."
                             class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
                     </div>
                 </div>
-                <div class="md:col-span-2 flex justify-end items-center gap-4">
-                    <button @click="openCreateModal()"
+                <!-- Search and Reset buttons -->
+                <div class="flex gap-2">
+                    <button type="submit" 
+                            class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hoverScale hover:bg-green-700 transition">
+                        <span class="material-symbols-outlined">search</span>
+                        <span>Search</span>
+                    </button>
+                    
+                    <a href="{{ route('product.index') }}" 
+                            class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hoverScale hover:bg-gray-300 transition">
+                        <span class="material-symbols-outlined">refresh</span>
+                        <span>Reset</span>
+                    </a>
+                </div>        
+                <!-- Items per page select -->
+                <div>
+                    <select name="per_page" onchange="this.form.submit()" 
+                            class="w-32 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+                        <option value="5" {{ request('per_page') == 5 ? 'selected' : '' }}>5 Items</option>
+                        <option value="10" {{ request('per_page') == 10 || !request('per_page') ? 'selected' : '' }}>10 Items</option>
+                        <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25 Items</option>
+                        <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50 Items</option>
+                        <option value="100" {{ request('per_page') == 100 ? 'selected' : '' }}>100 Items</option>
+                    </select>
+                </div>
+                <!-- Add Product button -->
+                <div class="ml-auto">
+                    <button type="button" @click="openCreateModal()"
                         class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hoverScale hover:bg-blue-700 transition">
                         <span class="material-symbols-outlined">add</span>
                         <span>Add Product</span>
                     </button>
                 </div>
-            </div>
+            </form>
         </div>
+
         <!-- Table -->
         <div class="rounded-xl p-3 shadow-md bg-white">
             <div class="overflow-x-auto rounded-xl">
@@ -100,19 +127,24 @@
                         @empty
                             <tr>
                                 <td colspan="6" class="px-6 py-4 text-sm text-gray-500 text-center">
-                                    No products found.
+                                    @if(request('search'))
+                                        No products found for "{{ request('search') }}".
+                                    @else
+                                        No products found.
+                                    @endif
                                 </td>
                             </tr>
                         @endforelse
-
                     </tbody>
                 </table>
-                <!-- Pagination -->
-                <div class="mt-4 flex justify-end">
+                
+                <!-- Pagination Info และ Links -->
+                <div class="flex justify-end">
                     {{ $products->links('vendor.pagination.tailwind-custom') }}
                 </div>
             </div>
         </div>
+        
         <!-- Modals -->
         @include('components.Edit-modals.edit-product')
         @include('components.Detail-modals.detail-product')

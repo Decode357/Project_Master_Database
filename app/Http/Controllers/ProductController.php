@@ -12,7 +12,7 @@ use Illuminate\Validation\Rule;
 
 class ProductController extends Controller
 {
-    public function productindex()
+    public function productindex(Request $request)
     {
         $relations = [
             'status', 'category', 'shape', 'glaze', 'pattern',
@@ -22,7 +22,35 @@ class ProductController extends Controller
             'backstamp', 'creator', 'updater', 'image',
         ];
 
-        $products = Product::with($relations)->latest()->paginate(10);
+        // รับค่า perPage จาก request หรือใช้ default 10
+        $perPage = $request->get('per_page', 10);
+        
+        // จำกัดค่า perPage ที่อนุญาต
+        $allowedPerPage = [5, 10, 25, 50, 100];
+        if (!in_array($perPage, $allowedPerPage)) {
+            $perPage = 10;
+        }
+
+        // รับค่า search
+        $search = $request->get('search');
+
+        $query = Product::with($relations);
+
+        // เพิ่ม search functionality
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('product_sku', 'LIKE', "%{$search}%")
+                ->orWhere('product_name', 'LIKE', "%{$search}%")
+                ->orWhereHas('category', function($q) use ($search) {
+                    $q->where('category_name', 'LIKE', "%{$search}%");
+                })
+                ->orWhereHas('status', function($q) use ($search) {
+                    $q->where('status', 'LIKE', "%{$search}%");
+                });
+            });
+        }
+
+        $products = $query->latest()->paginate($perPage)->appends($request->query());
 
         $data = [
             'statuses'   => Status::all(),
@@ -35,7 +63,7 @@ class ProductController extends Controller
             'images'     => Image::all(),
         ];
 
-        return view('product', array_merge($data, compact('products')));
+        return view('product', array_merge($data, compact('products', 'perPage', 'search')));
     }
 
     private function rules($id = null)

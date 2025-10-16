@@ -40,8 +40,8 @@ function dashboardPage() {
                         {
                             label: 'Products',
                             data: productCounts,
-                            borderColor: '#10b981',
-                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            borderColor: '#22c55e',
+                            backgroundColor: 'rgba(34, 197, 94, 0.1)',
                             borderWidth: 2,
                             tension: 0.3,
                             fill: false,
@@ -62,8 +62,8 @@ function dashboardPage() {
                         {
                             label: 'Patterns',
                             data: patternCounts,
-                            borderColor: '#22c55e',
-                            backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                            borderColor: '#27a83a',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
                             borderWidth: 2,
                             tension: 0.3,
                             fill: false,
@@ -95,8 +95,8 @@ function dashboardPage() {
                         {
                             label: 'Users',
                             data: userCounts,
-                            borderColor: '#7c3aed',
-                            backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                            borderColor: '#000000',
+                            backgroundColor: 'rgba(0, 0, 0, 0.1)',
                             borderWidth: 2,
                             tension: 0.3,
                             fill: false,

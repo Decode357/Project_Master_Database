@@ -2,7 +2,8 @@
 @section('title', 'Dashboard')
 @section('header', 'Dashboard')
 @section('content')
-
+<!-- Chart.js CDN -->
+<script src="{{ asset('js/pages/dashboard-page.js') }}"></script>
 <!-- ส่งข้อมูลผ่าน data attributes -->
 <div id="chart-data" 
     data-dates="{{ json_encode($dates) }}" 
@@ -39,14 +40,14 @@
             <span class="text-xs text-gray-500 mt-1 uppercase tracking-wider">Glazes</span>
         </div>
         <div class="bg-white rounded-lg shadow p-4 flex flex-col items-center">
-            <span class="text-2xl font-bold text-purple-800">{{ $userCount }}</span>
+            <span class="text-2xl font-bold text-black">{{ $userCount }}</span>
             <span class="text-xs text-gray-500 mt-1 uppercase tracking-wider">Users</span>
         </div>
     </div>
 
     <div class="bg-white p-6 rounded-lg shadow-md md:col-span-2 mb-6">
         <h2 class="text-lg font-semibold mb-4">Items Created (Last 30 Days)</h2>
-        <div class="relative h-80 w-full">
+        <div class="w-full" style="height: 220px; position: relative;">
             <canvas id="productChart"></canvas>
         </div>
     </div>

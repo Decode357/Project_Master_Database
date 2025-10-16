@@ -7,7 +7,7 @@
 
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-xl font-semibold text-gray-800">Confirm Delete</h2>
-            <button @click="DeleteColorModal = false" class="text-gray-400 hover:text-gray-700 rounded-full p-2">
+            <button @click="DeleteColorModal = false" class="text-gray-400 hoverScale hover:text-gray-700 rounded-full p-2">
                 <span class="material-symbols-outlined">close</span>
             </button>
         </div>
@@ -21,14 +21,14 @@
 
         <div class="flex justify-end gap-3">
             <button @click="DeleteColorModal = false"
-                class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">
+                class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hoverScale hover:bg-gray-300">
                 Cancel
             </button>
 
             <form :action="`/color/${colorIdToDelete}`" method="POST">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">
+                <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded-lg hoverScale hover:bg-red-600">
                     Delete
                 </button>
             </form>
