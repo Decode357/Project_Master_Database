@@ -14,7 +14,7 @@ use App\Models\{
     ShapeType,Status,Process,
     GlazeOuter,GlazeInside,
     ItemGroup,Designer,ShapeCollection,
-    Image,Product,ProductCategory
+    Image
 };
 
 
@@ -41,30 +41,19 @@ class PageController extends Controller
             ->orderBy('updated_at', 'desc')
             ->take(5)
             ->get();
-        $latestProducts = Product::with(['updater'])
-            ->orderBy('updated_at', 'desc')
-            ->take(5)
-            ->get();
 
         // เพิ่ม count ของแต่ละ table
         $shapeCount = Shape::count();
         $patternCount = Pattern::count();
         $backstampCount = Backstamp::count();
         $glazeCount = Glaze::count();
-        $userCount = User::count();
-        $productCount = Product::count();
+        // $userCount = User::count();
 
         // ---------- สร้างข้อมูลสำหรับกราฟ 30 วันล่าสุด ----------
         $today = Carbon::today();
         $start = $today->copy()->subDays(29); // รวมวันนี้ = 30 วันล่าสุด
 
         // นับจำนวนที่ถูกสร้างในแต่ละวันสำหรับแต่ละ model
-        $productCountsByDate = Product::whereBetween('created_at', [$start->startOfDay(), $today->endOfDay()])
-            ->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as count'))
-            ->groupBy('date')
-            ->orderBy('date')
-            ->pluck('count', 'date')
-            ->toArray();
 
         $shapeCountsByDate = Shape::whereBetween('created_at', [$start->startOfDay(), $today->endOfDay()])
             ->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as count'))
@@ -94,33 +83,25 @@ class PageController extends Controller
             ->pluck('count', 'date')
             ->toArray();
 
-        $userCountsByDate = User::whereBetween('created_at', [$start->startOfDay(), $today->endOfDay()])
-            ->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as count'))
-            ->groupBy('date')
-            ->orderBy('date')
-            ->pluck('count', 'date')
-            ->toArray();
 
         // เตรียม labels ($dates) และ values สำหรับแต่ละ dataset
         $dates = [];
-        $productCounts = [];
         $shapeCounts = [];
         $patternCounts = [];
         $backstampCounts = [];
         $glazeCounts = [];
-        $userCounts = [];
+        // $userCounts = [];
 
         for ($i = 0; $i < 30; $i++) {
             $d = $start->copy()->addDays($i);
             $key = $d->format('Y-m-d');
             $dates[] = $d->format('d/m'); // label สำหรับแกน X
             
-            $productCounts[] = $productCountsByDate[$key] ?? 0;
             $shapeCounts[] = $shapeCountsByDate[$key] ?? 0;
             $patternCounts[] = $patternCountsByDate[$key] ?? 0;
             $backstampCounts[] = $backstampCountsByDate[$key] ?? 0;
             $glazeCounts[] = $glazeCountsByDate[$key] ?? 0;
-            $userCounts[] = $userCountsByDate[$key] ?? 0;
+            // $userCounts[] = $userCountsByDate[$key] ?? 0;
         }
 
         return view('dashboard', compact(
@@ -132,16 +113,13 @@ class PageController extends Controller
             'patternCount',
             'backstampCount',
             'glazeCount',
-            'userCount',
-            'latestProducts',
-            'productCount',
+            // 'userCount',
             'dates',
-            'productCounts',
             'shapeCounts',
             'patternCounts',
             'backstampCounts',
             'glazeCounts',
-            'userCounts'
+            // 'userCounts'
         ));
     }
 

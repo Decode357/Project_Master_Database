@@ -25,29 +25,16 @@ function dashboardPage() {
             }
 
             const dates = JSON.parse(chartDataElement.getAttribute('data-dates') || '[]');
-            const productCounts = JSON.parse(chartDataElement.getAttribute('data-product-counts') || '[]');
             const shapeCounts = JSON.parse(chartDataElement.getAttribute('data-shape-counts') || '[]');
             const patternCounts = JSON.parse(chartDataElement.getAttribute('data-pattern-counts') || '[]');
             const backstampCounts = JSON.parse(chartDataElement.getAttribute('data-backstamp-counts') || '[]');
             const glazeCounts = JSON.parse(chartDataElement.getAttribute('data-glaze-counts') || '[]');
-            const userCounts = JSON.parse(chartDataElement.getAttribute('data-user-counts') || '[]');
 
             new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: dates,
                     datasets: [
-                        {
-                            label: 'Products',
-                            data: productCounts,
-                            borderColor: '#22c55e',
-                            backgroundColor: 'rgba(34, 197, 94, 0.1)',
-                            borderWidth: 2,
-                            tension: 0.3,
-                            fill: false,
-                            pointRadius: 1,
-                            pointHoverRadius: 4
-                        },
                         {
                             label: 'Shapes',
                             data: shapeCounts,
@@ -59,6 +46,17 @@ function dashboardPage() {
                             pointRadius: 1,
                             pointHoverRadius: 4
                         },
+                        {
+                            label: 'Glazes',
+                            data: glazeCounts,
+                            borderColor: '#8b5cf6',
+                            backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.3,
+                            fill: false,
+                            pointRadius: 1,
+                            pointHoverRadius: 4
+                        },                        
                         {
                             label: 'Patterns',
                             data: patternCounts,
@@ -81,28 +79,6 @@ function dashboardPage() {
                             pointRadius: 1,
                             pointHoverRadius: 4
                         },
-                        {
-                            label: 'Glazes',
-                            data: glazeCounts,
-                            borderColor: '#8b5cf6',
-                            backgroundColor: 'rgba(139, 92, 246, 0.1)',
-                            borderWidth: 2,
-                            tension: 0.3,
-                            fill: false,
-                            pointRadius: 1,
-                            pointHoverRadius: 4
-                        },
-                        {
-                            label: 'Users',
-                            data: userCounts,
-                            borderColor: '#000000',
-                            backgroundColor: 'rgba(0, 0, 0, 0.1)',
-                            borderWidth: 2,
-                            tension: 0.3,
-                            fill: false,
-                            pointRadius: 1,
-                            pointHoverRadius: 4
-                        }
                     ]
                 },
                 options: {

@@ -24,11 +24,6 @@ use App\Models\{
     Image,
     GlazeInside,
     GlazeOuter,
-    Product,
-    ProductPrice,
-    ProductCategory,
-    Tier,
-    Currency
 };
 
 class DatabaseSeeder extends Seeder
@@ -63,11 +58,6 @@ class DatabaseSeeder extends Seeder
         GlazeInside::truncate();
         GlazeOuter::truncate();
         ItemGroup::truncate();
-        ProductCategory::truncate();
-        Product::truncate();
-        ProductPrice::truncate();
-        Tier::truncate();
-        Currency::truncate();
 
         Schema::enableForeignKeyConstraints();
 
@@ -92,11 +82,6 @@ class DatabaseSeeder extends Seeder
             PatternSeeder::class,
             GlazeSeeder::class,
             ShapeSeeder::class,
-            ProductCategorySeeder::class,
-            ProductSeeder::class,
-            CurrencySeeder::class,
-            TierSeeder::class,
-            ProductPriceSeeder::class,
         ]);
     }
 }

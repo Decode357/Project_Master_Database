@@ -43,13 +43,6 @@
                     <span class="material-symbols-outlined text-lg">home</span>
                     <span>Dashboards</span>
                 </a>
-                
-                <a href="{{ route('product.index') }}"
-                    class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium
-                    {{ request()->routeIs('product.index') ? 'bg-primary-50 text-primary-600 font-semibold scale-110' : 'text-gray-700 hoverScale hover:bg-gray-100' }}">
-                    <span class="material-symbols-outlined text-lg">package_2</span>
-                    <span>Products</span>
-                </a>
 
                 <a href="{{ route('shape.index') }}"
                     class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium
@@ -89,13 +82,6 @@
                 @role('admin|superadmin')
                     <hr class="my-2" />
                     <span class="text-center text-sm text-gray-400">Admin console</span>
-
-                    <a href="{{ route('product.price.index') }}"
-                        class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium
-                    {{ request()->routeIs('product.price.index') ? 'bg-primary-50 text-primary-600 font-semibold scale-110' : 'text-gray-700 hoverScale hover:bg-gray-100' }}">
-                        <span class="material-symbols-outlined text-lg">paid</span>
-                        <span>Product Price</span>
-                    </a>
 
                     <a href="{{ route('user') }}"
                         class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium
@@ -300,8 +286,6 @@
     <script src="{{ asset('js/modals/modal-common.js') }}"></script> 
     
     <!-- Page Specific Scripts -->
-    <script src="{{ asset('js/pages/product-page.js') }}"></script>
-    <script src="{{ asset('js/pages/product-price-page.js') }}"></script>
     <script src="{{ asset('js/pages/shape-page.js') }}"></script>
     <script src="{{ asset('js/pages/pattern-page.js') }}"></script>
     <script src="{{ asset('js/pages/backstamp-page.js') }}"></script>
