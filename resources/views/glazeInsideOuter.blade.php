@@ -17,7 +17,7 @@
                         <input type="hidden" name="outer_page" value="{{ request('outer_page') }}">
 
                         <!-- Search -->
-                        <div class="flex-1 min-w-64">
+                        <div class="flex-1 min-w-32">
                             <div class="relative">
                                 <span
                                     class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
@@ -144,7 +144,7 @@
                         <input type="hidden" name="inside_page" value="{{ request('inside_page') }}">
 
                         <!-- Search -->
-                        <div class="flex-1 min-w-64">
+                        <div class="flex-1 min-w-32">
                             <div class="relative">
                                 <span
                                     class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>

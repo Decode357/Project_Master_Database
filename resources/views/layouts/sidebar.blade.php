@@ -233,13 +233,6 @@
                     </h2>
                 </div>
                 <div class="flex items-center gap-4">
-                    <div class="relative w-full max-w-md">
-                        <input type="search" placeholder="search..."
-                            class="w-full rounded-full border border-gray-300 px-4 py-2 pl-10 text-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition" />
-                        <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-                            <span class="material-symbols-outlined mt-2">search</span>
-                        </span>
-                    </div>
                     <button class="rounded-full p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
                         <span class="material-symbols-outlined">notifications</span>
                     </button>
