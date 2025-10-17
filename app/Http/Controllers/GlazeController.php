@@ -8,17 +8,54 @@ use App\Models\{
     Glaze, Status, Effect, 
     GlazeInside, GlazeOuter, Image
 };
- 
+
 class GlazeController extends Controller
 {
-    public function glazeindex()
+    public function glazeindex(Request $request)
     {        
         $relations = [
-            'status', 'updater', 'effect.colors',        
+            'status', 'updater', 'effect.colors','effect',        
             'glazeInside.colors', 'glazeOuter.colors', 'image'
         ];
 
-        $glazes = Glaze::with($relations)->latest()->paginate(10);
+        // รับค่า perPage จาก request หรือใช้ default 10
+        $perPage = $request->get('per_page', 10);
+        
+        // จำกัดค่า perPage ที่อนุญาต
+        $allowedPerPage = [5, 10, 25, 50, 100];
+        if (!in_array($perPage, $allowedPerPage)) {
+            $perPage = 10;
+        }
+
+        // รับค่า search
+        $search = $request->get('search');
+
+        $query = Glaze::with($relations);
+        // เพิ่ม search functionality
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('glaze_code', 'LIKE', "%{$search}%")
+                ->orWhere('fire_temp', 'LIKE', "%{$search}%")
+                ->orWhere('approval_date', 'LIKE', "%{$search}%")
+                ->orWhereHas('effect', function($q) use ($search) {
+                    $q->where('effect_code', 'LIKE', "%{$search}%");
+                })
+                ->orWhereHas('glazeOuter', function($q) use ($search) {
+                    $q->where('glaze_outer_code', 'LIKE', "%{$search}%");
+                })
+                ->orWhereHas('glazeInside', function($q) use ($search) {
+                    $q->where('glaze_inside_code', 'LIKE', "%{$search}%");
+                })
+                ->orWhereHas('status', function($q) use ($search) {
+                    $q->where('status', 'LIKE', "%{$search}%");
+                })
+                ->orWhereHas('updater', function($q) use ($search) {
+                    $q->where('name', 'LIKE', "%{$search}%");
+                });
+            });
+        }
+
+        $glazes = $query->latest()->paginate($perPage)->appends($request->query());
 
         $data = [
             'statuses'     => Status::all(),

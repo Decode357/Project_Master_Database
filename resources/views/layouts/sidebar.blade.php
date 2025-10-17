@@ -57,7 +57,14 @@
                     <span class="material-symbols-outlined text-lg">shapes</span>
                     <span>Shapes</span>
                 </a>
-
+                
+                <a href="{{ route('glaze.index') }}"
+                    class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium
+                    {{ request()->routeIs('glaze.index') ? 'bg-primary-50 text-primary-600 font-semibold scale-110' : 'text-gray-700 hoverScale hover:bg-gray-100' }}">
+                    <span class="material-symbols-outlined text-lg">water_drop</span>
+                    <span>Glazes</span>
+                </a>
+                
                 <a href="{{ route('pattern.index') }}"
                     class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium
                     {{ request()->routeIs('pattern.index') ? 'bg-primary-50 text-primary-600 font-semibold scale-110' : 'text-gray-700 hoverScale hover:bg-gray-100' }}">
@@ -71,13 +78,7 @@
                     <span class="material-symbols-outlined text-lg">verified</span>
                     <span>Backstamps</span>
                 </a>
-                
-                <a href="{{ route('glaze.index') }}"
-                    class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium
-                    {{ request()->routeIs('glaze.index') ? 'bg-primary-50 text-primary-600 font-semibold scale-110' : 'text-gray-700 hoverScale hover:bg-gray-100' }}">
-                    <span class="material-symbols-outlined text-lg">water_drop</span>
-                    <span>Glazes</span>
-                </a>
+
                 @php
                     use Spatie\Permission\Models\Permission;
                     use Illuminate\Support\Facades\Auth;
@@ -260,7 +261,7 @@
             </header>
 
             <!-- ✅ แก้ไข: Content section -->
-            <section class="flex-1 p-6  overflow-y-auto ml-0 md:ml-0 transition-all duration-300">
+            <section class="flex-1 p-3  overflow-y-auto ml-0 md:ml-0 transition-all duration-300">
                 <div>
                     @yield('content')
                 </div>

@@ -7,21 +7,48 @@ use App\Models\{GlazeInside,GlazeOuter,Color};
 
 class GlazeInsideOuterController extends Controller
 {
-public function index()
-{
-    $glaze_insides = GlazeInside::with('colors')
-        ->latest()
-        ->paginate(10, ['*'], 'inside_page');   
+    public function index(Request $request)
+    {
+        // รับค่า pagination parameters
+        $insidePerPage = $request->get('inside_per_page', 10);
+        $outerPerPage = $request->get('outer_per_page', 10);
+        
+        // จำกัดค่า perPage ที่อนุญาต
+        $allowedPerPage = [5, 10, 25, 50, 100];
+        if (!in_array($insidePerPage, $allowedPerPage)) $insidePerPage = 10;
+        if (!in_array($outerPerPage, $allowedPerPage)) $outerPerPage = 10;
+        
+        // รับค่า search parameters
+        $insideSearch = $request->get('inside_search');
+        $outerSearch = $request->get('outer_search');
 
-    $glaze_outers = GlazeOuter::with('colors')
-        ->latest()
-        ->paginate(10, ['*'], 'outer_page'); 
-    
-    $colors = Color::all();
+        // Query สำหรับ Glaze Inside
+        $insideQuery = GlazeInside::with('colors');
+        if ($insideSearch) {
+            $insideQuery->where('glaze_inside_code', 'LIKE', "%{$insideSearch}%");
+        }
+        
+        $glaze_insides = $insideQuery->latest()
+            ->paginate($insidePerPage, ['*'], 'inside_page')
+            ->appends($request->except('inside_page'));
 
-    return view('glazeInsideOuter', compact('glaze_insides', 'glaze_outers', 'colors'));
-}
+        // Query สำหรับ Glaze Outer  
+        $outerQuery = GlazeOuter::with('colors');
+        if ($outerSearch) {
+            $outerQuery->where('glaze_outer_code', 'LIKE', "%{$outerSearch}%");
+        }
+        
+        $glaze_outers = $outerQuery->latest()
+            ->paginate($outerPerPage, ['*'], 'outer_page')
+            ->appends($request->except('outer_page'));
+        
+        $colors = Color::all();
 
+        return view('glazeInsideOuter', compact(
+            'glaze_insides', 'glaze_outers', 'colors',
+            'insidePerPage', 'outerPerPage', 'insideSearch', 'outerSearch'
+        ));
+    }
 
     private function rules($type = 'outer', $id = null)
     {

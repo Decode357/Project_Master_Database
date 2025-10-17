@@ -11,12 +11,48 @@ use App\Models\{User, Department, Requestor, Customer};
 class UserController extends Controller
 {
     // 🔹 User Management Controller
-    public function user()
+    public function user(Request $request)
     {
+        $relations = [
+            'roles','department', 'requestor', 'customer'
+        ];
+
+        // รับค่า perPage จาก request หรือใช้ default 10
+        $perPage = $request->get('per_page', 10);
+        // จำกัดค่า perPage ที่อนุญาต
+        $allowedPerPage = [5, 10, 25, 50, 100];
+        if (!in_array($perPage, $allowedPerPage)) {
+            $perPage = 10;
+        }
+
+        // รับค่า search
+        $search = $request->get('search');
+        $query = User::with($relations);
+        // เพิ่ม search functionality
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%")
+                ->orWhere('email', 'LIKE', "%{$search}%")
+                ->orWhereHas('roles', function($q) use ($search) {
+                    $q->where('name', 'LIKE', "%{$search}%");
+                })
+                ->orWhereHas('permissions', function($q) use ($search) {
+                    $q->where('name', 'LIKE', "%{$search}%");
+                })
+                ->orWhereHas('department', function($q) use ($search) {
+                    $q->where('name', 'LIKE', "%{$search}%");
+                })
+                ->orWhereHas('requestor', function($q) use ($search) {
+                    $q->where('name', 'LIKE', "%{$search}%");
+                })
+                ->orWhereHas('customer', function($q) use ($search) {
+                    $q->where('name', 'LIKE', "%{$search}%");
+                });
+            });
+        }
+
         // ดึง user ทั้งหมดพร้อม roles + paginate
-        $users = User::with(['roles','department', 'requestor', 'customer'])
-            ->orderBy('id', 'desc')
-            ->paginate(10);
+        $users = $query->latest()->paginate($perPage)->appends($request->query());
 
         // สีแต่ละ permission
         $permissionColors = [
@@ -36,7 +72,7 @@ class UserController extends Controller
             $user->userPermissions = $user->getAllPermissions()->pluck('name')->toArray();
         }
 
-        return view('user', compact('users', 'departments', 'requestors', 'customers', 'permissionColors'));
+        return view('user', compact('users', 'departments', 'requestors', 'customers', 'permissionColors', 'perPage', 'search'));
     }
 
     public function storeUser(Request $request)

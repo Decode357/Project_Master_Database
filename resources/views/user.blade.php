@@ -3,115 +3,148 @@
 @section('header', 'User Management')
 @section('content')
     <main x-data="userPage()" x-init="initSelect2()">
+        @php
+            use Spatie\Permission\Models\Permission;
+            use Illuminate\Support\Facades\Auth;
+
+            $user = Auth::user();
+            $hasManageUsers = $user->getDirectPermissions()->pluck('name')->contains('manage users');
+        @endphp
         <!-- Filters -->
         <div class="bg-white p-6 rounded-lg shadow-md mb-3 ">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <!-- Search -->
-                <div class="md:col-span-1">
+            <form method="GET" action="{{ route('user') }}" class="flex flex-wrap items-end gap-4">
+                <!-- Search Input -->
+                <div class="flex-1 min-w-64">
                     <div class="relative">
                         <span
                             class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
-                        <input type="text" placeholder="Search by username or role"
+                        <input type="text" name="search" value="{{ request('search') }}"
+                            placeholder="Search by ITEM CODE or etc.."
                             class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
                     </div>
                 </div>
-                @php
-                    use Spatie\Permission\Models\Permission;
-                    use Illuminate\Support\Facades\Auth;
+                <!-- Search and Reset buttons -->
+                <div class="flex gap-2">
+                    <button type="submit"
+                        class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hoverScale hover:bg-green-700 transition">
+                        <span class="material-symbols-outlined">search</span>
+                        <span>Search</span>
+                    </button>
 
-                    $user = Auth::user();
-                    $hasManageUsers = $user->getDirectPermissions()->pluck('name')->contains('manage users');
-                @endphp
-
+                    <a href="{{ route('user') }}"
+                        class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hoverScale hover:bg-gray-300 transition">
+                        <span class="material-symbols-outlined">refresh</span>
+                        <span>Reset</span>
+                    </a>
+                </div>
+                <!-- Items per page select -->
+                <div>
+                    <select name="per_page" onchange="this.form.submit()"
+                        class="w-32 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+                        <option value="5" {{ request('per_page') == 5 ? 'selected' : '' }}>5 Items</option>
+                        <option value="10" {{ request('per_page') == 10 || !request('per_page') ? 'selected' : '' }}>10 Items</option>
+                        <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25 Items</option>
+                        <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50 Items</option>
+                        <option value="100" {{ request('per_page') == 100 ? 'selected' : '' }}>100 Items</option>
+                    </select>
+                </div>
+                <!-- Add User button -->
                 @if ($hasManageUsers)
-                    <div class="md:col-span-2 flex flex-wrap items-center justify-end gap-4">
-                        <button @click="openCreateModal()"
+                    <div class="ml-auto">
+                        <button type="button" @click="openCreateModal()"
                             class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hoverScale hover:bg-blue-700 transition">
                             <span class="material-symbols-outlined">add</span>
                             <span>Create User</span>
                         </button>
                     </div>
                 @endif
-
-            </div>
+            </form>
         </div>
 
         <!-- Table -->
-        <div class="bg-white p-3 rounded-xl shadow-md overflow-x-auto">
-            <table class="w-full text-sm text-left text-gray-600">
-                <thead class="text-xs text-gray-500 uppercase bg-gray-50">
-                    <tr>
-                        <th class="px-3 py-3 w-[40px]">ID</th>
-                        <th class="px-3 py-3 w-[180px]">Name</th>
-                        <th class="px-3 py-3 w-[220px]">Email</th>
-                        <th class="px-3 py-3 w-[80px]">Password</th>
-                        <th class="px-3 py-3 w-[120px]">Role</th>
-                        <th class="px-3 py-3 w-[436px]">Permission</th>
-                        <th class="px-3 py-3">Department</th>
-                        <th class="px-3 py-3">Requestor</th>
-                        <th class="px-3 py-3">Customer</th>
-                        <th class="px-3 py-3 text-right max-w-[80px]">Actions</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    @foreach ($users as $user)
-                        <tr class="bg-white border-b max-h-[60px] hover:bg-gray-50">
-                            <td class="px-3 py-3 font-medium text-gray-900">{{ $user->id }}</td>
-                            <td class="px-3 py-3 font-medium text-gray-900">{{ Str::limit($user->name, 15) }}</td>
-                            <td class="px-3 py-3 font-medium text-gray-900">{{ Str::limit($user->email, 20) }}</td>
-
-                            <td class="px-3 py-3">********</td>
-                            <td class="px-3 py-3">
-                                @foreach ($user->roles as $role)
-                                    <span
-                                        class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                                        {{ ucfirst($role->name) }}
-                                    </span>
-                                @endforeach
-                            </td>
-                            <td class="px-3 py-3 space-x-1">
-                                @foreach ($user->permissions as $perm)
-                                    <span
-                                        class="inline-block {{ $permissionColors[$perm->name] ?? 'bg-gray-100 text-gray-800' }} text-xs font-medium px-2.5 py-0.5 rounded-full">
-                                        {{ $perm->name }}
-                                    </span>
-                                @endforeach
-                            </td>
-                            <td class="px-3 py-3">{{ $user->department?->name ?? '' }}</td>
-                            <td class="px-3 py-3">{{ $user->requestor?->name ?? '' }}</td>
-                            <td class="px-3 py-3">{{ $user->customer?->name ?? '' }}</td>
-                            @php
-                                $currentUser = Auth::user();
-                                $currentRole = $currentUser->roles->pluck('name')->first(); // สมมติผู้ใช้มี role แค่ role เดียว
-                                $rowRole = $user->roles->pluck('name')->first();
-                            @endphp
-
-                            @if ($hasManageUsers && ($currentRole === 'superadmin' || $rowRole !== 'superadmin') && $user->id !== auth()->id())
-                                <td class="text-right space-x-2 max-w-[80px]">
-                                    <button
-                                        @click="openEditModal({{ $user->toJson() }})"
-                                        class="text-blue-600 hoverScale hover:text-blue-700">
-                                        <span class="material-symbols-outlined">edit</span>
-                                    </button>
-
-                                    <button
-                                        @click="DeleteUserModal = true; userIdToDelete = {{ $user->id }}; userNameToDelete = '{{ $user->name }}'"
-                                        class="text-red-500 hoverScale hover:text-red-700">
-                                        <span class="material-symbols-outlined">delete</span>
-                                    </button>
-                                </td>
-                            @else
-                                <td class="text-right max-w-[80px]"></td>
-                            @endif
-
+        <div class="rounded-xl p-3 shadow-md bg-white">
+            <div class="overflow-x-auto rounded-xl">
+                <table class="w-full text-sm text-left text-gray-600">
+                    <thead class="text-xs text-gray-500 uppercase bg-gray-50">
+                        <tr>
+                            <th class="px-3 py-3 w-[40px]">ID</th>
+                            <th class="px-3 py-3 w-[180px]">Name</th>
+                            <th class="px-3 py-3 w-[220px]">Email</th>
+                            <th class="px-3 py-3 w-[80px]">Password</th>
+                            <th class="px-3 py-3 w-[120px]">Role</th>
+                            <th class="px-3 py-3 w-[436px]">Permission</th>
+                            <th class="px-3 py-3">Department</th>
+                            <th class="px-3 py-3">Requestor</th>
+                            <th class="px-3 py-3">Customer</th>
+                            <th class="px-3 py-3 text-right max-w-[80px]">Actions</th>
                         </tr>
-                    @endforeach
-                </tbody>
+                    </thead>
 
-            </table>
+                    <tbody>
+                        @forelse ($users as $user)
+                            <tr class="bg-white border-b max-h-[60px] hover:bg-gray-50">
+                                <td class="px-3 py-3 font-medium text-gray-900">{{ $user->id }}</td>
+                                <td class="px-3 py-3 font-medium text-gray-900">{{ Str::limit($user->name, 15) }}</td>
+                                <td class="px-3 py-3 font-medium text-gray-900">{{ Str::limit($user->email, 20) }}</td>
+
+                                <td class="px-3 py-3">********</td>
+                                <td class="px-3 py-3">
+                                    @foreach ($user->roles as $role)
+                                        <span
+                                            class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                            {{ ucfirst($role->name) }}
+                                        </span>
+                                    @endforeach
+                                </td>
+                                <td class="px-3 py-3 space-x-1">
+                                    @foreach ($user->permissions as $perm)
+                                        <span
+                                            class="inline-block {{ $permissionColors[$perm->name] ?? 'bg-gray-100 text-gray-800' }} text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                            {{ $perm->name }}
+                                        </span>
+                                    @endforeach
+                                </td>
+                                <td class="px-3 py-3">{{ $user->department?->name ?? '' }}</td>
+                                <td class="px-3 py-3">{{ $user->requestor?->name ?? '' }}</td>
+                                <td class="px-3 py-3">{{ $user->customer?->name ?? '' }}</td>
+                                @php
+                                    $currentUser = Auth::user();
+                                    $currentRole = $currentUser->roles->pluck('name')->first(); // สมมติผู้ใช้มี role แค่ role เดียว
+                                    $rowRole = $user->roles->pluck('name')->first();
+                                @endphp
+
+                                @if ($hasManageUsers && ($currentRole === 'superadmin' || $rowRole !== 'superadmin') && $user->id !== auth()->id())
+                                    <td class="text-right space-x-2 max-w-[80px]">
+                                        <button @click="openEditModal({{ $user->toJson() }})"
+                                            class="text-blue-600 hoverScale hover:text-blue-700">
+                                            <span class="material-symbols-outlined">edit</span>
+                                        </button>
+
+                                        <button
+                                            @click="DeleteUserModal = true; userIdToDelete = {{ $user->id }}; userNameToDelete = '{{ $user->name }}'"
+                                            class="text-red-500 hoverScale hover:text-red-700">
+                                            <span class="material-symbols-outlined">delete</span>
+                                        </button>
+                                    </td>
+                                @else
+                                    <td class="text-right max-w-[80px]"></td>
+                                @endif
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="10" class="px-6 py-4 text-sm text-gray-500 text-center">
+                                    @if (request('search'))
+                                        No users found for "{{ request('search') }}".
+                                    @else
+                                        No users found.
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
         </div>
-
         <!-- Pagination -->
         <div class="mt-4 flex justify-end">
             {{ $users->links('vendor.pagination.tailwind-custom') }}

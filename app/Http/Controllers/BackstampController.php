@@ -11,13 +11,44 @@ use App\Models\{
 
 class BackstampController extends Controller
 {
-    public function backstampindex()
+    public function backstampindex(Request $request)
     {
         $relations = [
             'requestor', 'customer', 'status', 'image', 'updater'
         ];
-        
-        $backstamps = Backstamp::with($relations)->latest()->paginate(10);
+
+        // รับค่า perPage จาก request หรือใช้ default 10
+        $perPage = $request->get('per_page', 10);
+        // จำกัดค่า perPage ที่อนุญาต
+        $allowedPerPage = [5, 10, 25, 50, 100];
+        if (!in_array($perPage, $allowedPerPage)) {
+            $perPage = 10;
+        }
+
+        // รับค่า search
+        $search = $request->get('search');
+            $query = Backstamp::with($relations);
+        // เพิ่ม search functionality 
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('backstamp_code', 'LIKE', "%{$search}%")
+                ->orWhere('name', 'LIKE', "%{$search}%")
+                ->orWhereHas('requestor', function($q) use ($search) {
+                    $q->where('name', 'LIKE', "%{$search}%");
+                })
+                ->orWhereHas('customer', function($q) use ($search) {
+                    $q->where('name', 'LIKE', "%{$search}%");
+                })
+                ->orWhereHas('status', function($q) use ($search) {
+                    $q->where('status', 'LIKE', "%{$search}%");
+                })
+                ->orWhereHas('updater', function($q) use ($search) {
+                    $q->where('name', 'LIKE', "%{$search}%");
+                });
+            });
+        }
+
+        $backstamps = $query->latest()->paginate($perPage)->appends($request->query());
 
         $data = [
             'statuses'   => Status::all(),
@@ -26,7 +57,7 @@ class BackstampController extends Controller
             'images'     => Image::all(),
         ];
 
-        return view('backstamp', array_merge($data, compact('backstamps')));
+        return view('backstamp', array_merge($data, compact('backstamps', 'perPage', 'search')));
     }
 
     private function rules($id = null)

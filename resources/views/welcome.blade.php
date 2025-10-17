@@ -10,7 +10,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             const progressBar = document.querySelector('#progress-bar');
             let width = 0;
-            const duration = 500; // 3 วินาที
+            const duration = 300; // 0.3 วินาที
             const intervalTime = 30; // update ทุก 30ms
             const increment = intervalTime / duration * 100;
 

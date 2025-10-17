@@ -10,14 +10,61 @@ use App\Models\{
 
 class ShapeController extends Controller
 {
-    public function shapeindex()
+    public function shapeindex(Request $request)
     {
         $relations = [
             'shapeType', 'status', 'shapeCollection', 'customer',
             'itemGroup', 'process', 'designer', 'requestor', 'updater', 'image'
         ];
 
-        $shapes = Shape::with($relations)->latest()->paginate(10);
+        // รับค่า perPage จาก request หรือใช้ default 10
+        $perPage = $request->get('per_page', 10);
+        // จำกัดค่า perPage ที่อนุญาต
+        $allowedPerPage = [5, 10, 25, 50, 100];
+        if (!in_array($perPage, $allowedPerPage)) {
+            $perPage = 10;
+        }
+
+        // รับค่า search
+        $search = $request->get('search');
+        $query = Shape::with($relations);
+        // เพิ่ม search functionality
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('item_code', 'LIKE', "%{$search}%")
+                ->orWhere('item_description_thai', 'LIKE', "%{$search}%")
+                ->orWhere('item_description_eng', 'LIKE', "%{$search}%")
+                ->orWhereHas('shapeType', function($q) use ($search) {
+                    $q->where('name', 'LIKE', "%{$search}%");
+                })
+                ->orWhereHas('shapeCollection', function($q) use ($search) {
+                    $q->where('collection_name', 'LIKE', "%{$search}%");
+                })
+                ->orWhereHas('customer', function($q) use ($search) {
+                    $q->where('name', 'LIKE', "%{$search}%");
+                })
+                ->orWhereHas('itemGroup', function($q) use ($search) {
+                    $q->where('item_group_name', 'LIKE', "%{$search}%");
+                })
+                ->orWhereHas('process', function($q) use ($search) {
+                    $q->where('process_name', 'LIKE', "%{$search}%");
+                })
+                ->orWhereHas('designer', function($q) use ($search) {
+                    $q->where('designer_name', 'LIKE', "%{$search}%");
+                })
+                ->orWhereHas('requestor', function($q) use ($search) {
+                    $q->where('name', 'LIKE', "%{$search}%");
+                })
+                ->orWhereHas('status', function($q) use ($search) {
+                    $q->where('status', 'LIKE', "%{$search}%");
+                })
+                ->orWhereHas('updater', function($q) use ($search) {
+                    $q->where('name', 'LIKE', "%{$search}%");
+                });
+            });
+        }
+
+        $shapes = $query->latest()->paginate($perPage)->appends($request->query());
 
         $data = [
             'shapeTypes' => ShapeType::all(),
@@ -31,7 +78,7 @@ class ShapeController extends Controller
             'images' => Image::all(),
         ];
 
-        return view('shape', array_merge($data, compact('shapes')));
+        return view('shape', array_merge($data, compact('shapes', 'perPage', 'search')));
     }
 
     private function rules($id = null)
