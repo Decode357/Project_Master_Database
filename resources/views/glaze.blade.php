@@ -2,28 +2,28 @@
 @section('title', 'Glaze')
 @section('header', 'Glaze')
 @section('content')
-    <main x-data="glazePage()" x-init="initSelect2()">
+    <main class="flex-1 bg-gray-50 dark:bg-gray-900" x-data="glazePage()" x-init="initSelect2()">
         <!-- Filters -->
-        <div class="bg-white p-6 rounded-lg shadow-md mb-3 ">
+        <div class="dark:bg-gray-800 dark:shadow-gray-900/50 bg-white p-6 rounded-lg shadow-md mb-3">
             <form method="GET" action="{{ route('glaze.index') }}" class="flex flex-wrap items-end gap-4">
                 <!-- Search Input -->
                 <div class="flex-1 min-w-64">
                     <div class="relative">
                         <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
                         <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by ITEM CODE or etc.."
-                            class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
+                            class="dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                     </div>
                 </div>
                 <!-- Search and Reset buttons -->
                 <div class="flex gap-2">
                     <button type="submit" 
-                            class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hoverScale hover:bg-green-700 transition">
+                            class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hoverScale hover:bg-green-700">
                         <span class="material-symbols-outlined">search</span>
                         <span>Search</span>
                     </button>
 
                     <a href="{{ route('glaze.index') }}" 
-                            class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hoverScale hover:bg-gray-300 transition">
+                            class="dark:bg-gray-600 dark:text-gray-300 dark:hover:bg-gray-500 flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hoverScale hover:bg-gray-300">
                         <span class="material-symbols-outlined">refresh</span>
                         <span>Reset</span>
                     </a>
@@ -31,7 +31,7 @@
                 <!-- Items per page select -->
                 <div>
                     <select name="per_page" onchange="this.form.submit()" 
-                            class="w-32 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+                            class="dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 w-32 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <option value="5" {{ request('per_page') == 5 ? 'selected' : '' }}>5 Items</option>
                         <option value="10" {{ request('per_page') == 10 || !request('per_page') ? 'selected' : '' }}>10 Items</option>
                         <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25 Items</option>
@@ -42,40 +42,32 @@
                 <!-- Add Glaze button -->
                 <div class="ml-auto">
                     <button type="button" @click="openCreateModal()"
-                        class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hoverScale hover:bg-blue-700 transition">
+                        class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hoverScale hover:bg-blue-700">
                         <span class="material-symbols-outlined">add</span>
-                        <span>Add Glaze</span>
+                        <span>Add</span>
                     </button>
                 </div>
             </form>
         </div>
-        <div class=" rounded-xl p-3 shadow-md bg-white">
+        <!-- Table -->
+        <div class="dark:shadow-gray-900/50 dark:bg-gray-800 rounded-xl shadow-md bg-white">
             <div class="overflow-x-auto rounded-xl">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
-                        <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                ITEM CODE</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Glaze Inside</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Glaze Outside</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Effect</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Fire Temp</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Status</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Approval Date</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                UPDATED BY</th>
-                            <th class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                ACTION</th>
+                <table class="min-w-full text-sm">
+                    <thead class="dark:bg-gray-700 dark:border-gray-700 text-xs text-gray-500 uppercase bg-gray-50 border-b">
+                        <tr class="dark:text-gray-400 text-gray-700">
+                            <th class="px-4 py-3 text-left">ITEM CODE</th>
+                            <th class="px-4 py-3 text-left">Glaze Inside</th>
+                            <th class="px-4 py-3 text-left">Glaze Outside</th>
+                            <th class="px-4 py-3 text-left">Effect</th>
+                            <th class="px-4 py-3 text-left">Fire Temp</th>
+                            <th class="px-4 py-3 text-left">Status</th>
+                            <th class="px-4 py-3 text-left">Approval Date</th>
+                            <th class="px-4 py-3 text-left">UPDATED BY</th>
+                            <th class="px-4 py-3 text-end">ACTION</th>
                         </tr>
                     </thead>
 
-                    <tbody class="bg-white divide-y divide-gray-200">
+                    <tbody>
                         @forelse ($glazes as $glaze)
                             @php
                                 $statusText = $glaze->status->status ?? 'Unknown';
@@ -86,41 +78,38 @@
                                     default => 'bg-gray-100 text-gray-800',
                                 };
                             @endphp
-                            <tr class="bg-white border-b hover:bg-gray-50">
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $glaze->glaze_code }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $glaze->glazeInside->glaze_inside_code ?? '-' }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $glaze->glazeOuter->glaze_outer_code ?? '-' }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $glaze->effect->effect_code ?? '-' }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">
+                            <tr class="dark:text-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 bg-white border-b border-gray-200 hover:bg-gray-50">
+                                <td class="px-4 py-3">{{ $glaze->glaze_code }}</td>
+                                <td class="px-4 py-3">{{ $glaze->glazeInside->glaze_inside_code ?? '-' }}</td>
+                                <td class="px-4 py-3">{{ $glaze->glazeOuter->glaze_outer_code ?? '-' }}</td>
+                                <td class="px-4 py-3">{{ $glaze->effect->effect_code ?? '-' }}</td>
+                                <td class="px-4 py-3">
                                     {{ $glaze->fire_temp ? $glaze->fire_temp . ' °C' : '-' }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">
+                                <td class="px-4 py-3">
                                     <span class="{{ $statusColor }} px-2 py-1 rounded-full text-xs font-semibold">
                                         {{ $statusText }}
                                     </span>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
+                                <td class="px-4 py-3">
                                     {{ $glaze->approval_date ? \Carbon\Carbon::parse($glaze->approval_date)->format('d/m/Y') : '-' }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
+                                <td class="px-4 py-3">
                                     {{ $glaze->updater->name ?? 'System' }}
                                 </td>
-                                <td class="px-6 py-4 ">
-                                    <div class="flex justify-end gap-2">
+                                <td class="px-4 py-3">
+                                    <div class="flex justify-end gap-1">
                                         <button @click="openDetailModal({{ $glaze->toJson() }})"
-                                            class="flex items-center gap-1 px-2 py-1 text-sm font-medium text-white 
-                                                bg-blue-500 rounded-lg shadow-sm hover:bg-green-600 hover:shadow-md 
-                                                transition-all duration-200 hoverScale">
+                                            class="flex items-center gap-1 px-2 py-1 text-sm font-medium text-white bg-blue-500 rounded-lg shadow-sm hover:bg-green-600 hover:shadow-md hoverScale">
                                             <span class="material-symbols-outlined text-white">feature_search</span>
-                                            <span>Detail</span>
                                         </button>
 
                                         <button @click="openEditModal({{ $glaze->toJson() }})"
-                                            class="text-blue-600 hoverScale hover:text-blue-700">
+                                            class="text-blue-600 hover:text-blue-700">
                                             <span class="material-symbols-outlined">edit</span>
                                         </button>
 
                                         <button @click="DeleteGlazeModal = true; glazeIdToDelete = {{ $glaze->id }}; itemCodeToDelete = '{{ $glaze->glaze_code }}'"
-                                            class="text-red-500 hoverScale hover:text-red-700">
+                                            class="text-red-500 hover:text-red-700">
                                             <span class="material-symbols-outlined">delete</span>
                                         </button>
                                     </div>
@@ -128,7 +117,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="9" class="px-6 py-4 text-sm text-gray-500 text-center">
+                                <td colspan="9" class="px-6 py-4 text-sm text-center text-gray-500 dark:text-gray-400">
                                     @if(request('search'))
                                         No glazes found for "{{ request('search') }}".
                                     @else
@@ -141,7 +130,7 @@
                 </table>
 
                 <!-- Pagination -->
-                <div class="mt-4 flex justify-end">
+                <div class="mt-4 flex justify-end pb-2">
                     {{ $glazes->links('vendor.pagination.tailwind-custom') }}
                 </div>
             </div>

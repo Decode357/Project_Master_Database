@@ -12,11 +12,11 @@
         <nav role="navigation" aria-label="Pagination Navigation" class="flex space-x-1 mr-4">
             {{-- Previous Page Link --}}
             @if ($paginator->onFirstPage())
-                <span class="pl-2 py-1 text-gray-400 bg-gray-200 rounded material-symbols-outlined">
+                <span class="pl-2 py-1 text-gray-400 bg-gray-200 rounded material-symbols-outlined dark:bg-gray-600">
                     Arrow_Back_iOS
                 </span>
             @else
-                <a href="{{ $paginator->previousPageUrl() }}" class="pl-2 py-1 text-white bg-blue-600 rounded hover:bg-blue-700 material-symbols-outlined">
+                <a href="{{ $paginator->previousPageUrl() }}" class="pl-2 py-1 text-white bg-blue-600 rounded hover:bg-blue-700 material-symbols-outlined ">
                     Arrow_Back_iOS
                 </a>
             @endif
@@ -24,15 +24,15 @@
             {{-- Pagination Elements --}}
             @foreach ($elements as $element)
                 @if (is_string($element))
-                    <span class="px-3 py-1 bg-gray-100 rounded">{{ $element }}</span>
+                    <span class="px-3 py-1 bg-gray-100 rounded dark:bg-gray-600">{{ $element }}</span>
                 @endif
 
                 @if (is_array($element))
                     @foreach ($element as $page => $url)
                         @if ($page == $paginator->currentPage())
-                            <span class="px-3 py-1 bg-blue-500 text-white rounded">{{ $page }}</span>
+                            <span class="px-3 py-1 bg-blue-500 text-white rounded ">{{ $page }}</span>
                         @else
-                            <a href="{{ $url }}" class="px-3 py-1 bg-gray-200 rounded hover:bg-blue-400">{{ $page }}</a>
+                            <a href="{{ $url }}" class="px-3 py-1 bg-gray-200 rounded hover:bg-blue-400 dark:bg-gray-600 dark:hover:bg-gray-700">{{ $page }}</a>
                         @endif
                     @endforeach
                 @endif
@@ -44,7 +44,7 @@
                     Arrow_Forward_iOS
                 </a>
             @else
-                <span class="pl-1 pr-1 py-1 text-gray-400 bg-gray-200 rounded material-symbols-outlined">
+                <span class="pl-1 pr-1 py-1 text-gray-400 bg-gray-200 rounded material-symbols-outlined dark:bg-gray-600">
                     Arrow_Forward_iOS
                 </span>
             @endif

@@ -4,11 +4,13 @@
 @section('content')
     <main class="flex-1 bg-gray-50" x-data="glazeInsideOuterPage()" x-init="initSelect2()">
         <!-- Tables -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4
+            dark:bg-gray-900">
             <!-- Glaze Inside -->
             <div>
                 <!-- Inside Filters -->
-                <div class="bg-white p-6 rounded-lg shadow-md mb-3">
+                <div class="dark:bg-gray-800 dark:shadow-gray-900/50
+                    bg-white p-6 rounded-lg shadow-md mb-3">
                     <form method="GET" action="{{ route('glaze.inside.outer.index') }}"
                         class="flex flex-wrap items-end gap-4">
                         <!-- Preserve outer search params -->
@@ -23,13 +25,14 @@
                                     class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
                                 <input type="text" name="inside_search" value="{{ request('inside_search') }}"
                                     placeholder="Search Inside Code..."
-                                    class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
+                                    class="dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 
+                                    w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500" />
                             </div>
                         </div>
                         <!-- Search and Reset buttons -->
                         <div class="flex gap-2">
                             <button type="submit"
-                                class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hoverScale hover:bg-green-700 transition">
+                                class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hoverScale hover:bg-green-700">
                                 <span class="material-symbols-outlined">search</span>
                             </button>
 
@@ -38,14 +41,16 @@
                                 'outer_per_page' => request('outer_per_page'),
                                 'outer_page' => request('outer_page')
                             ]) }}"
-                                class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hoverScale hover:bg-gray-300 transition">
+                                class="dark:bg-gray-600 dark:text-gray-300 dark:hover:bg-gray-500
+                                flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hoverScale hover:bg-gray-300 ">
                                 <span class="material-symbols-outlined">refresh</span>
                             </a>
                         </div>
                         <!-- Per Page -->
                         <div>
                             <select name="inside_per_page" onchange="this.form.submit()"
-                                class="w-32 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+                                class="dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100
+                                w-32 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                 <option value="5" {{ request('inside_per_page') == 5 ? 'selected' : '' }}>5 Items
                                 </option>
                                 <option value="10"
@@ -62,19 +67,21 @@
                         <!-- Add Inside button -->
                         <div class="ml-auto">
                             <button type="button" @click="openCreateInsideModal()"
-                                class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hoverScale hover:bg-blue-700 transition">
+                                class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hoverScale hover:bg-blue-700 ">
                                 <span class="material-symbols-outlined">add</span>
-                                <span>Add Inside</span>
+                                <span>Add</span>
                             </button>
                         </div>
                     </form>
                 </div>
                 <!-- Inside Table -->
-                <div class=" rounded-xl p-3 shadow-md bg-white">
+                <div class="dark:shadow-gray-900/50 dark:bg-gray-800 
+                    rounded-xl shadow-md bg-white">
                     <div class="overflow-x-auto rounded-xl">
-                        <table class="w-full text-sm text-left text-gray-600">
-                            <thead class="text-xs text-gray-500 uppercase bg-gray-50">
-                                <tr>
+                        <table class="dark:divide-gray-700 w-full text-sm text-left text-gray-600">
+                            <thead class="dark:bg-gray-700 dark:border-gray-700 border-b
+                                    text-xs text-gray-500 uppercase bg-gray-50">
+                                <tr class="dark:text-gray-400 text-gray-700">
                                     <th class="px-4 py-3">Code</th>
                                     <th class="px-4 py-3">Colors</th>
                                     <th class="px-4 py-3 text-right">Actions</th>
@@ -82,8 +89,9 @@
                             </thead>
                             <tbody>
                                 @forelse ($glaze_insides as $glaze_inside)
-                                    <tr class="bg-white border-b hover:bg-gray-50">
-                                        <td class="px-4 py-3 font-medium text-gray-900">
+                                    <tr class="dark:text-gray-100 dark:bg-gray-800  dark:border-gray-700 dark:hover:bg-gray-700
+                                        bg-white border-b border-gray-200 hover:bg-gray-50">
+                                        <td class="px-4 py-3 font-medium">
                                             {{ $glaze_inside->glaze_inside_code }}</td>
                                         <td class="px-4 py-3">
                                             <div class="flex gap-1 flex-wrap">
@@ -104,7 +112,7 @@
                                                 </button>
                                                 <button
                                                     @click="DeleteGlazeInsideModal = true; glazeInsideIdToDelete = {{ $glaze_inside->id }}; itemCodeToDelete = '{{ $glaze_inside->glaze_inside_code }}'"
-                                                    class="text-red-500 hover:text-red-700 p-1">
+                                                    class="text-red-500 hover:text-red-700">
                                                     <span class="material-symbols-outlined">delete</span>
                                                 </button>
                                             </div>
@@ -125,7 +133,7 @@
                         </table>
 
                         <!-- Inside pagination -->
-                        <div class="mt-4 flex justify-end">
+                        <div class="mt-4 flex justify-end pb-2">
                             {{ $glaze_insides->links('vendor.pagination.tailwind-custom') }}
                         </div>
                     </div>
@@ -135,7 +143,8 @@
             <!-- Glaze Outer -->
             <div>
                 <!-- Outer Filters -->
-                <div class="bg-white p-6 rounded-lg shadow-md mb-3">
+                <div class="dark:bg-gray-800 dark:shadow-gray-900/50
+                    bg-white p-6 rounded-lg shadow-md mb-3">
                     <form method="GET" action="{{ route('glaze.inside.outer.index') }}"
                         class="flex flex-wrap items-end gap-4">
                         <!-- Preserve inside search params -->
@@ -150,13 +159,14 @@
                                     class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
                                 <input type="text" name="outer_search" value="{{ request('outer_search') }}"
                                     placeholder="Search Outer Code..."
-                                    class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
+                                    class="dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 
+                                    w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500" />
                             </div>
                         </div>
                         <!-- Search and Reset buttons -->
                         <div class="flex gap-2">
                             <button type="submit"
-                                class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hoverScale hover:bg-green-700 transition">
+                                class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hoverScale hover:bg-green-700">
                                 <span class="material-symbols-outlined">search</span>
                             </button>
 
@@ -165,14 +175,16 @@
                                 'inside_per_page' => request('inside_per_page'),
                                 'inside_page' => request('inside_page')
                             ]) }}"
-                                class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hoverScale hover:bg-gray-300 transition">
+                                class="dark:bg-gray-600 dark:text-gray-300 dark:hover:bg-gray-500
+                                flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hoverScale hover:bg-gray-300 ">
                                 <span class="material-symbols-outlined">refresh</span>
                             </a>
                         </div>
                         <!-- Per Page -->
                         <div>
                             <select name="outer_per_page" onchange="this.form.submit()"
-                                class="w-32 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+                                class="dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100
+                                w-32 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                 <option value="5" {{ request('outer_per_page') == 5 ? 'selected' : '' }}>5 Items
                                 </option>
                                 <option value="10"
@@ -189,19 +201,21 @@
                         <!-- Add Outer button -->
                         <div class="ml-auto">
                             <button type="button" @click="openCreateOuterModal()"
-                                class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hoverScale hover:bg-blue-700 transition">
+                                class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hoverScale hover:bg-blue-700">
                                 <span class="material-symbols-outlined">add</span>
-                                <span>Add Outer</span>
+                                <span>Add</span>
                             </button>
                         </div>
                     </form>
                 </div>
                 <!-- Outer Table -->
-                <div class=" rounded-xl p-3 shadow-md bg-white">
+                <div class="dark:shadow-gray-900/50 dark:bg-gray-800 
+                    rounded-xl shadow-md bg-white">
                     <div class="overflow-x-auto rounded-xl">
-                        <table class="w-full text-sm text-left text-gray-600">
-                            <thead class="text-xs text-gray-500 uppercase bg-gray-50">
-                                <tr>
+                        <table class="dark:divide-gray-700 w-full text-sm text-left text-gray-600">
+                            <thead class="dark:bg-gray-700 dark:border-gray-700 border-b
+                                    text-xs text-gray-500 uppercase bg-gray-50">
+                                <tr class="dark:text-gray-400 text-gray-700">
                                     <th class="px-4 py-3">Code</th>
                                     <th class="px-4 py-3">Colors</th>
                                     <th class="px-4 py-3 text-right">Actions</th>
@@ -209,8 +223,9 @@
                             </thead>
                             <tbody>
                                 @forelse ($glaze_outers as $glaze_outer)
-                                    <tr class="bg-white border-b hover:bg-gray-50">
-                                        <td class="px-4 py-3 font-medium text-gray-900">
+                                    <tr class="dark:text-gray-100 dark:bg-gray-800  dark:border-gray-700 dark:hover:bg-gray-700
+                                        bg-white border-b border-gray-200 hover:bg-gray-50">
+                                        <td class="px-4 py-3 font-medium">
                                             {{ $glaze_outer->glaze_outer_code }}
                                         </td>
                                         <td class="px-4 py-3">
@@ -253,7 +268,7 @@
                         </table>
 
                         <!-- Outer pagination -->
-                        <div class="mt-4 flex justify-end">
+                        <div class="mt-4 flex justify-end pb-2">
                             {{ $glaze_outers->links('vendor.pagination.tailwind-custom') }}
                         </div>
                     </div>
