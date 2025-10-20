@@ -3,9 +3,9 @@
 
 <div x-show="CreateUserModal" x-transition.opacity
     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="display: none;">
-    <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
-        <h2 class="text-xl font-semibold mb-4">Create User</h2>
-        <hr class="mb-3">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-full max-w-md p-6">
+        <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Create User</h2>
+        <hr class="mb-3 border-gray-200 dark:border-gray-600">
 
         <form id="CreateUserForm" @submit.prevent="submitUserForm" class="space-y-4" x-data="{
             newUser: { department_id: '', requestor_id: '', customer_id: '' },
@@ -35,28 +35,28 @@
 
             <!-- Username -->
             <div>
-                <label class="block text-sm font-medium text-gray-700">Username</label>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Username</label>
                 <input type="text" name="name" placeholder="Enter username"
-                    class="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    class="mt-1 w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     required />
             </div>
 
             <!-- Email -->
             <div>
-                <label class="block text-sm font-medium text-gray-700">Email</label>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
                 <input type="email" name="email" placeholder="Enter email"
-                    class="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    class="mt-1 w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     required />
             </div>
 
             <!-- Password -->
             <div x-data="{ show: false }" class="relative">
-                <label class="block text-sm font-medium text-gray-700">Password</label>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
                 <input :type="show ? 'text' : 'password'" name="password" placeholder="Enter password"
-                    class="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 pr-10 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    class="mt-1 w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 rounded-md px-3 py-2 pr-10 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     required />
                 <button type="button" @click="show = !show"
-                    class="absolute inset-y-0 right-0 flex items-center pr-3 mt-6 text-gray-500 hover:text-gray-700">
+                    class="absolute inset-y-0 right-0 flex items-center pr-3 mt-6 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
                     <span x-show="!show" class="material-symbols-outlined">visibility</span>
                     <span x-show="show" class="material-symbols-outlined">visibility_off</span>
                 </button>
@@ -65,8 +65,8 @@
             <!-- Department / Requestor / Customer -->
             <div class="flex flex-row gap-4">
                 <div class="flex-1">
-                    <label class="block text-sm font-medium mb-1">Department</label>
-                    <select name="department_id" x-model="newUser.department_id" class="select2 w-full border rounded px-2 py-1">
+                    <label class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Department</label>
+                    <select name="department_id" x-model="newUser.department_id" class="select2 w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded px-2 py-1">
                         <option value="">-</option>
                         @foreach ($departments as $dep)
                             <option value="{{ $dep->id }}">{{ $dep->name }}</option>
@@ -75,8 +75,8 @@
                 </div>
 
                 <div class="flex-1">
-                    <label class="block text-sm font-medium mb-1">Requestor</label>
-                    <select name="requestor_id" x-model="newUser.requestor_id" class="select2 w-full border rounded px-2 py-1">
+                    <label class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Requestor</label>
+                    <select name="requestor_id" x-model="newUser.requestor_id" class="select2 w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded px-2 py-1">
                         <option value="">-</option>
                         @foreach ($requestors as $req)
                             <option value="{{ $req->id }}">{{ $req->name }}</option>
@@ -85,8 +85,8 @@
                 </div>
 
                 <div class="flex-1">
-                    <label class="block text-sm font-medium mb-1">Customer</label>
-                    <select name="customer_id" x-model="newUser.customer_id" class="select2 w-full border rounded px-2 py-1">
+                    <label class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Customer</label>
+                    <select name="customer_id" x-model="newUser.customer_id" class="select2 w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded px-2 py-1">
                         <option value="">-</option>
                         @foreach ($customers as $cust)
                             <option value="{{ $cust->id }}">{{ $cust->name }}</option>
@@ -97,13 +97,13 @@
 
             <!-- Role selection -->
             <div>
-                <label class="block text-sm font-medium text-gray-700">Role</label>
-                <div class="flex items-center justify-center rounded-full bg-gray-100 p-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Role</label>
+                <div class="flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-600 p-1">
                     <template x-for="r in ['user','admin','superadmin']" :key="r">
                         <label
                             :class="{
-                                'bg-white text-gray-900 shadow-sm': role === r,
-                                'text-gray-500 cursor-not-allowed opacity-50': r === 'superadmin' &&
+                                'bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm': role === r,
+                                'text-gray-500 dark:text-gray-400 cursor-not-allowed opacity-50': r === 'superadmin' &&
                                     currentUserRole === 'admin'
                             }"
                             class="flex-1 items-center justify-center rounded-full px-4 py-2 text-sm font-medium transition-colors flex cursor-pointer">
@@ -118,7 +118,7 @@
 
             <!-- Permissions -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 mt-2">Permissions</label>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mt-2">Permissions</label>
                 <div class="flex flex-wrap gap-2 mt-1">
                     @php
                         $permColors = [
@@ -149,9 +149,9 @@
             <!-- Buttons -->
             <div class="flex justify-end gap-2 mt-4">
                 <button type="button" @click="CreateUserModal = false"
-                    class="px-4 py-2 rounded-md bg-gray-200 hoverScale hover:bg-red-500 hover:text-white">Cancel</button>
+                    class="px-4 py-2 rounded-md bg-gray-200 dark:bg-gray-600 dark:text-gray-300 dark:hover:bg-gray-500 hoverScale hover:bg-red-500 hover:text-white">Cancel</button>
                 <button type="submit"
-                    class="px-4 py-2 rounded-md bg-blue-600 text-white hoverScale hover:bg-blue-700">Create</button>
+                    class="px-4 py-2 rounded-md bg-blue-600 dark:bg-blue-500 text-white hoverScale hover:bg-blue-700 dark:hover:bg-blue-600">Create</button>
             </div>
         </form>
     </div>
