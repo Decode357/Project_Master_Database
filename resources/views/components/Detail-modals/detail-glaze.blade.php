@@ -4,14 +4,13 @@
     @click.self="GlazeDetailModal = false" style="display: none;" x-data="{ zoomImage: false, activeTab: 'basic' }">
 
     <!-- Modal Content -->
-    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-6xl mx-4 relative overflow-hidden h-[90vh] flex flex-col">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-6xl mx-4 relative overflow-hidden h-[90vh] flex flex-col">
 
         <!-- Header -->
-        <div
-            class="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-6 flex justify-between items-center flex-shrink-0">
+        <div class="bg-gradient-to-r from-blue-600 to-blue-800 dark:from-blue-700 dark:to-blue-900 text-white p-6 flex justify-between items-center flex-shrink-0">
             <div>
                 <h2 class="text-2xl font-bold" x-text="glazeToView?.glaze_code || 'Glaze Details'"></h2>
-                <p class="text-blue-100 text-sm mt-1" x-text="glazeToView?.name || 'Glaze Details'"></p>
+                <p class="text-blue-100 dark:text-blue-200 text-sm mt-1" x-text="'Glaze Information'"></p>
             </div>
             <button @click="GlazeDetailModal = false"
                 class="text-white hover:bg-white hover:bg-opacity-20 rounded-full p-2 transition-all">
@@ -23,25 +22,25 @@
         <div class="flex-1 overflow-hidden">
             <!-- Image and Basic Info Section -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 p-6 h-full">
-
+                
                 <!-- Image Section -->
                 <div class="lg:col-span-1 flex flex-col">
-                    <div class="bg-gray-50 rounded-xl p-4 text-center flex-shrink-0">
+                    <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4 text-center flex-shrink-0">
                         <template x-if="glazeToView?.image?.file_path">
-                            <img :src="`{{ asset('storage') }}/${glazeToView.image.file_path}`"
-                                :alt="glazeToView.glaze_code"
-                                class="rounded-lg shadow-lg cursor-zoom-in mx-auto h-48 object-contain w-full"
-                                @click="zoomImage = true">
+                            <img :src="`{{ asset('storage') }}/${glazeToView.image.file_path}`" 
+                                 :alt="glazeToView.glaze_code"
+                                 class="rounded-lg shadow-lg cursor-zoom-in mx-auto h-48 object-contain w-full"
+                                 @click="zoomImage = true">
                         </template>
                         <template x-if="!glazeToView?.image?.file_path">
-                            <div class="bg-gray-200 rounded-lg flex items-center justify-center h-48">
-                                <div class="text-center text-gray-500">
+                            <div class="bg-gray-200 dark:bg-gray-600 rounded-lg flex items-center justify-center h-48">
+                                <div class="text-center text-gray-500 dark:text-gray-400">
                                     <span class="material-symbols-outlined text-6xl mb-2 block">image</span>
                                     <p>No Image Available</p>
                                 </div>
                             </div>
                         </template>
-                        <p class="text-sm text-gray-500 mt-3">
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-3">
                             <span class="material-symbols-outlined text-lg align-middle">zoom_in</span>
                             Click to zoom
                         </p>
@@ -51,167 +50,174 @@
                     <div class="mt-4 text-center flex-shrink-0">
                         <template x-if="glazeToView?.status">
                             <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium"
-                                :class="glazeToView.status.status === 'Active' ? 'bg-green-100 text-green-800' :
-                                    glazeToView.status.status === 'Inactive' ? 'bg-red-100 text-red-800' :
-                                    'bg-yellow-100 text-yellow-800'">
+                                  :class="glazeToView.status.status === 'Active' ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200' : 
+                                          glazeToView.status.status === 'Inactive' ? 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200' : 
+                                          'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200'">
                                 <span class="w-2 h-2 rounded-full mr-2"
-                                    :class="glazeToView.status.status === 'Active' ? 'bg-green-500' :
-                                        glazeToView.status.status === 'Inactive' ? 'bg-red-500' :
-                                        'bg-yellow-500'"></span>
+                                      :class="glazeToView.status.status === 'Active' ? 'bg-green-500' : 
+                                              glazeToView.status.status === 'Inactive' ? 'bg-red-500' : 
+                                              'bg-yellow-500'"></span>
                                 <span x-text="glazeToView.status.status"></span>
                             </span>
                         </template>
                     </div>
                 </div>
 
-                <!-- Content Section -->
+                <!-- Tabs Content -->
                 <div class="lg:col-span-2 flex flex-col overflow-hidden">
-
-                    <!-- All Information Container -->
-                    <div class="flex-1 min-h-0 overflow-y-auto overflow-x-hidden">
-                        <!-- Basic Information Section -->
-                        <div class="mb-1">
-                            <h3 class="text-sm font-medium text-blue-600 mb-4 flex items-center border-b pb-2">
+                    
+                    <!-- Tab Navigation -->
+                    <div class="border-b border-gray-200 dark:border-gray-600 mb-6 flex-shrink-0">
+                        <nav class="flex space-x-8">
+                            <button @click="activeTab = 'basic'"
+                                :class="activeTab === 'basic' ? 'border-blue-500 text-blue-600 dark:text-blue-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
+                                class="whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm transition-all">
                                 <span class="material-symbols-outlined text-sm mr-1">info</span>
                                 Basic Information
-                            </h3>
+                            </button>
+                            <button @click="activeTab = 'colors'"
+                                :class="activeTab === 'colors' ? 'border-blue-500 text-blue-600 dark:text-blue-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
+                                class="whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm transition-all">
+                                <span class="material-symbols-outlined text-sm mr-1">palette</span>
+                                Colors
+                            </button>
+                            <button @click="activeTab = 'relations'"
+                                :class="activeTab === 'relations' ? 'border-blue-500 text-blue-600 dark:text-blue-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
+                                class="whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm transition-all">
+                                <span class="material-symbols-outlined text-sm mr-1">group</span>
+                                Relations
+                            </button>
+                        </nav>
+                    </div>
+
+                    <!-- Tab Content Container -->
+                    <div class="flex-1 min-h-0">
+                        <!-- Basic Information Tab -->
+                        <div x-show="activeTab === 'basic'" 
+                             class="h-full overflow-y-auto overflow-x-hidden">
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <!-- Glaze Code -->
-                                <div class="bg-gray-50 rounded-lg p-4">
+                                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
                                     <div class="flex items-center mb-2">
-                                        <span class="material-symbols-outlined text-blue-600 mr-2">tag</span>
-                                        <span class="font-semibold text-gray-700">Glaze Code</span>
+                                        <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 mr-2">tag</span>
+                                        <span class="font-semibold text-gray-700 dark:text-gray-300">Glaze Code</span>
                                     </div>
-                                    <p class="text-lg font-mono text-gray-900 break-words"
-                                        x-text="glazeToView?.glaze_code || '-'"></p>
+                                    <p class="text-lg font-mono text-gray-900 dark:text-gray-100 break-words" x-text="glazeToView?.glaze_code || '-'"></p>
                                 </div>
-                                <!-- Temperature -->
-                                <div class="bg-gray-50 rounded-lg p-4">
+
+                                <!-- Duration -->
+                                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
                                     <div class="flex items-center mb-2">
-                                        <span class="material-symbols-outlined text-blue-600 mr-2">thermostat</span>
-                                        <span class="font-semibold text-gray-700">Temperature</span>
+                                        <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 mr-2">schedule</span>
+                                        <span class="font-semibold text-gray-700 dark:text-gray-300">Duration</span>
                                     </div>
-                                    <p class="text-gray-900 break-words"
-                                        x-text="glazeToView?.fire_temp ? glazeToView.fire_temp + '°C' : '-'"></p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Glaze Details Section -->
-                        <div class="mb-1">
-                            <h3 class="text-sm font-medium text-blue-600 mb-4 flex items-center border-b pb-2">
-                                <span class="material-symbols-outlined text-sm mr-1">palette</span>
-                                Glaze Details
-                            </h3>
-                            <div class="space-y-3">
-                                <!-- Effect Information -->
-                                <div
-                                    class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-4 border border-purple-200">
-                                    <div class="flex items-center mb-3">
-                                        <span
-                                            class="material-symbols-outlined text-purple-600 mr-2">auto_fix_high</span>
-                                        <span class="font-semibold text-gray-700 text-lg">Effect</span>
-                                    </div>
-                                    <div class="flex flex-row items-center gap-3">
-                                        <p class="text-sm font-medium text-purple-700">Name:</p>
-                                        <p class="text-lg font-medium text-purple-800 break-words"
-                                        x-text="glazeToView?.effect?.effect_name || '-'"></p>
-                                    </div>
-                                    <template x-if="glazeToView?.effect?.description">
-
-                                        <p class="text-sm text-purple-700 mt-2" x-text="glazeToView.effect.description">
-                                        </p>
-                                    </template>
-                                    <!-- Effect Colors -->
-                                    <template
-                                        x-if="glazeToView?.effect?.colors && glazeToView.effect.colors.length > 0">
-                                        <div class="mt-3 flex-row flex items-center">
-                                            <p class="text-sm font-medium text-purple-700 mb-2">Colors:</p>
-                                            <div class="flex flex-wrap gap-2 ml-2">
-                                                <template x-for="color in glazeToView.effect.colors"
-                                                    :key="color.id">
-                                                    <span
-                                                        class="inline-flex items-center  px-3 py-1 rounded-full text-xs font-medium bg-white text-purple-800">
-                                                        <span class="w-3 h-3 rounded-full mr-2 "
-                                                            :style="'background-color: ' + (color.color_code || '#10B981')"></span>
-                                                        <span x-text="color.color_name"></span>
-                                                    </span>
-                                                </template>
-                                            </div>
-                                        </div>
-                                    </template>
+                                    <p class="text-gray-900 dark:text-gray-100" x-text="(glazeToView?.duration || '0') + ' minutes'"></p>
                                 </div>
 
-                                <div>
-                                    <!-- Glaze Inside Information -->
-                                    <div
-                                        class="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-4 border border-green-200 mb-3">
-                                        <div class="flex items-center mb-3 ">
-                                            <span class="material-symbols-outlined text-green-600 mr-2">layers</span>
-                                            <span class="font-semibold text-gray-700 text-lg">Glaze</span>
-                                        </div>
-
-                                        <!-- Inside Colors -->
-                                        <template
-                                            x-if="glazeToView?.glaze_inside?.colors && glazeToView.glaze_inside.colors.length > 0">
-                                            <div class="mt-3 flex-row flex">
-                                                <p class="text-sm font-medium text-green-700 mb-2">Inside :</p>
-                                                <div class="flex flex-wrap gap-2 ml-2 items-center">
-                                                    <template x-for="color in glazeToView.glaze_inside.colors"
-                                                        :key="color.id">
-                                                        <span
-                                                            class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white text-green-800">
-                                                            <span class="w-3 h-3 rounded-full mr-2 "
-                                                                :style="'background-color: ' + (color.color_code || '#10B981')"></span>
-                                                            <span x-text="color.color_name"></span>
-                                                        </span>
-                                                    </template>
-                                                </div>
-                                            </div>
-                                        </template>
-
-                                        <!-- Outer Colors -->
-                                        <template
-                                            x-if="glazeToView?.glaze_outer?.colors && glazeToView.glaze_outer.colors.length > 0">
-                                            <div class="mt-3 flex-row flex">
-                                                <p class="text-sm font-medium text-green-700 mb-2">Outer :</p>
-                                                <div class="flex flex-wrap gap-2 ml-2 items-center">
-                                                    <template x-for="color in glazeToView.glaze_outer.colors"
-                                                        :key="color.id">
-                                                        <span
-                                                            class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white text-green-800">
-                                                            <span class="w-3 h-3 rounded-full mr-2 "
-                                                                :style="'background-color: ' + (color.color_code || '#F97316')"></span>
-                                                            <span x-text="color.color_name"></span>
-                                                        </span>
-                                                    </template>
-                                                </div>
-                                            </div>
-                                        </template>
+                                <!-- Approval Date -->
+                                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                                    <div class="flex items-center mb-2">
+                                        <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 mr-2">event</span>
+                                        <span class="font-semibold text-gray-700 dark:text-gray-300">Approval Date</span>
                                     </div>
+                                    <p class="text-gray-900 dark:text-gray-100" x-text="glazeToView?.approval_date ? new Date(glazeToView.approval_date).toLocaleDateString('th-TH') : '-'"></p>
                                 </div>
 
-
+                                <!-- Created Date -->
+                                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                                    <div class="flex items-center mb-2">
+                                        <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 mr-2">add_circle</span>
+                                        <span class="font-semibold text-gray-700 dark:text-gray-300">Created Date</span>
+                                    </div>
+                                    <p class="text-gray-900 dark:text-gray-100" x-text="glazeToView?.created_at ? new Date(glazeToView.created_at).toLocaleDateString('th-TH') : '-'"></p>
+                                </div>
 
                                 <!-- Last Updated Info -->
-                                <div class="bg-gray-50 rounded-lg p-4">
-                                    <h4 class="font-semibold text-gray-700 mb-3 flex items-center">
+                                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 sm:col-span-2">
+                                    <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center">
                                         <span class="material-symbols-outlined mr-2">history</span>
                                         Update Information
                                     </h4>
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                                         <div>
-                                            <p class="text-gray-600">Last Updated By:</p>
-                                            <p class="font-medium break-words"
-                                                x-text="glazeToView?.updater?.name || 'System'"></p>
+                                            <p class="text-gray-600 dark:text-gray-400">Last Updated By:</p>
+                                            <p class="font-medium text-gray-900 dark:text-gray-100 break-words" x-text="glazeToView?.updater?.name || 'System'"></p>
                                         </div>
                                         <div>
-                                            <p class="text-gray-600">Updated At:</p>
-                                            <p class="font-medium"
-                                                x-text="glazeToView?.updated_at ? new Date(glazeToView.updated_at).toLocaleString('th-TH') : '-'">
-                                            </p>
+                                            <p class="text-gray-600 dark:text-gray-400">Updated At:</p>
+                                            <p class="font-medium text-gray-900 dark:text-gray-100" x-text="glazeToView?.updated_at ? new Date(glazeToView.updated_at).toLocaleString('th-TH') : '-'"></p>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Colors Tab -->
+                        <div x-show="activeTab === 'colors'" 
+                             class="h-full overflow-y-auto overflow-x-hidden">
+                            <template x-if="glazeToView?.colors && glazeToView.colors.length > 0">
+                                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                                    <template x-for="color in glazeToView.colors" :key="color.id">
+                                        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 border border-gray-200 dark:border-gray-600 hover:shadow-md transition-all">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="w-8 h-8 rounded-full border-2 border-gray-300 dark:border-gray-500 shadow-inner"
+                                                     :style="`background-color: ${color.color_code || '#000000'}`"></div>
+                                                <div class="flex-1 min-w-0">
+                                                    <p class="font-medium text-gray-900 dark:text-gray-100 text-sm truncate" x-text="color.color_name"></p>
+                                                    <p class="text-xs text-gray-500 dark:text-gray-400 font-mono" x-text="color.color_code"></p>
+                                                    <p class="text-xs text-gray-400 dark:text-gray-500 truncate" x-text="color.customer?.name || '-'"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </template>
+                            <template x-if="!glazeToView?.colors || glazeToView.colors.length === 0">
+                                <div class="text-center py-12">
+                                    <span class="material-symbols-outlined text-6xl text-gray-400 dark:text-gray-500 mb-4 block">palette</span>
+                                    <p class="text-gray-500 dark:text-gray-400 text-lg">No colors associated with this glaze</p>
+                                </div>
+                            </template>
+                        </div>
+
+                        <!-- Relations Tab -->
+                        <div x-show="activeTab === 'relations'" 
+                             class="h-full overflow-y-auto overflow-x-hidden">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <!-- Customer -->
+                                <div class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900 dark:to-blue-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
+                                    <div class="flex items-center mb-3">
+                                        <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 mr-2">business</span>
+                                        <span class="font-semibold text-gray-700 dark:text-gray-300">Customer</span>
+                                    </div>
+                                    <p class="text-lg font-medium text-blue-800 dark:text-blue-200 break-words" x-text="glazeToView?.customer?.name || '-'"></p>
+                                </div>
+
+                                <!-- Requestor -->
+                                <div class="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900 dark:to-green-800 rounded-lg p-4 border border-green-200 dark:border-green-700">
+                                    <div class="flex items-center mb-3">
+                                        <span class="material-symbols-outlined text-green-600 dark:text-green-400 mr-2">person</span>
+                                        <span class="font-semibold text-gray-700 dark:text-gray-300">Requestor</span>
+                                    </div>
+                                    <p class="text-lg font-medium text-green-800 dark:text-green-200 break-words" x-text="glazeToView?.requestor?.name || '-'"></p>
+                                </div>
+
+                                <!-- Status -->
+                                <div class="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900 dark:to-orange-800 rounded-lg p-4 border border-orange-200 dark:border-orange-700">
+                                    <div class="flex items-center mb-3">
+                                        <span class="material-symbols-outlined text-orange-600 dark:text-orange-400 mr-2">flag</span>
+                                        <span class="font-semibold text-gray-700 dark:text-gray-300">Status</span>
+                                    </div>
+                                    <p class="text-lg font-medium text-orange-800 dark:text-orange-200 break-words" x-text="glazeToView?.status?.status || '-'"></p>
+                                </div>
+
+                                <!-- Color Count -->
+                                <div class="bg-gradient-to-br from-red-50 to-red-100 dark:from-red-900 dark:to-red-800 rounded-lg p-4 border border-red-200 dark:border-red-700">
+                                    <div class="flex items-center mb-3">
+                                        <span class="material-symbols-outlined text-red-600 dark:text-red-400 mr-2">palette</span>
+                                        <span class="font-semibold text-gray-700 dark:text-gray-300">Associated Colors</span>
+                                    </div>
+                                    <p class="text-lg font-medium text-red-800 dark:text-red-200" x-text="(glazeToView?.colors?.length || 0) + ' colors'"></p>
                                 </div>
                             </div>
                         </div>
@@ -221,14 +227,13 @@
         </div>
 
         <!-- Footer -->
-        <div class="bg-gray-50 px-6 py-4 flex justify-between items-center border-t flex-shrink-0">
-            <div class="text-sm text-gray-500">
+        <div class="bg-gray-50 dark:bg-gray-700 px-6 py-4 flex justify-between items-center border-t border-gray-200 dark:border-gray-600 flex-shrink-0">
+            <div class="text-sm text-gray-500 dark:text-gray-400">
                 <span class="material-symbols-outlined text-sm mr-1">schedule</span>
-                Created: <span
-                    x-text="glazeToView?.created_at ? new Date(glazeToView.created_at).toLocaleDateString('th-TH') : '-'"></span>
+                Created: <span x-text="glazeToView?.created_at ? new Date(glazeToView.created_at).toLocaleDateString('th-TH') : '-'"></span>
             </div>
             <button @click="GlazeDetailModal = false"
-                class="bg-gray-500 hover:bg-blue-600 text-white py-2 px-6 rounded-lg transition-all duration-200 hoverScale">
+                class="bg-gray-500 dark:bg-gray-600 hover:bg-blue-600 dark:hover:bg-blue-500 text-white py-2 px-6 rounded-lg transition-all duration-200 hoverScale">
                 <span class="material-symbols-outlined text-sm mr-1 mt-1">close</span>
                 Close
             </button>
@@ -241,14 +246,15 @@
         @click.self="zoomImage = false">
         <div class="relative max-h-[95vh] max-w-[95vw]">
             <template x-if="glazeToView?.image?.file_path">
-                <img :src="`{{ asset('storage') }}/${glazeToView.image.file_path}`" :alt="glazeToView.glaze_code"
-                    class="max-h-[95vh] max-w-[95vw] object-contain rounded-lg shadow-2xl cursor-zoom-out"
-                    @click="zoomImage = false">
+                <img :src="`{{ asset('storage') }}/${glazeToView.image.file_path}`" 
+                     :alt="glazeToView.glaze_code"
+                     class="max-h-[95vh] max-w-[95vw] object-contain rounded-lg shadow-2xl cursor-zoom-out"
+                     @click="zoomImage = false">
             </template>
             <template x-if="!glazeToView?.image?.file_path">
-                <div class="bg-white rounded-lg p-8 text-center">
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-8 text-center">
                     <span class="material-symbols-outlined text-6xl text-gray-400 mb-4 block">image</span>
-                    <p class="text-gray-600">No Image Available</p>
+                    <p class="text-gray-600 dark:text-gray-300">No Image Available</p>
                 </div>
             </template>
             <!-- Close button -->
