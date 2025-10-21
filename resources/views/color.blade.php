@@ -121,7 +121,7 @@
                     </tbody>
                 </table>
                 <!-- Pagination -->
-                <div class="mt-4 flex justify-end">
+                <div class="mt-4 flex justify-end pb-2">
                     {{ $colors->links('vendor.pagination.tailwind-custom') }}
                 </div>
             </div>

@@ -29,15 +29,20 @@
     <!-- GIF Background -->
     <div class="fixed inset-0 w-full h-full z-0">
         <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExNWV4NHFhM25mNHAwYmllMmZvbGVlaWxldDdvaThlbnhxN3UyaTg2cyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/MyWrJJIdAfoJuEPlLP/giphy.gif" 
-             class="w-full h-full object-cover" alt="Background GIF">
+            class="w-full h-full object-cover" alt="Background GIF">
         <!-- Overlay for better readability -->
         <div class="absolute inset-0 bg-black/40"></div>
     </div>
-
-<!-- Content -->
-<div class="relative z-10 min-h-screen flex items-center justify-center p-6 fade-in">
-    <div class="w-full sm:max-w-md px-6 py-8 bg-gray-100 shadow-2xl rounded-lg text-center">
-        <h1 class="text-4xl font-bold text-blue-600 mb-4">PATRA</h1>            <div>
+    <!-- Content -->
+    <div class="relative z-10 min-h-screen flex items-center justify-center p-6 fade-in">
+        <div class="w-full sm:max-w-md px-6 py-8 bg-gray-100 shadow-2xl rounded-lg text-center">
+            <!-- Logo แทนตัวอักษร -->
+            <div class="mb-6">
+                <img src="{{ asset('images/PatraLogo.png') }}" 
+                    alt="PATRA - We make good life possible" 
+                    class="mx-auto h-16 w-auto">
+            </div>
+            <div>
                 {{ $slot }}
             </div>
         </div>

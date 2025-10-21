@@ -29,16 +29,17 @@
 </head>
 <body class="bg-gray-50 flex items-center justify-center min-h-screen font-sans">
 
-    <div class="text-center space-y-8">
-        <!-- ชื่อ PATRA -->
-        <h1 class="text-6xl font-extrabold text-blue-600 tracking-wider">PATRA</h1>
-
-        <!-- Product Master -->
-        <p class="text-xl text-gray-700">Product Master</p>
+    <div class="text-center">
+        <!-- Logo แทนตัวอักษร -->
+        <div class="mb-6">
+            <img src="{{ asset('images/PatraLogo.png') }}" 
+                alt="PATRA - We make good life possible" 
+                class="mx-auto h-48 w-auto">
+        </div>
 
         <!-- Progress Bar -->
-        <div class="w-64 h-4 bg-gray-200 rounded-full mx-auto mt-8">
-            <div id="progress-bar" class="h-4 bg-blue-600 rounded-full" style="width: 0%; transition: width 0.03s linear;"></div>
+        <div class="w-128 h-4 bg-gray-100 rounded-full mx-auto mt-8">
+            <div id="progress-bar" class="h-4 bg-gray-500 rounded-full" style="width: 0%; transition: width 0.03s linear;"></div>
         </div>
     </div>
 

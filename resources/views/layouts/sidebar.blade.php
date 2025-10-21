@@ -92,21 +92,27 @@
 
     <!-- Sidebar -->
     <div class="flex h-screen overflow-hidden">
-        <aside class="fixed inset-y-0 left-0 z-50 w-64 flex-col gap-y-4 border-r border-gray-200 dark:border-gray-700 
+        <aside class="fixed inset-y-0 left-0 z-50 w-64 flex-col border-r border-gray-200 dark:border-gray-700 
                     bg-white dark:bg-gray-800 p-4 shadow-xl
                     transform ease-in-out md:static md:flex md:z-auto"
-            :class="sidebarClass"
+            :class="sidebarClass"   
             x-cloak>
-
-            <h1 class="text-4xl font-bold ml-3 text-gray-900 dark:text-gray-100">PATRA</h1>
-            <div class="flex items-center gap-2">
-                <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-900 dark:bg-gray-700 text-white">
-                    <span class="material-symbols-outlined text-full">database</span>
-                </div>
-                <h1 class="text-lg font-bold text-gray-900 dark:text-gray-100">Product Master</h1>
+            <div class="mb-2">
+                <div class="bg-white rounded-lg p-2 inline-block shadow-sm">
+                    <img src="{{ asset('images/PatraLogo.png') }}" 
+                        alt="PATRA - We make good life possible" 
+                        class="mx-auto h-14 w-auto">
+                </div>            
+                <div class="flex items-center gap-2">
+                    <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-900 dark:bg-gray-700 text-white">
+                        <span class="material-symbols-outlined text-full">database</span>
+                    </div>
+                    <h1 class="text-lg font-bold text-gray-900 dark:text-gray-100">Master Database</h1>
+                </div>                
             </div>
 
-            <nav class="flex flex-col gap-1 shadow-sm mt-4">
+
+            <nav class="flex flex-col gap-1 shadow-sm">
                 <a href="{{ route('dashboard') }}"
                     class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium 
                     {{ request()->routeIs('dashboard') 
