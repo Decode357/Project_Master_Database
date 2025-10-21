@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 /* ปรับ container ของ Select2 */
 .select2-container .select2-selection {
     @apply  border border-gray-300 rounded-lg py-5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
@@ -21,6 +22,7 @@
     top: 50%;
     transform: translateY(30%);
 }
+
 #CreateGlazeOuterModal .select2-container .select2-selection,
 #CreateGlazeInsideModal .select2-container .select2-selection,
 #CreateEffectModal .select2-container .select2-selection,
@@ -30,25 +32,117 @@
     min-height: 4rem; /* ให้สูงพอสำหรับข้อความ */
 }
 
-    
+/* Dark Theme Styles for Select2 */
+.dark .select2-container .select2-selection {
+    @apply bg-gray-700 border-gray-600 text-gray-100;
+}
 
-/* ปรับ hover */
-/* .select2-container .select2-selection:hover {
-    @apply border-gray-400;
-} */
+.dark .select2-container .select2-selection:hover {
+    @apply border-gray-500;
+}
 
-/* ปรับเมื่อมี focus */
-/* .select2-container--focus .select2-selection {
-    @apply border-blue-500 ring-2 ring-blue-500;
-} */
+.dark .select2-container--focus .select2-selection {
+    @apply border-blue-400 ring-blue-400;
+}
 
-/* ปรับ placeholder */
-/* .select2-container .select2-selection__placeholder {
+.dark .select2-container .select2-selection__rendered {
+    @apply text-gray-100 !important;
+    color: #f3f4f6 !important; /* เพิ่ม !important เพื่อบังคับสี */
+}
+
+.dark .select2-container .select2-selection__placeholder {
     @apply text-gray-400;
-} */
+    color: #9ca3af !important;
+}
 
-/* ปรับ text ของตัวเลือก */
-/* .select2-container .select2-selection__rendered {
-    @apply text-sm;
-} */
+.dark .select2-container .select2-selection__arrow b {
+    border-color: #9CA3AF transparent transparent transparent;
+}
+
+/* Dark theme for dropdown */
+.dark .select2-dropdown {
+    @apply bg-gray-700 border-gray-600;
+}
+
+.dark .select2-search__field {
+    @apply bg-gray-600 border-gray-500 text-gray-100;
+    color: #f3f4f6 !important;
+}
+
+.dark .select2-search__field:focus {
+    @apply border-blue-400 ring-1 ring-blue-400;
+}
+
+.dark .select2-results__option {
+    @apply text-gray-100 bg-gray-700;
+    color: #f3f4f6 !important;
+}
+
+.dark .select2-results__option--highlighted {
+    @apply bg-blue-600 text-white;
+    color: #ffffff !important;
+}
+
+.dark .select2-results__option[aria-selected="true"] {
+    @apply bg-gray-600;
+    color: #f3f4f6 !important;
+}
+
+.dark .select2-results__option--selectable:hover {
+    @apply bg-gray-600;
+    color: #f3f4f6 !important;
+}
+
+/* Dark theme for multi-select */
+.dark .select2-container--default .select2-selection--multiple {
+    @apply bg-gray-700 border-gray-600;
+}
+
+.dark .select2-container--default .select2-selection--multiple .select2-selection__choice {
+    @apply bg-gray-600 border-gray-500 text-gray-100;
+    color: #f3f4f6 !important;
+}
+
+.dark .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    @apply text-gray-300;
+    color: #d1d5db !important;
+}
+
+.dark .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
+    @apply text-red-400;
+    color: #f87171 !important;
+}
+
+/* Dark theme for disabled state */
+.dark .select2-container--disabled .select2-selection {
+    @apply bg-gray-800 text-gray-500 border-gray-600;
+}
+
+.dark .select2-container--disabled .select2-selection .select2-selection__rendered {
+    color: #6b7280 !important;
+}
+
+/* Dark theme for specific modals */
+.dark #CreateGlazeOuterModal .select2-container .select2-selection,
+.dark #CreateGlazeInsideModal .select2-container .select2-selection,
+.dark #CreateEffectModal .select2-container .select2-selection,
+.dark #EditEffectModal .select2-container .select2-selection {
+    @apply bg-gray-700 border-gray-600 text-gray-100;
+}
+
+.dark #CreateGlazeOuterModal .select2-container .select2-selection .select2-selection__rendered,
+.dark #CreateGlazeInsideModal .select2-container .select2-selection .select2-selection__rendered,
+.dark #CreateEffectModal .select2-container .select2-selection .select2-selection__rendered,
+.dark #EditEffectModal .select2-container .select2-selection .select2-selection__rendered {
+    color: #f3f4f6 !important;
+}
+
+/* เพิ่มการจัดการสีให้ครอบคลุมทุกกรณี */
+.dark .select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #f3f4f6 !important;
+}
+
+.dark .select2-container--default .select2-selection--multiple .select2-selection__rendered {
+    color: #f3f4f6 !important;
+}
 
