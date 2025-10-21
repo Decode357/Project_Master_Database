@@ -34,8 +34,8 @@ class ColorController extends Controller
         $colors = $query->latest()->paginate($perPage)->appends($request->query());
 
         $customers = Customer::all();
-
-        return view('color', compact('colors', 'customers', 'perPage', 'search'));
+        $permissions = $this->getUserPermissions();
+        return view('color', compact('colors', 'customers', 'perPage', 'search'), $permissions);
     }
 
     private function rules()

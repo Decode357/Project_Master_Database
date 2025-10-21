@@ -3,13 +3,6 @@
 @section('header', 'User Management')
 @section('content')
     <main class="flex-1 bg-gray-50 dark:bg-gray-900" x-data="userPage()" x-init="initSelect2()">
-        @php
-            use Spatie\Permission\Models\Permission;
-            use Illuminate\Support\Facades\Auth;
-
-            $user = Auth::user();
-            $hasManageUsers = $user->getDirectPermissions()->pluck('name')->contains('manage users');
-        @endphp
         <!-- Filters -->
         <div class="bg-white p-6 rounded-lg shadow-md mb-3 
             dark:bg-gray-800 dark:shadow-gray-900/50">
@@ -53,7 +46,7 @@
                     </select>
                 </div>
                 <!-- Add User button -->
-                @if ($hasManageUsers)
+                @if ($hasManageUser)
                     <div class="ml-auto">
                         <button type="button" @click="openCreateModal()"
                             class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hoverScale hover:bg-blue-700">
@@ -103,7 +96,7 @@
                                         </span>
                                     @endforeach
                                 </td>
-                                <td class="px-3 py-3 space-x-1">
+                                <td class="px-3 py-3">
                                     @foreach ($user->permissions as $perm)
                                         <span
                                             class="inline-block {{ $permissionColors[$perm->name] ?? 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300' }} text-xs font-medium px-2.5 py-0.5 rounded-full">
@@ -119,8 +112,8 @@
                                     $currentRole = $currentUser->roles->pluck('name')->first();
                                     $rowRole = $user->roles->pluck('name')->first();
                                 @endphp
-
-                                @if ($hasManageUsers && ($currentRole === 'superadmin' || $rowRole !== 'superadmin') && $user->id !== auth()->id())
+ 
+                                @if ($hasManageUser&& ($currentRole === 'superadmin' || $rowRole !== 'superadmin') && $user->id !== auth()->id())
                                     <td class="text-right space-x-2 max-w-[80px]">
                                         <button @click="openEditModal({{ $user->toJson() }})"
                                             class="text-blue-600 hover:text-blue-700">

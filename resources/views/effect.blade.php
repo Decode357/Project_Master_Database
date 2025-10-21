@@ -45,13 +45,15 @@
                     </select>
                 </div>
                 <!-- Add Effect button -->
-                <div class="ml-auto">
-                    <button type="button" @click="openCreateModal()"
-                        class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hoverScale hover:bg-blue-700">
-                        <span class="material-symbols-outlined">add</span>
-                        <span>Add</span>
-                    </button>
-                </div>
+                @if ($hasCreate)
+                    <div class="ml-auto">
+                        <button type="button" @click="openCreateModal()"
+                            class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hoverScale hover:bg-blue-700">
+                            <span class="material-symbols-outlined">add</span>
+                            <span>Add</span>
+                        </button>
+                    </div>
+                @endif
             </form>
         </div>
 
@@ -91,16 +93,18 @@
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 text-right space-x-2">
-                                    <button @click="openEditModal({{ $effect->toJson() }})"
-                                            class="text-blue-600 hover:text-blue-700">
-                                        <span class="material-symbols-outlined">edit</span>
-                                    </button>
-
-                                    <button
-                                        @click="DeleteEffectModal = true; effectIdToDelete = {{ $effect->id }}; itemCodeToDelete = '{{ $effect->effect_code }}'"
-                                            class="text-red-500 hover:text-red-700">
-                                        <span class="material-symbols-outlined">delete</span>
-                                    </button>
+                                    @if ($hasEdit)
+                                        <button @click="openEditModal({{ $effect->toJson() }})"
+                                                class="text-blue-600 hover:text-blue-700">
+                                            <span class="material-symbols-outlined">edit</span>
+                                        </button>                                        
+                                    @endif
+                                    @if ($hasDelete)
+                                        <button @click="DeleteEffectModal = true; effectIdToDelete = {{ $effect->id }}; itemCodeToDelete = '{{ $effect->effect_code }}'"
+                                                class="text-red-500 hover:text-red-700">
+                                            <span class="material-symbols-outlined">delete</span>
+                                        </button>
+                                    @endif
                                 </td>
                             </tr>
                         @empty

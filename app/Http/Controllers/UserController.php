@@ -63,7 +63,7 @@ class UserController extends Controller
             'file import' => 'bg-gray-100 text-gray-800',
             'manage users' => 'bg-purple-100 text-purple-800',
         ];
-
+        $permissions = $this->getUserPermissions();
         $departments = Department::all();
         $requestors = Requestor::all();
         $customers = Customer::all();    
@@ -72,7 +72,7 @@ class UserController extends Controller
             $user->userPermissions = $user->getAllPermissions()->pluck('name')->toArray();
         }
 
-        return view('user', compact('users', 'departments', 'requestors', 'customers', 'permissionColors', 'perPage', 'search'));
+        return view('user', compact('users', 'departments', 'requestors', 'customers', 'permissionColors', 'perPage', 'search'), $permissions);
     }
 
     public function storeUser(Request $request)

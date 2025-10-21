@@ -78,7 +78,9 @@ class ShapeController extends Controller
             'images' => Image::all(),
         ];
 
-        return view('shape', array_merge($data, compact('shapes', 'perPage', 'search')));
+        $permissions = $this->getUserPermissions();
+
+        return view('shape', array_merge($data, compact('shapes', 'perPage', 'search'), $permissions));
     }
 
     private function rules($id = null)

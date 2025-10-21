@@ -36,7 +36,9 @@ class EffectController extends Controller
 
         $colors = Color::with('customer')->get();
 
-        return view('effect', compact('effects', 'colors', 'perPage', 'search'));
+        $permissions = $this->getUserPermissions();
+
+        return view('effect', compact('effects', 'colors', 'perPage', 'search'), $permissions);
     }
 
     private function rules($id = null)

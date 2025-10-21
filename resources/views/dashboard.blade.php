@@ -44,11 +44,11 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-6">
         <!-- Latest Shapes -->
         <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md ">
-            <h2 class="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">Latest Shapes</h2>
+            <h2 class="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">Shape History</h2>
             <table class="w-full text-sm text-left text-gray-600 dark:text-gray-400">
                 <thead class="text-xs text-gray-500 dark:text-gray-400 uppercase bg-gray-50 dark:bg-gray-700">
                     <tr>
-                        <th class="px-4 py-2">Item Code</th>
+                        <th class="px-4 py-2">Shape Code</th>
                         <th class="px-4 py-2">Description</th>
                         <th class="px-4 py-2">Updated By</th>
                         <th class="px-4 py-2 text-end">Updated At</th>
@@ -71,13 +71,13 @@
 
         <!-- Latest Glazes -->
         <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-            <h2 class="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">Latest Glazes</h2>
+            <h2 class="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">Glaze History</h2>
             <table class="w-full text-sm text-left text-gray-600 dark:text-gray-400">
                 <thead class="text-xs text-gray-500 dark:text-gray-400 uppercase bg-gray-50 dark:bg-gray-700">
                     <tr>
                         <th class="px-4 py-2">Glaze Code</th>
-                        <th class="px-4 py-2">Glaze Inside</th>
-                        <th class="px-4 py-2">Glaze Outside</th>
+                        <th class="px-4 py-2">Inside Color Code</th>
+                        <th class="px-4 py-2">Outside Color Code</th>
                         <th class="px-4 py-2">Updated By</th>
                         <th class="px-4 py-2 text-end">Updated At</th>
                     </tr>
@@ -99,12 +99,12 @@
         </div>        
         <!-- Latest Patterns -->
         <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-            <h2 class="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">Latest Patterns</h2>
+            <h2 class="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">Pattern History</h2>
             <table class="w-full text-sm text-left text-gray-600 dark:text-gray-400">
                 <thead class="text-xs text-gray-500 dark:text-gray-400 uppercase bg-gray-50 dark:bg-gray-700">
                     <tr>
                         <th class="px-4 py-2">Pattern Code</th>
-                        <th class="px-4 py-2">Name</th>
+                        <th class="px-4 py-2">Description</th>
                         <th class="px-4 py-2">Updated By</th>
                         <th class="px-4 py-2 text-end">Updated At</th>
                     </tr>
@@ -125,12 +125,12 @@
         </div>
         <!-- Latest Backstamps -->
         <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-            <h2 class="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">Latest Backstamps</h2>
+            <h2 class="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">Backstamp History</h2>
             <table class="w-full text-sm text-left text-gray-600 dark:text-gray-400">
                 <thead class="text-xs text-gray-500 dark:text-gray-400 uppercase bg-gray-50 dark:bg-gray-700">
                     <tr>
                         <th class="px-4 py-2">Backstamp Code</th>
-                        <th class="px-4 py-2">Name</th>
+                        <th class="px-4 py-2">Description</th>
                         <th class="px-4 py-2">Updated By</th>
                         <th class="px-4 py-2 text-end">Updated At</th>
                     </tr>

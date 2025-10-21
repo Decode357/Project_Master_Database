@@ -40,13 +40,15 @@
                     </select>
                 </div>
                 <!-- Add Backstamp button -->
-                <div class="ml-auto">
-                    <button type="button" @click="openCreateModal()"
-                        class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hoverScale hover:bg-blue-700">
-                        <span class="material-symbols-outlined">add</span>
-                        <span>Add</span>
-                    </button>
-                </div>
+                @if ($hasCreate)
+                    <div class="ml-auto">
+                        <button type="button" @click="openCreateModal()"
+                            class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hoverScale hover:bg-blue-700">
+                            <span class="material-symbols-outlined">add</span>
+                            <span>Add</span>
+                        </button>
+                    </div>
+                @endif
             </form>
         </div>
         <!-- Table -->
@@ -126,14 +128,18 @@
                                             class="flex items-center gap-1 px-2 py-1 text-sm font-medium text-white bg-blue-500 rounded-lg shadow-sm hover:bg-green-600 hover:shadow-md hoverScale">
                                         <span class="material-symbols-outlined text-white">feature_search</span>
                                     </button>
-                                    <button @click="openEditModal({{ $backstamp->toJson() }})"
-                                            class="text-blue-600 hover:text-blue-700">
-                                        <span class="material-symbols-outlined">edit</span>
-                                    </button>
-                                    <button @click="DeleteBackstampModal = true; backstampIdToDelete = {{ $backstamp->id }}; itemCodeToDelete = '{{ $backstamp->backstamp_code }}'" 
-                                            class="text-red-500 hover:text-red-700">
-                                        <span class="material-symbols-outlined">delete</span>
-                                    </button>
+                                    @if ($hasEdit)
+                                        <button @click="openEditModal({{ $backstamp->toJson() }})"
+                                                class="text-blue-600 hover:text-blue-700">
+                                            <span class="material-symbols-outlined">edit</span>
+                                        </button>
+                                    @endif
+                                    @if ($hasDelete)
+                                        <button @click="DeleteBackstampModal = true; backstampIdToDelete = {{ $backstamp->id }}; itemCodeToDelete = '{{ $backstamp->backstamp_code }}'" 
+                                                class="text-red-500 hover:text-red-700">
+                                            <span class="material-symbols-outlined">delete</span>
+                                        </button>
+                                    @endif
                                 </div>
                             </td>
                         </tr>

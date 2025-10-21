@@ -43,11 +43,11 @@ class GlazeInsideOuterController extends Controller
             ->appends($request->except('outer_page'));
         
         $colors = Color::all();
-
+        $permissions = $this->getUserPermissions();
         return view('glazeInsideOuter', compact(
             'glaze_insides', 'glaze_outers', 'colors',
-            'insidePerPage', 'outerPerPage', 'insideSearch', 'outerSearch'
-        ));
+            'insidePerPage', 'outerPerPage', 'insideSearch', 'outerSearch'  
+        ), $permissions);
     }
 
     private function rules($type = 'outer', $id = null)

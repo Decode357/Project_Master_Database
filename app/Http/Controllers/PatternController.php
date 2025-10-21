@@ -64,8 +64,8 @@ class PatternController extends Controller
             'customers'  => Customer::all(),
             'images'     => Image::all(),
         ];
-
-        return view('pattern', array_merge($data, compact('patterns', 'perPage', 'search')));
+        $permissions = $this->getUserPermissions();
+        return view('pattern', array_merge($data, compact('patterns', 'perPage', 'search'), $permissions));
     }
 
     private function rules($id = null)

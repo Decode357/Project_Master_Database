@@ -56,8 +56,8 @@ class BackstampController extends Controller
             'customers'  => Customer::all(),
             'images'     => Image::all(),
         ];
-
-        return view('backstamp', array_merge($data, compact('backstamps', 'perPage', 'search')));
+        $permissions = $this->getUserPermissions();
+        return view('backstamp', array_merge($data, compact('backstamps', 'perPage', 'search'), $permissions));
     }
 
     private function rules($id = null)

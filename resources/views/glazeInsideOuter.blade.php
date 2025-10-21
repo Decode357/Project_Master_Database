@@ -65,13 +65,15 @@
                             </select>
                         </div>
                         <!-- Add Inside button -->
-                        <div class="ml-auto">
-                            <button type="button" @click="openCreateInsideModal()"
-                                class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hoverScale hover:bg-blue-700 ">
-                                <span class="material-symbols-outlined">add</span>
-                                <span>Add</span>
-                            </button>
-                        </div>
+                        @if ($hasCreate)
+                            <div class="ml-auto">
+                                <button type="button" @click="openCreateInsideModal()"
+                                    class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hoverScale hover:bg-blue-700 ">
+                                    <span class="material-symbols-outlined">add</span>
+                                    <span>Add</span>
+                                </button>
+                            </div>
+                        @endif
                     </form>
                 </div>
                 <!-- Inside Table -->
@@ -106,15 +108,19 @@
                                         </td>
                                         <td class="px-4 py-3 text-right">
                                             <div class="flex justify-end gap-1">
-                                                <button @click="openEditInsideModal({{ $glaze_inside->toJson() }})"
-                                                    class="text-blue-600 hover:text-blue-700 p-1">
-                                                    <span class="material-symbols-outlined">edit</span>
-                                                </button>
-                                                <button
-                                                    @click="DeleteGlazeInsideModal = true; glazeInsideIdToDelete = {{ $glaze_inside->id }}; itemCodeToDelete = '{{ $glaze_inside->glaze_inside_code }}'"
-                                                    class="text-red-500 hover:text-red-700">
-                                                    <span class="material-symbols-outlined">delete</span>
-                                                </button>
+                                                @if ($hasEdit)
+                                                    <button @click="openEditInsideModal({{ $glaze_inside->toJson() }})"
+                                                        class="text-blue-600 hover:text-blue-700 p-1">
+                                                        <span class="material-symbols-outlined">edit</span>
+                                                    </button>
+                                                @endif
+                                                @if ($hasDelete)
+                                                    <button
+                                                        @click="DeleteGlazeInsideModal = true; glazeInsideIdToDelete = {{ $glaze_inside->id }}; itemCodeToDelete = '{{ $glaze_inside->glaze_inside_code }}'"
+                                                        class="text-red-500 hover:text-red-700">
+                                                        <span class="material-symbols-outlined">delete</span>
+                                                    </button>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>
@@ -199,13 +205,15 @@
                             </select>
                         </div>
                         <!-- Add Outer button -->
-                        <div class="ml-auto">
-                            <button type="button" @click="openCreateOuterModal()"
-                                class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hoverScale hover:bg-blue-700">
-                                <span class="material-symbols-outlined">add</span>
-                                <span>Add</span>
-                            </button>
-                        </div>
+                        @if ($hasCreate)
+                            <div class="ml-auto">
+                                <button type="button" @click="openCreateOuterModal()"
+                                    class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hoverScale hover:bg-blue-700">
+                                    <span class="material-symbols-outlined">add</span>
+                                    <span>Add</span>
+                                </button>
+                            </div>
+                        @endif
                     </form>
                 </div>
                 <!-- Outer Table -->
@@ -241,15 +249,19 @@
                                         </td>
                                         <td class="px-4 py-3 text-right">
                                             <div class="flex justify-end gap-1">
-                                                <button @click="openEditOuterModal({{ $glaze_outer->toJson() }})"
-                                                    class="text-blue-600 hover:text-blue-700 p-1">
-                                                    <span class="material-symbols-outlined">edit</span>
-                                                </button>
-                                                <button
-                                                    @click="DeleteGlazeOuterModal = true; glazeOuterIdToDelete = {{ $glaze_outer->id }}; itemCodeToDelete = '{{ $glaze_outer->glaze_outer_code }}'"
-                                                    class="text-red-500 hover:text-red-700 p-1">
-                                                    <span class="material-symbols-outlined">delete</span>
-                                                </button>
+                                                @if ($hasEdit)
+                                                    <button @click="openEditOuterModal({{ $glaze_outer->toJson() }})"
+                                                        class="text-blue-600 hover:text-blue-700 p-1">
+                                                        <span class="material-symbols-outlined">edit</span>
+                                                    </button>
+                                                @endif
+                                                @if ($hasDelete)
+                                                    <button
+                                                        @click="DeleteGlazeOuterModal = true; glazeOuterIdToDelete = {{ $glaze_outer->id }}; itemCodeToDelete = '{{ $glaze_outer->glaze_outer_code }}'"
+                                                        class="text-red-500 hover:text-red-700 p-1">
+                                                        <span class="material-symbols-outlined">delete</span>
+                                                    </button>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>

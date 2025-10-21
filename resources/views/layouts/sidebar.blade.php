@@ -158,6 +158,9 @@
 
                     $user = Auth::user();
                     $hasFileImport = $user->getDirectPermissions()->pluck('name')->contains('file import');
+                    $hasCreate = $user->getDirectPermissions()->pluck('name')->contains('create');
+                    $hasEdit = $user->getDirectPermissions()->pluck('name')->contains('edit');
+                    $hasDelete = $user->getDirectPermissions()->pluck('name')->contains('delete');
                 @endphp
                 @role('admin|superadmin')
                     <hr class="my-2 border-gray-300 dark:border-gray-600" />
@@ -240,13 +243,6 @@
 
                 <!-- Logout & Settings -->
                 <div class="flex flex-row gap-2">
-                    <!-- Theme Toggle -->
-                    <button @click="toggleTheme()"
-                        class="flex items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-600 px-3 py-2
-                               text-gray-600 dark:text-gray-300 hoverScale hover:bg-gray-300 dark:hover:bg-gray-500">
-                        <span class="material-symbols-outlined" x-text="themeIcon"></span>
-                    </button>
-                    
                     <!-- Logout -->
                     <form method="POST" action="{{ route('logout') }}" class="flex-1">
                         @csrf
@@ -263,7 +259,7 @@
                     <div class="relative" x-data="{ settingsOpen: false }" @click.outside="settingsOpen = false">
                         <!-- Trigger Button -->
                         <button @click="settingsOpen = !settingsOpen"
-                            class="flex items-center justify-center rounded-lg bg-white dark:bg-gray-700 px-3 py-2
+                            class="flex items-center justify-center rounded-lg bg-white dark:bg-gray-700 px-3 py-2.5
                             text-gray-600 dark:text-gray-300 hoverScale hover:bg-gray-300 dark:hover:bg-gray-600">
                             <span class="material-symbols-outlined">settings</span>
                         </button>
@@ -330,11 +326,12 @@
                         <span class="text-gray-500 dark:text-gray-400">| {{ $permissionLabel }}</span>
                     </h2>
                 </div>
-                <div class="flex items-center gap-4">
-                    <button class="rounded-full p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-700 dark:hover:text-gray-200">
-                        <span class="material-symbols-outlined">notifications</span>
-                    </button>
-                </div>
+                <!-- Theme Toggle -->
+                <button @click="toggleTheme()"
+                    class="flex items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-600 px-3 py-2
+                            text-gray-600 dark:text-gray-300 hoverScale hover:bg-gray-300 dark:hover:bg-gray-500">
+                    <span class="material-symbols-outlined" x-text="themeIcon"></span>
+                </button>
             </header>
 
             <section class="flex-1 p-3 overflow-y-auto ml-0 md:ml-0">

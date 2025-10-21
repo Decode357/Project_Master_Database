@@ -64,8 +64,8 @@ class GlazeController extends Controller
             'glazeInsides' => GlazeInside::all(),
             'images'       => Image::all(),
         ];
-        
-        return view('glaze', array_merge($data, compact('glazes')));
+        $permissions = $this->getUserPermissions();
+        return view('glaze', array_merge($data, compact('glazes'), $permissions));
     }
 
     private function rules($id = null)
