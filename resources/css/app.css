@@ -52,7 +52,7 @@
 
 .dark .select2-container .select2-selection__placeholder {
     @apply text-gray-400;
-    color: #9ca3af !important;
+    color: #9cafa2 !important;
 }
 
 .dark .select2-container .select2-selection__arrow b {
