@@ -130,7 +130,10 @@ class UserController extends Controller
     {
         $user->delete();
 
-        return redirect()->route('user')->with('success', 'User deleted successfully.');
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User deleted successfully.'
+        ]);
     }
 
     public function updateUser(Request $request, User $user)
@@ -179,7 +182,8 @@ class UserController extends Controller
         $user->syncPermissions($permissionsToAssign);
 
         return response()->json([
-            'success' => 'User updated successfully.',
+            'status' => 'success',
+            'message' => 'User updated successfully!',
             'user' => $user->load(['roles', 'department', 'requestor', 'customer'])
         ]);
     }

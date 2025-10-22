@@ -106,6 +106,9 @@ class EffectController extends Controller
     public function destroyEffect(Effect $effect)
     {
         $effect->delete();
-        return redirect()->route('effect.index')->with('success', 'Effect deleted successfully.',200);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Effect deleted successfully.'
+        ]);
     }
 }

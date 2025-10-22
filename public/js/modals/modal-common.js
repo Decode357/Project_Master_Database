@@ -56,9 +56,30 @@ function getCSRFToken() {
     return token ? token.content : '';
 }
 
+// Simple toast notification function
+function showToast(message, type = 'success') {
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'bottom-end',
+        showConfirmButton: false,
+        timer: 1000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    });
+    
+    Toast.fire({
+        icon: type,
+        title: message
+    });
+}
+
 // Make functions available globally
 window.initializeSelect2 = initializeSelect2;
 window.resetSelect2 = resetSelect2;
 window.setLoadingState = setLoadingState;
 window.handleAjaxError = handleAjaxError;
 window.getCSRFToken = getCSRFToken;
+window.showToast = showToast;

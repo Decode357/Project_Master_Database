@@ -7,12 +7,13 @@
         <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Create User</h2>
         <hr class="mb-3 border-gray-200 dark:border-gray-600">
 
-        <form id="CreateUserForm" @submit.prevent="submitUserForm" class="space-y-4" x-data="{
+        <form id="CreateUserForm" @submit.prevent="isSubmitting = true; submitUserForm()" class="space-y-4" x-data="{
             newUser: { department_id: '', requestor_id: '', customer_id: '' },
             role: 'user',
             permissions: ['view'],
             allPermissions: ['view', 'edit', 'delete', 'create', 'file import', 'manage users'],
             currentUserRole: '{{ Auth::user()->roles->pluck('name')->first() }}',
+            isSubmitting: false,
             updatePermissions() {
                 if (!this.permissions.includes('view')) this.permissions.push('view');
                 if (this.role === 'user') this.permissions = ['view'];
@@ -151,7 +152,11 @@
                 <button type="button" @click="CreateUserModal = false"
                     class="px-4 py-2 rounded-md bg-gray-200 dark:bg-gray-600 dark:text-gray-300 dark:hover:bg-gray-500 hoverScale hover:bg-red-500 hover:text-white">Cancel</button>
                 <button type="submit"
-                    class="px-4 py-2 rounded-md bg-blue-600 dark:bg-blue-500 text-white hoverScale hover:bg-blue-700 dark:hover:bg-blue-600">Create</button>
+                    :disabled="isSubmitting"
+                    :class="isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600'"
+                    class="px-4 py-2 rounded-md text-white hoverScale">
+                    <span x-text="isSubmitting ? 'Processing...' : 'Create'"></span>
+                </button>
             </div>
         </form>
     </div>

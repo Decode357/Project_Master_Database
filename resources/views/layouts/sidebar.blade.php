@@ -79,9 +79,6 @@
     x-cloak 
     style='font-family: "Public Sans", "Noto Sans", sans-serif;'>
 
-    <!-- Theme Manager Script -->
-    <script src="{{ asset('js/theme-manager.js') }}"></script>
-
     <!-- Overlay -->
     <div class="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden" 
         x-show="sidebarOpen" 
@@ -93,17 +90,17 @@
     <!-- Sidebar -->
     <div class="flex h-screen overflow-hidden">
         <aside class="fixed inset-y-0 left-0 z-50 w-64 flex-col border-r border-gray-200 dark:border-gray-700 
-                    bg-white dark:bg-gray-800 p-4 shadow-xl
+                    bg-white dark:bg-gray-800 shadow-xl
                     transform ease-in-out md:static md:flex md:z-auto"
             :class="sidebarClass"   
             x-cloak>
             <div class="mb-2">
-                <div class="bg-white rounded-lg p-2 inline-block shadow-sm">
+                <div class="bg-white p-2 inline-block shadow-sm">
                     <img src="{{ asset('images/PatraLogo.png') }}" 
                         alt="PATRA - We make good life possible" 
                         class="mx-auto h-14 w-auto">
                 </div>            
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-2 px-4">
                     <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-900 dark:bg-gray-700 text-white">
                         <span class="material-symbols-outlined text-full">database</span>
                     </div>
@@ -112,7 +109,7 @@
             </div>
 
 
-            <nav class="flex flex-col gap-1 shadow-sm">
+            <nav class="flex flex-col gap-1 shadow-sm px-4">
                 <a href="{{ route('dashboard') }}"
                     class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium 
                     {{ request()->routeIs('dashboard') 
@@ -339,7 +336,6 @@
                     <span class="material-symbols-outlined" x-text="themeIcon"></span>
                 </button>
             </header>
-
             <section class="flex-1 p-3 overflow-y-auto ml-0 md:ml-0">
                 <div>
                     @yield('content')
@@ -411,16 +407,18 @@
             }
         }
     </script>
-
+        <!-- Add SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Alpine.js CDN -->
     <script src="//unpkg.com/alpinejs" defer></script>
     <!-- Select2 CSS & JS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
     <!-- Modal common Scripts -->
     <script src="{{ asset('js/modals/modal-common.js') }}"></script> 
-    
+    <!-- Theme Manager Script -->
+    <script src="{{ asset('js/theme-manager.js') }}"></script>    
     <!-- Page Specific Scripts -->
     <script src="{{ asset('js/pages/shape-page.js') }}"></script>
     <script src="{{ asset('js/pages/pattern-page.js') }}"></script>

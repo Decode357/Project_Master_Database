@@ -112,6 +112,9 @@ class BackstampController extends Controller
     public function destroyBackstamp(Backstamp $backstamp)
     {
         $backstamp->delete();
-        return redirect()->route('backstamp.index')->with('success', 'Backstamp deleted successfully.',200);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Backstamp deleted successfully.'
+        ]);
     }
 }

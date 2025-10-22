@@ -57,6 +57,35 @@ function userPage() {
             $('.select2').select2({
                 width: '100%'
             });
+        },
+
+        deleteUser() {
+            const formData = new FormData();
+            formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+            formData.append('_method', 'DELETE');
+
+            fetch(`/user/${this.userIdToDelete}`, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                this.DeleteUserModal = false;
+                
+                // ใช้ข้อความจาก response แทนข้อความที่กำหนดเอง
+                showToast(data.message || 'รายการถูกลบเรียบร้อยแล้ว', 'success');
+                
+                setTimeout(() => {
+                    window.location.reload();
+                }, 300);
+            })
+            .catch(error => {
+                handleAjaxError(error, 'ลบข้อมูล');
+            });
         }
     }
 }

@@ -116,6 +116,9 @@ class GlazeController extends Controller
     public function destroyGlaze(Glaze $glaze)
     {
         $glaze->delete();
-        return redirect()->route('glaze.index')->with('success', 'Glaze deleted successfully.',200);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Shape deleted successfully.'
+        ]);    
     }
 }

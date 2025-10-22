@@ -79,6 +79,9 @@ class ColorController extends Controller
     public function destroyColor(Color $color)
     {
         $color->delete();
-        return redirect()->route('color.index')->with('success', 'Color deleted successfully.',200);
+                return response()->json([
+            'status' => 'success',
+            'message' => 'Color deleted successfully.'
+        ]);
     }
 }

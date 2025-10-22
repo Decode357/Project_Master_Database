@@ -42,7 +42,13 @@ function submitGlazeForm() {
         form.reset();
         resetSelect2('#CreateGlazeModal');
 
-        window.location.reload();
+        // Show toast notification
+        showToast(data.message, 'success');
+        
+        // Reload page after short delay
+        setTimeout(() => {
+            window.location.reload();
+        }, 300);
     })
     .catch(error => {
         this.errors = handleAjaxError(error, 'บันทึกข้อมูล');

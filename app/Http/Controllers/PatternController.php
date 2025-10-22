@@ -120,6 +120,9 @@ class PatternController extends Controller
     public function destroyPattern(Pattern $pattern)
     {
         $pattern->delete();
-        return redirect()->route('pattern.index')->with('success', 'Pattern deleted successfully.',200);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User deleted successfully.'
+        ]);
     }
 }

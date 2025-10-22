@@ -44,7 +44,13 @@ document.addEventListener('alpine:init', () => {
             .then(data => {
                 this.EditBackstampModal = false;
                 this.errors = {};
-                window.location.reload();
+                // Show toast notification
+                showToast(data.message, 'success');
+                
+                // Reload page after short delay
+                setTimeout(() => {
+                    window.location.reload();
+                }, 300);
             })
             .catch(error => {
                 this.errors = handleAjaxError(error, 'อัพเดทข้อมูล');

@@ -71,12 +71,18 @@ class GlazeInsideOuterController extends Controller
     public function destroyGlazeOuter(GlazeOuter $glazeOuter)
     {
         $glazeOuter->delete();
-        return redirect()->route('glaze.inside.outer.index')->with('success', 'Glaze Outer deleted successfully.',200);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Outside Color successfully.'
+        ]);
     }
     public function destroyGlazeInside(GlazeInside $glazeInside)
     {
         $glazeInside->delete();
-        return redirect()->route('glaze.inside.outer.index')->with('success', 'Glaze Inside deleted successfully.',200);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Inside Color deleted successfully.'
+        ]);
     }
 
     public function storeGlazeInside(Request $request)

@@ -61,7 +61,13 @@ function submitUserForm() {
         form.reset();
         resetSelect2('#CreateUserModal');
         
-        window.location.reload();
+        // Show toast notification
+        showToast(data.message, 'success');
+        
+        // Reload page after short delay
+        setTimeout(() => {
+            window.location.reload();
+        }, 300);
     })
     .catch(error => {
         alpineData.errors = handleAjaxError(error, 'บันทึกข้อมูล');

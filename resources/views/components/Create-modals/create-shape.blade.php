@@ -286,7 +286,7 @@
 
             <!-- Buttons -->
             <div class="flex justify-end gap-2 mt-4">
-                <button type="button" @click="CreateShapeModal = false; errors = {}"
+                <button type="button" @click="$event.target.disabled = true; CreateShapeModal = false; errors = {}"
                     class="px-4 py-2 rounded-md bg-gray-200 dark:bg-gray-600 dark:text-gray-100 hoverScale hover:bg-red-500 hover:text-white">Cancel</button>
                 <button type="submit" :disabled="loading"
                     class="px-4 py-2 rounded-md bg-blue-600 text-white hoverScale hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed">
