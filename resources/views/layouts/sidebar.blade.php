@@ -330,11 +330,19 @@
                     </h2>
                 </div>
                 <!-- Theme Toggle -->
+                <div class="flex items-center gap-2 flex-row">
+                    <button 
+                        class="flex items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-600 px-3 py-2
+                                text-gray-600 dark:text-gray-300 hoverScale hover:bg-gray-300 dark:hover:bg-gray-500">
+                        <span class="material-symbols-outlined">language</span>
+                    </button>                    
                 <button @click="toggleTheme()"
                     class="flex items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-600 px-3 py-2
                             text-gray-600 dark:text-gray-300 hoverScale hover:bg-gray-300 dark:hover:bg-gray-500">
                     <span class="material-symbols-outlined" x-text="themeIcon"></span>
                 </button>
+                </div>
+
             </header>
             <section class="flex-1 p-3 overflow-y-auto ml-0 md:ml-0">
                 <div>

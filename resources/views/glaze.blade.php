@@ -63,7 +63,6 @@
                             <th class="px-4 py-3 text-left">Effect CODE</th>
                             <th class="px-4 py-3 text-left">Fire Temp</th>
                             <th class="px-4 py-3 text-left">Status</th>
-                            <th class="px-4 py-3 text-left">Approval Date</th>
                             <th class="px-4 py-3 text-left">UPDATED BY</th>
                             <th class="px-4 py-3 text-end">ACTION</th>
                         </tr>
@@ -74,7 +73,6 @@
                             @php
                                 $statusText = $glaze->status->status ?? 'Unknown';
                                 $statusColor = match ($statusText) {
-                                    'Approved' => 'bg-green-100 text-green-800',
                                     'Pending' => 'bg-yellow-100 text-yellow-800',
                                     'Rejected' => 'bg-red-100 text-red-800',
                                     default => 'bg-gray-100 text-gray-800',
@@ -91,9 +89,6 @@
                                     <span class="{{ $statusColor }} px-2 py-1 rounded-full text-xs font-semibold">
                                         {{ $statusText }}
                                     </span>
-                                </td>
-                                <td class="px-4 py-3">
-                                    {{ $glaze->approval_date ? \Carbon\Carbon::parse($glaze->approval_date)->format('d/m/Y') : '-' }}
                                 </td>
                                 <td class="px-4 py-3">
                                     {{ $glaze->updater->name ?? 'System' }}

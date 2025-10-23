@@ -62,7 +62,6 @@
                             <th class="px-4 py-3 text-left">PATTERN CODE</th>
                             <th class="px-4 py-3 text-left">Description</th>
                             <th class="px-4 py-3 text-left">Status</th>
-                            <th class="px-4 py-3 text-left">Approval Date</th>
                             <th class="px-4 py-3 text-left">UPDATED BY</th>
                             <th class="px-4 py-3 text-end">ACTION</th>
                         </tr>
@@ -73,7 +72,6 @@
                             @php
                                 $statusText = $pattern->status->status ?? 'Unknown';
                                 $statusColor = match ($statusText) {
-                                    'Approved' => 'bg-green-100 text-green-800',
                                     'Pending' => 'bg-yellow-100 text-yellow-800',
                                     'Rejected' => 'bg-red-100 text-red-800',
                                     default => 'bg-gray-100 text-gray-800',
@@ -90,10 +88,6 @@
                                     </span>
                                 </td>
 
-                                <!-- Approval Date -->
-                                <td class="px-4 py-3">
-                                    {{ $pattern->approval_date?->format('d/m/Y') ?? '-' }}
-                                </td>
                                 <!-- UPDATED BY -->
                                 <td class="px-4 py-3">{{ $pattern->updater->name ?? 'System' }}</td>
 
