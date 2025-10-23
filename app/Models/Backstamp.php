@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\{Requestor, Customer, Status, User, Image};
 
 class Backstamp extends Model
 {
@@ -14,24 +15,28 @@ class Backstamp extends Model
         'requestor_id',
         'customer_id',
         'status_id',
-        'duration',
+        'organic',
         'in_glaze',
         'on_glaze',
         'under_glaze',
         'air_dry',
         'approval_date',
-        'image_id',
         'updated_by',
     ];
 
     protected $casts = [
+        'organic' => 'boolean',
         'in_glaze' => 'boolean',
         'on_glaze' => 'boolean',
         'under_glaze' => 'boolean',
         'air_dry' => 'boolean',
         'approval_date' => 'datetime',
     ];
-    
+
+    public function images()
+    {
+        return $this->hasMany(Image::class);
+    }
     public function requestor()
     {
         return $this->belongsTo(Requestor::class, 'requestor_id');
@@ -43,10 +48,6 @@ class Backstamp extends Model
     public function status()
     {
         return $this->belongsTo(Status::class, 'status_id');
-    }
-    public function image()
-    {
-        return $this->belongsTo(Image::class, 'image_id');
     }
     public function updater()
     {

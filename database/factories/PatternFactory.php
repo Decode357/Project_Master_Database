@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\{Requestor, Customer, Status, Designer, Image, User};
+use App\Models\{Requestor, Customer, Status, Designer, User};
 
 class PatternFactory extends Factory
 {
@@ -33,12 +33,11 @@ class PatternFactory extends Factory
             'customer_id' => Customer::inRandomOrder()->value('id'),
             'status_id' => Status::inRandomOrder()->value('id'),
             'designer_id' => Designer::inRandomOrder()->value('id'),
-            'duration' => $this->faker->numberBetween(1, 30),
+            'exclusive' => $this->faker->boolean(),
             'in_glaze' => $this->faker->boolean(),
             'on_glaze' => $this->faker->boolean(),
             'under_glaze' => $this->faker->boolean(),
             'approval_date' => $this->faker->optional()->date(),
-            'image_id' => Image::inRandomOrder()->value('id'),
             'updated_by' => User::inRandomOrder()->value('id'),
         ];
     }

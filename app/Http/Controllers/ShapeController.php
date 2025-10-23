@@ -14,7 +14,7 @@ class ShapeController extends Controller
     {
         $relations = [
             'shapeType', 'status', 'shapeCollection', 'customer',
-            'itemGroup', 'process', 'designer', 'requestor', 'updater', 'image'
+            'itemGroup', 'process', 'designer', 'requestor', 'updater','images'
         ];
 
         // รับค่า perPage จาก request หรือใช้ default 10
@@ -75,7 +75,6 @@ class ShapeController extends Controller
             'processes' => Process::all(),
             'designers' => Designer::all(),
             'requestors' => Requestor::all(),
-            'images' => Image::all(),
         ];
 
         $permissions = $this->getUserPermissions();
@@ -98,7 +97,6 @@ class ShapeController extends Controller
             'customer_id'   => 'nullable|exists:customers,id',
             'designer_id'   => 'nullable|exists:designers,id',
             'shape_collection_id' => 'nullable|exists:shape_collections,id',
-            'image_id'      => 'nullable|exists:images,id',
             'volume'        => 'nullable|numeric',
             'weight'        => 'nullable|numeric',
             'long_diameter' => 'nullable|numeric',

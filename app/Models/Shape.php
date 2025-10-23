@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\{ShapeType, Status, ShapeCollection, Customer, ItemGroup, Process, Designer, Requestor, User, Image};
 
 class Shape extends Model
 {
@@ -21,7 +22,6 @@ class Shape extends Model
         'process_id',
         'designer_id',
         'requestor_id',
-        'image_id',
         'volume',
         'weight',
         'long_diameter',
@@ -33,6 +33,10 @@ class Shape extends Model
         'updated_by',
     ];
 
+    public function images()
+    {
+        return $this->hasMany(Image::class);
+    }
     public function shapeType()
     {
         return $this->belongsTo(ShapeType::class, 'shape_type_id');
@@ -64,10 +68,6 @@ class Shape extends Model
     public function status()
     {
         return $this->belongsTo(Status::class, 'status_id');
-    }
-    public function image()
-    {
-        return $this->belongsTo(Image::class, 'image_id');
     }
     public function updater()
     {

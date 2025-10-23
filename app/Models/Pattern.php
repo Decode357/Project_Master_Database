@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\{Requestor, Customer, Status, Designer, User, Image};
 
 class Pattern extends Model
 {
@@ -25,7 +26,6 @@ class Pattern extends Model
         'on_glaze',
         'under_glaze',
         'approval_date',
-        'image_id',
         'updated_by',
     ];
 
@@ -41,6 +41,10 @@ class Pattern extends Model
     ];
 
     // ความสัมพันธ์กับตารางอื่นๆ
+    public function images()
+    {
+        return $this->hasMany(Image::class);
+    }
     public function requestor()
     {
         return $this->belongsTo(Requestor::class, 'requestor_id');
@@ -52,10 +56,6 @@ class Pattern extends Model
     public function status()
     {
         return $this->belongsTo(Status::class, 'status_id');
-    }
-    public function image()
-    {
-        return $this->belongsTo(Image::class, 'image_id');
     }
     public function designer()
     {

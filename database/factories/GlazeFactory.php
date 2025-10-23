@@ -7,7 +7,6 @@ use App\Models\{
     GlazeInside,
     GlazeOuter,
     Effect,
-    Image,
     Status,
     User,
 };
@@ -30,7 +29,6 @@ class GlazeFactory extends Factory
             'glaze_inside_id' => GlazeInside::inRandomOrder()->value('id'),
             'glaze_outer_id' => GlazeOuter::inRandomOrder()->value('id'),
             'effect_id' => Effect::inRandomOrder()->value('id'),
-            'image_id' => Image::inRandomOrder()->value('id'),
             'updated_by' => User::inRandomOrder()->value('id'),
         ];
     }

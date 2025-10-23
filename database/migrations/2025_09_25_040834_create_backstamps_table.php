@@ -18,13 +18,12 @@ return new class extends Migration
             $table->unsignedBigInteger('requestor_id')->nullable();
             $table->unsignedBigInteger('customer_id')->nullable();
             $table->unsignedBigInteger('status_id')->nullable();
-            $table->integer('duration')->nullable();
+            $table->boolean('organic')->default(false);
             $table->boolean('in_glaze')->default(false);
             $table->boolean('on_glaze')->default(false);
             $table->boolean('under_glaze')->default(false);
             $table->boolean('air_dry')->default(false);
             $table->date('approval_date')->nullable();
-            $table->unsignedBigInteger('image_id')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
 
@@ -32,7 +31,6 @@ return new class extends Migration
             $table->foreign('status_id')->references('id')->on('statuses')->onDelete('set null');
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('set null');
             $table->foreign('requestor_id')->references('id')->on('requestors')->onDelete('set null');
-            $table->foreign('image_id')->references('id')->on('images')->onDelete('set null');
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('set null');
         });
     }

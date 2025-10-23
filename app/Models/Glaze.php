@@ -8,8 +8,9 @@ use App\Models\{
     GlazeInside,
     GlazeOuter,
     Effect,
-    Image,
     Status,
+    User,
+    Image
 };
 
 class Glaze extends Model
@@ -26,7 +27,6 @@ class Glaze extends Model
         'glaze_inside_id',
         'glaze_outer_id',
         'effect_id',
-        'image_id',
         'updated_by',
     ];
 
@@ -37,9 +37,12 @@ class Glaze extends Model
         'glaze_inside_id' => 'integer',
         'glaze_outer_id' => 'integer',
         'effect_id' => 'integer',
-        'image_id' => 'integer',
     ];
 
+    public function images()
+    {
+        return $this->hasMany(Image::class);
+    }
     public function glazeInside()
     {
         return $this->belongsTo(GlazeInside::class, 'glaze_inside_id');
@@ -51,10 +54,6 @@ class Glaze extends Model
     public function effect()
     {
         return $this->belongsTo(Effect::class, 'effect_id');
-    }
-    public function image()
-    {
-        return $this->belongsTo(Image::class, 'image_id');
     }
     public function status()
     {

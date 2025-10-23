@@ -75,13 +75,13 @@ class DatabaseSeeder extends Seeder
             ProcessSeeder::class,
             StatusSeeder::class,
             DesignerSeeder::class,
-            ImageSeeder::class,
             GlazeOuterSeeder::class,
             GlazeInsideSeeder::class,
             BackstampSeeder::class,
             PatternSeeder::class,
             GlazeSeeder::class,
             ShapeSeeder::class,
+            ImageSeeder::class,
         ]);
     }
 }

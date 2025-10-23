@@ -2,7 +2,17 @@
 <div x-show="PatternDetailModal" x-transition.opacity
     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
     @click.self="PatternDetailModal = false" style="display: none;"
-    x-data="{ zoomImage: false, activeTab: 'basic' }">
+    x-data="{ 
+        zoomImage: false, 
+        activeTab: 'basic',
+        showDebug: true,
+        currentImageIndex: 0,
+        get currentImage() {
+            return this.patternToView?.images && this.patternToView.images.length > 0 
+                ? this.patternToView.images[this.currentImageIndex] 
+                : null;
+        }
+    }">
     
     <!-- Modal Content -->
     <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-6xl mx-4 relative overflow-hidden h-[90vh] flex flex-col">
@@ -26,25 +36,55 @@
                 
                 <!-- Image Section -->
                 <div class="lg:col-span-1 flex flex-col">
-                    <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4 text-center flex-shrink-0">
-                        <template x-if="patternToView?.image?.file_path">
-                            <img :src="`{{ asset('storage') }}/${patternToView.image.file_path}`" 
-                                 :alt="patternToView.pattern_code"
-                                 class="rounded-lg shadow-lg cursor-zoom-in mx-auto h-48 object-contain w-full"
-                                 @click="zoomImage = true">
-                        </template>
-                        <template x-if="!patternToView?.image?.file_path">
-                            <div class="bg-gray-200 dark:bg-gray-600 rounded-lg flex items-center justify-center h-48">
-                                <div class="text-center text-gray-500 dark:text-gray-400">
-                                    <span class="material-symbols-outlined text-6xl mb-2 block">image</span>
-                                    <p>No Image Available</p>
+                    <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4 flex-shrink-0">
+                        <div class="relative">
+                            <!-- Main Image Display -->
+                            <template x-if="patternToView?.images?.length > 0">
+                                <div>
+                                    <img :src="`{{ asset('storage') }}/${patternToView.images[currentImageIndex].file_path}`" 
+                                        :alt="patternToView.images[currentImageIndex].file_name"
+                                        class="rounded-lg shadow-lg cursor-zoom-in mx-auto h-48 object-contain w-full"
+                                        @click="zoomImage = true">
+                                    
+                                    <!-- Image Navigation -->
+                                    <div class="flex justify-between items-center mt-3">
+                                        <button @click="currentImageIndex = (currentImageIndex - 1 + patternToView.images.length) % patternToView.images.length"
+                                                class="bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-full p-1 hover:bg-gray-300 dark:hover:bg-gray-500">
+                                            <span class="material-symbols-outlined">arrow_back</span>
+                                        </button>
+                                        
+                                        <span class="text-sm text-gray-500 dark:text-gray-400">
+                                            <span x-text="currentImageIndex + 1"></span>/<span x-text="patternToView.images.length"></span>
+                                        </span>
+                                        
+                                        <button @click="currentImageIndex = (currentImageIndex + 1) % patternToView.images.length"
+                                                class="bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-full p-1 hover:bg-gray-300 dark:hover:bg-gray-500">
+                                            <span class="material-symbols-outlined">arrow_forward</span>
+                                        </button>
+                                    </div>
+                                    
+                                    <!-- Thumbnails -->
+                                    <div class="flex gap-1 mt-3 overflow-x-auto pb-2">
+                                        <template x-for="(image, index) in patternToView.images" :key="index">
+                                            <img :src="`{{ asset('storage') }}/${image.file_path}`" 
+                                                :alt="`Thumbnail ${index + 1}`"
+                                                class="h-12 w-12 object-cover rounded cursor-pointer"
+                                                :class="currentImageIndex === index ? 'ring-2 ring-blue-500' : ''"
+                                                @click="currentImageIndex = index">
+                                        </template>
+                                    </div>
                                 </div>
-                            </div>
-                        </template>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-3">
-                            <span class="material-symbols-outlined text-lg align-middle">zoom_in</span>
-                            Click to zoom
-                        </p>
+                            </template>
+
+                            <template x-if="!patternToView?.images?.length">
+                                <div class="bg-gray-200 dark:bg-gray-600 rounded-lg flex items-center justify-center h-48">
+                                    <div class="text-center text-gray-500 dark:text-gray-400">
+                                        <span class="material-symbols-outlined text-6xl mb-2 block">image</span>
+                                        <p>No Images Available</p>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
                     </div>
 
                     <!-- Status Badge -->
@@ -287,21 +327,54 @@
         </div>
     </div>
 
+    <!-- Debug Panel - กดปุ่ม F2 เพื่อเปิด/ปิด -->
+    <div x-show="showDebug" 
+        class="fixed top-2 right-2 bg-black bg-opacity-90 text-green-400 p-4 rounded text-xs font-mono  flex flex-row"
+        @keydown.window.f2.prevent="showDebug = !showDebug">
+        <div class="flex justify-between items-center mb-2">
+            <button @click="showDebug = false" class="text-white hover:text-red-400">✕</button>
+        </div>
+        <div class="overflow-auto flex-1" style="max-height: calc(90vh - 40px);">
+            <pre x-text="JSON.stringify(patternToView.images, null, 2)" class="whitespace-pre-wrap"></pre>
+        </div>
+        <div class="overflow-auto flex-1" style="max-height: calc(90vh - 40px);">
+            <pre x-text="JSON.stringify(patternToView, null, 2)" class="whitespace-pre-wrap"></pre>
+        </div>
+    </div>   
     <!-- Zoom Image Modal -->
     <div x-show="zoomImage" x-transition.opacity
-         class="fixed inset-0 bg-black bg-opacity-95 flex items-center justify-center z-60"
-         @click.self="zoomImage = false">
+        class="fixed inset-0 bg-black bg-opacity-95 flex items-center justify-center z-60"
+        @click.self="zoomImage = false">
         <div class="relative max-h-[95vh] max-w-[95vw]">
-            <template x-if="patternToView?.image?.file_path">
-                <img :src="`{{ asset('storage') }}/${patternToView.image.file_path}`" 
-                     :alt="patternToView.pattern_code"
-                     class="max-h-[95vh] max-w-[95vw] object-contain rounded-lg shadow-2xl cursor-zoom-out"
-                     @click="zoomImage = false">
+            <template x-if="patternToView?.images?.length > 0">
+                <div class="relative">
+                    <img :src="`{{ asset('storage') }}/${patternToView.images[currentImageIndex].file_path}`" 
+                        :alt="patternToView.item_code"
+                        class="max-h-[80vh] max-w-[95vw] object-contain rounded-lg shadow-2xl">
+                        
+                    <!-- Navigation Arrows -->
+                    <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-4">
+                        <button @click.stop="currentImageIndex = (currentImageIndex - 1 + patternToView.images.length) % patternToView.images.length"
+                                class="bg-black bg-opacity-50 text-white rounded-full p-2 hover:bg-opacity-70 transition-all">
+                            <span class="material-symbols-outlined">arrow_back</span>
+                        </button>
+                        <button @click.stop="currentImageIndex = (currentImageIndex + 1) % patternToView.images.length"
+                                class="bg-black bg-opacity-50 text-white rounded-full p-2 hover:bg-opacity-70 transition-all">
+                            <span class="material-symbols-outlined">arrow_forward</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Image Counter -->
+                    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full">
+                        <span x-text="currentImageIndex + 1"></span>/<span x-text="patternToView.images.length"></span>
+                    </div>
+                </div>
             </template>
-            <template x-if="!patternToView?.image?.file_path">
+            
+            <template x-if="!patternToView?.images?.length">
                 <div class="bg-white dark:bg-gray-800 rounded-lg p-8 text-center">
                     <span class="material-symbols-outlined text-6xl text-gray-400 mb-4 block">image</span>
-                    <p class="text-gray-600 dark:text-gray-300">No Image Available</p>
+                    <p class="text-gray-600 dark:text-gray-300">No Images Available</p>
                 </div>
             </template>
             <!-- Close button -->

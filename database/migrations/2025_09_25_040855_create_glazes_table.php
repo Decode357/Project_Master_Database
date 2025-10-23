@@ -20,7 +20,6 @@ return new class extends Migration
             $table->unsignedBigInteger('glaze_inside_id')->nullable();
             $table->unsignedBigInteger('glaze_outer_id')->nullable();
             $table->unsignedBigInteger('effect_id')->nullable();
-            $table->unsignedBigInteger('image_id')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
 
@@ -29,7 +28,6 @@ return new class extends Migration
             $table->foreign('glaze_inside_id')->references('id')->on('glaze_insides')->onDelete('set null');
             $table->foreign('glaze_outer_id')->references('id')->on('glaze_outers')->onDelete('set null');
             $table->foreign('effect_id')->references('id')->on('effects')->onDelete('set null');
-            $table->foreign('image_id')->references('id')->on('images')->onDelete('set null');
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('set null');
         });
     }

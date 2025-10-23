@@ -220,7 +220,7 @@
             </nav>
             
             <!-- Sidebar User Info & Actions -->
-            <div class="mt-auto flex flex-col gap-2" x-data="{ open: false }">
+            <div class="mt-auto flex flex-col gap-2 px-2" x-data="{ open: false }">
                 @php
                     use Illuminate\Support\Str;
 
@@ -245,7 +245,7 @@
                 </div>
 
                 <!-- Logout & Settings -->
-                <div class="flex flex-row gap-2">
+                <div class="flex flex-row gap-2 pb-2">
                     <!-- Logout -->
                     <form method="POST" action="{{ route('logout') }}" class="flex-1">
                         @csrf

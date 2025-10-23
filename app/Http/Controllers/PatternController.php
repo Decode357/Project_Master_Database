@@ -15,7 +15,7 @@ class PatternController extends Controller
     {
         $relations = [
             'requestor', 'customer', 'status', 
-            'designer', 'image', 'updater'
+            'designer', 'updater', 'images'
         ];
 
         // รับค่า perPage จาก request หรือใช้ default 10
@@ -62,7 +62,6 @@ class PatternController extends Controller
             'designers'  => Designer::all(),
             'requestors' => Requestor::all(),
             'customers'  => Customer::all(),
-            'images'     => Image::all(),
         ];
         $permissions = $this->getUserPermissions();
         return view('pattern', array_merge($data, compact('patterns', 'perPage', 'search'), $permissions));
@@ -85,7 +84,6 @@ class PatternController extends Controller
             'on_glaze'       => 'nullable|boolean',
             'under_glaze'    => 'nullable|boolean',
             'approval_date'  => 'nullable|date',
-            'image_id'       => 'nullable|exists:images,id',
         ];
     }
 

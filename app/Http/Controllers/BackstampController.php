@@ -14,7 +14,7 @@ class BackstampController extends Controller
     public function backstampindex(Request $request)
     {
         $relations = [
-            'requestor', 'customer', 'status', 'image', 'updater'
+            'requestor', 'customer', 'status', 'updater', 'images'
         ];
 
         // รับค่า perPage จาก request หรือใช้ default 10
@@ -54,7 +54,6 @@ class BackstampController extends Controller
             'statuses'   => Status::all(),
             'requestors' => Requestor::all(),
             'customers'  => Customer::all(),
-            'images'     => Image::all(),
         ];
         $permissions = $this->getUserPermissions();
         return view('backstamp', array_merge($data, compact('backstamps', 'perPage', 'search'), $permissions));
@@ -77,7 +76,6 @@ class BackstampController extends Controller
             'under_glaze'    => 'nullable|boolean',
             'air_dry'        => 'nullable|boolean',
             'approval_date'  => 'nullable|date',
-            'image_id'       => 'nullable|exists:images,id',
         ];
     }
 

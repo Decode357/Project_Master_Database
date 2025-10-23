@@ -27,7 +27,6 @@ return new class extends Migration
             $table->unsignedBigInteger('process_id')->nullable();
             $table->unsignedBigInteger('designer_id')->nullable();
             $table->unsignedBigInteger('requestor_id')->nullable();
-            $table->unsignedBigInteger('image_id')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->integer('volume')->nullable();
             $table->integer('weight')->nullable();
@@ -48,7 +47,6 @@ return new class extends Migration
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('set null');
             $table->foreign('designer_id')->references('id')->on('designers')->onDelete('set null');
             $table->foreign('requestor_id')->references('id')->on('requestors')->onDelete('set null');
-            $table->foreign('image_id')->references('id')->on('images')->onDelete('set null');
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('set null');
         });
 

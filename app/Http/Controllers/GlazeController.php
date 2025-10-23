@@ -15,7 +15,7 @@ class GlazeController extends Controller
     {        
         $relations = [
             'status', 'updater', 'effect.colors','effect',        
-            'glazeInside.colors', 'glazeOuter.colors', 'image'
+            'glazeInside.colors', 'glazeOuter.colors', 'images'
         ];
 
         // รับค่า perPage จาก request หรือใช้ default 10
@@ -62,7 +62,6 @@ class GlazeController extends Controller
             'effects'      => Effect::all(),
             'glazeOuters'  => GlazeOuter::all(),
             'glazeInsides' => GlazeInside::all(),
-            'images'       => Image::all(),
         ];
         $permissions = $this->getUserPermissions();
         return view('glaze', array_merge($data, compact('glazes'), $permissions));
@@ -81,7 +80,6 @@ class GlazeController extends Controller
             'glaze_inside_id' => 'nullable|exists:glaze_insides,id',
             'glaze_outer_id'  => 'nullable|exists:glaze_outers,id',
             'effect_id'       => 'nullable|exists:effects,id',
-            'image_id'        => 'nullable|exists:images,id',
         ];
     }
 

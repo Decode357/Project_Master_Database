@@ -12,7 +12,6 @@ use App\Models\{
     Process,
     Status,
     Designer,
-    Image,
     User,
 };
 
@@ -33,7 +32,6 @@ class ShapeFactory extends Factory
             'requestor_id' => Requestor::inRandomOrder()->value('id'),
             'status_id' => Status::inRandomOrder()->value('id'),
             'designer_id' => Designer::inRandomOrder()->value('id'),
-            'image_id' => Image::inRandomOrder()->value('id'),
             'volume' => $this->faker->numberBetween(100, 1000),
             'weight' => $this->faker->numberBetween(10, 500),
             'long_diameter' => $this->faker->numberBetween(10, 100),
