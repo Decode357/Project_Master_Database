@@ -12,7 +12,7 @@
                 <div class="flex-1 min-w-64">
                     <div class="relative">
                         <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
-                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by ITEM CODE or etc.."
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by EFFECT CODE or etc.."
                             class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent
                             dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100" />
                     </div>
@@ -66,9 +66,8 @@
                     <thead class="text-xs text-gray-500 uppercase bg-gray-50 border-b dark:border-gray-700
                         dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th class="px-6 py-3">Effect ID</th>
                             <th class="px-6 py-3">Effect Code</th>
-                            <th class="px-6 py-3">Effect Name</th>
+                            <th class="px-6 py-3">Description</th>
                             <th class="px-6 py-3">Colors</th>
                             <th class="px-6 py-3 text-right">Actions</th>
                         </tr>
@@ -78,7 +77,6 @@
                         @forelse ($effects as $effect)
                             <tr class="bg-white border-b hover:bg-gray-50 
                                 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                                <td class="px-6 py-4 font-medium text-gray-900 dark:text-gray-100">{{ $effect->id }}</td>
                                 <td class="px-6 py-4 font-medium text-gray-900 dark:text-gray-100">{{ $effect->effect_code }}</td>
                                 <td class="px-6 py-4 font-medium text-gray-900 dark:text-gray-100">{{ $effect->effect_name }}</td>
                                 <td class="px-6 py-4">

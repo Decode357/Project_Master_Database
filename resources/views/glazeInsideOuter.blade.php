@@ -24,7 +24,7 @@
                                 <span
                                     class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
                                 <input type="text" name="inside_search" value="{{ request('inside_search') }}"
-                                    placeholder="Search Inside Code..."
+                                    placeholder="Search by Inside Code..."
                                     class="dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 
                                     w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500" />
                             </div>
@@ -84,7 +84,7 @@
                             <thead class="dark:bg-gray-700 dark:border-gray-700 border-b
                                     text-xs text-gray-500 uppercase bg-gray-50">
                                 <tr class="dark:text-gray-400 text-gray-700">
-                                    <th class="px-4 py-3">Code</th>
+                                    <th class="px-4 py-3">Inside COLOR CODE</th>
                                     <th class="px-4 py-3">Colors</th>
                                     <th class="px-4 py-3 text-right">Actions</th>
                                 </tr>
@@ -164,7 +164,7 @@
                                 <span
                                     class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
                                 <input type="text" name="outer_search" value="{{ request('outer_search') }}"
-                                    placeholder="Search Outer Code..."
+                                    placeholder="Search by Outside CODE..."
                                     class="dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 
                                     w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500" />
                             </div>
@@ -224,7 +224,7 @@
                             <thead class="dark:bg-gray-700 dark:border-gray-700 border-b
                                     text-xs text-gray-500 uppercase bg-gray-50">
                                 <tr class="dark:text-gray-400 text-gray-700">
-                                    <th class="px-4 py-3">Code</th>
+                                    <th class="px-4 py-3">Outside COLOR CODE</th>
                                     <th class="px-4 py-3">Colors</th>
                                     <th class="px-4 py-3 text-right">Actions</th>
                                 </tr>

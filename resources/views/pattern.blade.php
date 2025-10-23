@@ -10,7 +10,7 @@
                 <div class="flex-1 min-w-64">
                     <div class="relative">
                         <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
-                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by ITEM CODE or etc.."
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by PATTERN CODE or etc.."
                             class="dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                     </div>
                 </div>
@@ -57,13 +57,10 @@
             <div class="overflow-x-auto rounded-xl">
                 <table class="min-w-full text-sm">
                     <thead class="bg-gray-50 border-b border-gray-200 uppercase text-xs
-                            dark:bg-gray-700 dark:border-gray-700 ">
+                            dark:bg-gray-700 dark:border-gray-700 ">    
                         <tr class="dark:text-gray-400 text-gray-700">
-                            <th class="px-4 py-3 text-left">ITEM CODE</th>
-                            <th class="px-4 py-3 text-left">Name</th>
-                            <th class="px-4 py-3 text-center">In Glaze</th>
-                            <th class="px-4 py-3 text-center">On Glaze</th>
-                            <th class="px-4 py-3 text-center">Under Glaze</th>
+                            <th class="px-4 py-3 text-left">PATTERN CODE</th>
+                            <th class="px-4 py-3 text-left">Description</th>
                             <th class="px-4 py-3 text-left">Status</th>
                             <th class="px-4 py-3 text-left">Approval Date</th>
                             <th class="px-4 py-3 text-left">UPDATED BY</th>
@@ -86,30 +83,6 @@
                             <tr class="dark:text-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 bg-white border-b border-gray-200 hover:bg-gray-50">
                                 <td class="px-4 py-3">{{ $pattern->pattern_code }}</td>
                                 <td class="px-4 py-3">{{ $pattern->pattern_name }}</td>
-
-                                <!-- Glaze icons -->
-                                <td class="px-4 py-3 text-center">
-                                    @if ($pattern->in_glaze)
-                                        <span class="material-symbols-outlined text-green-500">radio_button_checked</span>
-                                    @else
-                                        <span class="material-symbols-outlined text-gray-500">radio_button_unchecked</span>
-                                    @endif
-                                </td>
-                                <td class="px-4 py-3 text-center">
-                                    @if ($pattern->on_glaze)
-                                        <span class="material-symbols-outlined text-green-500">radio_button_checked</span>
-                                    @else
-                                        <span class="material-symbols-outlined text-gray-500">radio_button_unchecked</span>
-                                    @endif
-                                </td>
-                                <td class="px-4 py-3 text-center">
-                                    @if ($pattern->under_glaze)
-                                        <span class="material-symbols-outlined text-green-500">radio_button_checked</span>
-                                    @else
-                                        <span class="material-symbols-outlined text-gray-500">radio_button_unchecked</span>
-                                    @endif
-                                </td>
-
                                 <!-- Status -->
                                 <td class="px-4 py-3">
                                     <span class="{{ $statusColor }} px-2 py-1 rounded-full text-xs font-semibold">

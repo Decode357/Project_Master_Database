@@ -10,7 +10,7 @@
                 <div class="flex-1 min-w-64">
                     <div class="relative">
                         <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
-                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by ITEM CODE or etc.."
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by GLAZE CODE or etc.."
                             class="dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                     </div>
                 </div>
@@ -57,10 +57,10 @@
                 <table class="min-w-full text-sm">
                     <thead class="dark:bg-gray-700 dark:border-gray-700 text-xs text-gray-500 uppercase bg-gray-50 border-b">
                         <tr class="dark:text-gray-400 text-gray-700">
-                            <th class="px-4 py-3 text-left">ITEM CODE</th>
-                            <th class="px-4 py-3 text-left">Glaze Inside</th>
-                            <th class="px-4 py-3 text-left">Glaze Outside</th>
-                            <th class="px-4 py-3 text-left">Effect</th>
+                            <th class="px-4 py-3 text-left">GLAZE CODE</th>
+                            <th class="px-4 py-3 text-left">Inside COLOR CODE</th>
+                            <th class="px-4 py-3 text-left">Outside COLOR CODE</th>
+                            <th class="px-4 py-3 text-left">Effect CODE</th>
                             <th class="px-4 py-3 text-left">Fire Temp</th>
                             <th class="px-4 py-3 text-left">Status</th>
                             <th class="px-4 py-3 text-left">Approval Date</th>
