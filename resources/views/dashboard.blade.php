@@ -1,6 +1,6 @@
 @extends('layouts.sidebar')
-@section('title', 'Dashboard')
-@section('header', 'Dashboard')
+@section('title', __('sidebar.dashboard'))
+@section('header', __('sidebar.dashboard'))
 @section('content')
 
 <!-- ส่งข้อมูลผ่าน data attributes -->

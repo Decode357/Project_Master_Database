@@ -1,6 +1,6 @@
 @extends('layouts.sidebar')
-@section('title', 'Backstamp')
-@section('header', 'Backstamp')
+@section('title', __('sidebar.backstamps'))
+@section('header', __('sidebar.backstamps'))
 @section('content')
 <main class="flex-1 bg-gray-50 dark:bg-gray-900" x-data="backstampPage()" x-init="initSelect2()">
         <!-- Filters -->

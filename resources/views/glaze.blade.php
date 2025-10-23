@@ -1,6 +1,6 @@
 @extends('layouts.sidebar')
-@section('title', 'Glaze')
-@section('header', 'Glaze')
+@section('title', __('sidebar.glazes'))
+@section('header', __('sidebar.glazes'))
 @section('content')
     <main class="flex-1 bg-gray-50 dark:bg-gray-900" x-data="glazePage()" x-init="initSelect2()">
         <!-- Filters -->

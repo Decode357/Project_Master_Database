@@ -1,6 +1,6 @@
 @extends('layouts.sidebar')
-@section('title', 'Pattern')
-@section('header', 'Pattern')
+@section('title', __('sidebar.patterns'))
+@section('header', __('sidebar.patterns'))
 @section('content')
     <main class="flex-1 bg-gray-50 dark:bg-gray-900" x-data="patternPage()" x-init="initSelect2()">
         <!-- Filters -->

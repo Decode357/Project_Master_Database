@@ -89,3 +89,17 @@ Route::middleware(['auth'])->group(function () {
 
 // route สำหรับ auth (login/register/logout)
 require __DIR__ . '/auth.php';
+
+// Language switcher
+Route::get('/language/{lang}', function ($lang) {
+    if (in_array($lang, ['en', 'th'])) {
+        session()->put('locale', $lang);
+        App::setLocale($lang);
+    }
+    
+    if (request()->ajax()) {
+        return response()->json(['status' => 'success']);
+    }
+    
+    return redirect()->back();
+})->name('language.change');

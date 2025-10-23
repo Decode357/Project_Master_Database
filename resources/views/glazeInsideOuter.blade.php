@@ -1,6 +1,6 @@
 @extends('layouts.sidebar')
-@section('title', 'Glaze inside/outer')
-@section('header', 'Glaze inside/outer')
+@section('title', __('sidebar.glaze_inside_outer'))
+@section('header', __('sidebar.glaze_inside_outer'))
 @section('content')
     <main class="flex-1 bg-gray-50" x-data="glazeInsideOuterPage()" x-init="initSelect2()">
         <!-- Tables -->

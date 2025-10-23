@@ -1,6 +1,6 @@
 @extends('layouts.sidebar')
-@section('title', 'Color')
-@section('header', 'Color')
+@section('title', __('sidebar.colors'))
+@section('header', __('sidebar.colors'))
 @section('content')
 
     <main class="flex-1 bg-gray-50 dark:bg-gray-900" x-data="colorPage()" x-init="initSelect2()">

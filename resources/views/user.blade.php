@@ -1,6 +1,6 @@
 @extends('layouts.sidebar')
-@section('title', 'User Management')
-@section('header', 'User Management')
+@section('title', __('sidebar.user_management'))
+@section('header', __('sidebar.user_management'))
 @section('content')
     <main class="flex-1 bg-gray-50 dark:bg-gray-900" x-data="userPage()" x-init="initSelect2()">
         <!-- Filters -->

@@ -1,6 +1,6 @@
 @extends('layouts.sidebar')
-@section('title', 'Effect')
-@section('header', 'Effect')
+@section('title', __('sidebar.effects'))
+@section('header', __('sidebar.effects'))
 @section('content')
     <main class="flex-1 bg-gray-50 dark:bg-gray-900" x-data="effectPage()" x-init="initSelect2()">
 

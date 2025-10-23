@@ -1,0 +1,18 @@
+<?php
+return [
+    'master_database' => 'Master Database',
+    'dashboard' => 'Dashboard',
+    'shapes' => 'Shapes',
+    'glazes' => 'Glazes',
+    'patterns' => 'Patterns',
+    'backstamps' => 'Backstamps',
+    'admin_console' => 'Admin console',
+    'user_management' => 'User Management',
+    'colors' => 'Colors',
+    'effects' => 'Effects',
+    'glaze_inside_outer' => 'Glaze inside/outer',
+    'csv_import' => 'CSV Import',
+    'profile' => 'Profile',
+    'logout' => 'Logout',
+    'user' => 'User',
+];

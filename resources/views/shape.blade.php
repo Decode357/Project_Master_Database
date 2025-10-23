@@ -1,6 +1,6 @@
 @extends('layouts.sidebar')
-@section('title', 'Shape')
-@section('header', 'Shape')
+@section('title', __('sidebar.shapes'))
+@section('header', __('sidebar.shapes'))
 @section('content')
     <main x-data="shapePage()" x-init="initSelect2()">
         <!-- Filters -->

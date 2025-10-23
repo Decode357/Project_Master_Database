@@ -1,6 +1,6 @@
 @extends('layouts.sidebar')
-@section('title', 'CSV Import')
-@section('header', 'CSV Import')
+@section('title', __('sidebar.csv_import'))
+@section('header', __('sidebar.csv_import'))
 @section('content')
     <main class="flex-1 bg-gray-50 dark:bg-gray-900 flex justify-center items-center">
         <div class="w-full max-w-lg text-center">

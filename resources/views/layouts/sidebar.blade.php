@@ -104,7 +104,7 @@
                     <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-900 dark:bg-gray-700 text-white">
                         <span class="material-symbols-outlined text-full">database</span>
                     </div>
-                    <h1 class="text-lg font-bold text-gray-900 dark:text-gray-100">Master Database</h1>
+                    <h1 class="text-lg font-bold text-gray-900 dark:text-gray-100">{{ __('sidebar.master_database') }}</h1>
                 </div>                
             </div>
 
@@ -116,7 +116,7 @@
                         ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold scale-110' 
                         : 'text-gray-700 dark:text-gray-300 hoverScale hover:bg-gray-100 dark:hover:bg-gray-700' }}">
                     <span class="material-symbols-outlined text-lg">home</span>
-                    <span>Dashboards</span>
+                    <span>{{ __('sidebar.dashboard') }}</span>
                 </a>
 
                 <a href="{{ route('shape.index') }}"
@@ -125,7 +125,7 @@
                         ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold scale-110' 
                         : 'text-gray-700 dark:text-gray-300 hoverScale hover:bg-gray-100 dark:hover:bg-gray-700' }}">
                     <span class="material-symbols-outlined text-lg">shapes</span>
-                    <span>Shapes</span>
+                    <span>{{ __('sidebar.shapes') }}</span>
                 </a>
                 
                 <a href="{{ route('glaze.index') }}"
@@ -134,7 +134,7 @@
                         ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold scale-110' 
                         : 'text-gray-700 dark:text-gray-300 hoverScale hover:bg-gray-100 dark:hover:bg-gray-700' }}">
                     <span class="material-symbols-outlined text-lg">water_drop</span>
-                    <span>Glazes</span>
+                    <span>{{ __('sidebar.glazes') }}</span>
                 </a>
                 
                 <a href="{{ route('pattern.index') }}"
@@ -143,7 +143,7 @@
                         ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold scale-110' 
                         : 'text-gray-700 dark:text-gray-300 hoverScale hover:bg-gray-100 dark:hover:bg-gray-700' }}">
                     <span class="material-symbols-outlined text-lg">border_color</span>
-                    <span>Patterns</span>
+                    <span>{{ __('sidebar.patterns') }}</span>
                 </a>
 
                 <a href="{{ route('backstamp.index') }}"
@@ -152,7 +152,7 @@
                         ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold scale-110' 
                         : 'text-gray-700 dark:text-gray-300 hoverScale hover:bg-gray-100 dark:hover:bg-gray-700' }}">
                     <span class="material-symbols-outlined text-lg">verified</span>
-                    <span>Backstamps</span>
+                    <span>{{ __('sidebar.backstamps') }}</span>
                 </a>
 
                 @php
@@ -167,7 +167,7 @@
                 @endphp
                 @role('admin|superadmin')
                     <hr class="my-2 border-gray-300 dark:border-gray-600" />
-                    <span class="text-center text-sm text-gray-400 dark:text-gray-500">Admin console</span>
+                    <span class="text-center text-sm text-gray-400 dark:text-gray-500">{{ __('sidebar.admin_console') }}</span>
 
                     <a href="{{ route('user') }}"
                         class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium 
@@ -175,7 +175,7 @@
                         ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold scale-110' 
                         : 'text-gray-700 dark:text-gray-300 hoverScale hover:bg-gray-100 dark:hover:bg-gray-700' }}">
                         <span class="material-symbols-outlined text-lg">group</span>
-                        <span>User Management</span>
+                        <span>{{ __('sidebar.user_management') }}</span>
                     </a>
 
                     <a href="{{ route('color.index') }}"
@@ -184,7 +184,7 @@
                         ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold scale-110' 
                         : 'text-gray-700 dark:text-gray-300 hoverScale hover:bg-gray-100 dark:hover:bg-gray-700' }}">
                         <span class="material-symbols-outlined text-lg">palette</span>
-                        <span>Colors</span>
+                        <span>{{ __('sidebar.colors') }}</span>
                     </a>
 
                     <a href="{{ route('effect.index') }}"
@@ -193,7 +193,7 @@
                         ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold scale-110' 
                         : 'text-gray-700 dark:text-gray-300 hoverScale hover:bg-gray-100 dark:hover:bg-gray-700' }}">
                         <span class="material-symbols-outlined text-lg">auto_awesome</span>
-                        <span>Effects</span>
+                        <span>{{ __('sidebar.effects') }}</span>
                     </a>
                     
                     <a href="{{ route('glaze.inside.outer.index') }}"
@@ -202,7 +202,7 @@
                         ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold scale-110' 
                         : 'text-gray-700 dark:text-gray-300 hoverScale hover:bg-gray-100 dark:hover:bg-gray-700' }}">
                         <span class="material-symbols-outlined text-lg">opacity</span>
-                        <span>Glaze inside/outer</span>
+                        <span>{{ __('sidebar.glaze_inside_outer') }}</span>
                     </a>
                     
                     @if ($hasFileImport)
@@ -212,7 +212,7 @@
                         ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold scale-110' 
                         : 'text-gray-700 dark:text-gray-300 hoverScale hover:bg-gray-100 dark:hover:bg-gray-700' }}">
                             <span class="material-symbols-outlined text-lg">cloud_upload</span>
-                            <span>CSV Import</span>
+                            <span>{{ __('sidebar.csv_import') }}</span>
                         </a>
                     @endif
 
@@ -254,7 +254,7 @@
                             py-2 px-3 text-sm font-semibold text-white shadow-sm hoverScale hover:bg-red-500 dark:hover:bg-red-600
                             focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
                             <span class="material-symbols-outlined text-lg">logout</span>
-                            <span class="mt-1 ml-1">Logout</span>
+                            <span class="mt-1 ml-1">{{__('sidebar.logout')}}</span>
                         </button>
                     </form>
 
@@ -285,7 +285,7 @@
                                 <a href="{{ route('profile.edit') }}" 
                                 class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 
                                         hover:bg-gray-100 dark:hover:bg-gray-700">
-                                    {{ __('Profile') }}
+                                    {{ __('sidebar.profile') }}
                                 </a>
 
                                 <!-- Logout -->
@@ -294,7 +294,7 @@
                                     <button type="submit"
                                             class="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 
                                                 hover:bg-gray-100 dark:hover:bg-gray-700">
-                                        {{ __('Log Out') }}
+                                        {{ __('sidebar.logout') }}
                                     </button>
                                 </form>
                             </div>
@@ -316,12 +316,15 @@
                     </button>
                     @php
                         $userPermissions = Auth::user()->permissions->pluck('name')->toArray();
-                        $permissionLabel = 'User : view only';
+                        $permissionLabel = __('auth.user') . ' : ' . __('auth.view_only');
 
                         if (Auth::user()->hasRole('admin')) {
-                            $permissionLabel = 'Admin : ' . implode(', ', $userPermissions);
-                        } elseif (Auth::user()->hasRole('superadmin')) {
-                            $permissionLabel = 'Super Admin : all permissions';
+                            // แปลง permission name แต่ละตัวเป็น localized text
+                            $translatedPermissions = array_map(function($perm) {
+                                return __('auth.' . $perm);
+                            }, $userPermissions);
+
+                            $permissionLabel = __('auth.admin') . ' : ' . implode(', ', $translatedPermissions);
                         }
                     @endphp
                     <h2>
@@ -331,10 +334,11 @@
                 </div>
                 <!-- Theme Toggle -->
                 <div class="flex items-center gap-2 flex-row">
-                    <button 
+                    <button @click="toggleLanguage()" 
                         class="flex items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-600 px-3 py-2
                                 text-gray-600 dark:text-gray-300 hoverScale hover:bg-gray-300 dark:hover:bg-gray-500">
-                        <span class="material-symbols-outlined">language</span>
+                        <span class="material-symbols-outlined mr-1">language</span>
+                        <span x-text="getLanguageText()"></span>
                     </button>                    
                 <button @click="toggleTheme()"
                     class="flex items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-600 px-3 py-2
@@ -359,6 +363,7 @@
                 sidebarOpen: false,
                 isMobile: window.innerWidth < 768,
                 themeIcon: 'light_mode',
+                currentLanguage: localStorage.getItem('language') || 'th',
                 
                 init() {
                     this.checkScreenSize();
@@ -396,6 +401,15 @@
                     this.updateThemeIcon();
                 },
                 
+                toggleLanguage() {
+                    window.languageManager.toggle();
+                    this.currentLanguage = window.languageManager.getCurrentLanguage();
+                },
+                
+                getLanguageText() {
+                    return this.currentLanguage === 'th' ? 'ไทย' : 'ENG';
+                },
+                
                 updateThemeIcon() {
                     const theme = window.themeManager.getCurrentTheme();
                     this.themeIcon = theme === 'dark' ? 'dark_mode' : 'light_mode';
@@ -425,8 +439,9 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <!-- Modal common Scripts -->
     <script src="{{ asset('js/modals/modal-common.js') }}"></script> 
-    <!-- Theme Manager Script -->
-    <script src="{{ asset('js/theme-manager.js') }}"></script>    
+    <!-- Manager Script -->
+    <script src="{{ asset('js/language-manager.js') }}"></script>
+    <script src="{{ asset('js/theme-manager.js') }}"></script>
     <!-- Page Specific Scripts -->
     <script src="{{ asset('js/pages/shape-page.js') }}"></script>
     <script src="{{ asset('js/pages/pattern-page.js') }}"></script>
