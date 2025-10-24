@@ -94,15 +94,16 @@
                                     <tr class="dark:text-gray-100 dark:bg-gray-800  dark:border-gray-700 dark:hover:bg-gray-700
                                         bg-white border-b border-gray-200 hover:bg-gray-50">
                                         <td class="px-4 py-3 font-medium">
-                                            {{ $glaze_inside->glaze_inside_code }}</td>
+                                            {{ $glaze_inside->glaze_inside_code }}
+                                        </td>
                                         <td class="px-4 py-3">
-                                            <div class="flex gap-1 flex-wrap">
+                                            <div class="flex gap-2 flex-wrap">
                                                 @forelse ($glaze_inside->colors ?? [] as $color)
-                                                    <span class="w-4 h-4 rounded-full border border-gray-300"
-                                                        style="background-color: {{ $color->color_code }}"
-                                                        title="{{ $color->color_name }}"></span>
+                                                    <span class="text-sm text-gray-700 dark:text-gray-300">
+                                                        {{ $color->color_code}} : {{ $color->color_name }}
+                                                    </span>@if (!$loop->last),@endif
                                                 @empty
-                                                    <span class="text-gray-400 text-xs">No colors</span>
+                                                    <span class="text-gray-400 text-sm dark:text-gray-500">No colors</span>
                                                 @endforelse
                                             </div>
                                         </td>
@@ -234,13 +235,13 @@
                                             {{ $glaze_outer->glaze_outer_code }}
                                         </td>
                                         <td class="px-4 py-3">
-                                            <div class="flex gap-1 flex-wrap">
+                                            <div class="flex gap-2 flex-wrap">
                                                 @forelse ($glaze_outer->colors ?? [] as $color)
-                                                    <span class="w-4 h-4 rounded-full border border-gray-300"
-                                                        style="background-color: {{ $color->color_code }}"
-                                                        title="{{ $color->color_name }}"></span>
+                                                    <span class="text-sm text-gray-700 dark:text-gray-300">
+                                                        {{ $color->color_code}} : {{ $color->color_name }}
+                                                    </span>@if (!$loop->last),@endif
                                                 @empty
-                                                    <span class="text-gray-400 text-xs">No colors</span>
+                                                    <span class="text-gray-400 text-sm dark:text-gray-500">No colors</span>
                                                 @endforelse
                                             </div>
                                         </td>
@@ -287,8 +288,17 @@
 
         {{-- include modal --}}
         @include('components.Edit-modals.edit-glazeInsideOuter')
-        @include('components.Delete-modals.delete-glazeInsideOuter')
         @include('components.Create-modals.create-glazeInsideOuter')
+        <x-modals.delete-modal 
+            show="DeleteGlazeInsideModal"
+            itemName="itemCodeToDelete"
+            deleteFunction="deleteGlazeInside"
+        />
 
+        <x-modals.delete-modal 
+            show="DeleteGlazeOuterModal"
+            itemName="itemCodeToDelete"
+            deleteFunction="deleteGlazeOuter"
+        />
     </main>
 @endsection

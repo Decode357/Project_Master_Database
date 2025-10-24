@@ -40,4 +40,6 @@ return [
     'customer' => 'ลูกค้า',
     'department' => 'แผนก',
     'requestor' => 'ผู้ร้องขอ',
+    'confirm_delete' => 'ยืนยันการลบ',
+    'confirm_delete_message' => 'คุณแน่ใจหรือไม่ว่าต้องการลบรายการนี้? ',
 ];

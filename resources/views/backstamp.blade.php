@@ -137,9 +137,13 @@
     </div>
 
     {{-- include modal --}}
-    @include('components.Delete-modals.delete-backstamp')
     @include('components.Create-modals.create-backstamp')
     @include('components.Edit-modals.edit-backstamp')
     @include('components.Detail-modals.detail-backstamp')
+        <x-modals.delete-modal 
+            show="DeleteBackstampModal"
+            itemName="itemCodeToDelete"
+            deleteFunction="deleteBackstamp"
+        />    
 </main>
 @endsection

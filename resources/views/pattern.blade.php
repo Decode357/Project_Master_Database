@@ -137,9 +137,13 @@
         </div>
 
         {{-- include modal --}}
-        @include('components.Delete-modals.delete-pattern')
         @include('components.Create-modals.create-pattern')
         @include('components.Detail-modals.detail-pattern')
-        @include('components.Edit-modals.edit-pattern')      
+        @include('components.Edit-modals.edit-pattern')    
+        <x-modals.delete-modal 
+            show="DeletePatternModal"
+            itemName="itemCodeToDelete"
+            deleteFunction="deletePattern"
+        />        
     </main>
 @endsection

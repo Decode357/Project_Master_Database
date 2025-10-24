@@ -40,5 +40,6 @@ return [
     'customer' => 'Customer',
     'department' => 'Department',
     'requestor' => 'Requestor',
-
+    'confirm_delete' => 'Confirm Delete',
+    'confirm_delete_message' => 'Are you sure you want to delete this item? ',
 ];

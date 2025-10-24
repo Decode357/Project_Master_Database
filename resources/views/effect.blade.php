@@ -80,11 +80,11 @@
                                 <td class="px-6 py-4 font-medium text-gray-900 dark:text-gray-100">{{ $effect->effect_code }}</td>
                                 <td class="px-6 py-4 font-medium text-gray-900 dark:text-gray-100">{{ $effect->effect_name }}</td>
                                 <td class="px-6 py-4">
-                                    <div class="flex gap-2">
+                                    <div class="flex gap-2 flex-wrap">
                                         @forelse ($effect->colors ?? [] as $color)
-                                            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600"
-                                                style="background-color: {{ $color->color_code }}"
-                                                title="{{ $color->color_name }}"></span>
+                                            <span class="text-sm text-gray-700 dark:text-gray-300">
+                                                {{ $color->color_code}} : {{ $color->color_name }}
+                                            </span>@if (!$loop->last),@endif
                                         @empty
                                             <span class="text-gray-400 text-sm dark:text-gray-500">No colors</span>
                                         @endforelse
@@ -128,8 +128,11 @@
         </div>
         {{-- include modal --}}
         @include('components.Edit-modals.edit-effect')
-        @include('components.Delete-modals.delete-effect')
         @include('components.Create-modals.create-effect')
-
+        <x-modals.delete-modal 
+            show="DeleteEffectModal"
+            itemName="itemCodeToDelete"
+            deleteFunction="deleteEffect"
+        />    
     </main>
 @endsection

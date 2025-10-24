@@ -122,7 +122,11 @@
         </div>
         {{-- include modal --}}
         @include('components.Edit-modals.edit-color')
-        @include('components.Delete-modals.delete-color')
         @include('components.Create-modals.create-color')
+        <x-modals.delete-modal 
+            show="DeleteColorModal"
+            itemName="itemCodeToDelete"
+            deleteFunction="deleteColor"
+        />    
     </main>
 @endsection

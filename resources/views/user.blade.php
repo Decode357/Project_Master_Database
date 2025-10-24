@@ -149,8 +149,12 @@
         </div>
 
         {{-- include modal --}}
-        @include('components.Delete-modals.delete-user')
         @include('components.Create-modals.create-user')
         @include('components.Edit-modals.edit-user')
+        <x-modals.delete-modal 
+            show="DeleteUserModal"
+            itemName="userNameToDelete"
+            deleteFunction="deleteUser"
+        />    
     </main>
 @endsection

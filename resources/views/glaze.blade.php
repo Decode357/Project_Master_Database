@@ -135,9 +135,13 @@
             </div>
         </div>
         {{-- include modal --}}
-        @include('components.Delete-modals.delete-glaze')
         @include('components.Create-modals.create-glaze')
         @include('components.Edit-modals.edit-glaze')
         @include('components.Detail-modals.detail-glaze')
+        <x-modals.delete-modal 
+            show="DeleteGlazeModal"
+            itemName="itemCodeToDelete"
+            deleteFunction="deleteGlaze"
+        />    
     </main>
 @endsection

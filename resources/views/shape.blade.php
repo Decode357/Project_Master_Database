@@ -156,6 +156,10 @@
         @include('components.Edit-modals.edit-shape')
         @include('components.Detail-modals.detail-shape')
         @include('components.Create-modals.create-shape')
-        @include('components.Delete-modals.delete-shape')
+        <x-modals.delete-modal 
+            show="DeleteShapeModal"
+            itemName="itemCodeToDelete"
+            deleteFunction="deleteShape"
+        />    
     </main>
 @endsection
