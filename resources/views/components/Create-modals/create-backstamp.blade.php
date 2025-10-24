@@ -152,7 +152,7 @@
             </div>
             <!-- Buttons -->
             <div class="flex justify-end gap-2 mt-4">
-                <button type="button" @click="$event.target.disabled = true; CreateBackstampModal = false; errors = {}"
+                <button type="button" @click="CreateBackstampModal = false; errors = {}"
                     class="px-4 py-2 rounded-md bg-gray-200 dark:bg-gray-600 dark:text-gray-300 dark:hover:bg-gray-500 hoverScale hover:bg-red-500 hover:text-white">Cancel</button>
                 <button type="submit" :disabled="loading"
                     class="px-4 py-2 rounded-md bg-blue-600 dark:bg-blue-500 text-white hoverScale hover:bg-blue-700 dark:hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed">
