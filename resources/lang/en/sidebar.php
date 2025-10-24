@@ -1,5 +1,7 @@
 <?php
 return [
+    'language' => 'ENG',
+    'date' => 'Date',
     'master_database' => 'Master Database',
     'dashboard' => 'Dashboard',
     'shapes' => 'Shapes',

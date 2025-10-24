@@ -11,7 +11,7 @@
                 <div class="flex-1 min-w-64">
                     <div class="relative">
                         <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
-                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by Shape CODE or etc.."
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="{{ __('content.search_by') }}{{ __('content.shape_code') }}{{ __('content.etc') }}"
                             class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent
                             dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 " />
                     </div>
@@ -21,14 +21,14 @@
                     <button type="submit" 
                             class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hoverScale hover:bg-green-700 ">
                         <span class="material-symbols-outlined">search</span>
-                        <span>Search</span>
+                        <span>{{ __('content.search') }}</span>
                     </button>
 
                     <a href="{{ route('shape.index') }}" 
                             class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hoverScale hover:bg-gray-300
                             dark:bg-gray-600 dark:text-gray-300 dark:hover:bg-gray-500">
                         <span class="material-symbols-outlined">refresh</span>
-                        <span>Reset</span>
+                        <span>{{ __('content.reset') }}</span>
                     </a>
                 </div>        
                 <!-- Items per page select -->
@@ -36,11 +36,11 @@
                     <select name="per_page" onchange="this.form.submit()" 
                             class="w-32 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent
                             dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100">
-                        <option value="5" {{ request('per_page') == 5 ? 'selected' : '' }}>5 Items</option>
-                        <option value="10" {{ request('per_page') == 10 || !request('per_page') ? 'selected' : '' }}>10 Items</option>
-                        <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25 Items</option>
-                        <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50 Items</option>
-                        <option value="100" {{ request('per_page') == 100 ? 'selected' : '' }}>100 Items</option>
+                        <option value="5" {{ request('per_page') == 5 ? 'selected' : '' }}>5 {{ __('content.items') }}</option>
+                        <option value="10" {{ request('per_page') == 10 || !request('per_page') ? 'selected' : '' }}>10 {{ __('content.items') }}</option>
+                        <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25 {{ __('content.items') }}</option>
+                        <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50 {{ __('content.items') }}</option>
+                        <option value="100" {{ request('per_page') == 100 ? 'selected' : '' }}>100 {{ __('content.items') }}</option>
                     </select>
                 </div>
                 <!-- Add Shape button -->
@@ -49,7 +49,7 @@
                     <button type="button" @click="openCreateModal()"
                         class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hoverScale hover:bg-blue-700">
                         <span class="material-symbols-outlined">add</span>
-                        <span>Add</span>
+                        <span>{{ __('content.add') }}</span>
                     </button>
                 </div>                    
                 @endif
@@ -64,21 +64,21 @@
                             dark:bg-gray-700 dark:border-gray-700 ">
                         <tr class="dark:text-gray-400 text-gray-700">
                             <th class="px-4 py-3 text-left">
-                                SHAPE CODE</th>  
+                                {{__('content.shape_code')}}</th>  
                             <th class="px-4 py-3 text-left">
-                                Description TH</th>
+                                {{__('content.description_th')}}</th>
                             <th class="px-4 py-3 text-left">
-                                Description EN</th>
+                                {{__('content.description_en')}}</th>
                             <th class="px-4 py-3 text-left">
-                                TYPE</th>
+                                {{__('content.type')}}</th>
                             <th class="px-4 py-3 text-left">
-                                STATUS</th>
+                                {{__('content.status')}}</th>
                             <th class="px-4 py-3 text-left">
-                                PROCESS</th>
-                            <th class="px-4 py-3 text-left">
-                                UPDATED BY</th>
-                            <th class="px-4 py-3 text-end">
-                                ACTION</th>
+                                {{__('content.process')}}</th>
+                            <th class="px-4 py-3 text-right">
+                                {{__('content.updated_by')}}</th>
+                            <th class="px-4 py-3 text-end w-[80px]">
+                                {{__('content.action')}}</th>
                         </tr>
                     </thead>
                     <!-- Table Body -->
@@ -108,7 +108,7 @@
                                     </span>
                                 </td>
                                 <td class="px-4 py-3">{{ $process }}</td>
-                                <td class="px-4 py-3">{{ $updatedBy }}</td>
+                                <td class="px-4 py-3 text-right">{{ $updatedBy }}</td>
                                 <td class="px-4 py-3">
                                     <!-- Action Buttons -->
                                     <div class="flex justify-end gap-1">

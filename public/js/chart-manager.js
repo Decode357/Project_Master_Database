@@ -41,9 +41,9 @@ class ChartManager {
         return {
             dates: JSON.parse(element.getAttribute('data-dates') || '[]'),
             shapeCounts: JSON.parse(element.getAttribute('data-shape-counts') || '[]'),
+            glazeCounts: JSON.parse(element.getAttribute('data-glaze-counts') || '[]'),
             patternCounts: JSON.parse(element.getAttribute('data-pattern-counts') || '[]'),
             backstampCounts: JSON.parse(element.getAttribute('data-backstamp-counts') || '[]'),
-            glazeCounts: JSON.parse(element.getAttribute('data-glaze-counts') || '[]')
         };
     }
 
@@ -79,7 +79,7 @@ class ChartManager {
             console.log('🗑️ Destroying previous chart');
             this.chart.destroy();
         }
-
+        
         console.log('📊 Creating new chart...');
 
         this.chart = new Chart(ctx, {
@@ -88,7 +88,7 @@ class ChartManager {
                 labels: data.dates,
                 datasets: [
                     {
-                        label: 'Shapes',
+                        label: LANG.shapes,
                         data: data.shapeCounts,
                         borderColor: '#3b82f6',
                         backgroundColor: 'rgba(59, 130, 246, 0.1)',
@@ -99,7 +99,7 @@ class ChartManager {
                         pointHoverRadius: 6
                     },
                     {
-                        label: 'Patterns',
+                        label: LANG.patterns,
                         data: data.patternCounts,
                         borderColor: '#10b981',
                         backgroundColor: 'rgba(16, 185, 129, 0.1)',
@@ -110,7 +110,7 @@ class ChartManager {
                         pointHoverRadius: 6
                     },
                     {
-                        label: 'Backstamps',
+                        label: LANG.backstamps,
                         data: data.backstampCounts,
                         borderColor: '#f59e0b',
                         backgroundColor: 'rgba(245, 158, 11, 0.1)',
@@ -121,7 +121,7 @@ class ChartManager {
                         pointHoverRadius: 6
                     },
                     {
-                        label: 'Glazes',
+                        label: LANG.glazes,
                         data: data.glazeCounts,
                         borderColor: '#8b5cf6',
                         backgroundColor: 'rgba(139, 92, 246, 0.1)',
@@ -184,7 +184,7 @@ class ChartManager {
                         cornerRadius: 8,
                         callbacks: {
                             title: function(context) {
-                                return 'Date: ' + context[0].label;
+                                return  LANG.date + ': ' + context[0].label;
                             }
                         }
                     }

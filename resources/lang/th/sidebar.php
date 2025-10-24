@@ -1,5 +1,7 @@
 <?php
 return [
+    'language' => 'ไทย',
+    'date' => 'วันที่',
     'master_database' => 'ฐานข้อมูลหลัก',
     'dashboard' => 'แดชบอร์ด',
     'shapes' => 'รูปทรง',

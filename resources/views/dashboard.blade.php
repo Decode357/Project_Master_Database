@@ -12,30 +12,39 @@
     data-glaze-counts="{{ json_encode($glazeCounts) }}"
     style="display: none;">
 </div>
-
+<script>
+    window.LANG = {
+        date: "{{ __('sidebar.date') }}",
+        shapes: "{{ __('sidebar.shapes') }}",
+        patterns: "{{ __('sidebar.patterns') }}",
+        backstamps: "{{ __('sidebar.backstamps') }}",
+        glazes: "{{ __('sidebar.glazes') }}",
+        createdAt: "{{ __('content.create_history') }}"
+    };
+</script>
 <main class="flex-1 bg-gray-50 dark:bg-gray-900">
     <!-- Summary Bar -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-3">
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 flex flex-col items-center ">
             <span class="text-2xl font-bold text-blue-600 dark:text-blue-400">{{ $shapeCount }}</span>
-            <span class="text-xs text-gray-500 dark:text-gray-400 mt-1 uppercase tracking-wider">Shapes</span>
+            <span class="text-xs text-gray-500 dark:text-gray-400 mt-1 uppercase tracking-wider">{{__('sidebar.shapes')}}</span>
         </div>
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 flex flex-col items-center ">
             <span class="text-2xl font-bold text-green-600 dark:text-green-400">{{ $patternCount }}</span>
-            <span class="text-xs text-gray-500 dark:text-gray-400 mt-1 uppercase tracking-wider">Patterns</span>
+            <span class="text-xs text-gray-500 dark:text-gray-400 mt-1 uppercase tracking-wider">{{__('sidebar.patterns')}}</span>
         </div>        
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 flex flex-col items-center ">
             <span class="text-2xl font-bold text-yellow-600 dark:text-yellow-400">{{ $backstampCount }}</span>
-            <span class="text-xs text-gray-500 dark:text-gray-400 mt-1 uppercase tracking-wider">Backstamps</span>
+            <span class="text-xs text-gray-500 dark:text-gray-400 mt-1 uppercase tracking-wider">{{__('sidebar.backstamps')}}</span>
         </div>
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 flex flex-col items-center ">
             <span class="text-2xl font-bold text-purple-600 dark:text-purple-400">{{ $glazeCount }}</span>
-            <span class="text-xs text-gray-500 dark:text-gray-400 mt-1 uppercase tracking-wider">Glazes</span>
+            <span class="text-xs text-gray-500 dark:text-gray-400 mt-1 uppercase tracking-wider">{{__('sidebar.glazes')}}</span>
         </div>
     </div>
 
     <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md md:col-span-2 mb-2 ">
-        <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Items Created (Last 30 Days)</h2>
+        <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{__('content.create_history')}}</h2>
         <div class="w-full" style="height: 220px; position: relative;">
             <canvas id="productChart"></canvas>
         </div>
@@ -44,14 +53,14 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-6">
         <!-- Latest Shapes -->
         <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md ">
-            <h2 class="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">Shape History</h2>
+            <h2 class="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">{{__('content.shape_history')}}</h2>
             <table class="w-full text-sm text-left text-gray-600 dark:text-gray-400">
                 <thead class="text-xs text-gray-500 dark:text-gray-400 uppercase bg-gray-50 dark:bg-gray-700">
                     <tr>
-                        <th class="px-4 py-2">Shape Code</th>
-                        <th class="px-4 py-2">Description</th>
-                        <th class="px-4 py-2">Updated By</th>
-                        <th class="px-4 py-2 text-end">Updated At</th>
+                        <th class="px-4 py-2">{{__('content.shape_code')}}</th>
+                        <th class="px-4 py-2">{{__('content.description')}}</th>
+                        <th class="px-4 py-2">{{__('content.updated_by')}}</th>
+                        <th class="px-4 py-2 text-end">{{__('content.updated_at')}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -71,15 +80,15 @@
 
         <!-- Latest Glazes -->
         <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-            <h2 class="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">Glaze History</h2>
+            <h2 class="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">{{__('content.glaze_history')}}</h2>
             <table class="w-full text-sm text-left text-gray-600 dark:text-gray-400">
                 <thead class="text-xs text-gray-500 dark:text-gray-400 uppercase bg-gray-50 dark:bg-gray-700">
                     <tr>
-                        <th class="px-4 py-2">Glaze Code</th>
-                        <th class="px-4 py-2">Inside Color Code</th>
-                        <th class="px-4 py-2">Outside Color Code</th>
-                        <th class="px-4 py-2">Updated By</th>
-                        <th class="px-4 py-2 text-end">Updated At</th>
+                        <th class="px-4 py-2">{{__('content.glaze_code')}}</th>
+                        <th class="px-4 py-2">{{__('content.inside_color_code')}}</th>
+                        <th class="px-4 py-2">{{__('content.outside_color_code')}}</th>
+                        <th class="px-4 py-2">{{__('content.updated_by')}}</th>
+                        <th class="px-4 py-2 text-end">{{__('content.updated_at')}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -99,14 +108,14 @@
         </div>        
         <!-- Latest Patterns -->
         <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-            <h2 class="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">Pattern History</h2>
+            <h2 class="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">{{__('content.pattern_history')}}</h2>
             <table class="w-full text-sm text-left text-gray-600 dark:text-gray-400">
                 <thead class="text-xs text-gray-500 dark:text-gray-400 uppercase bg-gray-50 dark:bg-gray-700">
                     <tr>
-                        <th class="px-4 py-2">Pattern Code</th>
-                        <th class="px-4 py-2">Description</th>
-                        <th class="px-4 py-2">Updated By</th>
-                        <th class="px-4 py-2 text-end">Updated At</th>
+                        <th class="px-4 py-2">{{__('content.pattern_code')}}</th>
+                        <th class="px-4 py-2">{{__('content.description')}}</th>
+                        <th class="px-4 py-2">{{__('content.updated_by')}}</th>
+                        <th class="px-4 py-2 text-end">{{__('content.updated_at')}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -125,14 +134,14 @@
         </div>
         <!-- Latest Backstamps -->
         <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-            <h2 class="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">Backstamp History</h2>
+            <h2 class="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">{{__('content.backstamp_history')}}</h2>
             <table class="w-full text-sm text-left text-gray-600 dark:text-gray-400">
                 <thead class="text-xs text-gray-500 dark:text-gray-400 uppercase bg-gray-50 dark:bg-gray-700">
                     <tr>
-                        <th class="px-4 py-2">Backstamp Code</th>
-                        <th class="px-4 py-2">Description</th>
-                        <th class="px-4 py-2">Updated By</th>
-                        <th class="px-4 py-2 text-end">Updated At</th>
+                        <th class="px-4 py-2">{{__('content.backstamp_code')}}</th>
+                        <th class="px-4 py-2">{{__('content.description')}}</th>
+                        <th class="px-4 py-2">{{__('content.updated_by')}}</th>
+                        <th class="px-4 py-2 text-end">{{__('content.updated_at')}}</th>
                     </tr>
                 </thead>
                 <tbody>

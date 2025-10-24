@@ -325,7 +325,10 @@
                             }, $userPermissions);
 
                             $permissionLabel = __('auth.admin') . ' : ' . implode(', ', $translatedPermissions);
+                        }elseif (Auth::user()->hasRole('superadmin')) {
+                            $permissionLabel = __('auth.superadmin') . ' : ' . __('auth.all_permissions');
                         }
+
                     @endphp
                     <h2>
                         <span class="text-xl font-semibold text-gray-900 dark:text-gray-100">@yield('header', 'Title')</span>
@@ -338,7 +341,7 @@
                         class="flex items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-600 px-3 py-2
                                 text-gray-600 dark:text-gray-300 hoverScale hover:bg-gray-300 dark:hover:bg-gray-500">
                         <span class="material-symbols-outlined mr-1">language</span>
-                        <span x-text="getLanguageText()"></span>
+                        <span x-text="'{{ __('sidebar.language') }}'"></span>
                     </button>                    
                 <button @click="toggleTheme()"
                     class="flex items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-600 px-3 py-2
@@ -405,11 +408,7 @@
                     window.languageManager.toggle();
                     this.currentLanguage = window.languageManager.getCurrentLanguage();
                 },
-                
-                getLanguageText() {
-                    return this.currentLanguage === 'th' ? 'ไทย' : 'ENG';
-                },
-                
+                                
                 updateThemeIcon() {
                     const theme = window.themeManager.getCurrentTheme();
                     this.themeIcon = theme === 'dark' ? 'dark_mode' : 'light_mode';

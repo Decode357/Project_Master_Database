@@ -24,7 +24,7 @@
                                 <span
                                     class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
                                 <input type="text" name="inside_search" value="{{ request('inside_search') }}"
-                                    placeholder="Search by Inside Code..."
+                                    placeholder="{{__('content.search_by')}}{{ __('content.inside_color_code') }}{{ __('content.etc') }}"
                                     class="dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 
                                     w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500" />
                             </div>
@@ -51,16 +51,16 @@
                             <select name="inside_per_page" onchange="this.form.submit()"
                                 class="dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100
                                 w-32 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                <option value="5" {{ request('inside_per_page') == 5 ? 'selected' : '' }}>5 Items
+                                <option value="5" {{ request('inside_per_page') == 5 ? 'selected' : '' }}>5 {{__('content.items') }}
                                 </option>
                                 <option value="10"
                                     {{ request('inside_per_page') == 10 || !request('inside_per_page') ? 'selected' : '' }}>
-                                    10 Items</option>
-                                <option value="25" {{ request('inside_per_page') == 25 ? 'selected' : '' }}>25 Items
+                                    10 {{__('content.items') }}</option>
+                                <option value="25" {{ request('inside_per_page') == 25 ? 'selected' : '' }}>25 {{__('content.items') }}
                                 </option>
-                                <option value="50" {{ request('inside_per_page') == 50 ? 'selected' : '' }}>50 Items
+                                <option value="50" {{ request('inside_per_page') == 50 ? 'selected' : '' }}>50 {{__('content.items') }}
                                 </option>
-                                <option value="100" {{ request('inside_per_page') == 100 ? 'selected' : '' }}>100 Items
+                                <option value="100" {{ request('inside_per_page') == 100 ? 'selected' : '' }}>100 {{__('content.items') }}
                                 </option>
                             </select>
                         </div>
@@ -70,7 +70,7 @@
                                 <button type="button" @click="openCreateInsideModal()"
                                     class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hoverScale hover:bg-blue-700 ">
                                     <span class="material-symbols-outlined">add</span>
-                                    <span>Add</span>
+                                    <span>{{ __('content.add') }}</span>
                                 </button>
                             </div>
                         @endif
@@ -84,9 +84,9 @@
                             <thead class="dark:bg-gray-700 dark:border-gray-700 border-b
                                     text-xs text-gray-500 uppercase bg-gray-50">
                                 <tr class="dark:text-gray-400 text-gray-700">
-                                    <th class="px-4 py-3">Inside COLOR CODE</th>
-                                    <th class="px-4 py-3">Colors</th>
-                                    <th class="px-4 py-3 text-right">Actions</th>
+                                    <th class="px-4 py-3">{{__('content.inside_color_code')}}</th>
+                                    <th class="px-4 py-3">{{__('sidebar.colors')}}</th>
+                                    <th class="px-4 py-3 text-right">{{__('content.action')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -164,7 +164,7 @@
                                 <span
                                     class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
                                 <input type="text" name="outer_search" value="{{ request('outer_search') }}"
-                                    placeholder="Search by Outside CODE..."
+                                    placeholder="{{__('content.search_by')}}{{ __('content.outside_color_code') }}{{ __('content.etc') }}"
                                     class="dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 
                                     w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500" />
                             </div>
@@ -191,17 +191,14 @@
                             <select name="outer_per_page" onchange="this.form.submit()"
                                 class="dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100
                                 w-32 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                <option value="5" {{ request('outer_per_page') == 5 ? 'selected' : '' }}>5 Items
+                                <option value="5" {{ request('outer_per_page') == 5 ? 'selected' : '' }}>5 {{__('content.items')}}
                                 </option>
                                 <option value="10"
                                     {{ request('outer_per_page') == 10 || !request('outer_per_page') ? 'selected' : '' }}>
-                                    10 Items</option>
-                                <option value="25" {{ request('outer_per_page') == 25 ? 'selected' : '' }}>25 Items
-                                </option>
-                                <option value="50" {{ request('outer_per_page') == 50 ? 'selected' : '' }}>50 Items
-                                </option>
-                                <option value="100" {{ request('outer_per_page') == 100 ? 'selected' : '' }}>100 Items
-                                </option>
+                                    10 {{__('content.items')}}</option>
+                                <option value="25" {{ request('outer_per_page') == 25 ? 'selected' : '' }}>25 {{__('content.items')}}</option>
+                                <option value="50" {{ request('outer_per_page') == 50 ? 'selected' : '' }}>50 {{__('content.items')}}</option>
+                                <option value="100" {{ request('outer_per_page') == 100 ? 'selected' : '' }}>100 {{__('content.items')}}</option>
                             </select>
                         </div>
                         <!-- Add Outer button -->
@@ -210,7 +207,7 @@
                                 <button type="button" @click="openCreateOuterModal()"
                                     class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hoverScale hover:bg-blue-700">
                                     <span class="material-symbols-outlined">add</span>
-                                    <span>Add</span>
+                                    <span>{{ __('content.add') }}</span>
                                 </button>
                             </div>
                         @endif
@@ -224,9 +221,9 @@
                             <thead class="dark:bg-gray-700 dark:border-gray-700 border-b
                                     text-xs text-gray-500 uppercase bg-gray-50">
                                 <tr class="dark:text-gray-400 text-gray-700">
-                                    <th class="px-4 py-3">Outside COLOR CODE</th>
-                                    <th class="px-4 py-3">Colors</th>
-                                    <th class="px-4 py-3 text-right">Actions</th>
+                                    <th class="px-4 py-3">{{__('content.outside_color_code')}}</th>
+                                    <th class="px-4 py-3">{{__('sidebar.colors')}}</th>
+                                    <th class="px-4 py-3 text-right">{{__('content.action')}}</th>
                                 </tr>
                             </thead>
                             <tbody>

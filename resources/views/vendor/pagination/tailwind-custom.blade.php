@@ -2,10 +2,10 @@
     <div class="flex flex-col md:flex-row items-center justify-between mt-4">
         {{-- Info ข้อความ: Showing x to y of z results --}}
         <div class="text-sm text-gray-500 mb-2 md:mb-0 mr-12">
-            Showing 
-            <span class="font-medium">{{ $paginator->firstItem() }}</span> to 
-            <span class="font-medium">{{ $paginator->lastItem() }}</span> of 
-            <span class="font-medium">{{ $paginator->total() }}</span> results
+            {{ __('content.showing') }} 
+            <span class="font-medium">{{ $paginator->firstItem() }}</span> {{ __('content.to') }} 
+            <span class="font-medium">{{ $paginator->lastItem() }}</span> {{ __('content.of') }} 
+            <span class="font-medium">{{ $paginator->total() }}</span> {{ __('content.results') }}
         </div>
 
         {{-- Pagination Buttons --}}

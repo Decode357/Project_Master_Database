@@ -3,6 +3,8 @@ return [
     'user' => 'User',
     'admin' => 'Admin',
     'superadmin' => 'Super Admin',
+    'role' => 'Role',
+    'permission' => 'Permission',
     'view' => 'View',
     'view_only' => 'View Only',
     'all_permissions' => 'All Permissions',
