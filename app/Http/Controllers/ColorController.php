@@ -41,11 +41,8 @@ class ColorController extends Controller
     private function rules()
     {
         return [
-            'color_code' => [
-                'required', 'string', 'max:7',
-                'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/',
-            ],
-            'color_name'  => 'required|string|max:255',
+            'color_code' => 'required|string|max:255',
+            'color_name'  => 'nullable|string|max:255',
             'customer_id' => 'nullable|exists:customers,id',
         ];
     }

@@ -11,7 +11,6 @@
         <form @submit.prevent="submitColorForm" class="space-y-4" x-data="{
             errors: {},
             loading: false,
-            selectedColor: '#000000', // ค่าเริ่มต้น
             }">
             @csrf
 
@@ -26,22 +25,15 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- 🎨 Color Picker + HEX Input -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Color (HEX only)</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Color Code</label>
                     <div class="flex gap-2 items-center">
                         <!-- input text -->
-                        <input name="color_code" type="text" x-model="selectedColor"
-                            maxlength="7"
-                            class="mt-1 flex-1 border rounded-md px-3 py-2 border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-blue-500"
-                            placeholder="#FFFFFF" required />
-
-                        <!-- color picker -->
-                        <input type="color" x-model="selectedColor"
-                            class="w-12 h-10 p-0 border rounded-md cursor-pointer dark:border-gray-600" />
+                        <input name="color_code" type="text" 
+                            maxlength="15"
+                            class="mt-1 flex-1 border rounded-md px-3 py-2 border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500"
+                            placeholder="Enter Color Code" required />
                     </div>
-
-                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1" x-text="'Selected: ' + selectedColor"></p>
                 </div>
 
                 <!-- 🏷️ Color Name -->
@@ -50,8 +42,7 @@
                     <input name="color_name" type="text" placeholder="Enter color name"
                         :class="errors.color_name ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400
-                            focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        required />
+                            focus:ring-2 focus:ring-blue-500 focus:border-transparent"/>
                     <p x-show="errors.color_name"
                         x-text="Array.isArray(errors.color_name) ? errors.color_name[0] : errors.color_name"
                         class="text-red-500 dark:text-red-400 text-xs mt-1"></p>

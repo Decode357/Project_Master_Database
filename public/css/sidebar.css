@@ -1,0 +1,19 @@
+[x-cloak] { display: none !important; }
+
+.sidebar-hidden { transform: translateX(-100%); }
+.sidebar-visible { transform: translateX(0); }
+
+@media (min-width: 768px) {
+    .sidebar-hidden { transform: translateX(0); }
+}
+
+.dark { color-scheme: dark; }
+.dark .bg-white { @apply bg-gray-800; }
+.dark .text-gray-900 { @apply text-gray-100; }
+.dark .text-gray-700 { @apply text-gray-300; }
+.dark .text-gray-500 { @apply text-gray-400; }
+.dark .border-gray-200 { @apply border-gray-700; }
+.dark .bg-gray-50 { @apply bg-gray-900; }
+.dark .bg-gray-100 { @apply bg-gray-700; }
+.dark .shadow-md { @apply shadow-gray-900/50; }
+.dark .shadow-xl { @apply shadow-gray-900/50; }

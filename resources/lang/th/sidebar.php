@@ -14,6 +14,7 @@ return [
     'effects' => 'เอฟเฟกต์',
     'glaze_inside_outer' => 'สีเคลือบด้านใน/นอก',
     'csv_import' => 'นำเข้าไฟล์ CSV',
+    'shape_collections' => 'คอลเลคชันรูปทรง',
     'profile' => 'โปรไฟล์',
     'logout' => 'ออกจากระบบ',
 ];

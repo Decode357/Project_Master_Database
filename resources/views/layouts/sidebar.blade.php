@@ -14,61 +14,24 @@
     <!-- Theme CSS -->
     <style>
         [x-cloak] { display: none !important; }
-        
-        .sidebar-hidden {
-            transform: translateX(-100%);
-        }
-        
-        .sidebar-visible {
-            transform: translateX(0);
-        }
-        
+
+        .sidebar-hidden { transform: translateX(-100%); }
+        .sidebar-visible { transform: translateX(0); }
+
         @media (min-width: 768px) {
-            .sidebar-hidden {
-                transform: translateX(0);
-            }
+            .sidebar-hidden { transform: translateX(0); }
         }
-        
-        /* Dark theme styles */
-        .dark {
-            color-scheme: dark;
-        }
-        
-        .dark .bg-white {
-            @apply bg-gray-800;
-        }
-        
-        .dark .text-gray-900 {
-            @apply text-gray-100;
-        }
-        
-        .dark .text-gray-700 {
-            @apply text-gray-300;
-        }
-        
-        .dark .text-gray-500 {
-            @apply text-gray-400;
-        }
-        
-        .dark .border-gray-200 {
-            @apply border-gray-700;
-        }
-        
-        .dark .bg-gray-50 {
-            @apply bg-gray-900;
-        }
-        
-        .dark .bg-gray-100 {
-            @apply bg-gray-700;
-        }
-        
-        .dark .shadow-md {
-            @apply shadow-gray-900/50;
-        }
-        
-        .dark .shadow-xl {
-            @apply shadow-gray-900/50;
-        }
+
+        .dark { color-scheme: dark; }
+        .dark .bg-white { @apply bg-gray-800; }
+        .dark .text-gray-900 { @apply text-gray-100; }
+        .dark .text-gray-700 { @apply text-gray-300; }
+        .dark .text-gray-500 { @apply text-gray-400; }
+        .dark .border-gray-200 { @apply border-gray-700; }
+        .dark .bg-gray-50 { @apply bg-gray-900; }
+        .dark .bg-gray-100 { @apply bg-gray-700; }
+        .dark .shadow-md { @apply shadow-gray-900/50; }
+        .dark .shadow-xl { @apply shadow-gray-900/50; }
     </style>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -203,6 +166,15 @@
                         : 'text-gray-700 dark:text-gray-300 hoverScale hover:bg-gray-100 dark:hover:bg-gray-700' }}">
                         <span class="material-symbols-outlined text-lg">opacity</span>
                         <span>{{ __('sidebar.glaze_inside_outer') }}</span>
+                    </a>
+                    
+                    <a href="{{ route('shape.collection.index') }}"
+                        class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium
+                    {{ request()->routeIs('shape.collection.index') 
+                        ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold scale-110' 
+                        : 'text-gray-700 dark:text-gray-300 hoverScale hover:bg-gray-100 dark:hover:bg-gray-700' }}">
+                        <span class="material-symbols-outlined text-lg">Collections_Bookmark</span>
+                        <span>{{ __('sidebar.shape_collections') }}</span>
                     </a>
                     
                     @if ($hasFileImport)
@@ -358,76 +330,7 @@
             </section>
         </main>
     </div>
-
-    <!-- JavaScript สำหรับจัดการ sidebar และ theme -->
-    <script>
-        function sidebarManager() {
-            return {
-                sidebarOpen: false,
-                isMobile: window.innerWidth < 768,
-                themeIcon: 'light_mode',
-                currentLanguage: localStorage.getItem('language') || 'th',
-                
-                init() {
-                    this.checkScreenSize();
-                    this.updateThemeIcon();
-                    
-                    window.addEventListener('resize', () => {
-                        this.checkScreenSize();
-                    });
-                    
-                    window.addEventListener('themeChanged', () => {
-                        this.updateThemeIcon();
-                    });
-                },
-                
-                checkScreenSize() {
-                    const wasMobile = this.isMobile;
-                    this.isMobile = window.innerWidth < 768;
-                    
-                    if (wasMobile && !this.isMobile) {
-                        this.sidebarOpen = false;
-                        document.body.style.overflow = 'auto';
-                    }
-                },
-                
-                toggleSidebar() {
-                    this.sidebarOpen = !this.sidebarOpen;
-                    
-                    if (this.isMobile) {
-                        document.body.style.overflow = this.sidebarOpen ? 'hidden' : 'auto';
-                    }
-                },
-                
-                toggleTheme() {
-                    window.themeManager.toggle();
-                    this.updateThemeIcon();
-                },
-                
-                toggleLanguage() {
-                    window.languageManager.toggle();
-                    this.currentLanguage = window.languageManager.getCurrentLanguage();
-                },
-                                
-                updateThemeIcon() {
-                    const theme = window.themeManager.getCurrentTheme();
-                    this.themeIcon = theme === 'dark' ? 'dark_mode' : 'light_mode';
-                },
-                
-                get sidebarClass() {
-                    if (this.isMobile) {
-                        return this.sidebarOpen ? 'translate-x-0' : '-translate-x-full';
-                    } else {
-                        return 'translate-x-0';
-                    }
-                },
-                
-                get headerClass() {
-                    return this.isMobile ? 'left-0' : 'left-64';
-                }
-            }
-        }
-    </script>
+    <script src="{{ asset('js/sidebar-manager.js') }}"></script>
         <!-- Add SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Alpine.js CDN -->
@@ -450,6 +353,7 @@
     <script src="{{ asset('js/pages/effect-page.js') }}"></script>
     <script src="{{ asset('js/pages/user-page.js') }}"></script>
     <script src="{{ asset('js/pages/glazeInsideOuter-page.js') }}"></script>
+    <script src="{{ asset('js/pages/shapeCollection.blade-page.js') }}"></script>
 </body>
 
 </html>

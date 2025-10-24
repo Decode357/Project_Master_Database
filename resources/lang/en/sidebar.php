@@ -15,6 +15,7 @@ return [
     'glaze_inside_outer' => 'Glaze inside/outer',
     'csv_import' => 'CSV Import',
     'profile' => 'Profile',
+    'shape_collections' => 'Shape Collections',
     'logout' => 'Logout',
     'user' => 'User',
 ];

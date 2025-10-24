@@ -42,4 +42,6 @@ return [
     'requestor' => 'ผู้ร้องขอ',
     'confirm_delete' => 'ยืนยันการลบ',
     'confirm_delete_message' => 'คุณแน่ใจหรือไม่ว่าต้องการลบรายการนี้? ',
+    'shape_collection_code' => 'รหัสชุดรูปทรง',
+    'shape_collection_name' => 'ชื่อชุดรูปทรง',
 ];

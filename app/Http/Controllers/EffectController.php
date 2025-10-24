@@ -7,8 +7,7 @@ use Illuminate\Validation\Rule;
 use App\Models\{Effect, Color};
 
 class EffectController extends Controller
-{
-    public function effectindex(Request $request)
+{    public function effectindex(Request $request)
     {
         // รับค่า perPage จาก request หรือใช้ default 10
         $perPage = $request->get('per_page', 10);
@@ -111,4 +110,5 @@ class EffectController extends Controller
             'message' => 'Effect deleted successfully.'
         ]);
     }
+
 }

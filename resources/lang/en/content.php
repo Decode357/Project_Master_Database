@@ -42,4 +42,6 @@ return [
     'requestor' => 'Requestor',
     'confirm_delete' => 'Confirm Delete',
     'confirm_delete_message' => 'Are you sure you want to delete this item? ',
+    'shape_collection_code' => 'Shape Collection Code',
+    'shape_collection_name' => 'Shape Collection Name',
 ];
