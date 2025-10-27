@@ -6,7 +6,7 @@
 
     <!-- Modal Content -->
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-full max-w-2xl p-6 overflow-y-auto max-h-[90vh]">
-        <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Edit Shape</h2>
+        <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">{{ __('content.edit_shape') }}</h2>
         <hr class="mb-3 border-gray-200 dark:border-gray-600">
         <form @submit.prevent="submitEditForm" class="space-y-4" x-data="{
             ...editShapeModal(),
@@ -17,7 +17,7 @@
 
             <!-- Dynamic Error Display Area -->
             <div x-show="Object.keys(errors).length > 0" class="p-4 bg-red-100 dark:bg-red-900 border border-red-400 dark:border-red-600 rounded-md">
-                <h4 class="text-red-800 dark:text-red-200 font-semibold">Please correct the following errors</h4>
+                <h4 class="text-red-800 dark:text-red-200 font-semibold">{{ __('content.please_correct_errors') }}</h4>
                 <ul class="mt-2 text-red-700 dark:text-red-300 text-sm list-disc list-inside">
                     <template x-for="(error, field) in errors" :key="field">
                         <li x-text="error[0] || error"></li>
@@ -26,8 +26,8 @@
             </div>
 
             <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">ITEM CODE</label>
-                <input type="text" name="item_code" x-model="shapeToEdit.item_code" placeholder="Enter shape code"
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.shape_code') }}</label>
+                <input type="text" name="item_code" x-model="shapeToEdit.item_code" placeholder="{{ __('content.enter') }}{{ __('content.shape_code') }}"
                     :class="errors.item_code ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                     class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400
                         focus:ring-2 focus:ring-blue-500 focus:border-transparent" required />
@@ -38,8 +38,8 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Description (TH)</label>
-                    <input type="text" name="item_description_thai" x-model="shapeToEdit.item_description_thai" placeholder="Enter description (TH)"
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.description_th') }}</label>
+                    <input type="text" name="item_description_thai" x-model="shapeToEdit.item_description_thai" placeholder="{{ __('content.enter') }}{{ __('content.description_th') }}"
                         :class="errors.item_description_thai ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                     <p x-show="errors.item_description_thai"
@@ -47,8 +47,8 @@
                         class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Description (EN)</label>
-                    <input type="text" name="item_description_eng" x-model="shapeToEdit.item_description_eng" placeholder="Enter description (EN)"
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.description_en') }}</label>
+                    <input type="text" name="item_description_eng" x-model="shapeToEdit.item_description_eng" placeholder="{{ __('content.enter') }}{{ __('content.description_en') }}"
                         :class="errors.item_description_eng ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                     <p x-show="errors.item_description_eng"
@@ -59,7 +59,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Type</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.type') }}</label>
                     <select name="shape_type_id" x-model="shapeToEdit.shape_type_id" 
                         :class="errors.shape_type_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
@@ -73,7 +73,7 @@
                         class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Status</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.status') }}</label>
                     <select name="status_id" x-model="shapeToEdit.status_id"
                         :class="errors.status_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
@@ -87,7 +87,7 @@
                         class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Collection</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.collection') }}</label>
                     <select name="shape_collection_id" x-model="shapeToEdit.shape_collection_id"
                         :class="errors.shape_collection_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
@@ -101,7 +101,7 @@
                         class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Process</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.process') }}</label>
                     <select name="process_id" x-model="shapeToEdit.process_id"
                         :class="errors.process_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
@@ -119,7 +119,7 @@
             <!-- CUSTOMER, GROUP, DESIGNER, Requestor -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Group</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.group') }}</label>
                     <select name="item_group_id" x-model="shapeToEdit.item_group_id"
                         :class="errors.item_group_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
@@ -134,7 +134,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Customer</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.customer') }}</label>
                     <select name="customer_id" x-model="shapeToEdit.customer_id"
                         :class="errors.customer_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
@@ -149,7 +149,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Requestor</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.requestor') }}</label>
                     <select name="requestor_id" x-model="shapeToEdit.requestor_id"
                         :class="errors.requestor_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
@@ -164,7 +164,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Designer</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.designer') }}</label>
                     <select name="designer_id" x-model="shapeToEdit.designer_id"
                         :class="errors.designer_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
@@ -182,8 +182,8 @@
             <!-- Volume & Weight -->
             <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Volume</label>
-                    <input type="text" name="volume" x-model="shapeToEdit.volume" placeholder="Enter volume"
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.volume') }} {{ __('content.cc') }}</label>
+                    <input type="text" name="volume" x-model="shapeToEdit.volume" placeholder="{{ __('content.enter') }}{{ __('content.volume') }}"
                         :class="errors.volume ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400" />
                     <p x-show="errors.volume"
@@ -191,8 +191,8 @@
                         class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Weight</label>
-                    <input type="text" name="weight" x-model="shapeToEdit.weight" placeholder="Enter weight"
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.weight') }} {{ __('content.g') }}</label>
+                    <input type="text" name="weight" x-model="shapeToEdit.weight" placeholder="{{ __('content.enter') }}{{ __('content.weight') }}"
                         :class="errors.weight ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400" />
                     <p x-show="errors.weight"
@@ -201,10 +201,10 @@
                 </div>
             </div>
             <!-- Diameter & Height -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="grid grid-cols-2 md:grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Long Diameter</label>
-                    <input type="text" name="long_diameter" x-model="shapeToEdit.long_diameter" placeholder="Enter long diameter"
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.long_diameter') }} {{ __('content.mm') }}</label>
+                    <input type="text" name="long_diameter" x-model="shapeToEdit.long_diameter" placeholder="{{ __('content.enter') }}{{ __('content.long_diameter') }}"
                         :class="errors.long_diameter ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400" />
                     <p x-show="errors.long_diameter"
@@ -212,8 +212,8 @@
                         class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Short Diameter</label>
-                    <input type="text" name="short_diameter" x-model="shapeToEdit.short_diameter" placeholder="Enter short diameter"
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.short_diameter') }} {{ __('content.mm') }}</label>
+                    <input type="text" name="short_diameter" x-model="shapeToEdit.short_diameter" placeholder="{{ __('content.enter') }}{{ __('content.short_diameter') }}"
                         :class="errors.short_diameter ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400" />
                     <p x-show="errors.short_diameter"
@@ -221,8 +221,8 @@
                         class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Height Long</label>
-                    <input type="text" name="height_long" x-model="shapeToEdit.height_long" placeholder="Enter height long"
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.height_long') }} {{ __('content.mm') }}</label>
+                    <input type="text" name="height_long" x-model="shapeToEdit.height_long" placeholder="{{ __('content.enter') }}{{ __('content.height_long') }}"
                         :class="errors.height_long ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400" />
                     <p x-show="errors.height_long"
@@ -230,8 +230,8 @@
                         class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Height Short</label>
-                    <input type="text" name="height_short" x-model="shapeToEdit.height_short" placeholder="Enter height short"
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.height_short') }} {{ __('content.mm') }}</label>
+                    <input type="text" name="height_short" x-model="shapeToEdit.height_short" placeholder="{{ __('content.enter') }}{{ __('content.height_short') }}"
                         :class="errors.height_short ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400" />
                     <p x-show="errors.height_short"
@@ -242,8 +242,8 @@
             <!-- Body, Approval Date -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Body</label>
-                    <input type="text" name="body" x-model="shapeToEdit.body" placeholder="Enter body"
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.body') }} {{ __('content.mm') }}</label>
+                    <input type="text" name="body" x-model="shapeToEdit.body" placeholder="{{ __('content.enter') }}{{ __('content.body') }}"
                         :class="errors.body ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400" />
                     <p x-show="errors.body"
@@ -252,7 +252,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Approval Date</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.approval_date') }}</label>
                     <input type="date" name="approval_date" x-model="shapeToEdit.approval_date"
                         :class="errors.approval_date ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100" />
@@ -264,11 +264,11 @@
 
             <div class="flex justify-end gap-2 mt-4">
                 <button type="button" @click="EditShapeModal = false; errors = {}"
-                    class="px-4 py-2 rounded-md bg-gray-200 dark:bg-gray-600 dark:text-gray-100 hoverScale hover:bg-red-500 hover:text-white">Cancel</button>
+                    class="px-4 py-2 rounded-md bg-gray-200 dark:bg-gray-600 dark:text-gray-100 hoverScale hover:bg-red-500 hover:text-white">{{ __('content.cancel') }}</button>
                 <button type="submit" :disabled="loading"
                     class="px-4 py-2 rounded-md bg-blue-600 text-white hoverScale hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed">
-                    <span x-show="!loading">Save</span>
-                    <span x-show="loading">Saving...</span>
+                    <span x-show="!loading">{{ __('content.save') }}</span>
+                    <span x-show="loading">{{ __('content.saving') }}</span>
                 </button>
             </div>
         </form>

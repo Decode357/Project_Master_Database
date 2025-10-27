@@ -6,7 +6,7 @@
 
     <!-- Modal Content -->
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-full max-w-2xl p-6 overflow-y-auto max-h-[90vh]">
-        <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Create Shape</h2>
+        <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">{{ __('content.create_shape') }}</h2>
         <hr class="mb-3 border-gray-200 dark:border-gray-600">
 
         <form @submit.prevent="submitShapeForm" class="space-y-4" x-data="{
@@ -27,8 +27,8 @@
 
             <!-- ITEM CODE -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">SHAPE CODE</label>
-                <input name="item_code" type="text" placeholder="Enter shape code"
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.shape_code') }}</label>
+                <input name="item_code" type="text" placeholder="{{ __('content.enter') }}{{ __('content.shape_code') }}"
                     :class="errors.item_code ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                     class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400
                         focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -41,8 +41,8 @@
             <!-- Description TH & EN -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Description (TH)</label>
-                    <input name="item_description_thai" type="text" placeholder="Enter description (TH)" value="{{ old('item_description_thai') }}"
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.description_th') }}</label>
+                    <input name="item_description_thai" type="text" placeholder="{{ __('content.enter') }}{{ __('content.description_th') }}" value="{{ old('item_description_thai') }}"
                         :class="errors.item_description_thai ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                     <p x-show="errors.item_description_thai"
@@ -50,8 +50,8 @@
                         class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Description (EN)</label>
-                    <input name="item_description_eng" type="text" placeholder="Enter description (EN)" value="{{ old('item_description_eng') }}"
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.description_en') }}</label>
+                    <input name="item_description_eng" type="text" placeholder="{{ __('content.enter') }}{{ __('content.description_en') }}" value="{{ old('item_description_eng') }}"
                         :class="errors.item_description_eng ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                     <p x-show="errors.item_description_eng"
@@ -63,7 +63,7 @@
             <!-- TYPE, STATUS, COLLECTION, PROCESS -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Type</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.type') }}</label>
                     <select name="shape_type_id" :class="errors.shape_type_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <option value="">-</option>
@@ -79,7 +79,7 @@
                         class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Status</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.status') }}</label>
                     <select name="status_id" :class="errors.status_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <option value="">-</option>
@@ -94,7 +94,7 @@
                         class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Collection</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.collection') }}</label>
                     <select name="shape_collection_id"
                         :class="errors.shape_collection_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
@@ -111,7 +111,7 @@
                         class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Process</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.process') }}</label>
                     <select name="process_id" :class="errors.process_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
                         <option value="">-</option>
@@ -131,7 +131,7 @@
             <!-- CUSTOMER, GROUP, DESIGNER, Requestor -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Group</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.group') }}</label>
                     <select name="item_group_id" :class="errors.item_group_id ? 'border-red-500' : 'border-gray-300'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2">
                         <option value="">-</option>
@@ -148,7 +148,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Customer</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.customer') }}</label>
                     <select name="customer_id" :class="errors.customer_id ? 'border-red-500' : 'border-gray-300'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2">
                         <option value="">-</option>
@@ -165,7 +165,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Requestor</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.requestor') }}</label>
                     <select name="requestor_id" :class="errors.requestor_id ? 'border-red-500' : 'border-gray-300'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2">
                         <option value="">-</option>
@@ -182,7 +182,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Designer</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.designer') }}</label>
                     <select name="designer_id" :class="errors.designer_id ? 'border-red-500' : 'border-gray-300'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2">
                         <option value="">-</option>
@@ -202,8 +202,8 @@
             <!-- Volume & Weight -->
             <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Volume</label>
-                    <input name="volume" type="text" value="{{ old('volume') }}" placeholder="Enter volume"
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.volume') }} {{__('content.cc') }}</label>
+                    <input name="volume" type="text" value="{{ old('volume') }}" placeholder="{{ __('content.enter') }}{{ __('content.volume') }}"
                         :class="errors.volume ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400" />
                     <p x-show="errors.volume"
@@ -211,8 +211,8 @@
                         class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Weight</label>
-                    <input name="weight" type="text" value="{{ old('weight') }}" placeholder="Enter weight"
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.weight') }} {{__('content.g') }}</label>
+                    <input name="weight" type="text" value="{{ old('weight') }}" placeholder="{{ __('content.enter') }}{{ __('content.weight') }}"
                         :class="errors.weight ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400" />
                     <p x-show="errors.weight"
@@ -222,10 +222,10 @@
             </div>
 
             <!-- Diameter & Height -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="grid grid-cols-2 md:grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Long Diameter</label>
-                    <input name="long_diameter" type="text" value="{{ old('long_diameter') }}" placeholder="Enter long diameter"
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.long_diameter') }} {{__('content.mm') }}</label>
+                    <input name="long_diameter" type="text" value="{{ old('long_diameter') }}" placeholder="{{ __('content.enter') }}{{ __('content.long_diameter') }}"
                         :class="errors.long_diameter ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400" />
                     <p x-show="errors.long_diameter"
@@ -233,8 +233,8 @@
                         class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Short Diameter</label>
-                    <input name="short_diameter" type="text" value="{{ old('short_diameter') }}" placeholder="Enter short diameter"
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.short_diameter') }} {{__('content.mm') }}</label>
+                    <input name="short_diameter" type="text" value="{{ old('short_diameter') }}" placeholder="{{ __('content.enter') }}{{ __('content.short_diameter') }}"
                         :class="errors.short_diameter ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400" />
                     <p x-show="errors.short_diameter"
@@ -242,8 +242,8 @@
                         class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Height Long</label>
-                    <input name="height_long" type="text" value="{{ old('height_long') }}" placeholder="Enter height long"
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.height_long') }} {{__('content.mm') }}</label>
+                    <input name="height_long" type="text" value="{{ old('height_long') }}" placeholder="{{ __('content.enter') }}{{ __('content.height_long') }}"
                         :class="errors.height_long ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400" />
                     <p x-show="errors.height_long"
@@ -251,8 +251,8 @@
                         class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Height Short</label>
-                    <input name="height_short" type="text" value="{{ old('height_short') }}" placeholder="Enter height short"
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.height_short') }} {{__('content.mm') }}</label>
+                    <input name="height_short" type="text" value="{{ old('height_short') }}" placeholder="{{ __('content.enter') }}{{ __('content.height_short') }}"
                         :class="errors.height_short ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400" />
                     <p x-show="errors.height_short"
@@ -264,8 +264,8 @@
             <!-- Body, Approval Date -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Body</label>
-                    <input name="body" type="text" value="{{ old('body') }}" placeholder="Enter body"
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.body') }} {{__('content.mm') }}</label>
+                    <input name="body" type="text" value="{{ old('body') }}" placeholder="{{ __('content.enter') }}{{ __('content.body') }}"
                         :class="errors.body ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400" />
                     <p x-show="errors.body"
@@ -274,7 +274,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Approval Date</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.approval_date') }}</label>
                     <input name="approval_date" type="date" value="{{ old('approval_date') }}"
                         :class="errors.approval_date ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100" />
@@ -287,11 +287,11 @@
             <!-- Buttons -->
             <div class="flex justify-end gap-2 mt-4">
                 <button type="button" @click="CreateShapeModal = false; errors = {}"
-                    class="px-4 py-2 rounded-md bg-gray-200 dark:bg-gray-600 dark:text-gray-100 hoverScale hover:bg-red-500 hover:text-white">Cancel</button>
+                    class="px-4 py-2 rounded-md bg-gray-200 dark:bg-gray-600 dark:text-gray-100 hoverScale hover:bg-red-500 hover:text-white">{{ __('content.cancel') }}</button>
                 <button type="submit" :disabled="loading"
                     class="px-4 py-2 rounded-md bg-blue-600 text-white hoverScale hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed">
-                    <span x-show="!loading">Save</span>
-                    <span x-show="loading">Saving...</span>
+                    <span x-show="!loading">{{ __('content.save') }}</span>
+                    <span x-show="loading">{{ __('content.saving') }}</span>
                 </button>
             </div>
         </form>

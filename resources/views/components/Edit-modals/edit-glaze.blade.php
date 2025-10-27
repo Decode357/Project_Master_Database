@@ -6,7 +6,7 @@
 
     <!-- Modal Content -->
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-full max-w-2xl p-6 overflow-y-auto max-h-[90vh]">
-        <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Edit Glaze</h2>
+        <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">{{ __('content.edit_glaze') }}</h2>
         <hr class="mb-3 border-gray-200 dark:border-gray-600">
         <form @submit.prevent="submitEditForm" class="space-y-4" x-data="{
             ...editGlazeModal(),
@@ -25,11 +25,11 @@
                 </ul>
             </div>
 
-            <!-- Glaze Code & Name -->
+            <!-- Glaze Code -->
             <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Glaze Code</label>
-                    <input type="text" name="glaze_code" x-model="glazeToEdit.glaze_code" placeholder="Enter glaze code"
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.glaze_code') }}</label>
+                    <input type="text" name="glaze_code" x-model="glazeToEdit.glaze_code" placeholder="{{ __('content.enter') }}{{ __('content.glaze_code') }}"
                         :class="errors.glaze_code ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400
                             focus:ring-2 focus:ring-blue-500 focus:border-transparent" required />
@@ -38,17 +38,18 @@
                         class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
                 </div>
             </div>
+
             <!-- Glaze Inside & Outside Selection -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Glaze Inside </label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.glaze_inside') }}</label>
                     <select name="glaze_inside_id" x-model="glazeToEdit.glaze_inside_id"
                         :class="errors.glaze_inside_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <option value="">-</option>
                         @foreach ($glazeInsides as $glazeInside)
                             <option value="{{ $glazeInside->id }}">{{ $glazeInside->glaze_inside_code }} :
-                                {{ $glazeInside->colors->pluck('color_name')->join(', ') ?: 'No Color' }}
+                                {{ $glazeInside->colors->pluck('color_name')->join(', ') ?: __('content.no_color') }}
                             </option>
                         @endforeach
                     </select>
@@ -57,14 +58,14 @@
                         class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Glaze Outer</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.glaze_outside') }}</label>
                     <select name="glaze_outer_id" x-model="glazeToEdit.glaze_outer_id"
                         :class="errors.glaze_outer_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <option value="">-</option>
                         @foreach ($glazeOuters as $glazeOuter)
                             <option value="{{ $glazeOuter->id }}">{{ $glazeOuter->glaze_outer_code }} :
-                                {{ $glazeOuter->colors->pluck('color_name')->join(', ') ?: 'No Color' }}
+                                {{ $glazeOuter->colors->pluck('color_name')->join(', ') ?: __('content.no_color') }}
                             </option>
                         @endforeach
                     </select>
@@ -73,18 +74,17 @@
                         class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
                 </div>
             </div>
+
             <!-- Status, Effect -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Effect</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.effect') }}</label>
                     <select name="effect_id" x-model="glazeToEdit.effect_id"
                         :class="errors.effect_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <option value="">-</option>
                         @foreach ($effects as $effect)
-                            <option value="{{ $effect->id }}">{{ $effect->effect_code }} :
-                                <p>{{ $effect->effect_name }}</p>
-                            </option>
+                            <option value="{{ $effect->id }}">{{ $effect->effect_code }} : {{ $effect->effect_name }}</option>
                         @endforeach
                     </select>
                     <p x-show="errors.effect_id"
@@ -92,7 +92,7 @@
                         class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Status</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.status') }}</label>
                     <select name="status_id" x-model="glazeToEdit.status_id"
                         :class="errors.status_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
@@ -107,11 +107,10 @@
                 </div>                
             </div>
 
-
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- Approval Date -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Approval Date</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.approval_date') }}</label>
                     <input type="date" name="approval_date" x-model="glazeToEdit.approval_date"
                         :class="errors.approval_date ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100
@@ -122,8 +121,8 @@
                 </div>
                 <!-- Fire Temperature -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Fire Temperature</label>
-                    <input type="text" name="fire_temp" x-model="glazeToEdit.fire_temp" placeholder="Enter temperature"
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.fire_temp') }} {{ __('content.°C') }}</label>
+                    <input type="text" name="fire_temp" x-model="glazeToEdit.fire_temp" placeholder="{{ __('content.enter') }}{{ __('content.fire_temp') }}"
                         :class="errors.fire_temp ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400
                             focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
@@ -135,11 +134,11 @@
 
             <div class="flex justify-end gap-2 mt-4">
                 <button type="button" @click="EditGlazeModal = false; errors = {}"
-                    class="px-4 py-2 rounded-md bg-gray-200 dark:bg-gray-600 dark:text-gray-300 dark:hover:bg-gray-500 hoverScale hover:bg-red-500 hover:text-white">Cancel</button>
+                    class="px-4 py-2 rounded-md bg-gray-200 dark:bg-gray-600 dark:text-gray-300 dark:hover:bg-gray-500 hoverScale hover:bg-red-500 hover:text-white">{{ __('content.cancel') }}</button>
                 <button type="submit" :disabled="loading"
                     class="px-4 py-2 rounded-md bg-blue-600 dark:bg-blue-500 text-white hoverScale hover:bg-blue-700 dark:hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed">
-                    <span x-show="!loading">Save</span>
-                    <span x-show="loading">Saving...</span>
+                    <span x-show="!loading">{{ __('content.save') }}</span>
+                    <span x-show="loading">{{ __('content.saving') }}</span>
                 </button>
             </div>
         </form>
