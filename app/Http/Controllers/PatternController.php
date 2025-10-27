@@ -79,7 +79,6 @@ class PatternController extends Controller
             'customer_id'    => 'nullable|exists:customers,id',
             'status_id'      => 'nullable|exists:statuses,id',
             'designer_id'    => 'nullable|exists:designers,id',
-            'duration'       => 'nullable|integer',
             'in_glaze'       => 'nullable|boolean',
             'on_glaze'       => 'nullable|boolean',
             'under_glaze'    => 'nullable|boolean',

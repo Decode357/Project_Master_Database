@@ -27,7 +27,7 @@
                 <!-- Pattern Code -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Pattern Code</label>
-                    <input type="text" name="pattern_code" x-model="patternToEdit.pattern_code"
+                    <input type="text" name="pattern_code" x-model="patternToEdit.pattern_code" placeholder="Enter pattern code"
                         :class="errors.pattern_code ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400
                             focus:ring-2 focus:ring-blue-500 focus:border-transparent" required />
@@ -39,7 +39,7 @@
                 <!-- Pattern Name -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Pattern Name</label>
-                    <input type="text" name="pattern_name" x-model="patternToEdit.pattern_name"
+                    <input type="text" name="pattern_name" x-model="patternToEdit.pattern_name" placeholder="Enter pattern name"
                         :class="errors.pattern_name ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400
                             focus:ring-2 focus:ring-blue-500 focus:border-transparent" required />
@@ -106,16 +106,6 @@
                     </select>
                     <p x-show="errors.designer_id"
                         x-text="errors.designer_id ? (Array.isArray(errors.designer_id) ? errors.designer_id[0] : errors.designer_id) : ''"
-                        class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
-                </div>
-                <div class="md:col-span-2">
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Duration</label>
-                    <input type="number" name="duration" x-model="patternToEdit.duration"
-                        :class="errors.duration ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
-                        class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400
-                            focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                    <p x-show="errors.duration"
-                        x-text="errors.duration ? (Array.isArray(errors.duration) ? errors.duration[0] : errors.duration) : ''"
                         class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
                 </div>
             </div>

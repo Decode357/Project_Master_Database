@@ -29,7 +29,7 @@
             <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Glaze Code</label>
-                    <input type="text" name="glaze_code" x-model="glazeToEdit.glaze_code"
+                    <input type="text" name="glaze_code" x-model="glazeToEdit.glaze_code" placeholder="Enter glaze code"
                         :class="errors.glaze_code ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400
                             focus:ring-2 focus:ring-blue-500 focus:border-transparent" required />
@@ -123,7 +123,7 @@
                 <!-- Fire Temperature -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Fire Temperature</label>
-                    <input type="text" name="fire_temp" x-model="glazeToEdit.fire_temp"
+                    <input type="text" name="fire_temp" x-model="glazeToEdit.fire_temp" placeholder="Enter temperature"
                         :class="errors.fire_temp ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400
                             focus:ring-2 focus:ring-blue-500 focus:border-transparent" />

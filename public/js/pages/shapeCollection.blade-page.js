@@ -12,28 +12,13 @@ function shapeCollectionPage() {
         itemCodeToDelete: '',
 
         openEditModal(shapeCollection) {
-            // แปลง approval_date format (ถ้ามี)
-            if (shapeCollection.approval_date) {
-                const date = new Date(shapeCollection.approval_date);
-                if (!isNaN(date.getTime())) {
-                    shapeCollection.approval_date = date.toISOString().split('T')[0];
-                }
-            }
-
             this.shapeCollectionToEdit = JSON.parse(JSON.stringify(shapeCollection)); // clone กัน reactive bug
-
-            // เตรียม selectedColors array จาก colors relationship
-            this.shapeCollectionToEdit.selectedColors = [];
-            if (shapeCollection.colors && Array.isArray(shapeCollection.colors)) {
-                this.shapeCollectionToEdit.selectedColors = shapeCollection.colors.map(color => color.id.toString());
-            }
-
             this.EditShapeCollectionModal = true;
 
             this.$nextTick(() => {
                 let $modal = $('#EditShapeCollectionModal');
                 let shapeCollectionToEdit = this.shapeCollectionToEdit; // เก็บ reference ไว้
-
+                
                 $modal.find('.select2').each(function () {
                     let $this = $(this);
                     let name = $this.attr('name');
@@ -44,30 +29,18 @@ function shapeCollectionPage() {
                         width: '100%'
                     });
 
-                    // สำหรับ colors[] ให้ใช้ selectedColors
-                    if (name === 'colors[]') {
-                        if (shapeCollectionToEdit.selectedColors && shapeCollectionToEdit.selectedColors.length > 0) {
-                            $this.val(shapeCollectionToEdit.selectedColors).trigger('change');
-                        }
-                        
-                        // sync กลับ Alpine
-                        $this.on('change', function () {
-                            shapeCollectionToEdit.selectedColors = $(this).val() || [];
-                        });
-                    } else {
-                        // set ค่า default ตาม shapeCollectionToEdit สำหรับฟิลด์อื่น
-                        if (shapeCollectionToEdit[name] !== undefined && shapeCollectionToEdit[name] !== null) {
-                            $this.val(shapeCollectionToEdit[name]).trigger('change');
-                        }
-
-                        // sync กลับ Alpine
-                        $this.on('change', function () {
-                            shapeCollectionToEdit[name] = $(this).val();
-                        });
+                    // set ค่า default ตาม shapeCollectionToEdit
+                    if (shapeCollectionToEdit[name] !== undefined && shapeCollectionToEdit[name] !== null) {
+                        $this.val(shapeCollectionToEdit[name]).trigger('change');
                     }
+
+                    // sync กลับ Alpine
+                    $this.on('change', function () {
+                        shapeCollectionToEdit[name] = $(this).val();
+                    });
                 });
             });
-        },   
+        },
 
         openCreateModal() {
             this.CreateShapeCollectionModal = true;

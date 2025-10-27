@@ -1,14 +1,14 @@
-<!-- Edit Color Modal -->
-<script src="{{ asset('js/modals/edit-color-modal.js') }}"></script>
+<!-- Edit Shape Collection Modal -->
+<script src="{{ asset('js/modals/edit-shapeCollection-modal.js') }}"></script>
 
-<div id="EditColorModal" x-show="EditColorModal" x-transition.opacity
+<div id="EditShapeCollectionModal" x-show="EditShapeCollectionModal" x-transition.opacity
     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="display: none;">
 
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-full max-w-2xl p-6 overflow-y-auto max-h-[90vh]">
-        <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Edit Color</h2>
+        <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Edit Shape Collection</h2>
         <hr class="mb-3 border-gray-200 dark:border-gray-600">
         <form @submit.prevent="submitEditForm" class="space-y-4" x-data="{
-            ...editColorModal(),
+            ...editShapeCollectionModal(),
             errors: {},
             loading: false,
             generalErrors: []
@@ -26,49 +26,33 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Color Code</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Collection Code</label>
                     <div class="flex gap-2 items-center">
                         <!-- input text -->
-                        <input name="color_code" type="text" x-model="colorToEdit.color_code"
+                        <input name="collection_code" type="text" x-model="shapeCollectionToEdit.collection_code"
                             maxlength="15"
-                            :class="errors.color_code ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
+                            :class="errors.collection_code ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                             class="mt-1 flex-1 border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500"
-                            placeholder="Enter color code" required />
+                            placeholder="Enter collection code" required />
                     </div>
                 </div>
 
-                <!-- 🏷️ Color Name -->
+                <!-- 🏷️ Shape Collection Name -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Color Name</label>
-                    <input name="color_name" type="text" x-model="colorToEdit.color_name"
-                        placeholder="Enter color name"
-                        :class="errors.color_name ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Shape Collection Name</label>
+                    <input name="collection_name" type="text" x-model="shapeCollectionToEdit.collection_name"
+                        placeholder="Enter collection name"
+                        :class="errors.collection_name ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400
                             focus:ring-2 focus:ring-blue-500 focus:border-transparent"/>
-                    <p x-show="errors.color_name"
-                        x-text="errors.color_name ? (Array.isArray(errors.color_name) ? errors.color_name[0] : errors.color_name) : ''"
+                    <p x-show="errors.collection_name"
+                        x-text="errors.collection_name ? (Array.isArray(errors.collection_name) ? errors.collection_name[0] : errors.collection_name) : ''"
                         class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
                 </div>
             </div>
 
-            <!-- 👤 Customer -->
-            <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Customer</label>
-                <select name="customer_id" x-model="colorToEdit.customer_id"
-                    :class="errors.customer_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
-                    class="select2 w-full mt-1 border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    <option value="">-</option>
-                    @foreach ($customers as $customer)
-                        <option value="{{ $customer->id }}">{{ $customer->name }}</option>
-                    @endforeach
-                </select>
-                <p x-show="errors.customer_id"
-                    x-text="errors.customer_id ? (Array.isArray(errors.customer_id) ? errors.customer_id[0] : errors.customer_id) : ''"
-                    class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
-            </div>
-
             <div class="flex justify-end gap-2 mt-4">
-                <button type="button" @click="EditColorModal = false; errors = {}"
+                <button type="button" @click="EditShapeCollectionModal = false; errors = {}"
                     class="px-4 py-2 rounded-md bg-gray-200 dark:bg-gray-600 dark:text-gray-300 dark:hover:bg-gray-500 hoverScale hover:bg-red-500 hover:text-white">Cancel</button>
                 <button type="submit" :disabled="loading"
                     class="px-4 py-2 rounded-md bg-blue-600 dark:bg-blue-500 text-white hoverScale hover:bg-blue-700 dark:hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed">

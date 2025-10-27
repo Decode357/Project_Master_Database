@@ -26,13 +26,15 @@
 </head>
 <body class="overflow-hidden font-sans text-gray-900 antialiased relative min-h-screen">
 
-    <!-- GIF Background -->
-    <div class="fixed inset-0 w-full h-full z-0">
-        <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExNWV4NHFhM25mNHAwYmllMmZvbGVlaWxldDdvaThlbnhxN3UyaTg2cyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/MyWrJJIdAfoJuEPlLP/giphy.gif" 
-            class="w-full h-full object-cover" alt="Background GIF">
-        <!-- Overlay for better readability -->
+    <!-- Static Background -->
+    <div class="fixed inset-0 w-full h-full z-0 overflow-hidden">
+        <img src="{{ asset('images/Background.gif') }}" 
+            alt="Background" 
+            class="w-full h-full object-cover" loading="lazy">
         <div class="absolute inset-0 bg-black/40"></div>
     </div>
+
+
     <!-- Content -->
     <div class="relative z-10 min-h-screen flex items-center justify-center p-6 fade-in">
         <div class="w-full sm:max-w-md px-6 py-8 bg-gray-100 shadow-2xl rounded-lg text-center">

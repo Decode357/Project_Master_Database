@@ -27,7 +27,7 @@
             <!-- Effect Code -->
             <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Effect Code</label>
-                <input name="effect_code" type="text" placeholder="Enter effect code (e.g., EF-001)"
+                <input name="effect_code" type="text" placeholder="Enter effect code"
                     :class="errors.effect_code ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                     class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400
                         focus:ring-2 focus:ring-blue-500 focus:border-transparent"

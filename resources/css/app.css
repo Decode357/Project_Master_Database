@@ -25,6 +25,8 @@
 
 #CreateGlazeOuterModal .select2-container .select2-selection,
 #CreateGlazeInsideModal .select2-container .select2-selection,
+#EditGlazeOuterModal .select2-container .select2-selection,
+#EditGlazeInsideModal .select2-container .select2-selection,
 #CreateEffectModal .select2-container .select2-selection,
 #EditEffectModal .select2-container .select2-selection {
     @apply border border-gray-300 rounded-lg;
@@ -125,6 +127,8 @@
 /* Dark theme for specific modals */
 .dark #CreateGlazeOuterModal .select2-container .select2-selection,
 .dark #CreateGlazeInsideModal .select2-container .select2-selection,
+.dark #EditGlazeOuterModal .select2-container .select2-selection,
+.dark #EditGlazeInsideModal .select2-container .select2-selection,
 .dark #CreateEffectModal .select2-container .select2-selection,
 .dark #EditEffectModal .select2-container .select2-selection {
     @apply bg-gray-700 border-gray-600 text-gray-100;

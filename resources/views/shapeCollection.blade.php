@@ -47,7 +47,7 @@
                 <!-- Add button -->
                 @if ($hasCreate)
                     <div class="ml-auto">
-                        <button type="button" {{--@click="openCreateModal()" --}}
+                        <button type="button" @click="openCreateModal()"
                             class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hoverScale hover:bg-blue-700">
                             <span class="material-symbols-outlined">add</span>
                             <span>{{ __('content.add') }}</span>
@@ -80,7 +80,7 @@
                                     <td class="px-6 py-4 font-medium text-gray-900 dark:text-gray-100">{{ $collection->collection_name }}</td>
                                 <td class="px-6 py-4 text-right space-x-2">
                                     @if ($hasEdit)
-                                        <button {{-- @click="openEditModal({{ $shapeCollection->toJson() }})" --}}
+                                        <button @click="openEditModal({{ $collection->toJson() }})"
                                                 class="text-blue-600 hover:text-blue-700">
                                             <span class="material-symbols-outlined">edit</span>
                                         </button>                                        

@@ -118,18 +118,6 @@
                 </div>
             </div>
 
-            <!-- Duration -->
-            <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Duration</label>
-                <input name="duration" type="number" placeholder="Enter duration"
-                    :class="errors.duration ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
-                    class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400
-                        focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                <p x-show="errors.duration"
-                    x-text="errors.duration ? (Array.isArray(errors.duration) ? errors.duration[0] : errors.duration) : ''"
-                    class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
-            </div>
-
             <!-- Glaze Options -->
             <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Glaze Application</label>

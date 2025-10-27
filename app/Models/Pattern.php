@@ -21,7 +21,6 @@ class Pattern extends Model
         'customer_id',
         'status_id',
         'designer_id',
-        'duration',
         'in_glaze',
         'on_glaze',
         'under_glaze',

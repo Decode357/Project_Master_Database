@@ -61,7 +61,7 @@
                 <div class="bg-white p-2 inline-block shadow-sm">
                     <img src="{{ asset('images/PatraLogo.png') }}" 
                         alt="PATRA - We make good life possible" 
-                        class="mx-auto h-14 w-auto">
+                        class="mx-auto w-auto">
                 </div>            
                 <div class="flex items-center gap-2 px-4">
                     <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-900 dark:bg-gray-700 text-white">

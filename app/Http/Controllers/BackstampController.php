@@ -70,7 +70,6 @@ class BackstampController extends Controller
             'requestor_id'   => 'nullable|exists:requestors,id',
             'customer_id'    => 'nullable|exists:customers,id',
             'status_id'      => 'nullable|exists:statuses,id',
-            'duration'       => 'nullable|integer',
             'in_glaze'       => 'nullable|boolean',
             'on_glaze'       => 'nullable|boolean',
             'under_glaze'    => 'nullable|boolean',

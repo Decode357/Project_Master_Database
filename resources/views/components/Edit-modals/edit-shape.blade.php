@@ -27,7 +27,7 @@
 
             <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">ITEM CODE</label>
-                <input type="text" name="item_code" x-model="shapeToEdit.item_code"
+                <input type="text" name="item_code" x-model="shapeToEdit.item_code" placeholder="Enter shape code"
                     :class="errors.item_code ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                     class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400
                         focus:ring-2 focus:ring-blue-500 focus:border-transparent" required />
@@ -39,7 +39,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Description (TH)</label>
-                    <input type="text" name="item_description_thai" x-model="shapeToEdit.item_description_thai"
+                    <input type="text" name="item_description_thai" x-model="shapeToEdit.item_description_thai" placeholder="Enter description (TH)"
                         :class="errors.item_description_thai ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                     <p x-show="errors.item_description_thai"
@@ -48,7 +48,7 @@
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Description (EN)</label>
-                    <input type="text" name="item_description_eng" x-model="shapeToEdit.item_description_eng"
+                    <input type="text" name="item_description_eng" x-model="shapeToEdit.item_description_eng" placeholder="Enter description (EN)"
                         :class="errors.item_description_eng ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                     <p x-show="errors.item_description_eng"
@@ -60,7 +60,7 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Type</label>
-                    <select name="shape_type_id" x-model="shapeToEdit.shape_type_id"
+                    <select name="shape_type_id" x-model="shapeToEdit.shape_type_id" 
                         :class="errors.shape_type_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <option value="">-</option>
@@ -183,7 +183,7 @@
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Volume</label>
-                    <input type="text" name="volume" x-model="shapeToEdit.volume"
+                    <input type="text" name="volume" x-model="shapeToEdit.volume" placeholder="Enter volume"
                         :class="errors.volume ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400" />
                     <p x-show="errors.volume"
@@ -192,7 +192,7 @@
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Weight</label>
-                    <input type="text" name="weight" x-model="shapeToEdit.weight"
+                    <input type="text" name="weight" x-model="shapeToEdit.weight" placeholder="Enter weight"
                         :class="errors.weight ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400" />
                     <p x-show="errors.weight"
@@ -204,7 +204,7 @@
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Long Diameter</label>
-                    <input type="text" name="long_diameter" x-model="shapeToEdit.long_diameter"
+                    <input type="text" name="long_diameter" x-model="shapeToEdit.long_diameter" placeholder="Enter long diameter"
                         :class="errors.long_diameter ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400" />
                     <p x-show="errors.long_diameter"
@@ -213,7 +213,7 @@
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Short Diameter</label>
-                    <input type="text" name="short_diameter" x-model="shapeToEdit.short_diameter"
+                    <input type="text" name="short_diameter" x-model="shapeToEdit.short_diameter" placeholder="Enter short diameter"
                         :class="errors.short_diameter ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400" />
                     <p x-show="errors.short_diameter"
@@ -222,7 +222,7 @@
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Height Long</label>
-                    <input type="text" name="height_long" x-model="shapeToEdit.height_long"
+                    <input type="text" name="height_long" x-model="shapeToEdit.height_long" placeholder="Enter height long"
                         :class="errors.height_long ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400" />
                     <p x-show="errors.height_long"
@@ -231,7 +231,7 @@
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Height Short</label>
-                    <input type="text" name="height_short" x-model="shapeToEdit.height_short"
+                    <input type="text" name="height_short" x-model="shapeToEdit.height_short" placeholder="Enter height short"
                         :class="errors.height_short ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400" />
                     <p x-show="errors.height_short"
@@ -243,7 +243,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Body</label>
-                    <input type="text" name="body" x-model="shapeToEdit.body"
+                    <input type="text" name="body" x-model="shapeToEdit.body" placeholder="Enter body"
                         :class="errors.body ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400" />
                     <p x-show="errors.body"

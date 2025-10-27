@@ -27,8 +27,8 @@
 
             <!-- ITEM CODE -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">ITEM CODE</label>
-                <input name="item_code" type="text" placeholder="Enter item code"
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">SHAPE CODE</label>
+                <input name="item_code" type="text" placeholder="Enter shape code"
                     :class="errors.item_code ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                     class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400
                         focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -42,7 +42,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Description (TH)</label>
-                    <input name="item_description_thai" type="text" value="{{ old('item_description_thai') }}"
+                    <input name="item_description_thai" type="text" placeholder="Enter description (TH)" value="{{ old('item_description_thai') }}"
                         :class="errors.item_description_thai ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                     <p x-show="errors.item_description_thai"
@@ -51,7 +51,7 @@
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Description (EN)</label>
-                    <input name="item_description_eng" type="text" value="{{ old('item_description_eng') }}"
+                    <input name="item_description_eng" type="text" placeholder="Enter description (EN)" value="{{ old('item_description_eng') }}"
                         :class="errors.item_description_eng ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                     <p x-show="errors.item_description_eng"
@@ -203,7 +203,7 @@
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Volume</label>
-                    <input name="volume" type="text" value="{{ old('volume') }}"
+                    <input name="volume" type="text" value="{{ old('volume') }}" placeholder="Enter volume"
                         :class="errors.volume ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400" />
                     <p x-show="errors.volume"
@@ -212,7 +212,7 @@
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Weight</label>
-                    <input name="weight" type="text" value="{{ old('weight') }}"
+                    <input name="weight" type="text" value="{{ old('weight') }}" placeholder="Enter weight"
                         :class="errors.weight ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400" />
                     <p x-show="errors.weight"
@@ -225,7 +225,7 @@
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Long Diameter</label>
-                    <input name="long_diameter" type="text" value="{{ old('long_diameter') }}"
+                    <input name="long_diameter" type="text" value="{{ old('long_diameter') }}" placeholder="Enter long diameter"
                         :class="errors.long_diameter ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400" />
                     <p x-show="errors.long_diameter"
@@ -234,7 +234,7 @@
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Short Diameter</label>
-                    <input name="short_diameter" type="text" value="{{ old('short_diameter') }}"
+                    <input name="short_diameter" type="text" value="{{ old('short_diameter') }}" placeholder="Enter short diameter"
                         :class="errors.short_diameter ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400" />
                     <p x-show="errors.short_diameter"
@@ -243,7 +243,7 @@
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Height Long</label>
-                    <input name="height_long" type="text" value="{{ old('height_long') }}"
+                    <input name="height_long" type="text" value="{{ old('height_long') }}" placeholder="Enter height long"
                         :class="errors.height_long ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400" />
                     <p x-show="errors.height_long"
@@ -252,7 +252,7 @@
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Height Short</label>
-                    <input name="height_short" type="text" value="{{ old('height_short') }}"
+                    <input name="height_short" type="text" value="{{ old('height_short') }}" placeholder="Enter height short"
                         :class="errors.height_short ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400" />
                     <p x-show="errors.height_short"
@@ -265,7 +265,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Body</label>
-                    <input name="body" type="text" value="{{ old('body') }}"
+                    <input name="body" type="text" value="{{ old('body') }}" placeholder="Enter body"
                         :class="errors.body ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400" />
                     <p x-show="errors.body"

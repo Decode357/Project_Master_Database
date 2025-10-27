@@ -29,7 +29,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Backstamp Code</label>
-                    <input type="text" name="backstamp_code" x-model="backstampToEdit.backstamp_code"
+                    <input type="text" name="backstamp_code" x-model="backstampToEdit.backstamp_code" placeholder="Enter backstamp code"
                         :class="errors.backstamp_code ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400
                             focus:ring-2 focus:ring-blue-500 focus:border-transparent" required />
@@ -39,7 +39,7 @@
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Backstamp Name</label>
-                    <input type="text" name="name" x-model="backstampToEdit.name"
+                    <input type="text" name="name" x-model="backstampToEdit.name" placeholder="Enter backstamp name"
                         :class="errors.name ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400
                             focus:ring-2 focus:ring-blue-500 focus:border-transparent" required />
@@ -93,18 +93,6 @@
                         x-text="errors.status_id ? (Array.isArray(errors.status_id) ? errors.status_id[0] : errors.status_id) : ''"
                         class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
                 </div>                
-            </div>
-
-            <!-- Duration -->
-            <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Duration</label>
-                <input type="number" name="duration" x-model="backstampToEdit.duration"
-                    :class="errors.duration ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
-                    class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400
-                        focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                <p x-show="errors.duration"
-                    x-text="errors.duration ? (Array.isArray(errors.duration) ? errors.duration[0] : errors.duration) : ''"
-                    class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
             </div>
 
             <!-- Glaze & Application Options -->

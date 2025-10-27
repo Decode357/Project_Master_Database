@@ -26,9 +26,9 @@
 
             <!-- Glaze Inside Code -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Glaze Inside Code</label>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Inside Color Code</label>
                 <input name="glaze_inside_code" type="text" x-model="glazeInsideToEdit.glaze_inside_code"
-                    placeholder="Enter glaze inside code (e.g., GI-001)"
+                    placeholder="Enter inside color code"
                     :class="errors.glaze_inside_code ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                     class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400
                         focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -76,7 +76,7 @@
     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="display: none;">
 
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-full max-w-2xl p-6 overflow-y-auto max-h-[90vh]">
-        <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Edit Glaze Outer</h2>
+        <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Edit Glaze Outside</h2>
         <hr class="mb-3 border-gray-200 dark:border-gray-600">
         <form @submit.prevent="submitEditGlazeOuterForm" class="space-y-4" x-data="{
             ...editGlazeOuterModal(),
@@ -97,9 +97,9 @@
 
             <!-- Glaze Outer Code -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Glaze Outer Code</label>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Outside Color Code</label>
                 <input name="glaze_outer_code" type="text" x-model="glazeOuterToEdit.glaze_outer_code"
-                    placeholder="Enter glaze outer code (e.g., GO-001)"
+                    placeholder="Enter outside color code"
                     :class="errors.glaze_outer_code ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                     class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400
                         focus:ring-2 focus:ring-blue-500 focus:border-transparent"
