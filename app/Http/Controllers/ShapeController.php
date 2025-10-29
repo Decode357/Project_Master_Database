@@ -32,8 +32,6 @@ class ShapeController extends Controller
         if ($search) {
             $query->where(function($q) use ($search) {
                 $q->where('item_code', 'LIKE', "%{$search}%")
-                ->orWhere('item_description_thai', 'LIKE', "%{$search}%")
-                ->orWhere('item_description_eng', 'LIKE', "%{$search}%")
                 ->orWhereHas('shapeType', function($q) use ($search) {
                     $q->where('name', 'LIKE', "%{$search}%");
                 })

@@ -68,7 +68,7 @@ return [
     'edit_glaze_outside' => 'แก้ไขเคลือบด้านนอก',
     'edit_collection' => 'แก้ไขชุดรูปทรง',
     'enter' => 'กรอก',
-    'shape_code' => 'รหัสรูปทรง',
+    'shape_code' => 'รหัสสินค้า',
     'group' => 'กลุ่ม',
     'designer' => 'ผู้ออกแบบ',
     'volume' => 'ปริมาตร',

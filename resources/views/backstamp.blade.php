@@ -79,7 +79,7 @@
                         @endphp
                         <tr class="dark:text-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 bg-white border-b border-gray-200 hover:bg-gray-50">
                             <td class="px-4 py-3 font-medium">{{ $backstamp->backstamp_code }}</td>
-                            <td class="px-4 py-3">{{ $backstamp->name }}</td>
+                            <td class="px-4 py-3">{{ $backstamp->name ?? '-'}}</td>
                             <td class="px-4 py-3 text-center">
                                 @if ($backstamp->organic)
                                     <span class="material-symbols-outlined text-green-500">radio_button_checked</span>

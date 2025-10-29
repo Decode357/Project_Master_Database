@@ -35,7 +35,6 @@ class PatternController extends Controller
         if ($search) {
             $query->where(function($q) use ($search) {
                 $q->where('pattern_code', 'LIKE', "%{$search}%")
-                ->orWhere('pattern_name', 'LIKE', "%{$search}%")
                 ->orWhere('approval_date', 'LIKE', "%{$search}%")
                 ->orWhereHas('designer', function($q) use ($search) {
                     $q->where('designer_name', 'LIKE', "%{$search}%");
@@ -74,7 +73,7 @@ class PatternController extends Controller
                 'required', 'string', 'max:255',
                 Rule::unique('patterns', 'pattern_code')->ignore($id),
             ],
-            'pattern_name'   => 'required|string|max:255',
+            'pattern_name'   => 'nullable|string|max:255',
             'requestor_id'   => 'nullable|exists:requestors,id',
             'customer_id'    => 'nullable|exists:customers,id',
             'status_id'      => 'nullable|exists:statuses,id',

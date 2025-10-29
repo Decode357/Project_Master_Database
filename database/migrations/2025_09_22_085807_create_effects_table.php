@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('effects', function (Blueprint $table) {
             $table->id();
             $table->string('effect_code')->unique();  // EF-001, EF-002 ...
-            $table->string('effect_name');
+            $table->string('effect_name')->nullable(); 
             $table->timestamps();
         });
     }

@@ -21,7 +21,7 @@ class EffectSeeder extends Seeder
 
         foreach ($effects as $effect) {
             $effect->colors()->attach(
-                $colors->random(rand(2,3))->pluck('id')->toArray()
+                $colors->random(rand(0,3))->pluck('id')->toArray()
             );
         }
     }

@@ -19,7 +19,7 @@ class GlazeInsideSeeder extends Seeder
         // Attach 1-3 random colors ให้แต่ละ GlazeInside
         foreach ($glazes as $glaze) {
             $glaze->colors()->attach(
-                $colors->random(rand(1,3))->pluck('id')->toArray()
+                $colors->random(rand(0,3))->pluck('id')->toArray()
             );
         }
     }

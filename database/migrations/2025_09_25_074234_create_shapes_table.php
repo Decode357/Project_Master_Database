@@ -28,13 +28,13 @@ return new class extends Migration
             $table->unsignedBigInteger('designer_id')->nullable();
             $table->unsignedBigInteger('requestor_id')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
-            $table->integer('volume')->nullable();
-            $table->integer('weight')->nullable();
-            $table->integer('long_diameter')->nullable();
-            $table->integer('short_diameter')->nullable();
-            $table->integer('height_long')->nullable();
-            $table->integer('height_short')->nullable();
-            $table->integer('body')->nullable();
+            $table->decimal('volume', 8, 2)->nullable();
+            $table->decimal('weight', 8, 2)->nullable();
+            $table->decimal('long_diameter', 8, 2)->nullable();
+            $table->decimal('short_diameter', 8, 2)->nullable();
+            $table->decimal('height_long', 8, 2)->nullable();
+            $table->decimal('height_short', 8, 2)->nullable();
+            $table->decimal('body', 8, 2)->nullable();
             $table->date('approval_date')->nullable();
             $table->timestamps();
 

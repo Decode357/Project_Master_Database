@@ -23,12 +23,7 @@ class EffectController extends Controller
         // เพิ่ม search functionality
         if ($search) {
             $query->where(function($q) use ($search) {
-                $q->where('effect_code', 'LIKE', "%{$search}%")
-                ->orWhere('effect_name', 'LIKE', "%{$search}%")
-                ->orWhereHas('colors', function($q) use ($search) {
-                    $q->where('color_code', 'LIKE', "%{$search}%")
-                    ->orWhere('color_name', 'LIKE', "%{$search}%");
-                });
+                $q->where('effect_code', 'LIKE', "%{$search}%");
             });
         }
         $effects = $query->latest()->paginate($perPage)->appends($request->query());
@@ -48,7 +43,7 @@ class EffectController extends Controller
                 Rule::unique('effects', 'effect_code')->ignore($id),
             ],
             'effect_name' => [
-                'required', 'string', 'max:255',
+                'nullable', 'string', 'max:255',
                 Rule::unique('effects', 'effect_name')->ignore($id),
             ],
             'colors'      => 'nullable|array',

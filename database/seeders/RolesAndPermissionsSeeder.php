@@ -71,6 +71,22 @@ class RolesAndPermissionsSeeder extends Seeder
         // superadmin มีทุก permission
         $superUser->syncPermissions(Permission::all());
 
+        // 5) ✅ สร้าง user ธรรมดา (มีสิทธิ์แค่ view)
+        $normalUser = User::firstOrCreate(
+            ['email' => 'user@gmail.com'],
+            [
+                'name' => 'Normal User',
+                'password' => bcrypt('11111111'),
+            ]
+        );
+
+        if (! $normalUser->hasRole('user')) {
+            $normalUser->assignRole($userRole);
+        }
+
+        // ให้สิทธิ์เฉพาะ view
+        $normalUser->syncPermissions(['view']);
+
         // ล้าง cache อีกครั้ง
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
     }

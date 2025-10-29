@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('shape_collections', function (Blueprint $table) {
             $table->id();
             $table->string('collection_code')->unique();
-            $table->string('collection_name');
+            $table->string('collection_name')->nullable(); 
             $table->timestamps();
         });
     }

@@ -24,7 +24,6 @@ class ColorController extends Controller
         if ($search) {
             $query->where(function($q) use ($search) {
                 $q->where('color_code', 'LIKE', "%{$search}%")
-                ->orWhere('color_name', 'LIKE', "%{$search}%")
                 ->orWhereHas('customer', function($q) use ($search) {
                     $q->where('name', 'LIKE', "%{$search}%");
                 });

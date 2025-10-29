@@ -32,7 +32,6 @@ class BackstampController extends Controller
         if ($search) {
             $query->where(function($q) use ($search) {
                 $q->where('backstamp_code', 'LIKE', "%{$search}%")
-                ->orWhere('name', 'LIKE', "%{$search}%")
                 ->orWhereHas('requestor', function($q) use ($search) {
                     $q->where('name', 'LIKE', "%{$search}%");
                 })
@@ -66,7 +65,7 @@ class BackstampController extends Controller
                 'required', 'string', 'max:255',
                 Rule::unique('backstamps', 'backstamp_code')->ignore($id),
             ],
-            'name'           => 'required|string|max:255',
+            'name'           => 'nullable|string|max:255',
             'requestor_id'   => 'nullable|exists:requestors,id',
             'customer_id'    => 'nullable|exists:customers,id',
             'status_id'      => 'nullable|exists:statuses,id',

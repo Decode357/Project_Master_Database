@@ -16,6 +16,6 @@ class ShapeCollectionSeeder extends Seeder
         // หรือสร้างกำหนดเอง
         // ShapeCollection::create(['collection_code'=>'COL-001','collection_name'=>'Basic Shapes']);
 
-        ShapeCollection::factory()->count(5)->create();
+        ShapeCollection::factory()->count(15)->create();
     }
 }

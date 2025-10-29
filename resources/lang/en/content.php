@@ -68,7 +68,7 @@ return [
     'edit_glaze_outside' => 'Edit Glaze Outside',
     'edit_collection' => 'Edit Shape Collection',
     'enter' => 'Enter ',
-    'shape_code' => 'Shape Code',
+    'shape_code' => 'Item Code',
     'group' => 'Group',
     'designer' => 'Designer',
     'volume' => 'Volume',

@@ -43,8 +43,7 @@
                 <input name="effect_name" type="text" placeholder="{{ __('content.enter') }}{{ __('content.effect_name') }}"
                     :class="errors.effect_name ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                     class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400
-                        focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    required />
+                        focus:ring-2 focus:ring-blue-500 focus:border-transparent"/>
                 <p x-show="errors.effect_name"
                     x-text="Array.isArray(errors.effect_name) ? errors.effect_name[0] : errors.effect_name"
                     class="text-red-500 dark:text-red-400 text-xs mt-1"></p>

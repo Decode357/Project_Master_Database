@@ -13,6 +13,6 @@ class PatternSeeder extends Seeder
      */
     public function run(): void
     {
-        Pattern::factory(114)->create();
+        Pattern::factory(50)->create();
     }
 }

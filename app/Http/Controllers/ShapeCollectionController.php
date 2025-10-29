@@ -44,7 +44,7 @@ class ShapeCollectionController extends Controller
                 Rule::unique('shape_collections', 'collection_code')->ignore($id),
             ],
             'collection_name' => [
-                'required', 'string', 'max:255',
+                'nullable', 'string', 'max:255',
                 Rule::unique('shape_collections', 'collection_name')->ignore($id),
             ],
         ];

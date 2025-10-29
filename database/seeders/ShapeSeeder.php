@@ -13,6 +13,6 @@ class ShapeSeeder extends Seeder
      */
     public function run(): void
     {
-        Shape::factory(44)->create();
+        Shape::factory(50)->create();
     }
 }

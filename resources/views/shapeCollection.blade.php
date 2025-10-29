@@ -77,7 +77,7 @@
                             <tr class="bg-white border-b hover:bg-gray-50 
                                 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                                     <td class="px-6 py-4 font-medium text-gray-900 dark:text-gray-100">{{ $collection->collection_code }}</td>
-                                    <td class="px-6 py-4 font-medium text-gray-900 dark:text-gray-100">{{ $collection->collection_name }}</td>
+                                    <td class="px-6 py-4 font-medium text-gray-900 dark:text-gray-100">{{ $collection->collection_name ?? '-' }}</td>
                                 <td class="px-6 py-4 text-right space-x-2">
                                     @if ($hasEdit)
                                         <button @click="openEditModal({{ $collection->toJson() }})"

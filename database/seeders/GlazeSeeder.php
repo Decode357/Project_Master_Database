@@ -13,6 +13,6 @@ class GlazeSeeder extends Seeder
      */
     public function run(): void
     {
-        Glaze::factory(24)->create();
+        Glaze::factory(50)->create();
     }
 }

@@ -59,7 +59,7 @@
                     <tr>
                         <th class="px-4 py-2">{{__('content.shape_code')}}</th>
                         <th class="px-4 py-2">{{__('content.description')}}</th>
-                        <th class="px-4 py-2">{{__('content.updated_by')}}</th>
+                        <th class="px-4 py-2 text-end">{{__('content.updated_by')}}</th>
                         <th class="px-4 py-2 text-end">{{__('content.updated_at')}}</th>
                     </tr>
                 </thead>
@@ -68,7 +68,7 @@
                         <tr class="border-b border-gray-200 dark:border-gray-700">
                             <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ $shape->item_code }}</td>
                             <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ Str::limit($shape->item_description_eng ?? '-',20) }}</td>
-                            <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ $shape->updater->name ?? 'System' }}</td>
+                            <td class="px-4 py-2 text-end text-gray-900 dark:text-gray-100">{{ $shape->updater->name ?? 'System' }}</td>
                             <td class="px-4 py-2 text-end text-gray-900 dark:text-gray-100">{{ $shape->updated_at->format('d/m/Y H:i') }}</td>
                         </tr>
                     @empty
@@ -87,7 +87,7 @@
                         <th class="px-4 py-2">{{__('content.glaze_code')}}</th>
                         <th class="px-4 py-2">{{__('content.inside_color_code')}}</th>
                         <th class="px-4 py-2">{{__('content.outside_color_code')}}</th>
-                        <th class="px-4 py-2">{{__('content.updated_by')}}</th>
+                        <th class="px-4 py-2 text-end">{{__('content.updated_by')}}</th>
                         <th class="px-4 py-2 text-end">{{__('content.updated_at')}}</th>
                     </tr>
                 </thead>
@@ -97,7 +97,7 @@
                             <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ $glaze->glaze_code }}</td>
                             <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ $glaze->glazeInside->glaze_inside_code ?? '-' }}</td>
                             <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ $glaze->glazeOuter->glaze_outer_code ?? '-' }}</td>
-                            <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ $glaze->updater->name ?? 'System' }}</td>
+                            <td class="px-4 py-2 text-end text-gray-900 dark:text-gray-100">{{ $glaze->updater->name ?? 'System' }}</td>
                             <td class="px-4 py-2 text-end text-gray-900 dark:text-gray-100">{{ $glaze->updated_at->format('d/m/Y H:i') }}</td>
                         </tr>
                     @empty
@@ -114,7 +114,7 @@
                     <tr>
                         <th class="px-4 py-2">{{__('content.pattern_code')}}</th>
                         <th class="px-4 py-2">{{__('content.description')}}</th>
-                        <th class="px-4 py-2">{{__('content.updated_by')}}</th>
+                        <th class="px-4 py-2 text-end">{{__('content.updated_by')}}</th>
                         <th class="px-4 py-2 text-end">{{__('content.updated_at')}}</th>
                     </tr>
                 </thead>
@@ -122,8 +122,8 @@
                     @forelse ($latestPatterns as $pattern)
                         <tr class="border-b border-gray-200 dark:border-gray-700">
                             <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ $pattern->pattern_code }}</td>
-                            <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ $pattern->pattern_name }}</td>
-                            <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ $pattern->updater->name ?? 'System' }}</td>
+                            <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ $pattern->pattern_name ?? '-'}}</td>
+                            <td class="px-4 py-2 text-end text-gray-900 dark:text-gray-100">{{ $pattern->updater->name ?? 'System' }}</td>
                             <td class="px-4 py-2 text-end text-gray-900 dark:text-gray-100">{{ $pattern->updated_at->format('d/m/Y H:i') }}</td>
                         </tr>
                     @empty
@@ -140,7 +140,7 @@
                     <tr>
                         <th class="px-4 py-2">{{__('content.backstamp_code')}}</th>
                         <th class="px-4 py-2">{{__('content.description')}}</th>
-                        <th class="px-4 py-2">{{__('content.updated_by')}}</th>
+                        <th class="px-4 py-2 text-end">{{__('content.updated_by')}}</th>
                         <th class="px-4 py-2 text-end">{{__('content.updated_at')}}</th>
                     </tr>
                 </thead>
@@ -148,8 +148,8 @@
                     @forelse ($latestBackstamps as $backstamp)
                         <tr class="border-b border-gray-200 dark:border-gray-700">
                             <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ $backstamp->backstamp_code }}</td>
-                            <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ $backstamp->name }}</td>
-                            <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ $backstamp->updater->name ?? 'System' }}</td>
+                            <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ $backstamp->name ?? '-'}}</td>
+                            <td class="px-4 py-2 text-end text-gray-900 dark:text-gray-100">{{ $backstamp->updater->name ?? 'System' }}</td>
                             <td class="px-4 py-2 text-end text-gray-900 dark:text-gray-100">{{ $backstamp->updated_at->format('d/m/Y H:i') }}</td>
                         </tr>
                     @empty

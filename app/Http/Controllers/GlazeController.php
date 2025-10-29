@@ -35,7 +35,6 @@ class GlazeController extends Controller
         if ($search) {
             $query->where(function($q) use ($search) {
                 $q->where('glaze_code', 'LIKE', "%{$search}%")
-                ->orWhere('fire_temp', 'LIKE', "%{$search}%")
                 ->orWhere('approval_date', 'LIKE', "%{$search}%")
                 ->orWhereHas('effect', function($q) use ($search) {
                     $q->where('effect_code', 'LIKE', "%{$search}%");

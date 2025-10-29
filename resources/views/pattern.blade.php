@@ -80,7 +80,7 @@
 
                             <tr class="dark:text-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 bg-white border-b border-gray-200 hover:bg-gray-50">
                                 <td class="px-4 py-3">{{ $pattern->pattern_code }}</td>
-                                <td class="px-4 py-3">{{ $pattern->pattern_name }}</td>
+                                <td class="px-4 py-3">{{ $pattern->pattern_name ?? '-' }}</td>
                                 <!-- Status -->
                                 <td class="px-4 py-3">
                                     <span class="{{ $statusColor }} px-2 py-1 rounded-full text-xs font-semibold">
