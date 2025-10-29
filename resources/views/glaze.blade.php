@@ -118,9 +118,9 @@
                             <tr>
                                 <td colspan="9" class="px-6 py-4 text-sm text-center text-gray-500 dark:text-gray-400">
                                     @if(request('search'))
-                                        No glazes found for "{{ request('search') }}".
+                                        {{ __('content.not_found') }} "{{ request('search') }}".
                                     @else
-                                        No glazes found.
+                                        {{ __('content.not_found') }}
                                     @endif
                                 </td>
                             </tr>

@@ -6,7 +6,7 @@
     x-transition.opacity
     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" 
     style="display: none;">
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-full max-w-md p-6" 
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-full max-w-lg p-6" 
         x-data="{
             ...editUserModal(),
             errors: {},
@@ -36,12 +36,12 @@
             });
         ">
 
-        <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Edit User</h2>
+        <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">{{__('content.edit_user')}}</h2>
         <hr class="mb-3 border-gray-200 dark:border-gray-600">
 
         <!-- Dynamic Error Display Area -->
         <div x-show="Object.keys(errors).length > 0" class="p-4 bg-red-100 dark:bg-red-900 border border-red-400 dark:border-red-600 rounded-md mb-4">
-            <h4 class="text-red-800 dark:text-red-200 font-semibold">Please correct the following errors</h4>
+            <h4 class="text-red-800 dark:text-red-200 font-semibold">{{__('content.please_correct_errors')}}</h4>
             <ul class="mt-2 text-red-700 dark:text-red-300 text-sm list-disc list-inside">
                 <template x-for="(error, field) in errors" :key="field">
                     <li x-text="error[0] || error"></li>
@@ -52,8 +52,8 @@
         <form @submit.prevent="submitEditForm" class="space-y-4">
             <!-- Username -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Username</label>
-                <input type="text" name="name" x-model="userToEdit.name" placeholder="Enter username"
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.username')}}</label>
+                <input type="text" name="name" x-model="userToEdit.name" placeholder="{{__('content.enter')}}{{__('content.username')}}"
                     :class="errors.name ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                     class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     required />
@@ -62,8 +62,8 @@
 
             <!-- Email -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
-                <input type="email" name="email" x-model="userToEdit.email" placeholder="Enter email"
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.email')}}</label>
+                <input type="email" name="email" x-model="userToEdit.email" placeholder="{{__('content.enter')}}{{__('content.email')}}"
                     :class="errors.email ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                     class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     required />
@@ -72,11 +72,11 @@
 
             <!-- Password (Optional) -->
             <div x-data="{ show: false }" class="relative">
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Password <span class="text-gray-400 dark:text-gray-500 text-xs">(leave blank to keep current password)</span></label>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.password')}} <span class="text-gray-400 dark:text-gray-500 text-xs">{{__('content.leave_blank')}}</span></label>
                 <input :type="show ? 'text' : 'password'" name="password" x-model="userToEdit.password"
                     :class="errors.password ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                     class="mt-1 w-full border rounded-md px-3 py-2 pr-10 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Enter new password (optional)" />
+                    placeholder="{{__('content.enter')}}{{__('content.new_password_optional')}}" />
                 <button type="button" @click="show = !show"
                     class="absolute inset-y-0 right-0 flex items-center pr-3 mt-6 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
                     <span x-show="!show" class="material-symbols-outlined">visibility</span>
@@ -88,7 +88,7 @@
             <!-- Department / Requestor / Customer -->
             <div class="flex flex-row gap-4">
                 <div class="flex-1">
-                    <label class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Department</label>
+                    <label class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">{{__('content.department')}}</label>
                     <select name="department_id" x-model="userToEdit.department_id" 
                             :class="errors.department_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                             class="select2 w-full border rounded px-2 py-1 dark:bg-gray-700 dark:text-gray-100">
@@ -101,7 +101,7 @@
                 </div>
 
                 <div class="flex-1">
-                    <label class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Requestor</label>
+                    <label class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">{{__('content.requestor')}}</label>
                     <select name="requestor_id" x-model="userToEdit.requestor_id" 
                             :class="errors.requestor_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                             class="select2 w-full border rounded px-2 py-1 dark:bg-gray-700 dark:text-gray-100">
@@ -114,7 +114,7 @@
                 </div>
 
                 <div class="flex-1">
-                    <label class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Customer</label>
+                    <label class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">{{__('content.customer')}}</label>
                     <select name="customer_id" x-model="userToEdit.customer_id" 
                             :class="errors.customer_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                             class="select2 w-full border rounded px-2 py-1 dark:bg-gray-700 dark:text-gray-100">
@@ -129,7 +129,7 @@
 
             <!-- Role selection -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Role</label>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('auth.role')}}</label>
                 <div class="flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-600 p-1">
                     <template x-for="r in ['user','admin','superadmin']" :key="r">
                         <label
@@ -140,7 +140,11 @@
                             class="flex-1 items-center justify-center rounded-full px-4 py-2 text-sm font-medium transition-colors flex cursor-pointer">
                             <input type="radio" name="role" :value="r" class="sr-only" x-model="role"
                                 :disabled="r === 'superadmin' && currentUserRole === 'admin'" />
-                            <span x-text="r.charAt(0).toUpperCase() + r.slice(1)"></span>
+                            <span x-text="{
+                                'user': '{{ __('auth.user') }}',
+                                'admin': '{{ __('auth.admin') }}',
+                                'superadmin': '{{ __('auth.superadmin') }}'
+                            }[r]"></span>                        
                         </label>
                     </template>
                 </div>
@@ -149,7 +153,7 @@
 
             <!-- Permissions -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mt-2">Permissions</label>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mt-2">{{__('auth.permission')}}</label>
                 @php
                     $permColors = [
                         'view' => 'bg-yellow-100 text-yellow-800',
@@ -178,7 +182,7 @@
                                 :disabled="isDisabled('{{ $perm }}')" />
                             <span class="inline-block {{ $permColors[$perm] }} text-xs font-medium px-2.5 py-0.5 rounded-full peer-checked:ring-2 cursor-pointer"
                                 :class="getRingColor('{{ $perm }}')">
-                                {{ $perm }}
+                                {{ __('auth.' . $perm) }}
                             </span>
                         </label>
                     @endforeach
@@ -189,11 +193,11 @@
             <!-- Buttons -->
             <div class="flex justify-end gap-2 mt-4">
                 <button type="button" @click="EditUserModal = false; errors = {}"
-                    class="px-4 py-2 rounded-md bg-gray-200 dark:bg-gray-600 dark:text-gray-300 dark:hover:bg-gray-500 hoverScale hover:bg-red-500 hover:text-white">Cancel</button>
+                    class="px-4 py-2 rounded-md bg-gray-200 dark:bg-gray-600 dark:text-gray-300 dark:hover:bg-gray-500 hoverScale hover:bg-red-500 hover:text-white">{{ __('content.cancel') }}</button>
                 <button type="submit" :disabled="loading"
                     class="px-4 py-2 rounded-md bg-blue-600 dark:bg-blue-500 text-white hoverScale hover:bg-blue-700 dark:hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed">
-                    <span x-show="!loading">Save</span>
-                    <span x-show="loading">Saving...</span>
+                    <span x-show="!loading">{{ __('content.save') }}</span>
+                    <span x-show="loading">{{ __('content.saving') }}</span>
                 </button>
             </div>
         </form>

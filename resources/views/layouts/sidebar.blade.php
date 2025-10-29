@@ -174,7 +174,7 @@
                         ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold scale-110' 
                         : 'text-gray-700 dark:text-gray-300 hoverScale hover:bg-gray-100 dark:hover:bg-gray-700' }}">
                         <span class="material-symbols-outlined text-lg">Collections_Bookmark</span>
-                        <span>{{ __('sidebar.shape_collections') }}</span>
+                        <span>{{ __('sidebar.collections') }}</span>
                     </a>
                     
                     @if ($hasFileImport)
@@ -234,7 +234,7 @@
                     <div class="relative" x-data="{ settingsOpen: false }" @click.outside="settingsOpen = false">
                         <!-- Trigger Button -->
                         <button @click="settingsOpen = !settingsOpen"
-                            class="flex items-center justify-center rounded-lg bg-white dark:bg-gray-700 px-3 py-2.5
+                            class="flex items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-700 px-3 py-2.5
                             text-gray-600 dark:text-gray-300 hoverScale hover:bg-gray-300 dark:hover:bg-gray-600">
                             <span class="material-symbols-outlined">settings</span>
                         </button>

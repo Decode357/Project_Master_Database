@@ -119,9 +119,9 @@
                             <td colspan="9" class="px-6 py-4 text-sm text-gray-500 text-center 
                                             dark:text-gray-400">
                                 @if(request('search'))
-                                    No backstamps found for "{{ request('search') }}".
+                                    {{ __('content.not_found') }} "{{ request('search') }}".
                                 @else
-                                    No backstamps found.
+                                    {{ __('content.not_found') }}
                                 @endif
                             </td>
                         </tr>

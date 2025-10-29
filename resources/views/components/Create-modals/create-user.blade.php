@@ -3,17 +3,17 @@
 
 <div x-show="CreateUserModal" x-transition.opacity
     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="display: none;">
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-full max-w-md p-6">
-        <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Create User</h2>
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-full max-w-lg p-6">
+        <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">{{__('content.create_user')}}</h2>
         <hr class="mb-3 border-gray-200 dark:border-gray-600">
 
-        <form id="CreateUserForm" @submit.prevent="isSubmitting = true; submitUserForm()" class="space-y-4" x-data="{
+        <form id="CreateUserForm" @submit.prevent="loading = true; submitUserForm()" class="space-y-4" x-data="{
             newUser: { department_id: '', requestor_id: '', customer_id: '' },
             role: 'user',
             permissions: ['view'],
             allPermissions: ['view', 'edit', 'delete', 'create', 'file import', 'manage users'],
             currentUserRole: '{{ Auth::user()->roles->pluck('name')->first() }}',
-            isSubmitting: false,
+            loading: false,
             updatePermissions() {
                 if (!this.permissions.includes('view')) this.permissions.push('view');
                 if (this.role === 'user') this.permissions = ['view'];
@@ -36,24 +36,24 @@
 
             <!-- Username -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Username</label>
-                <input type="text" name="name" placeholder="Enter username"
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.username')}}</label>
+                <input type="text" name="name" placeholder="{{__('content.enter')}}{{__('content.username')}}"
                     class="mt-1 w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     required />
             </div>
 
             <!-- Email -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
-                <input type="email" name="email" placeholder="Enter email"
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.email')}}</label>
+                <input type="email" name="email" placeholder="{{__('content.enter')}}{{__('content.email')}}"
                     class="mt-1 w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     required />
             </div>
 
             <!-- Password -->
             <div x-data="{ show: false }" class="relative">
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
-                <input :type="show ? 'text' : 'password'" name="password" placeholder="Enter password"
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.password')}}</label>
+                <input :type="show ? 'text' : 'password'" name="password" placeholder="{{__('content.enter')}}{{__('content.password')}}"
                     class="mt-1 w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 rounded-md px-3 py-2 pr-10 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     required />
                 <button type="button" @click="show = !show"
@@ -66,7 +66,7 @@
             <!-- Department / Requestor / Customer -->
             <div class="flex flex-row gap-4">
                 <div class="flex-1">
-                    <label class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Department</label>
+                    <label class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">{{__('content.department')}}</label>
                     <select name="department_id" x-model="newUser.department_id" class="select2 w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded px-2 py-1">
                         <option value="">-</option>
                         @foreach ($departments as $dep)
@@ -76,7 +76,7 @@
                 </div>
 
                 <div class="flex-1">
-                    <label class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Requestor</label>
+                    <label class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">{{__('content.requestor')}}</label>
                     <select name="requestor_id" x-model="newUser.requestor_id" class="select2 w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded px-2 py-1">
                         <option value="">-</option>
                         @foreach ($requestors as $req)
@@ -86,7 +86,7 @@
                 </div>
 
                 <div class="flex-1">
-                    <label class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Customer</label>
+                    <label class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">{{__('content.customer')}}</label>
                     <select name="customer_id" x-model="newUser.customer_id" class="select2 w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded px-2 py-1">
                         <option value="">-</option>
                         @foreach ($customers as $cust)
@@ -98,7 +98,7 @@
 
             <!-- Role selection -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Role</label>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('auth.role')}}</label>
                 <div class="flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-600 p-1">
                     <template x-for="r in ['user','admin','superadmin']" :key="r">
                         <label
@@ -111,7 +111,11 @@
                             <input type="radio" name="role" :value="r" class="sr-only" x-model="role"
                                 :disabled="r === 'superadmin' && currentUserRole === 'admin'"
                                 @change="updatePermissions()" />
-                            <span x-text="r.charAt(0).toUpperCase() + r.slice(1)"></span>
+                            <span x-text="{
+                                'user': '{{ __('auth.user') }}',
+                                'admin': '{{ __('auth.admin') }}',
+                                'superadmin': '{{ __('auth.superadmin') }}'
+                            }[r]"></span>                        
                         </label>
                     </template>
                 </div>
@@ -119,7 +123,7 @@
 
             <!-- Permissions -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mt-2">Permissions</label>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mt-2">{{__('auth.permission')}}</label>
                 <div class="flex flex-wrap gap-2 mt-1">
                     @php
                         $permColors = [
@@ -132,15 +136,14 @@
                         ];
                     @endphp
                     @foreach (['view', 'edit', 'delete', 'create', 'file import', 'manage users'] as $perm)
-                        <label class="flex items-center gap-1 cursor-pointer"
-                            :class="getOpacity('{{ $perm }}')">
+                        <label class="flex items-center gap-1 cursor-pointer" :class="getOpacity('{{ $perm }}')">
                             <input type="checkbox" name="permissions[]" value="{{ $perm }}" class="sr-only peer"
                                 x-model="permissions" :disabled="isDisabled('{{ $perm }}')" />
                             <span
                                 class="inline-block {{ $permColors[$perm] }} text-xs font-medium px-2.5 py-0.5 rounded-full
                                 peer-checked:ring-2 cursor-pointer"
                                 :class="getRingColor('{{ $perm }}')">
-                                {{ $perm }}
+                                {{ __('auth.' . $perm) }}
                             </span>
                         </label>
                     @endforeach
@@ -150,12 +153,11 @@
             <!-- Buttons -->
             <div class="flex justify-end gap-2 mt-4">
                 <button type="button" @click="CreateUserModal = false"
-                    class="px-4 py-2 rounded-md bg-gray-200 dark:bg-gray-600 dark:text-gray-300 dark:hover:bg-gray-500 hoverScale hover:bg-red-500 hover:text-white">Cancel</button>
-                <button type="submit"
-                    :disabled="isSubmitting"
-                    :class="isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600'"
-                    class="px-4 py-2 rounded-md text-white hoverScale">
-                    <span x-text="isSubmitting ? 'Processing...' : 'Create'"></span>
+                    class="px-4 py-2 rounded-md bg-gray-200 dark:bg-gray-600 dark:text-gray-300 dark:hover:bg-gray-500 hoverScale hover:bg-red-500 hover:text-white">{{ __('content.cancel') }}</button>
+                <button type="submit" :disabled="loading"
+                    class="px-4 py-2 rounded-md bg-blue-600 dark:bg-blue-500 text-white hoverScale hover:bg-blue-700 dark:hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <span x-show="!loading">{{ __('content.save') }}</span>
+                    <span x-show="loading">{{ __('content.saving') }}</span>
                 </button>
             </div>
         </form>

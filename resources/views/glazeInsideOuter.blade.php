@@ -103,7 +103,7 @@
                                                         {{ $color->color_code}} : {{ $color->color_name }}
                                                     </span>@if (!$loop->last),@endif
                                                 @empty
-                                                    <span class="text-gray-400 text-sm dark:text-gray-500">No colors</span>
+                                                    <span class="text-gray-400 text-sm dark:text-gray-500">{{__('content.no_data')}}</span>
                                                 @endforelse
                                             </div>
                                         </td>
@@ -129,9 +129,9 @@
                                     <tr>
                                         <td colspan="3" class="px-4 py-8 text-center text-gray-500">
                                             @if (request('inside_search'))
-                                                No results found for "{{ request('inside_search') }}"
+                                                {{ __('content.not_found') }} "{{ request('inside_search') }}"
                                             @else
-                                                No glaze inside found
+                                                {{ __('content.not_found') }}
                                             @endif
                                         </td>
                                     </tr>
@@ -241,7 +241,7 @@
                                                         {{ $color->color_code}} : {{ $color->color_name }}
                                                     </span>@if (!$loop->last),@endif
                                                 @empty
-                                                    <span class="text-gray-400 text-sm dark:text-gray-500">No colors</span>
+                                                    <span class="text-gray-400 text-sm dark:text-gray-500">{{__('content.no_data')}}</span>
                                                 @endforelse
                                             </div>
                                         </td>
@@ -267,9 +267,9 @@
                                     <tr>
                                         <td colspan="3" class="px-4 py-8 text-center text-gray-500">
                                             @if (request('outer_search'))
-                                                No results found for "{{ request('outer_search') }}"
+                                                {{ __('content.not_found') }} "{{ request('outer_search') }}"
                                             @else
-                                                No glaze outer found
+                                                {{ __('content.not_found') }}
                                             @endif
                                         </td>
                                     </tr>

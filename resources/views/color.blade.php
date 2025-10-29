@@ -80,7 +80,7 @@
                             <tr class="bg-white border-b hover:bg-gray-50
                                 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                                 <td class="px-6 py-4 font-medium text-gray-900 dark:text-gray-100">{{ $color->color_code }}</td>
-                                <td class="px-6 py-4 font-medium text-gray-900 dark:text-gray-100">{{ $color->color_name }}</td>
+                                <td class="px-6 py-4 font-medium text-gray-900 dark:text-gray-100">{{ $color->color_name ?? '-' }}</td>
                                 <td class="px-6 py-4 dark:text-gray-300">
                                     {{ $color->customer ? $color->customer->name : '-' }}
                                 </td>
@@ -105,9 +105,9 @@
                                 <td colspan="5" class="px-6 py-4 text-center text-gray-500
                                     dark:text-gray-400">
                                     @if(request('search'))
-                                        No colors found for "{{ request('search') }}".
+                                        {{ __('content.not_found') }} "{{ request('search') }}".
                                     @else
-                                        No colors found.
+                                        {{ __('content.not_found') }}
                                     @endif
                                 </td>
                             </tr>   

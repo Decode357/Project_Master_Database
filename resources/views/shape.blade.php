@@ -86,9 +86,9 @@
                         @forelse ($shapes as $shape)
                             @php
                                 $status = $shape->status->status ?? 'Unknown';
-                                $type = $shape->shapeType->name ?? 'Unknown';
-                                $process = $shape->process->process_name ?? 'Unknown';
-                                $updatedBy = $shape->updater->name ?? 'Unknown';
+                                $type = $shape->shapeType->name ?? '-';
+                                $process = $shape->process->process_name ?? '-';
+                                $updatedBy = $shape->updater->name ?? '-';
                                 $statusColor = match ($status) {
                                     'Approved' => 'bg-green-100 text-green-800',
                                     'Pending' => 'bg-yellow-100 text-yellow-800',
@@ -99,8 +99,8 @@
                             <!-- Table Row -->
                             <tr class="dark:text-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 bg-white border-b border-gray-200 hover:bg-gray-50">
                                 <td class="px-4 py-3">{{ $shape->item_code }}</td>
-                                <td class="px-4 py-3">{{ Str::limit($shape->item_description_thai, 15) }}</td>
-                                <td class="px-4 py-3">{{ Str::limit($shape->item_description_eng, 15) }}</td>
+                                <td class="px-4 py-3">{{ Str::limit($shape->item_description_thai, 15) ?? '-'  }}</td>
+                                <td class="px-4 py-3">{{ Str::limit($shape->item_description_eng, 15) ?? '-'  }}</td>
                                 <td class="px-4 py-3">{{ $type }}</td>
                                 <td class="px-4 py-3">
                                     <span class="{{ $statusColor }} px-2 py-1 rounded-full text-xs font-semibold">
@@ -137,9 +137,9 @@
                                 <td colspan="9" class="px-6 py-4 text-sm text-gray-500 text-center 
                                                 dark:text-gray-400">
                                     @if(request('search'))
-                                        No shapes found for "{{ request('search') }}".
+                                        {{ __('content.not_found') }} "{{ request('search') }}".
                                     @else
-                                        No shapes found.
+                                        {{ __('content.not_found') }}
                                     @endif
                                 </td>
                             </tr>

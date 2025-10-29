@@ -86,7 +86,7 @@
                                                 {{ $color->color_code}} : {{ $color->color_name }}
                                             </span>@if (!$loop->last),@endif
                                         @empty
-                                            <span class="text-gray-400 text-sm dark:text-gray-500">No colors</span>
+                                            <span class="text-gray-400 text-sm dark:text-gray-500">{{__('content.no_data')}}</span>
                                         @endforelse
                                     </div>
                                 </td>
@@ -110,9 +110,9 @@
                                 <td colspan="5" class="px-6 py-4 text-sm text-gray-500 text-center
                                     dark:text-gray-400">
                                     @if(request('search'))
-                                        No effects found for "{{ request('search') }}".
+                                        {{ __('content.not_found') }} "{{ request('search') }}".
                                     @else
-                                        No effects found.
+                                        {{ __('content.not_found') }}
                                     @endif
                                 </td>
                             </tr>

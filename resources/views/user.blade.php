@@ -68,8 +68,8 @@
                         dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th class="px-3 py-3 w-[180px]">{{ __('content.name') }}</th>
-                            <th class="px-3 py-3 w-[220px]">{{ __('content.email') }}</th>
-                            <th class="px-3 py-3 w-[120px]">{{ __('auth.role') }}</th>
+                            <th class="px-3 py-3 w-[240px]">{{ __('content.email') }}</th>
+                            <th class="px-3 py-3 w-[180px]">{{ __('auth.role') }}</th>
                             <th class="px-3 py-3 w-[436px]">{{ __('auth.permission') }}</th>
                             <th class="px-3 py-3">{{ __('content.department') }}</th>
                             <th class="px-3 py-3">{{ __('content.requestor') }}</th>
@@ -83,13 +83,13 @@
                             <tr class="bg-white border-b max-h-[60px] hover:bg-gray-50
                                 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                                 <td class="px-3 py-3 font-medium text-gray-900 dark:text-gray-100">{{ Str::limit($user->name, 20) }}</td>
-                                <td class="px-3 py-3 font-medium text-gray-900 dark:text-gray-100">{{ Str::limit($user->email, 40) }}</td>
+                                <td class="px-3 py-3 font-medium text-gray-900 dark:text-gray-100">{{ Str::limit($user->email, 30) }}</td>
                                 <td class="px-3 py-3">
                                     @foreach ($user->roles as $role)
                                         <span
                                             class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full
                                             dark:bg-blue-900 dark:text-blue-300">
-                                            {{ ucfirst($role->name) }}
+                                            {{ __('auth.' . $role->name) }}
                                         </span>
                                     @endforeach
                                 </td>
@@ -97,7 +97,7 @@
                                     @foreach ($user->permissions as $perm)
                                         <span
                                             class="inline-block {{ $permissionColors[$perm->name] ?? 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300' }} text-xs font-medium px-2.5 py-0.5 rounded-full">
-                                            {{ $perm->name }}
+                                            {{ __('auth.' . $perm->name) }}
                                         </span>
                                     @endforeach
                                 </td>
@@ -132,9 +132,9 @@
                                 <td colspan="10" class="px-6 py-4 text-sm text-gray-500 text-center
                                     dark:text-gray-400">
                                     @if (request('search'))
-                                        No users found for "{{ request('search') }}".
+                                        {{ __('content.not_found') }} "{{ request('search') }}".
                                     @else
-                                        No users found.
+                                        {{ __('content.not_found') }}
                                     @endif
                                 </td>
                             </tr>
