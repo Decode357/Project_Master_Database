@@ -106,4 +106,9 @@ return [
     'color_optional' => 'You can select multiple colors or leave empty',
     'no_data' => 'No data available',
     'not_found' => 'Not found',
+    'details' => 'Details',
+    'shape' => 'Shape',
+    'glaze' => 'Glaze',
+    'pattern' => 'Pattern',
+    'backstamp' => 'backstamp',
 ];

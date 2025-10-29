@@ -1,6 +1,6 @@
 @extends('layouts.sidebar')
-@section('title', 'Profile')
-@section('header', 'Profile')
+@section('title', __('sidebar.profile'))
+@section('header', __('sidebar.profile'))
 @section('content')
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">

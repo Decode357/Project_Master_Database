@@ -15,7 +15,7 @@
                         <span
                             class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
                         <input type="text" name="search" value="{{ request('search') }}"
-                            placeholder="{{ __('content.search_by') }}{{ __('content.color_code') }},{{__('content.color_name')}}{{ __('content.etc') }}"
+                            placeholder="{{ __('content.search_by') }}{{ __('content.color_code') }}{{ __('content.etc') }}"
                             class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent
                             dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100" />
                     </div>

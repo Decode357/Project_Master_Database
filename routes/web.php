@@ -42,16 +42,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/pattern', [PatternController::class, 'patternindex'])->name('pattern.index');
     Route::get('/backstamp', [BackstampController::class, 'backstampindex'])->name('backstamp.index');
     Route::get('/glaze', [GlazeController::class, 'glazeindex'])->name('glaze.index');
+    Route::get('/color', [ColorController::class, 'colorindex'])->name('color.index');
+    Route::get('/effect', [EffectController::class, 'effectindex'])->name('effect.index');
+    Route::get('/glaze-inside-outer', [GlazeInsideOuterController::class, 'index'])->name('glaze.inside.outer.index');
+    Route::get('/shape-collection', [ShapeCollectionController::class, 'shapecollectionindex'])->name('shape.collection.index');
 
     // เมนูสำหรับ admin และ superadmin
     Route::middleware('role:admin|superadmin')->group(function () {
         // เมนูสำหรับแสดงข้อมูล
-        Route::get('/color', [ColorController::class, 'colorindex'])->name('color.index');
-        Route::get('/effect', [EffectController::class, 'effectindex'])->name('effect.index');
         Route::get('/csv-import', [PageController::class, 'csvImport'])->name('csvImport')->middleware(['auth', 'role:admin|superadmin', 'permission:file import']);
         Route::get('/user', [UserController::class, 'user'])->name('user');
-        Route::get('/glaze-inside-outer', [GlazeInsideOuterController::class, 'index'])->name('glaze.inside.outer.index');
-        Route::get('/shape-collection', [ShapeCollectionController::class, 'shapecollectionindex'])->name('shape.collection.index');
 
         // เมนูสำหรับเก็บข้อมูล 
         Route::post('/user', [UserController::class, 'storeUser'])->name('user.store')->middleware(['auth', 'role:admin|superadmin', 'permission:manage users']);
