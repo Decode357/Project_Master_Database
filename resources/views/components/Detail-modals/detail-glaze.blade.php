@@ -20,8 +20,8 @@
         <!-- Header -->
         <div class="bg-gradient-to-r from-blue-600 to-blue-800 dark:from-blue-700 dark:to-blue-900 text-white p-6 flex justify-between items-center flex-shrink-0">
             <div>
-                <h2 class="text-2xl font-bold" x-text="glazeToView?.glaze_code || 'Glaze Details'"></h2>
-                <p class="text-blue-100 dark:text-blue-200 text-sm mt-1" x-text="'Glaze Information'"></p>
+                <h2 class="text-2xl font-bold" x-text="glazeToView?.glaze_code || '{{ __('content.details') }} {{ __('content.glaze') }}'"></h2>
+                <p class="text-blue-100 dark:text-blue-200 text-sm mt-1" x-text="'{{ __('content.details') }} {{ __('content.glaze') }}'"></p>
             </div>
             <button @click="GlazeDetailModal = false"
                 class="text-white hover:bg-white hover:bg-opacity-20 rounded-full p-2 transition-all">

@@ -8,7 +8,7 @@ return [
     'glazes' => 'เคลือบ',
     'patterns' => 'ลวดลาย',
     'backstamps' => 'ตราประทับด้านหลัง',
-    'admin_console' => 'แผงควบคุมแอดมิน',
+    'admin_console' => 'ผู้ดูแลระบบเท่านั้น',
     'user_management' => 'จัดการผู้ใช้',
     'colors' => 'สี',
     'effects' => 'เอฟเฟกต์',

@@ -131,7 +131,12 @@
                     </div>
                 </div>
             </div>
-
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('content.exclusive_customer') }}</label>
+            <div class="flex items-center">
+                <input name="exclusive" type="checkbox" id="exclusive" value="1"
+                    class="rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                <label for="exclusive" class="ml-2 text-sm text-gray-700 dark:text-gray-300">{{ __('content.exclusive') }}</label>
+            </div>
             <!-- Approval Date -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>

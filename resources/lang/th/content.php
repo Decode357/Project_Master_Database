@@ -111,4 +111,6 @@ return [
     'glaze' => 'เคลือบ',
     'pattern' => 'ลวดลาย',
     'backstamp' => 'ตราประทับด้านหลัง',
+    'exclusive_customer' => 'พิเศษเฉพาะลูกค้ารายนี้',
+    'exclusive' => 'เอ็กซ์คลูซีฟ',
 ];

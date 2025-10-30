@@ -20,8 +20,8 @@
         <!-- Header -->
         <div class="bg-gradient-to-r from-blue-600 to-blue-800 dark:from-blue-700 dark:to-blue-900 text-white p-6 flex justify-between items-center flex-shrink-0">
             <div>
-                <h2 class="text-2xl font-bold" x-text="patternToView?.pattern_code || 'Pattern Details'"></h2>
-                <p class="text-blue-100 dark:text-blue-200 text-sm mt-1" x-text="patternToView?.pattern_name || 'Pattern Information'"></p>
+                <h2 class="text-2xl font-bold" x-text="patternToView?.pattern_code || '{{ __('content.details') }} {{ __('content.pattern') }}'"></h2>
+                <p class="text-blue-100 dark:text-blue-200 text-sm mt-1" x-text="patternToView?.pattern_name || '{{ __('content.details') }} {{ __('content.pattern') }}'"></p>
             </div>
             <button @click="PatternDetailModal = false"
                 class="text-white hover:bg-white hover:bg-opacity-20 rounded-full p-2 transition-all">

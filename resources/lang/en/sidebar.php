@@ -8,7 +8,7 @@ return [
     'glazes' => 'Glazes',
     'patterns' => 'Patterns',
     'backstamps' => 'Backstamps',
-    'admin_console' => 'Admin console',
+    'admin_console' => 'Admin only',
     'user_management' => 'User Management',
     'colors' => 'Colors',
     'effects' => 'Effects',

@@ -28,7 +28,7 @@ document.addEventListener('alpine:init', () => {
             formData.append('in_glaze', this.patternToEdit.in_glaze ? '1' : '0');
             formData.append('on_glaze', this.patternToEdit.on_glaze ? '1' : '0');
             formData.append('under_glaze', this.patternToEdit.under_glaze ? '1' : '0');
-
+            formData.append('exclusive', this.patternToEdit.exclusive ? '1' : '0');
             fetch(`/pattern/${this.patternToEdit.id}`, {
                 method: 'POST',
                 body: formData,

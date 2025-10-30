@@ -81,6 +81,7 @@ class PatternController extends Controller
             'in_glaze'       => 'nullable|boolean',
             'on_glaze'       => 'nullable|boolean',
             'under_glaze'    => 'nullable|boolean',
+            'exclusive'     => 'nullable|boolean',
             'approval_date'  => 'nullable|date',
         ];
     }

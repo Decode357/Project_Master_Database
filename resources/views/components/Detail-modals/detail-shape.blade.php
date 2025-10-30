@@ -19,8 +19,8 @@
         <!-- Header -->
         <div class="bg-gradient-to-r from-blue-600 to-blue-800 dark:from-blue-700 dark:to-blue-900 text-white p-6 flex justify-between items-center flex-shrink-0">
             <div>
-                <h2 class="text-2xl font-bold" x-text="shapeToView?.item_code || 'Shape Details'"></h2>
-                <p class="text-blue-100 dark:text-blue-200 text-sm mt-1" x-text="shapeToView?.item_description_eng || 'Product Details'"></p>
+                <h2 class="text-2xl font-bold" x-text="shapeToView?.item_code || '{{ __('content.details') }} {{ __('content.shape') }}'"></h2>
+                <p class="text-blue-100 dark:text-blue-200 text-sm mt-1" x-text="shapeToView?.item_description_eng || '{{ __('content.details') }} {{ __('content.shape') }}'"></p>
             </div>
             <button @click="ShapeDetailModal = false"
                 class="text-white hover:bg-white hover:bg-opacity-20 rounded-full p-2 transition-all">

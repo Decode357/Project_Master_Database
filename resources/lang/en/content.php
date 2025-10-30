@@ -111,4 +111,6 @@ return [
     'glaze' => 'Glaze',
     'pattern' => 'Pattern',
     'backstamp' => 'backstamp',
+    'customer_exclusive' => 'Exclusive to This Customer',
+    'exclusive' => 'Exclusive',
 ];

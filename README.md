@@ -1,8 +1,8 @@
 # Master Data Management System
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Laravel-11.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel">
-  <img src="https://img.shields.io/badge/PHP-8.2+-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP">
+  <img src="https://img.shields.io/badge/Laravel-10.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel">
+  <img src="https://img.shields.io/badge/PHP-8.1+-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP">
   <img src="https://img.shields.io/badge/MySQL-8.0+-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL">
   <img src="https://img.shields.io/badge/Alpine.js-8BC34A?style=for-the-badge&logo=alpine.js&logoColor=white" alt="Alpine.js">
   <img src="https://img.shields.io/badge/TailwindCSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="TailwindCSS">
@@ -30,7 +30,7 @@ Master Data Management System เป็นระบบจัดการข้�
 ### 🛠️ Technology Stack
 
 **Backend:**  
-- Laravel 11.x  
+- Laravel 10.x  
 - MySQL 8.0+  
 - Eloquent ORM  
 
@@ -99,11 +99,13 @@ Master Data Management System เป็นระบบจัดการข้�
 
 - กดปุ่มเปลี่ยนภาษา (มุมขวาบน) เพื่อสลับระหว่างภาษาไทย/อังกฤษ
 - ข้อความทุกส่วนในระบบจะเปลี่ยนตามภาษา
+- เพิ่มไฟล์ภาษาใหม่ได้ที่ `resources/lang/{locale}/` และใช้ `__('...')` ใน Blade
 
 ### Dark Mode
 
 - กดปุ่มสลับธีม (🌗) เพื่อเปลี่ยนระหว่างโหมดสว่าง/มืด
-- ระบบจะจำค่าธีมที่เลือกไว้
+- ระบบจะจำค่าธีมที่เลือกไว้ (localStorage)
+- สามารถปรับแต่งธีมได้ที่ `resources/css/app.css` และ Alpine.js ใน layout
 
 ## 📁 Project Structure
 
@@ -154,10 +156,15 @@ DB_USERNAME=root
 DB_PASSWORD=
 ```
 
-
 ## 👥 Team
 
 - **Developer**: [Decode357](https://github.com/Decode357)
 - **Project Type**: Master Data Management System
 - **Framework**: Laravel 10.x
+
+---
+
+> **อัปเดตล่าสุด:**  
+> - รองรับ Multi-language (เปลี่ยนภาษาได้ทันที)
+> - รองรับ Dark Mode (ธีมมืด/สว่าง)
 
