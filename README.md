@@ -6,64 +6,49 @@
   <img src="https://img.shields.io/badge/MySQL-8.0+-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL">
   <img src="https://img.shields.io/badge/Alpine.js-8BC34A?style=for-the-badge&logo=alpine.js&logoColor=white" alt="Alpine.js">
   <img src="https://img.shields.io/badge/TailwindCSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="TailwindCSS">
+  <img src="https://img.shields.io/badge/i18n-Multi--Language-4F8A10?style=for-the-badge&logo=google-translate&logoColor=white" alt="Multi-Language">
+  <img src="https://img.shields.io/badge/Dark%20Mode-Enabled-22223B?style=for-the-badge&logo=darkreader&logoColor=white" alt="Dark Mode">
 </p>
 
 ## 📖 About This Project
 
-Master Data Management System เป็นระบบจัดการข้อมูลหลัก (Master Data) สำหรับองค์กร ที่พัฒนาด้วย Laravel Framework โดยมีจุดประสงค์เพื่อจัดการข้อมูลพื้นฐานต่างๆ เช่น ข้อมูลรูปทรง (Shape), สี (Color), ลูกค้า (Customer), และข้อมูลอื่นๆ ที่เกี่ยวข้อง
+Master Data Management System เป็นระบบจัดการข้อมูลหลัก (Master Data) สำหรับองค์กร พัฒนาด้วย Laravel Framework เพื่อจัดการข้อมูลพื้นฐาน เช่น รูปทรง (Shape), สี (Color), ลูกค้า (Customer), และข้อมูลอื่นๆ ที่เกี่ยวข้อง  
+**รองรับหลายภาษา (Multi-language)** และ **ธีม Dark Mode** เพื่อประสบการณ์ผู้ใช้ที่ดียิ่งขึ้น
 
 ### ✨ Key Features
 
-- 🎨 **Modern UI/UX** - ใช้ TailwindCSS และ Alpine.js สำหรับ Interactive UI
-- 📊 **CRUD Operations** - ระบบจัดการข้อมูลแบบครบครัน (Create, Read, Update, Delete)
-- 🔍 **Advanced Search & Filter** - ค้นหาและกรองข้อมูลได้อย่างรวดเร็ว
-- ✅ **Real-time Validation** - ตรวจสอบข้อมูลแบบ Real-time ด้วย AJAX
-- 📱 **Responsive Design** - รองรับการใช้งานบนทุกอุปกรณ์
-- 🔐 **User Authentication & Authorization** - ระบบจัดการผู้ใช้และสิทธิ์การเข้าถึง
-- 📈 **Data Relationships** - จัดการความสัมพันธ์ของข้อมูลแบบซับซ้อน
+- 🎨 **Modern UI/UX** - TailwindCSS + Alpine.js
+- 🌗 **Dark Mode** - สลับธีมได้ทันที
+- 🌐 **Multi-language** - รองรับภาษาไทย/อังกฤษ เปลี่ยนภาษาได้ทันที
+- 📊 **CRUD Operations** - จัดการข้อมูลครบวงจร
+- 🔍 **Advanced Search & Filter** - ค้นหาและกรองข้อมูล
+- ✅ **Real-time Validation** - ตรวจสอบข้อมูลทันที
+- 📱 **Responsive Design** - รองรับทุกอุปกรณ์
+- 🔐 **User Authentication & Authorization** - ระบบผู้ใช้และสิทธิ์
+- 📈 **Data Relationships** - จัดการข้อมูลสัมพันธ์
 
 ### 🛠️ Technology Stack
 
-**Backend:**
-- Laravel 11.x (PHP Framework)
-- MySQL 8.0+ (Database)
-- Eloquent ORM (Database Relationships)
+**Backend:**  
+- Laravel 11.x  
+- MySQL 8.0+  
+- Eloquent ORM  
 
-**Frontend:**
-- TailwindCSS (CSS Framework)
-- Alpine.js (JavaScript Framework)
-- Select2 (Enhanced Select Dropdowns)
-- Blade Templates (Laravel Templating Engine)
+**Frontend:**  
+- TailwindCSS  
+- Alpine.js  
+- Select2  
+- Blade Templates  
 
-**Additional Tools:**
-- Laragon (Local Development Environment)
-- Composer (PHP Package Manager)
-- NPM/Node.js (Frontend Package Manager)
-
-## 📋 Data Models
-
-ระบบจัดการข้อมูลหลักต่างๆ ดังนี้:
-
-### Core Models
-- **Shape** - ข้อมูลรูปทรงสินค้า
-- **Color** - ข้อมูลสีและการเคลือบ
-- **Customer** - ข้อมูลลูกค้า
-- **Department** - ข้อมูลแผนก
-- **Designer** - ข้อมูลนักออกแบบ
-- **Pattern** - ข้อมูลลวดลาย
-- **Process** - ข้อมูลกระบวนการผลิต
-
-### Supporting Models
-- **ShapeType** - ประเภทรูปทรง
-- **Status** - สถานะต่างๆ
-- **ItemGroup** - กลุ่มสินค้า
-- **Effect** - เอฟเฟกต์พิเศษ
-- **Glaze** - ข้อมูลการเคลือบ
+**Additional:**  
+- Laragon  
+- Composer  
+- NPM/Node.js  
 
 ## 🚀 Installation
 
 ### Prerequisites
-- PHP 8.2 หรือสูงกว่า
+- PHP 8.1.10+
 - Composer
 - Node.js & NPM
 - MySQL 8.0+
@@ -72,59 +57,53 @@ Master Data Management System เป็นระบบจัดการข้�
 ### Setup Instructions
 
 1. **Clone Repository**
-```bash
-git clone https://github.com/Decode357/Project_Master_Database.git
-cd MasterDataDemo
-```
+    ```bash
+    git clone https://github.com/Decode357/Project_Master_Database.git
+    cd MasterDataDemo
+    ```
 
 2. **Install Dependencies**
-```bash
-# Install PHP dependencies
-composer install
-
-# Install Node.js dependencies
-npm install
-```
+    ```bash
+    composer install
+    npm install
+    ```
 
 3. **Environment Configuration**
-```bash
-# Copy environment file
-cp .env.example .env
-
-# Generate application key
-php artisan key:generate
-```
+    ```bash
+    cp .env.example .env
+    php artisan key:generate
+    ```
 
 4. **Database Setup**
-```bash
-# Configure database in .env file
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=master_data_demo
-DB_USERNAME=root
-DB_PASSWORD=
-
-# Run migrations
-php artisan migrate
-
-# Seed database (optional)
-php artisan db:seed
-```
+    - ตั้งค่า DB ใน `.env`
+    - รัน migration และ seed
+    ```bash
+    php artisan migrate
+    php artisan db:seed
+    ```
 
 5. **Build Assets**
-```bash
-# Development
-npm run dev
-
-# Production
-npm run build
-```
+    ```bash
+    npm run dev   # สำหรับพัฒนา
+    npm run build # สำหรับ production
+    ```
 
 6. **Start Development Server**
-```bash
-php artisan serve
-```
+    ```bash
+    php artisan serve
+    ```
+
+## 🌐 Multi-language & Dark Mode
+
+### เปลี่ยนภาษา
+
+- กดปุ่มเปลี่ยนภาษา (มุมขวาบน) เพื่อสลับระหว่างภาษาไทย/อังกฤษ
+- ข้อความทุกส่วนในระบบจะเปลี่ยนตามภาษา
+
+### Dark Mode
+
+- กดปุ่มสลับธีม (🌗) เพื่อเปลี่ยนระหว่างโหมดสว่าง/มืด
+- ระบบจะจำค่าธีมที่เลือกไว้
 
 ## 📁 Project Structure
 
@@ -152,45 +131,27 @@ MasterDataDemo/
 
 ### Basic Operations
 
-1. **การจัดการข้อมูล Shape**
-   - เพิ่ม/แก้ไข/ลบข้อมูลรูปทรง
-   - กำหนดประเภท สถานะ และข้อมูลเทคนิค
-   - ผูกข้อมูลกับลูกค้า นักออกแบบ และแผนก
-
-2. **ระบบ Validation**
-   - ตรวจสอบข้อมูลแบบ Real-time
-   - แสดงข้อผิดพลาดที่ชัดเจน
-   - Modal จะไม่ปิดเมื่อมี validation errors
-
-3. **การค้นหาและกรอง**
-   - ค้นหาด้วย Item Code
-   - กรองตามประเภท สถานะ หรือลูกค้า
-   - รองรับ Pagination
+- **Shape Management:** เพิ่ม/แก้ไข/ลบรูปทรง กำหนดประเภท สถานะ ผูกข้อมูลกับลูกค้าและนักออกแบบ
+- **Validation:** ตรวจสอบข้อมูลแบบ Real-time แสดงข้อผิดพลาดทันที
+- **Search & Filter:** ค้นหาด้วย Item Code กรองตามประเภท/สถานะ/ลูกค้า รองรับ Pagination
 
 ## 🔧 Configuration
 
 ### Environment Variables
 
 ```env
-# Application
 APP_NAME="Master Data Demo"
 APP_ENV=local
 APP_KEY=base64:...
 APP_DEBUG=true
 APP_URL=http://localhost
 
-# Database
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=master_data_demo
 DB_USERNAME=root
 DB_PASSWORD=
-
-# Cache & Session
-CACHE_DRIVER=file
-SESSION_DRIVER=file
-SESSION_LIFETIME=120
 ```
 
 
@@ -198,5 +159,5 @@ SESSION_LIFETIME=120
 
 - **Developer**: [Decode357](https://github.com/Decode357)
 - **Project Type**: Master Data Management System
-- **Framework**: Laravel 11.x
+- **Framework**: Laravel 10.x
 
