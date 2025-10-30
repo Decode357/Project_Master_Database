@@ -4,8 +4,8 @@
     @click.self="ShapeDetailModal = false" style="display: none;"
     x-data="{ 
         zoomImage: false, 
-        activeTab: 'basic',
-        showDebug: true,
+        activeTab: 'info',
+        showDebug: false,
         currentImageIndex: 0,
         get currentImage() {
             return this.shapeToView?.images && this.shapeToView.images.length > 0 
@@ -14,7 +14,7 @@
         }
     }">
     <!-- Modal Content -->
-    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-6xl mx-4 relative overflow-hidden h-[90vh] flex flex-col">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-6xl mx-4 relative overflow-visible h-[90vh] flex flex-col">
         
         <!-- Header -->
         <div class="bg-gradient-to-r from-blue-600 to-blue-800 dark:from-blue-700 dark:to-blue-900 text-white p-6 flex justify-between items-center flex-shrink-0">
@@ -29,8 +29,8 @@
         </div>
 
         <!-- Content Area -->
-        <div class="flex-1 overflow-hidden">
-            <!-- Image and Basic Info Section -->
+        <div class="flex-1 overflow-visible">
+            <!-- Image and Information Section -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 p-6 h-full">
                 
                 <!-- Image Section -->
@@ -49,7 +49,7 @@
                                     <div class="flex justify-between items-center mt-3">
                                         <button @click="currentImageIndex = (currentImageIndex - 1 + shapeToView.images.length) % shapeToView.images.length"
                                                 class="bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-full p-1 hover:bg-gray-300 dark:hover:bg-gray-500">
-                                            <span class="material-symbols-outlined">arrow_back</span>
+                                            <span class="material-symbols-outlined mt-1">arrow_back</span>
                                         </button>
                                         
                                         <span class="text-sm text-gray-500 dark:text-gray-400">
@@ -58,7 +58,7 @@
                                         
                                         <button @click="currentImageIndex = (currentImageIndex + 1) % shapeToView.images.length"
                                                 class="bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-full p-1 hover:bg-gray-300 dark:hover:bg-gray-500">
-                                            <span class="material-symbols-outlined">arrow_forward</span>
+                                            <span class="material-symbols-outlined mt-1">arrow_forward</span>
                                         </button>
                                     </div>
                                     
@@ -85,285 +85,261 @@
                             </template>
                         </div>
                     </div>
-                    <!-- Status Badge -->
-                    <div class="mt-4 text-center flex-shrink-0">
+                    <!-- Status & Process Badge -->
+                    <div class="my-2 flex justify-center items-center gap-6 border border-gray-200 dark:border-gray-600 pb-4 rounded-lg p-2">
+                        <!-- Status -->
                         <template x-if="shapeToView?.status">
-                            <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium"
-                                :class="shapeToView.status.status === 'Active' ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200' : 
-                                        shapeToView.status.status === 'Inactive' ? 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200' : 
-                                        'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200'">
-                                <span class="w-2 h-2 rounded-full mr-2"
-                                    :class="shapeToView.status.status === 'Active' ? 'bg-green-500' : 
-                                            shapeToView.status.status === 'Inactive' ? 'bg-red-500' : 
-                                            'bg-yellow-500'"></span>
-                                <span x-text="shapeToView.status.status"></span>
-                            </span>
+                            <div class="flex flex-col items-center">
+                                <label class="text-gray-700 dark:text-gray-300 font-semibold mb-1">Status</label>
+                                <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200">
+                                    <span class="w-2 h-2 rounded-full mr-2 bg-yellow-500"></span>
+                                    <span x-text="shapeToView.status.status"></span>
+                                </span>
+                            </div>
                         </template>
-                    </div>              
+
+                        <!-- Process -->
+                        <template x-if="shapeToView?.process">
+                            <div class="flex flex-col items-center">
+                                <label class="text-gray-700 dark:text-gray-300 font-semibold mb-1">Process</label>
+                                <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200">
+                                    <span class="w-2 h-2 rounded-full mr-2 bg-yellow-500"></span>
+                                    <span x-text="shapeToView.process.process_name"></span>
+                                </span>
+                            </div>
+                        </template>
+                    </div>
+                    <!-- Last Updated Info -->
+                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 sm:col-span-3">
+                        <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center">
+                            <span class="material-symbols-outlined mr-2">history</span>
+                            Update Information
+                        </h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <p class="text-gray-600 dark:text-gray-400">Last Updated By:</p>
+                                <p class="font-medium text-gray-900 dark:text-gray-100 break-words" x-text="shapeToView?.updater?.name || 'System'"></p>
+                            </div>
+                            <div>
+                                <p class="text-gray-600 dark:text-gray-400">Updated At:</p>
+                                <p class="font-medium text-gray-900 dark:text-gray-100" x-text="shapeToView?.updated_at ? new Date(shapeToView.updated_at).toLocaleString('th-TH') : '-'"></p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Tabs Content -->
-                <div class="lg:col-span-2 flex flex-col overflow-hidden">
+                <div class="lg:col-span-2 flex flex-col overflow-visible">
                     
                     <!-- Tab Navigation -->
                     <div class="border-b border-gray-200 dark:border-gray-600 mb-6 flex-shrink-0">
                         <nav class="flex space-x-8">
-                            <button @click="activeTab = 'basic'"
-                                :class="activeTab === 'basic' ? 'border-blue-500 text-blue-600 dark:text-blue-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
+                            <button @click="activeTab = 'info'"
+                                :class="activeTab === 'info' ? 'border-blue-500 text-blue-600 dark:text-blue-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
                                 class="whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm transition-all">
                                 <span class="material-symbols-outlined text-sm mr-1">info</span>
-                                Basic Information
+                                Information
                             </button>
-                            <button @click="activeTab = 'dimensions'"
-                                :class="activeTab === 'dimensions' ? 'border-blue-500 text-blue-600 dark:text-blue-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
+                            <button @click="activeTab = 'specification'"
+                                :class="activeTab === 'specification' ? 'border-blue-500 text-blue-600 dark:text-blue-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
                                 class="whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm transition-all">
                                 <span class="material-symbols-outlined text-sm mr-1">straighten</span>
-                                Dimensions
-                            </button>
-                            <button @click="activeTab = 'relations'"
-                                :class="activeTab === 'relations' ? 'border-blue-500 text-blue-600 dark:text-blue-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
-                                class="whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm transition-all">
-                                <span class="material-symbols-outlined text-sm mr-1">group</span>
-                                Relations
+                                Specification
                             </button>
                         </nav>
                     </div>
 
                     <!-- Tab Content Container -->
                     <div class="flex-1 min-h-0">
-                        <!-- Basic Information Tab -->
-                        <div x-show="activeTab === 'basic'" 
-                             class="h-full overflow-y-auto overflow-x-hidden">
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                                <!-- Item Code -->
-                                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                                    <div class="flex items-center mb-2">
-                                        <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 mr-2">tag</span>
-                                        <span class="font-semibold text-gray-700 dark:text-gray-300">Item Code</span>
-                                    </div>
-                                    <p class="text-lg font-mono text-gray-900 dark:text-gray-100 break-words" x-text="shapeToView?.item_code || '-'"></p>
-                                </div>
-
-                                <!-- Collection -->
-                                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                                    <div class="flex items-center mb-2">
-                                        <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 mr-2">collections</span>
-                                        <span class="font-semibold text-gray-700 dark:text-gray-300">Collection</span>
-                                    </div>
-                                    <p class="text-gray-900 dark:text-gray-100 break-words" x-text="shapeToView?.shape_collection?.collection_code || '-'"></p>
-                                </div>
-                                <!-- Process -->
-                                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                                    <div class="flex items-center mb-3">
-                                        <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 mr-2">precision_manufacturing</span>
-                                        <span class="font-semibold text-gray-700 dark:text-gray-300">Process</span>
-                                    </div>
-                                    <p class="text-gray-900 dark:text-gray-100 break-words" x-text="shapeToView?.process?.process_name || '-'"></p>
-                                </div>
-                                <!-- Type -->
-                                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                                    <div class="flex items-center mb-2">
-                                        <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 mr-2">category</span>
-                                        <span class="font-semibold text-gray-700 dark:text-gray-300">Type</span>
-                                    </div>
-                                    <p class="text-gray-900 dark:text-gray-100 break-words" x-text="shapeToView?.shape_type?.name || '-'"></p>
-                                </div>
-                                <!-- Body -->
-                                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                                    <div class="flex items-center mb-2">
-                                        <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 mr-2">texture</span>
-                                        <span class="font-semibold text-gray-700 dark:text-gray-300">Body</span>
-                                    </div>
-                                    <p class="text-gray-900 dark:text-gray-100 break-words" x-text="shapeToView?.body || '-'"></p>
-                                </div>
-
-                                <!-- Approval Date -->
-                                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                                    <div class="flex items-center mb-2">
-                                        <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 mr-2">event</span>
-                                        <span class="font-semibold text-gray-700 dark:text-gray-300">Approval Date</span>
-                                    </div>
-                                    <p class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.approval_date ? new Date(shapeToView.approval_date).toLocaleDateString('th-TH') : '-'"></p>
-                                </div>
-                                <!-- Description Thai -->
-                                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 sm:col-span-3">
-                                    <div class="flex items-center mb-2">
-                                        <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 mr-2">translate</span>
-                                        <span class="font-semibold text-gray-700 dark:text-gray-300">Description (TH)</span>
-                                    </div>
-                                    <!-- Description Thai -->
-                                    <p class="text-gray-900 dark:text-gray-100 break-words overflow-wrap-anywhere hyphens-auto" 
-                                       x-text="shapeToView?.item_description_thai || '-'"></p>
-                                </div>
-
-                                <!-- Description English -->
-                                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 sm:col-span-3">
-                                    <div class="flex items-center mb-2">
-                                        <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 mr-2">language</span>
-                                        <span class="font-semibold text-gray-700 dark:text-gray-300">Description (EN)</span>
-                                    </div>
-                                    <!-- Description English -->  
-                                    <p class="text-gray-900 dark:text-gray-100 break-words overflow-wrap-anywhere hyphens-auto" 
-                                       x-text="shapeToView?.item_description_eng || '-'"></p>
-                                </div>
-                                <!-- Last Updated Info -->
-                                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 sm:col-span-3">
-                                    <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center">
-                                        <span class="material-symbols-outlined mr-2">history</span>
-                                        Update Information
-                                    </h4>
-                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                                        <div>
-                                            <p class="text-gray-600 dark:text-gray-400">Last Updated By:</p>
-                                            <p class="font-medium text-gray-900 dark:text-gray-100 break-words" x-text="shapeToView?.updater?.name || 'System'"></p>
-                                        </div>
-                                        <div>
-                                            <p class="text-gray-600 dark:text-gray-400">Updated At:</p>
-                                            <p class="font-medium text-gray-900 dark:text-gray-100" x-text="shapeToView?.updated_at ? new Date(shapeToView.updated_at).toLocaleString('th-TH') : '-'"></p>
-                                        </div>
-                                    </div>
-                                </div>
+                        <!-- Information Tab -->
+                        <div x-show="activeTab === 'info'" class="h-full overflow-y-auto overflow-x-hidden flex flex-col gap-2 font-lg text-lg">
+                            
+                            <!-- Item Code -->
+                            <div class="flex flex-row gap-2 items-center">
+                                <span class="material-symbols-outlined text-base text-blue-600 dark:text-blue-400">qr_code_2</span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.shape_code') }}:
+                                </label>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.item_code || '-'"></span>
+                            </div>
+                            
+                            <!-- Description (TH) -->
+                            <div class="flex flex-row gap-2 items-center">
+                                <span class="material-symbols-outlined text-base text-green-600 dark:text-green-400">translate</span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.description_th') }}:
+                                </label>
+                                <span class="text-gray-900 dark:text-gray-100 " x-text="shapeToView?.item_description_thai || '-'"></span>
+                            </div>
+                            
+                            <!-- Description (EN) -->
+                            <div class="flex flex-row gap-2 items-center">
+                                <span class="material-symbols-outlined text-base text-purple-600 dark:text-purple-400">language</span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.description_en') }}:
+                                </label>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.item_description_eng || '-'"></span>
+                            </div>
+                            
+                            <!-- Collection Code -->
+                            <div class="flex flex-row gap-2 items-center">
+                                <span class="material-symbols-outlined text-base text-orange-600 dark:text-orange-400">collections_bookmark</span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.collection_code') }}:
+                                </label>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.shape_collection.collection_code || '-'"></span>
+                            </div>
+                            
+                            <!-- Collection Name -->
+                            <div class="flex flex-row gap-2 items-center">
+                                <span class="material-symbols-outlined text-base text-pink-600 dark:text-pink-400">folder_special</span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.collection_name') }}:
+                                </label>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.shape_collection.collection_name || '-'"></span>
+                            </div>
+                            
+                            <!-- Type -->
+                            <div class="flex flex-row gap-2 items-center">
+                                <span class="material-symbols-outlined text-base text-indigo-600 dark:text-indigo-400">category</span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.type') }}:
+                                </label>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.shape_type.name || '-'"></span>
+                            </div>
+                            
+                            <!-- Group -->
+                            <div class="flex flex-row gap-2 items-center">
+                                <span class="material-symbols-outlined text-base text-teal-600 dark:text-teal-400">workspaces</span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.group') }}:
+                                </label>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.item_group.item_group_name || '-'"></span>
+                            </div>
+                            
+                            <hr class="mt-3 mb-2 border-gray-300 dark:border-gray-600">
+                            
+                            <!-- Customer -->
+                            <div class="flex flex-row gap-2 items-center">
+                                <span class="material-symbols-outlined text-base text-blue-600 dark:text-blue-400">business</span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.customer') }}:
+                                </label>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.customer.name || '-'"></span>
+                            </div>
+                            
+                            <!-- Designer -->
+                            <div class="flex flex-row gap-2 items-center">
+                                <span class="material-symbols-outlined text-base text-orange-600 dark:text-orange-400">palette</span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.designer') }}:
+                                </label>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.designer.designer_name || '-'"></span>
+                            </div>
+                            
+                            <!-- Requestor -->
+                            <div class="flex flex-row gap-2 items-center">
+                                <span class="material-symbols-outlined text-base text-red-600 dark:text-red-400">person_raised_hand</span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.requestor') }}:
+                                </label>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.requestor.name || '-'"></span>
                             </div>
                         </div>
-
-                        <!-- Dimensions Tab -->
-                        <div x-show="activeTab === 'dimensions'"
-                             class="h-full overflow-y-auto overflow-x-hidden">
-                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-                                <!-- Volume -->
-                                <div class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900 dark:to-blue-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
-                                    <div class="flex items-center mb-2">
-                                        <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 mr-2">water_drop</span>
-                                        <span class="font-semibold text-gray-700 dark:text-gray-300">Volume</span>
-                                    </div>
-                                    <p class="text-2xl font-bold text-blue-700 dark:text-blue-300" x-text="(shapeToView?.volume || '0') + ' ml'"></p>
-                                </div>
-
-                                <!-- Weight -->
-                                <div class="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900 dark:to-green-800 rounded-lg p-4 border border-green-200 dark:border-green-700">
-                                    <div class="flex items-center mb-2">
-                                        <span class="material-symbols-outlined text-green-600 dark:text-green-400 mr-2">scale</span>
-                                        <span class="font-semibold text-gray-700 dark:text-gray-300">Weight</span>
-                                    </div>
-                                    <p class="text-2xl font-bold text-green-700 dark:text-green-300" x-text="(shapeToView?.weight || '0') + ' g'"></p>
-                                </div>
-
-                                <!-- Long Diameter -->
-                                <div class="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900 dark:to-purple-800 rounded-lg p-4 border border-purple-200 dark:border-purple-700">
-                                    <div class="flex items-center mb-2">
-                                        <span class="material-symbols-outlined text-purple-600 dark:text-purple-400 mr-2">straighten</span>
-                                        <span class="font-semibold text-gray-700 dark:text-gray-300">Long Diameter</span>
-                                    </div>
-                                    <p class="text-2xl font-bold text-purple-700 dark:text-purple-300" x-text="(shapeToView?.long_diameter || '0') + ' cm'"></p>
-                                </div>
-
-                                <!-- Short Diameter -->
-                                <div class="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900 dark:to-orange-800 rounded-lg p-4 border border-orange-200 dark:border-orange-700">
-                                    <div class="flex items-center mb-2">
-                                        <span class="material-symbols-outlined text-orange-600 dark:text-orange-400 mr-2">straighten</span>
-                                        <span class="font-semibold text-gray-700 dark:text-gray-300">Short Diameter</span>
-                                    </div>
-                                    <p class="text-2xl font-bold text-orange-700 dark:text-orange-300" x-text="(shapeToView?.short_diameter || '0') + ' cm'"></p>
-                                </div>
-
-                                <!-- Height Long -->
-                                <div class="bg-gradient-to-br from-red-50 to-red-100 dark:from-red-900 dark:to-red-800 rounded-lg p-4 border border-red-200 dark:border-red-700">
-                                    <div class="flex items-center mb-2">
-                                        <span class="material-symbols-outlined text-red-600 dark:text-red-400 mr-2">height</span>
-                                        <span class="font-semibold text-gray-700 dark:text-gray-300">Height Long</span>
-                                    </div>
-                                    <p class="text-2xl font-bold text-red-700 dark:text-red-300" x-text="(shapeToView?.height_long || '0') + ' cm'"></p>
-                                </div>
-
-                                <!-- Height Short -->
-                                <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 dark:from-indigo-900 dark:to-indigo-800 rounded-lg p-4 border border-indigo-200 dark:border-indigo-700">
-                                    <div class="flex items-center mb-2">
-                                        <span class="material-symbols-outlined text-indigo-600 dark:text-indigo-400 mr-2">height</span>
-                                        <span class="font-semibold text-gray-700 dark:text-gray-300">Height Short</span>
-                                    </div>
-                                    <p class="text-2xl font-bold text-indigo-700 dark:text-indigo-300" x-text="(shapeToView?.height_short || '0') + ' cm'"></p>
-                                </div>
-                            </div>
-
-                            <!-- Dimensions Visualization -->
-                            <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6">
-                                <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-4 flex items-center">
-                                    <span class="material-symbols-outlined mr-2">3d_rotation</span>
-                                    Dimensions Summary
-                                </h4>
-                                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                                    <div class="text-center">
-                                        <div class="w-16 h-16 bg-blue-100 dark:bg-blue-800 rounded-full flex items-center justify-center mx-auto mb-2">
-                                            <span class="material-symbols-outlined text-blue-600 dark:text-blue-300">water_drop</span>
-                                        </div>
-                                        <p class="font-medium text-gray-900 dark:text-gray-100" x-text="(shapeToView?.volume || '0') + ' ml'"></p>
-                                        <p class="text-gray-500 dark:text-gray-400">Volume</p>
-                                    </div>
-                                    <div class="text-center">
-                                        <div class="w-16 h-16 bg-green-100 dark:bg-green-800 rounded-full flex items-center justify-center mx-auto mb-2">
-                                            <span class="material-symbols-outlined text-green-600 dark:text-green-300">scale</span>
-                                        </div>
-                                        <p class="font-medium text-gray-900 dark:text-gray-100" x-text="(shapeToView?.weight || '0') + ' g'"></p>
-                                        <p class="text-gray-500 dark:text-gray-400">Weight</p>
-                                    </div>
-                                    <div class="text-center">
-                                        <div class="w-16 h-16 bg-purple-100 dark:bg-purple-800 rounded-full flex items-center justify-center mx-auto mb-2">
-                                            <span class="material-symbols-outlined text-purple-600 dark:text-purple-300">straighten</span>
-                                        </div>
-                                        <p class="font-medium text-gray-900 dark:text-gray-100" x-text="(shapeToView?.long_diameter || '0') + ' × ' + (shapeToView?.short_diameter || '0') + ' cm'"></p>
-                                        <p class="text-gray-500 dark:text-gray-400">Diameter</p>
-                                    </div>
-                                    <div class="text-center">
-                                        <div class="w-16 h-16 bg-red-100 dark:bg-red-800 rounded-full flex items-center justify-center mx-auto mb-2">
-                                            <span class="material-symbols-outlined text-red-600 dark:text-red-300">height</span>
-                                        </div>
-                                        <p class="font-medium text-gray-900 dark:text-gray-100" x-text="(shapeToView?.height_long || '0') + ' × ' + (shapeToView?.height_short || '0') + ' cm'"></p>
-                                        <p class="text-gray-500 dark:text-gray-400">Height</p>
-                                    </div>
-                                </div>
-                            </div>
+                        <!-- Specification Image -->
+                        <div x-show="activeTab === 'specification'" class="flex justify-center mb-4 hoverScale150"   style="transform-origin: bottom left;" >
+                            <div class="bg-white p-1 py-3 inline-block shadow-sm rounded-lg">
+                                <img src="{{ asset('images/speci.png') }}" 
+                                    alt="speci" 
+                                    class="mx-auto w-auto">
+                            </div> 
                         </div>
-
-                        <!-- Relations Tab -->
-                        <div x-show="activeTab === 'relations'" 
-                             class="h-full overflow-y-auto overflow-x-hidden">
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                                <!-- Customer -->
-                                <div class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900 dark:to-blue-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
-                                    <div class="flex items-center mb-3">
-                                        <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 mr-2">business</span>
-                                        <span class="font-semibold text-gray-700 dark:text-gray-300">Customer</span>
-                                    </div>
-                                    <p class="text-lg font-medium text-blue-800 dark:text-blue-200 break-words" x-text="shapeToView?.customer?.name || '-'"></p>
-                                </div>
-
-                                <!-- Group -->
-                                <div class="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900 dark:to-green-800 rounded-lg p-4 border border-green-200 dark:border-green-700">
-                                    <div class="flex items-center mb-3">
-                                        <span class="material-symbols-outlined text-green-600 dark:text-green-400 mr-2">category</span>
-                                        <span class="font-semibold text-gray-700 dark:text-gray-300">Group</span>
-                                    </div>
-                                    <p class="text-lg font-medium text-green-800 dark:text-green-200 break-words" x-text="shapeToView?.item_group?.item_group_name || '-'"></p>
-                                </div>
-
-                                <!-- Designer -->
-                                <div class="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900 dark:to-orange-800 rounded-lg p-4 border border-orange-200 dark:border-orange-700">
-                                    <div class="flex items-center mb-3">
-                                        <span class="material-symbols-outlined text-orange-600 dark:text-orange-400 mr-2">design_services</span>
-                                        <span class="font-semibold text-gray-700 dark:text-gray-300">Designer</span>
-                                    </div>
-                                    <p class="text-lg font-medium text-orange-800 dark:text-orange-200 break-words" x-text="shapeToView?.designer?.designer_name || '-'"></p>
-                                </div>
-
-                                <!-- Requestor -->
-                                <div class="bg-gradient-to-br from-red-50 to-red-100 dark:from-red-900 dark:to-red-800 rounded-lg p-4 border border-red-200 dark:border-red-700">
-                                    <div class="flex items-center mb-3">
-                                        <span class="material-symbols-outlined text-red-600 dark:text-red-400 mr-2">person</span>
-                                        <span class="font-semibold text-gray-700 dark:text-gray-300">Requestor</span>
-                                    </div>
-                                    <p class="text-lg font-medium text-red-800 dark:text-red-200 break-words" x-text="shapeToView?.requestor?.name || '-'"></p>
-                                </div>
+                        <!-- Specification Tab -->
+                        <div x-show="activeTab === 'specification'" class="h-full overflow-y-auto overflow-x-visible flex flex-col gap-1 font-lg text-lg">
+                            <!-- Volume -->
+                            <div class="flex flex-row gap-2 items-center">
+                                <span class="material-symbols-outlined text-base text-blue-600 dark:text-blue-400">water_drop</span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.volume') }}:
+                                </label>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.volume || '-'"></span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.cc') }}
+                                </label>
                             </div>
+                            <hr class=" border-gray-300 dark:border-gray-600">
+                            <!-- Weight -->
+                            <div class="flex flex-row gap-2 items-center">
+                                <span class="material-symbols-outlined text-base text-purple-600 dark:text-purple-400">scale</span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.weight') }}:
+                                </label>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.weight || '-'"></span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.g') }}
+                                </label>
+                            </div>
+                            <hr class=" border-gray-300 dark:border-gray-600">
+                            <!-- Long Diameter -->
+                            <div class="flex flex-row gap-2 items-center">
+                                <span class="material-symbols-outlined text-base text-green-600 dark:text-green-400">straighten</span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.long_diameter') }}:
+                                </label>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.long_diameter || '-'"></span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.mm') }}
+                                </label>
+                            </div>
+                            <hr class=" border-gray-300 dark:border-gray-600">
+                            <!-- Short Diameter -->
+                            <div class="flex flex-row gap-2 items-center">
+                                <span class="material-symbols-outlined text-base text-orange-600 dark:text-orange-400">width</span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.short_diameter') }}:
+                                </label>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.short_diameter || '-'"></span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.mm') }}
+                                </label>
+                            </div>
+                            <hr class=" border-gray-300 dark:border-gray-600">
+                            <!-- Height Long -->
+                            <div class="flex flex-row gap-2 items-center">
+                                <span class="material-symbols-outlined text-base text-red-600 dark:text-red-400">height</span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.height_long') }}:
+                                </label>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.height_long || '-'"></span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.mm') }}
+                                </label>
+                            </div>
+                            <hr class=" border-gray-300 dark:border-gray-600">
+                            <!-- Height Short -->
+                            <div class="flex flex-row gap-2 items-center">
+                                <span class="material-symbols-outlined text-base text-pink-600 dark:text-pink-400">expand</span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.height_short') }}:
+                                </label>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.height_short || '-'"></span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.mm') }}
+                                </label>
+                            </div>
+                            <hr class=" border-gray-300 dark:border-gray-600">
+                            <!-- Body -->
+                            <div class="flex flex-row gap-2 items-center">
+                                <span class="material-symbols-outlined text-base text-teal-600 dark:text-teal-400">width_full</span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.body') }}:
+                                </label>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.body || '-'"></span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.mm') }}
+                                </label>
+                            </div>
+                            <hr class=" border-gray-300 dark:border-gray-600">
                         </div>
                     </div>
                 </div>
@@ -378,7 +354,6 @@
             </div>
             <button @click="ShapeDetailModal = false"
                 class="bg-gray-500 dark:bg-gray-600 hover:bg-blue-600 dark:hover:bg-blue-500 text-white py-2 px-6 rounded-lg transition-all duration-200 hoverScale">
-                <span class="material-symbols-outlined text-sm mr-1 mt-1">close</span>
                 Close
             </button>
         </div>

@@ -78,7 +78,7 @@ return [
     'height_long' => 'Height Long',
     'height_short' => 'Height Short',
     'body' => 'Body',
-    'cc' => '(cc. cubic centimeter)',
+    'cc' => '(cc. cubic centiliter)',
     'g' => '(g. gram)',
     'mm' => '(mm. millimeter)',
     '°C' => '(°C. Celsius)',
@@ -111,6 +111,7 @@ return [
     'glaze' => 'Glaze',
     'pattern' => 'Pattern',
     'backstamp' => 'backstamp',
-    'customer_exclusive' => 'Exclusive to This Customer',
+    'exclusive_customer' => 'Exclusive to This Customer',
     'exclusive' => 'Exclusive',
+    'organic' => 'Organic',
 ];

@@ -17,7 +17,7 @@
 
             <!-- Dynamic Error Display Area -->
             <div x-show="Object.keys(errors).length > 0" class="p-4 bg-red-100 dark:bg-red-900 border border-red-400 dark:border-red-600 rounded-md">
-                <h4 class="text-red-800 dark:text-red-200 font-semibold">Please correct the following errors</h4>
+                <h4 class="text-red-800 dark:text-red-200 font-semibold">{{__('content.please_correct_errors')}}</h4>
                 <ul class="mt-2 text-red-700 dark:text-red-300 text-sm list-disc list-inside">
                     <template x-for="(error, field) in errors" :key="field">
                         <li x-text="error[0] || error"></li>

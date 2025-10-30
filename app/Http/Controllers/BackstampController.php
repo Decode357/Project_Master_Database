@@ -73,6 +73,7 @@ class BackstampController extends Controller
             'on_glaze'       => 'nullable|boolean',
             'under_glaze'    => 'nullable|boolean',
             'air_dry'        => 'nullable|boolean',
+            'organic'         => 'nullable|boolean',
             'approval_date'  => 'nullable|date',
         ];
     }

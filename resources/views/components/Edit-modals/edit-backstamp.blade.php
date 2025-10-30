@@ -17,7 +17,7 @@
 
             <!-- Dynamic Error Display Area -->
             <div x-show="Object.keys(errors).length > 0" class="p-4 bg-red-100 dark:bg-red-900 border border-red-400 dark:border-red-600 rounded-md">
-                <h4 class="text-red-800 dark:text-red-200 font-semibold">Please correct the following errors</h4>
+                <h4 class="text-red-800 dark:text-red-200 font-semibold">{{__('content.please_correct_errors')}}</h4>
                 <ul class="mt-2 text-red-700 dark:text-red-300 text-sm list-disc list-inside">
                     <template x-for="(error, field) in errors" :key="field">
                         <li x-text="error[0] || error"></li>
@@ -96,35 +96,41 @@
             </div>
 
             <!-- Glaze & Application Options -->
-            <div>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="flex items-center">
-                        <input type="checkbox" name="in_glaze" id="in_glaze" x-model="backstampToEdit.in_glaze"
-                            :checked="backstampToEdit.in_glaze"
-                            class="rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                        <label for="in_glaze" class="ml-2 text-sm text-gray-700 dark:text-gray-300">{{ __('content.in_glaze') }}</label>
-                    </div>
-                    <div class="flex items-center">
-                        <input type="checkbox" name="on_glaze" id="on_glaze" x-model="backstampToEdit.on_glaze"
-                            :checked="backstampToEdit.on_glaze"
-                            class="rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                        <label for="on_glaze" class="ml-2 text-sm text-gray-700 dark:text-gray-300">{{ __('content.on_glaze') }}</label>
-                    </div>
-                    <div class="flex items-center">
-                        <input type="checkbox" name="under_glaze" id="under_glaze" x-model="backstampToEdit.under_glaze"
-                            :checked="backstampToEdit.under_glaze"
-                            class="rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                        <label for="under_glaze" class="ml-2 text-sm text-gray-700 dark:text-gray-300">{{ __('content.under_glaze') }}</label>
-                    </div>
-                    <div class="flex items-center">
-                        <input type="checkbox" name="air_dry" id="air_dry" x-model="backstampToEdit.air_dry"
-                            :checked="backstampToEdit.air_dry"
-                            class="rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                        <label for="air_dry" class="ml-2 text-sm text-gray-700 dark:text-gray-300">{{ __('content.air_dry') }}</label>
-                    </div>
+
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('content.glaze_application') }}</label>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="flex items-center">
+                    <input type="checkbox" name="in_glaze" id="in_glaze" x-model="backstampToEdit.in_glaze"
+                        :checked="backstampToEdit.in_glaze"
+                        class="rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                    <label for="in_glaze" class="ml-2 text-sm text-gray-700 dark:text-gray-300">{{ __('content.in_glaze') }}</label>
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" name="on_glaze" id="on_glaze" x-model="backstampToEdit.on_glaze"
+                        :checked="backstampToEdit.on_glaze"
+                        class="rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                    <label for="on_glaze" class="ml-2 text-sm text-gray-700 dark:text-gray-300">{{ __('content.on_glaze') }}</label>
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" name="under_glaze" id="under_glaze" x-model="backstampToEdit.under_glaze"
+                        :checked="backstampToEdit.under_glaze"
+                        class="rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                    <label for="under_glaze" class="ml-2 text-sm text-gray-700 dark:text-gray-300">{{ __('content.under_glaze') }}</label>
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" name="air_dry" id="air_dry" x-model="backstampToEdit.air_dry"
+                        :checked="backstampToEdit.air_dry"
+                        class="rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                    <label for="air_dry" class="ml-2 text-sm text-gray-700 dark:text-gray-300">{{ __('content.air_dry') }}</label>
                 </div>
             </div>
-
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('content.organic') }}</label>
+            <div class="flex items-center">
+                <input type="checkbox" name="organic" id="organic" x-model="backstampToEdit.organic"
+                    :checked="backstampToEdit.organic"
+                    class="rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                <label for="organic" class="ml-2 text-sm text-gray-700 dark:text-gray-300">{{ __('content.organic') }}</label>
+            </div>
             <!-- Approval Date -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>

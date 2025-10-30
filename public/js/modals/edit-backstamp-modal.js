@@ -21,11 +21,11 @@ document.addEventListener('alpine:init', () => {
             formData.append('requestor_id', this.backstampToEdit.requestor_id || '');
             formData.append('customer_id', this.backstampToEdit.customer_id || '');
             formData.append('status_id', this.backstampToEdit.status_id || '');
-            formData.append('duration', this.backstampToEdit.duration || '');
             formData.append('in_glaze', this.backstampToEdit.in_glaze ? '1' : '0');
             formData.append('on_glaze', this.backstampToEdit.on_glaze ? '1' : '0');
             formData.append('under_glaze', this.backstampToEdit.under_glaze ? '1' : '0');
             formData.append('air_dry', this.backstampToEdit.air_dry ? '1' : '0');
+            formData.append('organic', this.backstampToEdit.organic ? '1' : '0');
             formData.append('approval_date', this.backstampToEdit.approval_date || '');
 
             fetch(`/backstamp/${this.backstampToEdit.id}`, {
