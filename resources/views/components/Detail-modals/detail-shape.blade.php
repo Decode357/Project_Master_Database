@@ -86,7 +86,7 @@
                         </div>
                     </div>
                     <!-- Status & Process Badge -->
-                    <div class="my-2 flex justify-center items-center gap-6 border border-gray-200 dark:border-gray-600 pb-4 rounded-lg p-2">
+                    <div class="my-2 flex justify-center items-center gap-6 border border-gray-200 dark:border-gray-600 rounded-lg p-2">
                         <!-- Status -->
                         <template x-if="shapeToView?.status">
                             <div class="flex flex-col items-center">
@@ -187,7 +187,7 @@
                                 <label class="text-gray-700 dark:text-gray-300">
                                     {{ __('content.collection_code') }}:
                                 </label>
-                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.shape_collection.collection_code || '-'"></span>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.shape_collection?.collection_code || '-'"></span>
                             </div>
                             
                             <!-- Collection Name -->
@@ -196,7 +196,7 @@
                                 <label class="text-gray-700 dark:text-gray-300">
                                     {{ __('content.collection_name') }}:
                                 </label>
-                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.shape_collection.collection_name || '-'"></span>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.shape_collection?.collection_name || '-'"></span>
                             </div>
                             
                             <!-- Type -->
@@ -205,7 +205,7 @@
                                 <label class="text-gray-700 dark:text-gray-300">
                                     {{ __('content.type') }}:
                                 </label>
-                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.shape_type.name || '-'"></span>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.shape_type?.name || '-'"></span>
                             </div>
                             
                             <!-- Group -->
@@ -214,7 +214,7 @@
                                 <label class="text-gray-700 dark:text-gray-300">
                                     {{ __('content.group') }}:
                                 </label>
-                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.item_group.item_group_name || '-'"></span>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.item_group?.item_group_name || '-'"></span>
                             </div>
 
                             <!-- Approval Date -->
@@ -234,7 +234,7 @@
                                 <label class="text-gray-700 dark:text-gray-300">
                                     {{ __('content.customer') }}:
                                 </label>
-                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.customer.name || '-'"></span>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.customer?.name || '-'"></span>
                             </div>
                             
                             <!-- Designer -->
@@ -243,7 +243,7 @@
                                 <label class="text-gray-700 dark:text-gray-300">
                                     {{ __('content.designer') }}:
                                 </label>
-                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.designer.designer_name || '-'"></span>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.designer?.designer_name || '-'"></span>
                             </div>
                             
                             <!-- Requestor -->
@@ -252,7 +252,7 @@
                                 <label class="text-gray-700 dark:text-gray-300">
                                     {{ __('content.requestor') }}:
                                 </label>
-                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.requestor.name || '-'"></span>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.requestor?.name || '-'"></span>
                             </div>
                         </div>
                         <!-- Specification Image -->

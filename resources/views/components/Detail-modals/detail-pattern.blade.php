@@ -95,7 +95,7 @@
                     </div>
 
                     <!-- Status & Process Badge -->
-                    <div class="my-2 flex justify-center items-center gap-6 border border-gray-200 dark:border-gray-600 pb-4 rounded-lg p-2">
+                    <div class="my-2 flex justify-center items-center gap-6 border border-gray-200 dark:border-gray-600 rounded-lg p-2">
                         <!-- Status -->
                         <template x-if="patternToView?.status">
                             <div class="flex flex-col items-center">
@@ -160,7 +160,7 @@
                             
                             <!-- Pattern Code -->
                             <div class="flex flex-row gap-2 items-center">
-                                <span class="material-symbols-outlined text-base text-green-500 dark:text-green-300">qr_code_2</span>
+                                <span class="material-symbols-outlined text-base text-green-600 dark:text-green-400">qr_code_2</span>
                                 <label class="text-gray-700 dark:text-gray-300">
                                     {{ __('content.pattern_code') }}:
                                 </label>
@@ -169,7 +169,7 @@
 
                             <!-- Pattern Name -->
                             <div class="flex flex-row gap-2 items-center">
-                                <span class="material-symbols-outlined text-base text-green-500 dark:text-green-300">border_color</span>
+                                <span class="material-symbols-outlined text-base text-green-600 dark:text-green-400">border_color</span>
                                 <label class="text-gray-700 dark:text-gray-300">
                                     {{ __('content.pattern_name') }}:
                                 </label>
@@ -248,7 +248,7 @@
                                 </label>
                                 <span class="text-gray-900 dark:text-gray-100" x-text="patternToView?.approval_date ? new Date(patternToView.approval_date).toLocaleDateString('th-TH') : '-'"></span>
                             </div>
-                            
+
                             <hr class="mt-3 mb-2 border-gray-300 dark:border-gray-600">
                             
                             <!-- Customer -->

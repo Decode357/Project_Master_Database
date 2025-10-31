@@ -1,11 +1,11 @@
 <!-- Modal Overlay -->
 <div x-show="BackstampDetailModal" x-transition.opacity
     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-    @click.self="BackstampDetailModal = false" style="display: none;" 
+    @click.self="BackstampDetailModal = false" style="display: none;"
     x-data="{ 
         zoomImage: false, 
-        activeTab: 'basic',
-        showDebug: true,
+        activeTab: 'info',
+        showDebug: false,
         currentImageIndex: 0,
         get currentImage() {
             return this.backstampToView?.images && this.backstampToView.images.length > 0 
@@ -14,13 +14,13 @@
         }
     }">
     <!-- Modal Content -->
-    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-6xl mx-4 relative overflow-hidden h-[90vh] flex flex-col">
-
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-6xl mx-4 relative overflow-visible h-[90vh] flex flex-col">
+        
         <!-- Header -->
-        <div class="bg-gradient-to-r from-blue-600 to-blue-800 dark:from-blue-700 dark:to-blue-900 text-white p-6 flex justify-between items-center flex-shrink-0">
+        <div class="bg-gradient-to-r from-orange-600 to-orange-800 dark:from-orange-700 dark:to-orange-900 text-white p-6 flex justify-between items-center flex-shrink-0 rounded-t-2xl">
             <div>
                 <h2 class="text-2xl font-bold" x-text="backstampToView?.backstamp_code || '{{ __('content.details') }} {{ __('content.backstamp') }}'"></h2>
-                <p class="text-blue-100 dark:text-blue-200 text-sm mt-1" x-text="backstampToView?.name || '{{ __('content.details') }} {{ __('content.backstamp') }}'"></p>
+                <p class="text-orange-100 dark:text-orange-200 text-sm mt-1" x-text="backstampToView?.name || '{{ __('content.details') }} {{ __('content.backstamp') }}'"></p>
             </div>
             <button @click="BackstampDetailModal = false"
                 class="text-white hover:bg-white hover:bg-opacity-20 rounded-full p-2 transition-all">
@@ -29,8 +29,8 @@
         </div>
 
         <!-- Content Area -->
-        <div class="flex-1 overflow-hidden">
-            <!-- Image and Basic Info Section -->
+        <div class="flex-1 overflow-visible">
+            <!-- Image and Information Section -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 p-6 h-full">
                 
                 <!-- Image Section -->
@@ -49,7 +49,7 @@
                                     <div class="flex justify-between items-center mt-3">
                                         <button @click="currentImageIndex = (currentImageIndex - 1 + backstampToView.images.length) % backstampToView.images.length"
                                                 class="bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-full p-1 hover:bg-gray-300 dark:hover:bg-gray-500">
-                                            <span class="material-symbols-outlined">arrow_back</span>
+                                            <span class="material-symbols-outlined mt-1">arrow_back</span>
                                         </button>
                                         
                                         <span class="text-sm text-gray-500 dark:text-gray-400">
@@ -58,7 +58,7 @@
                                         
                                         <button @click="currentImageIndex = (currentImageIndex + 1) % backstampToView.images.length"
                                                 class="bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-full p-1 hover:bg-gray-300 dark:hover:bg-gray-500">
-                                            <span class="material-symbols-outlined">arrow_forward</span>
+                                            <span class="material-symbols-outlined mt-1">arrow_forward</span>
                                         </button>
                                     </div>
                                     
@@ -68,18 +68,18 @@
                                             <img :src="`{{ asset('storage') }}/${image.file_path}`" 
                                                 :alt="`Thumbnail ${index + 1}`"
                                                 class="h-12 w-12 object-cover rounded cursor-pointer"
-                                                :class="currentImageIndex === index ? 'ring-2 ring-blue-500' : ''"
+                                                :class="currentImageIndex === index ? 'ring-2 ring-orange-500' : ''"
                                                 @click="currentImageIndex = index">
                                         </template>
                                     </div>
                                 </div>
                             </template>
-
+                            
                             <template x-if="!backstampToView?.images?.length">
                                 <div class="bg-gray-200 dark:bg-gray-600 rounded-lg flex items-center justify-center h-48">
                                     <div class="text-center text-gray-500 dark:text-gray-400">
                                         <span class="material-symbols-outlined text-6xl mb-2 block">image</span>
-                                        <p>No Images Available</p>
+                                        <p>{{ __('content.no_images_available') }}</p>
                                     </div>
                                 </div>
                             </template>
@@ -87,242 +87,182 @@
                     </div>
 
                     <!-- Status Badge -->
-                    <div class="mt-4 text-center flex-shrink-0">
+                    <div class="my-2 flex justify-center items-center border border-gray-200 dark:border-gray-600 rounded-lg p-2">
                         <template x-if="backstampToView?.status">
-                            <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium"
-                                :class="backstampToView.status.status === 'Active' ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200' : 
-                                        backstampToView.status.status === 'Inactive' ? 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200' : 
-                                        'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200'">
-                                <span class="w-2 h-2 rounded-full mr-2"
-                                    :class="backstampToView.status.status === 'Active' ? 'bg-green-500' : 
-                                            backstampToView.status.status === 'Inactive' ? 'bg-red-500' : 
-                                            'bg-yellow-500'"></span>
-                                <span x-text="backstampToView.status.status"></span>
-                            </span>
+                            <div class="flex flex-col items-center">
+                                <label class="text-gray-700 dark:text-gray-300 font-semibold mb-1">{{ __('content.status') }}</label>
+                                <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200">
+                                    <span class="w-2 h-2 rounded-full mr-2 bg-yellow-500"></span>
+                                    <span x-text="backstampToView.status.status"></span>
+                                </span>
+                            </div>
                         </template>
+                    </div>
+
+                    <!-- Last Updated Info -->
+                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                        <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center">
+                            <span class="material-symbols-outlined mr-2">history</span>
+                            {{ __('content.update_information') }}
+                        </h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <p class="text-gray-600 dark:text-gray-400">{{ __('content.update_by') }}:</p>
+                                <p class="font-medium text-gray-900 dark:text-gray-100 break-words" x-text="backstampToView?.updater?.name || 'System'"></p>
+                            </div>
+                            <div>
+                                <p class="text-gray-600 dark:text-gray-400">{{ __('content.update_at') }}:</p>
+                                <p class="font-medium text-gray-900 dark:text-gray-100" x-text="backstampToView?.updated_at ? new Date(backstampToView.updated_at).toLocaleString('th-TH') : '-'"></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Tabs Content -->
-                <div class="lg:col-span-2 flex flex-col overflow-hidden">
+                <div class="lg:col-span-2 flex flex-col overflow-visible">
                     
                     <!-- Tab Navigation -->
                     <div class="border-b border-gray-200 dark:border-gray-600 mb-6 flex-shrink-0">
                         <nav class="flex space-x-8">
-                            <button @click="activeTab = 'basic'"
-                                :class="activeTab === 'basic' ? 'border-blue-500 text-blue-600 dark:text-blue-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
+                            <button @click="activeTab = 'info'"
+                                :class="activeTab === 'info' ? 'border-orange-500 text-orange-600 dark:text-orange-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
                                 class="whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm transition-all">
                                 <span class="material-symbols-outlined text-sm mr-1">info</span>
-                                Basic Information
-                            </button>
-                            <button @click="activeTab = 'application'"
-                                :class="activeTab === 'application' ? 'border-blue-500 text-blue-600 dark:text-blue-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
-                                class="whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm transition-all">
-                                <span class="material-symbols-outlined text-sm mr-1">brush</span>
-                                Application
-                            </button>
-                            <button @click="activeTab = 'relations'"
-                                :class="activeTab === 'relations' ? 'border-blue-500 text-blue-600 dark:text-blue-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
-                                class="whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm transition-all">
-                                <span class="material-symbols-outlined text-sm mr-1">group</span>
-                                Relations
+                                {{ __('content.information') }}
                             </button>
                         </nav>
                     </div>
 
                     <!-- Tab Content Container -->
                     <div class="flex-1 min-h-0">
-                        <!-- Basic Information Tab -->
-                        <div x-show="activeTab === 'basic'" 
-                            class="h-full overflow-y-auto overflow-x-hidden">
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <!-- Backstamp Code -->
-                                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                                    <div class="flex items-center mb-2">
-                                        <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 mr-2">tag</span>
-                                        <span class="font-semibold text-gray-700 dark:text-gray-300">Backstamp Code</span>
-                                    </div>
-                                    <p class="text-lg font-mono text-gray-900 dark:text-gray-100 break-words" x-text="backstampToView?.backstamp_code || '-'"></p>
-                                </div>
-
-                                <!-- Backstamp Name -->
-                                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                                    <div class="flex items-center mb-2">
-                                        <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 mr-2">title</span>
-                                        <span class="font-semibold text-gray-700 dark:text-gray-300">Backstamp Name</span>
-                                    </div>
-                                    <p class="text-gray-900 dark:text-gray-100 break-words" x-text="backstampToView?.name || '-'"></p>
-                                </div>
-
-                                <!-- Duration -->
-                                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                                    <div class="flex items-center mb-2">
-                                        <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 mr-2">schedule</span>
-                                        <span class="font-semibold text-gray-700 dark:text-gray-300">Duration</span>
-                                    </div>
-                                    <p class="text-gray-900 dark:text-gray-100" x-text="(backstampToView?.duration || '0') + ' minutes'"></p>
-                                </div>
-
-                                <!-- Approval Date -->
-                                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                                    <div class="flex items-center mb-2">
-                                        <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 mr-2">event</span>
-                                        <span class="font-semibold text-gray-700 dark:text-gray-300">Approval Date</span>
-                                    </div>
-                                    <p class="text-gray-900 dark:text-gray-100" x-text="backstampToView?.approval_date ? new Date(backstampToView.approval_date).toLocaleDateString('th-TH') : '-'"></p>
-                                </div>
-
-                                <!-- Last Updated Info -->
-                                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 sm:col-span-2">
-                                    <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center">
-                                        <span class="material-symbols-outlined mr-2">history</span>
-                                        Update Information
-                                    </h4>
-                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                                        <div>
-                                            <p class="text-gray-600 dark:text-gray-400">Last Updated By:</p>
-                                            <p class="font-medium text-gray-900 dark:text-gray-100 break-words" x-text="backstampToView?.updater?.name || 'System'"></p>
-                                        </div>
-                                        <div>
-                                            <p class="text-gray-600 dark:text-gray-400">Updated At:</p>
-                                            <p class="font-medium text-gray-900 dark:text-gray-100" x-text="backstampToView?.updated_at ? new Date(backstampToView.updated_at).toLocaleString('th-TH') : '-'"></p>
-                                        </div>
-                                    </div>
-                                </div>
+                        <!-- Information Tab -->
+                        <div x-show="activeTab === 'info'" class="h-full overflow-y-auto overflow-x-hidden flex flex-col gap-2 font-lg text-lg">
+                            
+                            <!-- Backstamp Code -->
+                            <div class="flex flex-row gap-2 items-center">
+                                <span class="material-symbols-outlined text-base text-orange-600 dark:text-orange-400">qr_code_2</span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.backstamp_code') }}:
+                                </label>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="backstampToView?.backstamp_code || '-'"></span>
                             </div>
-                        </div>
-
-                        <!-- Application Tab -->
-                        <div x-show="activeTab === 'application'" 
-                            class="h-full overflow-y-auto overflow-x-hidden">
-                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                                <!-- In Glaze -->
-                                <div class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900 dark:to-blue-800 rounded-lg p-6 border border-blue-200 dark:border-blue-700 text-center">
-                                    <div class="flex items-center justify-center mb-3">
-                                        <span class="material-symbols-outlined text-3xl text-blue-600 dark:text-blue-400">format_paint</span>
-                                    </div>
-                                    <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-2">In Glaze</h4>
-                                    <div class="flex items-center justify-center">
-                                        <span x-show="backstampToView?.in_glaze" class="text-green-600 dark:text-green-400">
-                                            <span class="material-symbols-outlined text-2xl">check_circle</span>
-                                        </span>
-                                        <span x-show="!backstampToView?.in_glaze" class="text-red-600 dark:text-red-400">
-                                            <span class="material-symbols-outlined text-2xl">cancel</span>
-                                        </span>
-                                    </div>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-2" x-text="backstampToView?.in_glaze ? 'Available' : 'Not Available'"></p>
-                                </div>
-
-                                <!-- On Glaze -->
-                                <div class="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900 dark:to-green-800 rounded-lg p-6 border border-green-200 dark:border-green-700 text-center">
-                                    <div class="flex items-center justify-center mb-3">
-                                        <span class="material-symbols-outlined text-3xl text-green-600 dark:text-green-400">brush</span>
-                                    </div>
-                                    <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-2">On Glaze</h4>
-                                    <div class="flex items-center justify-center">
-                                        <span x-show="backstampToView?.on_glaze" class="text-green-600 dark:text-green-400">
-                                            <span class="material-symbols-outlined text-2xl">check_circle</span>
-                                        </span>
-                                        <span x-show="!backstampToView?.on_glaze" class="text-red-600 dark:text-red-400">
-                                            <span class="material-symbols-outlined text-2xl">cancel</span>
-                                        </span>
-                                    </div>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-2" x-text="backstampToView?.on_glaze ? 'Available' : 'Not Available'"></p>
-                                </div>
-
-                                <!-- Under Glaze -->
-                                <div class="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900 dark:to-purple-800 rounded-lg p-6 border border-purple-200 dark:border-purple-700 text-center">
-                                    <div class="flex items-center justify-center mb-3">
-                                        <span class="material-symbols-outlined text-3xl text-purple-600 dark:text-purple-400">layers</span>
-                                    </div>
-                                    <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-2">Under Glaze</h4>
-                                    <div class="flex items-center justify-center">
-                                        <span x-show="backstampToView?.under_glaze" class="text-green-600 dark:text-green-400">
-                                            <span class="material-symbols-outlined text-2xl">check_circle</span>
-                                        </span>
-                                        <span x-show="!backstampToView?.under_glaze" class="text-red-600 dark:text-red-400">
-                                            <span class="material-symbols-outlined text-2xl">cancel</span>
-                                        </span>
-                                    </div>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-2" x-text="backstampToView?.under_glaze ? 'Available' : 'Not Available'"></p>
-                                </div>
-
-                                <!-- Air Dry -->
-                                <div class="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900 dark:to-orange-800 rounded-lg p-6 border border-orange-200 dark:border-orange-700 text-center">
-                                    <div class="flex items-center justify-center mb-3">
-                                        <span class="material-symbols-outlined text-3xl text-orange-600 dark:text-orange-400">air</span>
-                                    </div>
-                                    <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-2">Air Dry</h4>
-                                    <div class="flex items-center justify-center">
-                                        <span x-show="backstampToView?.air_dry" class="text-green-600 dark:text-green-400">
-                                            <span class="material-symbols-outlined text-2xl">check_circle</span>
-                                        </span>
-                                        <span x-show="!backstampToView?.air_dry" class="text-red-600 dark:text-red-400">
-                                            <span class="material-symbols-outlined text-2xl">cancel</span>
-                                        </span>
-                                    </div>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-2" x-text="backstampToView?.air_dry ? 'Available' : 'Not Available'"></p>
-                                </div>
+                            
+                            <!-- Backstamp Name -->
+                            <div class="flex flex-row gap-2 items-center">
+                                <span class="material-symbols-outlined text-base text-orange-600 dark:text-orange-400">border_color</span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.backstamp_name') }}:
+                                </label>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="backstampToView?.name || '-'"></span>
                             </div>
 
-                            <!-- Application Summary -->
-                            <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6">
-                                <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-4 flex items-center">
-                                    <span class="material-symbols-outlined mr-2">palette</span>
-                                    Application Methods Summary
-                                </h4>
-                                <div class="text-sm text-gray-600 dark:text-gray-400">
-                                    <p class="mb-2">This backstamp supports the following application methods:</p>
-                                    <ul class="list-disc list-inside space-y-1">
-                                        <li x-show="backstampToView?.in_glaze" class="text-blue-600 dark:text-blue-400">In Glaze - Applied within the glaze layer</li>
-                                        <li x-show="backstampToView?.on_glaze" class="text-green-600 dark:text-green-400">On Glaze - Applied on top of the glaze layer</li>
-                                        <li x-show="backstampToView?.under_glaze" class="text-purple-600 dark:text-purple-400">Under Glaze - Applied beneath the glaze layer</li>
-                                        <li x-show="backstampToView?.air_dry" class="text-orange-600 dark:text-orange-400">Air Dry - Can be air dried</li>
-                                        <li x-show="!backstampToView?.in_glaze && !backstampToView?.on_glaze && !backstampToView?.under_glaze && !backstampToView?.air_dry" class="text-gray-500 dark:text-gray-400">No application methods available</li>
-                                    </ul>
-                                </div>
+                            <!-- Organic -->
+                            <div class="flex flex-row gap-2 items-center">
+                                <span class="material-symbols-outlined text-base text-lime-600 dark:text-lime-400">
+                                    Eco
+                                </span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.organic') }}:
+                                </label>
+                                <template x-if="backstampToView?.organic === true">
+                                    <span class="material-symbols-outlined text-green-600 dark:text-green-400">check</span>
+                                </template>
+                                <template x-if="backstampToView?.organic === false">
+                                    <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">close</span>
+                                </template>
                             </div>
-                        </div>
 
-                        <!-- Relations Tab -->
-                        <div x-show="activeTab === 'relations'" 
-                            class="h-full overflow-y-auto overflow-x-hidden">
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <!-- Customer -->
-                                <div class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900 dark:to-blue-800 rounded-lg p-4 border border-blue-200 dark:border-blue-700">
-                                    <div class="flex items-center mb-3">
-                                        <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 mr-2">business</span>
-                                        <span class="font-semibold text-gray-700 dark:text-gray-300">Customer</span>
-                                    </div>
-                                    <p class="text-lg font-medium text-blue-800 dark:text-blue-200 break-words" x-text="backstampToView?.customer?.name || '-'"></p>
-                                </div>
+                            <!-- In Glaze -->
+                            <div class="flex flex-row gap-2 items-center">
+                                <span class="material-symbols-outlined text-base text-purple-600 dark:text-purple-400">
+                                    Vertical_Align_Center
+                                </span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.in_glaze') }}:
+                                </label>
+                                <template x-if="backstampToView?.in_glaze === true">
+                                    <span class="material-symbols-outlined text-green-600 dark:text-green-400">check</span>
+                                </template>
+                                <template x-if="backstampToView?.in_glaze === false">
+                                    <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">close</span>
+                                </template>
+                            </div>
 
-                                <!-- Requestor -->
-                                <div class="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900 dark:to-green-800 rounded-lg p-4 border border-green-200 dark:border-green-700">
-                                    <div class="flex items-center mb-3">
-                                        <span class="material-symbols-outlined text-green-600 dark:text-green-400 mr-2">person</span>
-                                        <span class="font-semibold text-gray-700 dark:text-gray-300">Requestor</span>
-                                    </div>
-                                    <p class="text-lg font-medium text-green-800 dark:text-green-200 break-words" x-text="backstampToView?.requestor?.name || '-'"></p>
-                                </div>
+                            <!-- On Glaze -->
+                            <div class="flex flex-row gap-2 items-center">
+                                <span class="material-symbols-outlined text-base text-purple-600 dark:text-purple-400">
+                                    Vertical_Align_Bottom
+                                </span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.on_glaze') }}:
+                                </label>
+                                <template x-if="backstampToView?.on_glaze === true">
+                                    <span class="material-symbols-outlined text-green-600 dark:text-green-400">check</span>
+                                </template>
+                                <template x-if="backstampToView?.on_glaze === false">
+                                    <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">close</span>
+                                </template>
+                            </div>
 
-                                <!-- Status -->
-                                <div class="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900 dark:to-orange-800 rounded-lg p-4 border border-orange-200 dark:border-orange-700">
-                                    <div class="flex items-center mb-3">
-                                        <span class="material-symbols-outlined text-orange-600 dark:text-orange-400 mr-2">flag</span>
-                                        <span class="font-semibold text-gray-700 dark:text-gray-300">Status</span>
-                                    </div>
-                                    <p class="text-lg font-medium text-orange-800 dark:text-orange-200 break-words" x-text="backstampToView?.status?.status || '-'"></p>
-                                </div>
+                            <!-- Under Glaze -->
+                            <div class="flex flex-row gap-2 items-center">
+                                <span class="material-symbols-outlined text-base text-purple-600 dark:text-purple-400">
+                                    Vertical_Align_Top
+                                </span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.under_glaze') }}:
+                                </label>
+                                <template x-if="backstampToView?.under_glaze === true">
+                                    <span class="material-symbols-outlined text-green-600 dark:text-green-400">check</span>
+                                </template>
+                                <template x-if="backstampToView?.under_glaze === false">
+                                    <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">close</span>
+                                </template>
+                            </div>
 
-                                <!-- Duration -->
-                                <div class="bg-gradient-to-br from-red-50 to-red-100 dark:from-red-900 dark:to-red-800 rounded-lg p-4 border border-red-200 dark:border-red-700">
-                                    <div class="flex items-center mb-3">
-                                        <span class="material-symbols-outlined text-red-600 dark:text-red-400 mr-2">schedule</span>
-                                        <span class="font-semibold text-gray-700 dark:text-gray-300">Processing Time</span>
-                                    </div>
-                                    <p class="text-lg font-medium text-red-800 dark:text-red-200" x-text="(backstampToView?.duration || '0') + ' minutes'"></p>
-                                </div>
+                            <!-- Air dry -->
+                            <div class="flex flex-row gap-2 items-center">
+                                <span class="material-symbols-outlined text-base text-gray-600 dark:text-gray-400">
+                                    Air
+                                </span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.air_dry') }}:
+                                </label>
+                                <template x-if="backstampToView?.air_dry === true">
+                                    <span class="material-symbols-outlined text-green-600 dark:text-green-400">check</span>
+                                </template>
+                                <template x-if="backstampToView?.air_dry === false">
+                                    <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">close</span>
+                                </template>
+                            </div>
+
+                            <!-- Approval Date -->
+                            <div class="flex flex-row gap-2 items-center">
+                                <span class="material-symbols-outlined text-base text-green-600 dark:text-green-400">Order_Approve</span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.approval_date') }}:
+                                </label>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="backstampToView?.approval_date ? new Date(backstampToView.approval_date).toLocaleDateString('th-TH') : '-'"></span>
+                            </div>
+
+                            <hr class="mt-3 mb-2 border-gray-300 dark:border-gray-600">
+                            
+                            <!-- Customer -->
+                            <div class="flex flex-row gap-2 items-center">
+                                <span class="material-symbols-outlined text-base text-indigo-600 dark:text-indigo-400">business</span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.customer') }}:
+                                </label>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="backstampToView?.customer?.name || '-'"></span>
+                            </div>
+                            
+                            <!-- Requestor -->
+                            <div class="flex flex-row gap-2 items-center">
+                                <span class="material-symbols-outlined text-base text-red-600 dark:text-red-400">person_raised_hand</span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.requestor') }}:
+                                </label>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="backstampToView?.requestor?.name || '-'"></span>
                             </div>
                         </div>
                     </div>
@@ -331,33 +271,30 @@
         </div>
 
         <!-- Footer -->
-        <div class="bg-gray-50 dark:bg-gray-700 px-6 py-4 flex justify-between items-center border-t border-gray-200 dark:border-gray-600 flex-shrink-0">
+        <div class="bg-gray-50 dark:bg-gray-700 px-6 py-4 flex justify-between items-center border-t border-gray-200 dark:border-gray-600 flex-shrink-0 rounded-b-2xl">
             <div class="text-sm text-gray-500 dark:text-gray-400">
                 <span class="material-symbols-outlined text-sm mr-1">schedule</span>
-                Created: <span x-text="backstampToView?.created_at ? new Date(backstampToView.created_at).toLocaleDateString('th-TH') : '-'"></span>
+                {{ __('content.created_at') }}: <span x-text="backstampToView?.created_at ? new Date(backstampToView.created_at).toLocaleDateString('th-TH') : '-'"></span>
             </div>
             <button @click="BackstampDetailModal = false"
-                class="bg-gray-500 dark:bg-gray-600 hover:bg-blue-600 dark:hover:bg-blue-500 text-white py-2 px-6 rounded-lg transition-all duration-200 hoverScale">
-                <span class="material-symbols-outlined text-sm mr-1 mt-1">close</span>
-                Close
+                class="bg-gray-500 dark:bg-gray-600 hover:bg-orange-600 dark:hover:bg-orange-500 text-white py-2 px-6 rounded-lg transition-all duration-200 hoverScale">
+                {{ __('content.close') }}
             </button>
         </div>
     </div>
 
-    <!-- Debug Panel - กดปุ่ม F2 เพื่อเปิด/ปิด -->
+    <!-- Debug Panel - F2 -->
     <div x-show="showDebug" 
-        class="fixed top-2 right-2 bg-black bg-opacity-90 text-green-400 p-4 rounded text-xs font-mono  flex flex-row"
+        class="fixed top-2 right-2 bg-black bg-opacity-90 text-green-400 p-4 rounded text-xs font-mono flex flex-row max-w-4xl"
         @keydown.window.f2.prevent="showDebug = !showDebug">
         <div class="flex justify-between items-center mb-2">
             <button @click="showDebug = false" class="text-white hover:text-red-400">✕</button>
         </div>
         <div class="overflow-auto flex-1" style="max-height: calc(90vh - 40px);">
-            <pre x-text="JSON.stringify(backstampToView.images, null, 2)" class="whitespace-pre-wrap"></pre>
-        </div>
-        <div class="overflow-auto flex-1" style="max-height: calc(90vh - 40px);">
             <pre x-text="JSON.stringify(backstampToView, null, 2)" class="whitespace-pre-wrap"></pre>
         </div>
-    </div> 
+    </div>
+
     <!-- Zoom Image Modal -->
     <div x-show="zoomImage" x-transition.opacity
         class="fixed inset-0 bg-black bg-opacity-95 flex items-center justify-center z-60"
@@ -366,7 +303,7 @@
             <template x-if="backstampToView?.images?.length > 0">
                 <div class="relative">
                     <img :src="`{{ asset('storage') }}/${backstampToView.images[currentImageIndex].file_path}`" 
-                        :alt="backstampToView.item_code"
+                        :alt="backstampToView.backstamp_code"
                         class="max-h-[80vh] max-w-[95vw] object-contain rounded-lg shadow-2xl">
                         
                     <!-- Navigation Arrows -->
@@ -387,13 +324,14 @@
                     </div>
                 </div>
             </template>
-
+            
             <template x-if="!backstampToView?.images?.length">
                 <div class="bg-white dark:bg-gray-800 rounded-lg p-8 text-center">
                     <span class="material-symbols-outlined text-6xl text-gray-400 mb-4 block">image</span>
-                    <p class="text-gray-600 dark:text-gray-300">No Images Available</p>
+                    <p class="text-gray-600 dark:text-gray-300">{{ __('content.no_images_available') }}</p>
                 </div>
             </template>
+            
             <!-- Close button -->
             <button @click="zoomImage = false"
                 class="absolute top-4 right-4 bg-black bg-opacity-50 text-white rounded-full p-2 hover:bg-opacity-70 transition-all">
