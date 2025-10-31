@@ -183,7 +183,7 @@
                             
                             <!-- Collection Code -->
                             <div class="flex flex-row gap-2 items-center">
-                                <span class="material-symbols-outlined text-base text-orange-600 dark:text-orange-400">collections_bookmark</span>
+                                <span class="material-symbols-outlined text-base text-orange-600 dark:text-orange-400">qr_code</span>
                                 <label class="text-gray-700 dark:text-gray-300">
                                     {{ __('content.collection_code') }}:
                                 </label>
@@ -216,7 +216,16 @@
                                 </label>
                                 <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.item_group.item_group_name || '-'"></span>
                             </div>
-                            
+
+                            <!-- Approval Date -->
+                            <div class="flex flex-row gap-2 items-center">
+                                <span class="material-symbols-outlined text-base text-green-600 dark:text-green-400">Order_Approve</span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.approval_date') }}:
+                                </label>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.approval_date ? new Date(shapeToView.approval_date).toLocaleDateString('th-TH') : '-'"></span>
+                            </div>
+
                             <hr class="mt-3 mb-2 border-gray-300 dark:border-gray-600">
                             
                             <!-- Customer -->
