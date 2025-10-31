@@ -33,6 +33,53 @@ class Shape extends Model
         'updated_by',
     ];
 
+    // ✅ ฟังก์ชันช่วย format ตัวเลข
+    protected function formatNumber(?float $value): ?string
+    {
+        if (is_null($value)) {
+            return null;
+        }
+
+        $formatted = number_format((float)$value, 2, '.', '');
+        return rtrim(rtrim($formatted, '0'), '.');
+    }
+
+    // ✅ Accessors
+    public function getVolumeAttribute($value)
+    {
+        return $this->formatNumber($value);
+    }
+
+    public function getWeightAttribute($value)
+    {
+        return $this->formatNumber($value);
+    }
+
+    public function getLongDiameterAttribute($value)
+    {
+        return $this->formatNumber($value);
+    }
+
+    public function getShortDiameterAttribute($value)
+    {
+        return $this->formatNumber($value);
+    }
+
+    public function getHeightLongAttribute($value)
+    {
+        return $this->formatNumber($value);
+    }
+
+    public function getHeightShortAttribute($value)
+    {
+        return $this->formatNumber($value);
+    }
+
+    public function getBodyAttribute($value)
+    {
+        return $this->formatNumber($value);
+    }
+
     public function images()
     {
         return $this->hasMany(Image::class);
