@@ -183,7 +183,7 @@
                             
                             <!-- Collection Code -->
                             <div class="flex flex-row gap-2 items-center">
-                                <span class="material-symbols-outlined text-base text-orange-600 dark:text-orange-400">qr_code</span>
+                                <span class="material-symbols-outlined text-base text-pink-600 dark:text-pink-400">qr_code</span>
                                 <label class="text-gray-700 dark:text-gray-300">
                                     {{ __('content.collection_code') }}:
                                 </label>

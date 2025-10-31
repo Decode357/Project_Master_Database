@@ -58,7 +58,7 @@
                     data-placeholder="{{ __('content.select_colors') }}">
                     @foreach ($colors as $color)
                         <option value="{{ $color->id }}">
-                            {{ $color->color_name }} : {{ optional($color->customer)->name ?? '-' }}
+                            {{ $color->color_code }} : {{ $color->color_name ?? __('content.no_color') }} : {{ $color->customer->name ?? '-' }}
                         </option>
                     @endforeach
                 </select>
