@@ -99,6 +99,17 @@ class ChartManager {
                         pointHoverRadius: 6
                     },
                     {
+                        label: LANG.glazes,
+                        data: data.glazeCounts,
+                        borderColor: '#8b5cf6',
+                        backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                        borderWidth: 2,
+                        tension: 0.3,
+                        fill: false,
+                        pointRadius: 3,
+                        pointHoverRadius: 6
+                    },
+                    {
                         label: LANG.patterns,
                         data: data.patternCounts,
                         borderColor: '#10b981',
@@ -120,17 +131,6 @@ class ChartManager {
                         pointRadius: 3,
                         pointHoverRadius: 6
                     },
-                    {
-                        label: LANG.glazes,
-                        data: data.glazeCounts,
-                        borderColor: '#8b5cf6',
-                        backgroundColor: 'rgba(139, 92, 246, 0.1)',
-                        borderWidth: 2,
-                        tension: 0.3,
-                        fill: false,
-                        pointRadius: 3,
-                        pointHoverRadius: 6
-                    }
                 ]
             },
             options: {

@@ -42,7 +42,7 @@
                                 <div>
                                     <img :src="`{{ asset('storage') }}/${shapeToView.images[currentImageIndex].file_path}`" 
                                         :alt="shapeToView.images[currentImageIndex].file_name"
-                                        class="rounded-lg shadow-lg cursor-zoom-in mx-auto h-48 object-contain w-full"
+                                        class="rounded-lg shadow-lg cursor-zoom-in mx-auto h-64 md:h-80 object-contain w-full"
                                         @click="zoomImage = true">
                                     
                                     <!-- Image Navigation -->

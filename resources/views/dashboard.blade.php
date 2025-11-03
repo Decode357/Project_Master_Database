@@ -30,16 +30,16 @@
             <span class="text-xs text-gray-500 dark:text-gray-400 mt-1 uppercase tracking-wider">{{__('sidebar.shapes')}}</span>
         </div>
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 flex flex-col items-center ">
+            <span class="text-2xl font-bold text-purple-600 dark:text-purple-400">{{ $glazeCount }}</span>
+            <span class="text-xs text-gray-500 dark:text-gray-400 mt-1 uppercase tracking-wider">{{__('sidebar.glazes')}}</span>
+        </div>       
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 flex flex-col items-center ">
             <span class="text-2xl font-bold text-green-600 dark:text-green-400">{{ $patternCount }}</span>
             <span class="text-xs text-gray-500 dark:text-gray-400 mt-1 uppercase tracking-wider">{{__('sidebar.patterns')}}</span>
         </div>        
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 flex flex-col items-center ">
             <span class="text-2xl font-bold text-yellow-600 dark:text-yellow-400">{{ $backstampCount }}</span>
             <span class="text-xs text-gray-500 dark:text-gray-400 mt-1 uppercase tracking-wider">{{__('sidebar.backstamps')}}</span>
-        </div>
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 flex flex-col items-center ">
-            <span class="text-2xl font-bold text-purple-600 dark:text-purple-400">{{ $glazeCount }}</span>
-            <span class="text-xs text-gray-500 dark:text-gray-400 mt-1 uppercase tracking-wider">{{__('sidebar.glazes')}}</span>
         </div>
     </div>
 
