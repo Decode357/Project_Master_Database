@@ -63,7 +63,7 @@
                                     </div>
                                     
                                     <!-- Thumbnails -->
-                                    <div class="flex gap-1 mt-3 overflow-x-auto pb-2">
+                                    <div class="flex gap-1 px-2 py-2 overflow-x-auto pb-2"> 
                                         <template x-for="(image, index) in backstampToView.images" :key="index">
                                             <img :src="`{{ asset('storage') }}/${image.file_path}`" 
                                                 :alt="`Thumbnail ${index + 1}`"

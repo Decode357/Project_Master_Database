@@ -307,7 +307,7 @@
                         <template x-for="(file, index) in newImages" :key="index">
                             <div class="relative group">
                                 <img :src="URL.createObjectURL(file)" 
-                                    class="w-full h-32 object-cover rounded-lg" 
+                                    class="w-full h-16 object-cover rounded-lg" 
                                     :alt="file.name">
                                 <button type="button" 
                                         @click="removeNewImage(index)"

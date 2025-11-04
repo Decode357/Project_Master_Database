@@ -225,7 +225,7 @@
                     }
                 @endphp
                 <!-- User Info Section -->
-                <div class="flex items-center gap-3 rounded-md p-3 shadow-md bg-gray-50 dark:bg-gray-700">
+                <div class="flex items-center gap-3 rounded-md p-3 mt-2 shadow-md bg-gray-50 dark:bg-gray-700">
                     <div class="relative flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-600">
                         <span class="text-lg font-bold text-gray-700 dark:text-gray-200">{{ $roleInitial }}</span>
                         <div class="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-white dark:border-gray-700 bg-green-500">

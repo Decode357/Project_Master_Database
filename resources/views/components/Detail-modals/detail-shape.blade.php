@@ -63,7 +63,7 @@
                                     </div>
                                     
                                     <!-- Thumbnails -->
-                                    <div class="flex gap-1 mt-3 overflow-x-auto pb-2">
+                                    <div class="flex gap-1 px-2 py-2 overflow-x-auto pb-2">
                                         <template x-for="(image, index) in shapeToView.images" :key="index">
                                             <img :src="`{{ asset('storage') }}/${image.file_path}`" 
                                                 :alt="`Thumbnail ${index + 1}`"
@@ -273,7 +273,7 @@
                                 </label>
                                 <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.volume || '-'"></span>
                                 <label class="text-gray-400 dark:text-gray-500">
-                                    {{ __('content.cc') }}
+                                    {{ __('content.cc_full') }}
                                 </label>
                             </div>
                             <hr class=" border-gray-300 dark:border-gray-600">
@@ -285,7 +285,7 @@
                                 </label>
                                 <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.weight || '-'"></span>
                                 <label class="text-gray-400 dark:text-gray-500">
-                                    {{ __('content.g') }}
+                                    {{ __('content.g_full') }}
                                 </label>
                             </div>
                             <hr class=" border-gray-300 dark:border-gray-600">
@@ -297,7 +297,7 @@
                                 </label>
                                 <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.long_diameter || '-'"></span>
                                 <label class="text-gray-400 dark:text-gray-500">
-                                    {{ __('content.mm') }}
+                                    {{ __('content.mm_full') }}
                                 </label>
                             </div>
                             <hr class=" border-gray-300 dark:border-gray-600">
@@ -309,7 +309,7 @@
                                 </label>
                                 <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.short_diameter || '-'"></span>
                                 <label class="text-gray-400 dark:text-gray-500">
-                                    {{ __('content.mm') }}
+                                    {{ __('content.mm_full') }}
                                 </label>
                             </div>
                             <hr class=" border-gray-300 dark:border-gray-600">
@@ -321,7 +321,7 @@
                                 </label>
                                 <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.height_long || '-'"></span>
                                 <label class="text-gray-400 dark:text-gray-500">
-                                    {{ __('content.mm') }}
+                                    {{ __('content.mm_full') }}
                                 </label>
                             </div>
                             <hr class=" border-gray-300 dark:border-gray-600">
@@ -333,7 +333,7 @@
                                 </label>
                                 <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.height_short || '-'"></span>
                                 <label class="text-gray-400 dark:text-gray-500">
-                                    {{ __('content.mm') }}
+                                    {{ __('content.mm_full') }}
                                 </label>
                             </div>
                             <hr class=" border-gray-300 dark:border-gray-600">
@@ -345,7 +345,7 @@
                                 </label>
                                 <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.body || '-'"></span>
                                 <label class="text-gray-400 dark:text-gray-500">
-                                    {{ __('content.mm') }}
+                                    {{ __('content.mm_full') }}
                                 </label>
                             </div>
                             <hr class=" border-gray-300 dark:border-gray-600">

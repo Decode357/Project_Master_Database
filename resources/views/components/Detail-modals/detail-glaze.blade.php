@@ -63,7 +63,7 @@
                                     </div>
                                     
                                     <!-- Thumbnails -->
-                                    <div class="flex gap-1 mt-3 overflow-x-auto pb-2">
+                                    <div class="flex gap-1 px-2 py-2 overflow-x-auto pb-2"> 
                                         <template x-for="(image, index) in glazeToView.images" :key="index">
                                             <img :src="`{{ asset('storage') }}/${image.file_path}`" 
                                                 :alt="`Thumbnail ${index + 1}`"
@@ -153,8 +153,11 @@
                                 <label class="text-gray-700 dark:text-gray-300">
                                     {{ __('content.fire_temp') }}:
                                 </label>
-                                <span class="text-gray-900 dark:text-gray-100" x-text="glazeToView?.fire_temp || '-'"></span>
-                                <label class="text-gray-400 dark:text-gray-500">°C</label>
+                                <span 
+                                    class="text-gray-900 dark:text-gray-100"
+                                    x-text="glazeToView?.fire_temp ? glazeToView.fire_temp + ' {{ __('content.°C_full') }}' : '-'">
+                                </span>
+
                             </div>
 
                             <!-- Approval Date -->
