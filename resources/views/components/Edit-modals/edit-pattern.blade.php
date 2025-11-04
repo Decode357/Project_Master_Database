@@ -158,8 +158,69 @@
                         x-text="errors.approval_date ? (Array.isArray(errors.approval_date) ? errors.approval_date[0] : errors.approval_date) : ''"
                         class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
                 </div>
+                <div class="text-end">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('content.upload_new_images') }}</label>
+                    <!-- ปุ่มแทน input file -->
+                    <label 
+                        for="newImageUpload"
+                        class="inline-flex items-center px-6 py-2 bg-blue-600 text-white text-sm font-medium hoverScale rounded-md cursor-pointer hover:bg-blue-700">
+                        <svg  class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 12V4m0 0l4 4m-4-4L8 8"/>
+                        </svg>
+                        {{ __('content.select_images') }}
+                    </label>
+                    <!-- input file ซ่อน -->
+                    <input class="hidden" id="newImageUpload" type="file" multiple accept="image/*" @change="handleImageUpload">
+                </div>    
             </div>
-
+            <!-- Existing Images and New Image Previews -->
+            <div class="rounded-md grid grid-cols-2 gap-4">
+                <!-- แสดงรูปภาพที่มีอยู่ -->
+                <div x-show="patternToEdit.images && patternToEdit.images.length > 0">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                        {{ __('content.existing_images') }}
+                    </label>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                        <template x-for="(image, index) in patternToEdit.images" :key="image.id">
+                            <div class="relative group">
+                                <img :src="image.url" 
+                                    class="w-full h-32 object-cover rounded-lg" 
+                                    :alt="image.file_name">
+                                <button type="button" 
+                                        @click="removeImage(index)"
+                                        class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+                <!-- แสดงตัวอย่างรูปภาพที่เพิ่งอัพโหลด -->
+                <div x-show="newImages.length > 0">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                        {{ __('content.new_images_preview') }}
+                    </label>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                        <template x-for="(file, index) in newImages" :key="index">
+                            <div class="relative group">
+                                <img :src="URL.createObjectURL(file)" 
+                                    class="w-full h-32 object-cover rounded-lg" 
+                                    :alt="file.name">
+                                <button type="button" 
+                                        @click="removeNewImage(index)"
+                                        class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
             <div class="flex justify-end gap-2 mt-4">
                 <button type="button" @click="EditPatternModal = false; errors = {}"
                     class="px-4 py-2 rounded-md bg-gray-200 dark:bg-gray-600 dark:text-gray-300 dark:hover:bg-gray-500 hoverScale hover:bg-red-500 hover:text-white">{{ __('content.cancel') }}</button>

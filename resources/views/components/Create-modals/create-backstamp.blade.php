@@ -8,9 +8,82 @@
         <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">{{ __('content.create_backstamp') }}</h2>
         <hr class="mb-3 border-gray-200 dark:border-gray-600">
 
-        <form @submit.prevent="submitBackstampForm" class="space-y-4" x-data="{
+        <form @submit.prevent="submitBackstampForm($event)" class="space-y-4" x-data="{
             errors: {},
-            loading: false
+            loading: false,
+            
+            handleImageUpload(event) {
+                const files = event.target.files;
+                if (files) {
+                    Array.from(files).forEach(file => {
+                        if (file.type.startsWith('image/')) {
+                            if (file.size <= 5 * 1024 * 1024) {
+                                this.newImages.push(file);
+                            } else {
+                                showToast('Image file size must be less than 5MB', 'error');
+                            }
+                        } else {
+                            showToast('Please select only image files', 'error');
+                        }
+                    });
+                }
+                event.target.value = '';
+            },
+            
+            removeNewImage(index) {
+                this.newImages.splice(index, 1);
+            },
+
+            submitBackstampForm(event) {
+                this.loading = true;
+                this.errors = {};
+
+                const formData = new FormData();
+                formData.append('_token', document.querySelector('meta[name=\'csrf-token\']').getAttribute('content'));
+                
+                const form = event.target;
+                const formElements = form.elements;
+                for (let element of formElements) {
+                    if (element.name && element.type !== 'submit') {
+                        formData.append(element.name, element.value || '');
+                    }
+                }
+
+                this.newImages.forEach((file, index) => {
+                    formData.append(`new_images[${index}]`, file);
+                });
+
+                fetch('/backstamp', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => {
+                    if (response.ok) return response.json();
+                    return response.json().then(data => Promise.reject(data));
+                })
+                .then(data => {
+                    this.CreateBackstampModal = false;
+                    this.errors = {};
+                    this.newImages = [];
+                    form.reset();
+                    if (typeof resetSelect2 === 'function') resetSelect2('#CreateBackstampModal');
+                    showToast(data.message, 'success');
+                    setTimeout(() => window.location.reload(), 300);
+                })
+                .catch(error => {
+                    if (error.errors) {
+                        this.errors = error.errors;
+                    } else {
+                        showToast(error.message || 'เกิดข้อผิดพลาด', 'error');
+                    }
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
+            }
         }">
             @csrf
 
@@ -136,10 +209,50 @@
                         x-text="errors.approval_date ? (Array.isArray(errors.approval_date) ? errors.approval_date[0] : errors.approval_date) : ''"
                         class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
                 </div>
+                <div class="text-end">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('content.upload_new_images') }}</label>
+                    <!-- ปุ่มแทน input file -->
+                    <label 
+                        for="newImageUpload"
+                        class="inline-flex items-center px-6 py-2 bg-blue-600 text-white text-sm font-medium hoverScale rounded-md cursor-pointer hover:bg-blue-700">
+                        <svg  class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 12V4m0 0l4 4m-4-4L8 8"/>
+                        </svg>
+                        {{ __('content.select_images') }}
+                    </label>
+                    <!-- input file ซ่อน -->
+                    <input class="hidden" id="newImageUpload" type="file" multiple accept="image/*" @change="handleImageUpload">
+                </div>  
+            </div>
+            <!-- Existing Images and New Image Previews -->
+            <div class="rounded-md grid grid-cols-2 gap-4">
+                <!-- แสดงตัวอย่างรูปภาพที่เพิ่งอัพโหลด -->
+                <div x-show="newImages.length > 0">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                        {{ __('content.new_images_preview') }}
+                    </label>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                        <template x-for="(file, index) in newImages" :key="index">
+                            <div class="relative group">
+                                <img :src="URL.createObjectURL(file)" 
+                                    class="w-full h-32 object-cover rounded-lg" 
+                                    :alt="file.name">
+                                <button type="button" 
+                                        @click="removeNewImage(index)"
+                                        class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </template>
+                    </div>
+                </div>
             </div>
             <!-- Buttons -->
             <div class="flex justify-end gap-2 mt-4">
-                <button type="button" @click="CreateBackstampModal = false; errors = {}"
+                <button type="button" @click="CreateBackstampModal = false; errors = {}; newImages = []"
                     class="px-4 py-2 rounded-md bg-gray-200 dark:bg-gray-600 dark:text-gray-300 dark:hover:bg-gray-500 hoverScale hover:bg-red-500 hover:text-white">{{ __('content.cancel') }}</button>
                 <button type="submit" :disabled="loading"
                     class="px-4 py-2 rounded-md bg-blue-600 dark:bg-blue-500 text-white hoverScale hover:bg-blue-700 dark:hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed">

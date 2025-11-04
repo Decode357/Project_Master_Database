@@ -12,7 +12,8 @@ function backstampPage() {
         backstampToEdit: {},
         backstampToView: {},
         itemCodeToDelete: '',
-
+        newImages: [],
+        deletedImages: [],
         openEditModal(backstamp) {
             // แปลง approval_date format
             if (backstamp.approval_date) {
@@ -23,6 +24,8 @@ function backstampPage() {
             }
             
             this.backstampToEdit = JSON.parse(JSON.stringify(backstamp)); // clone กัน reactive bug
+            this.newImages = [];
+            this.deletedImages = [];
             this.EditBackstampModal = true;
             
             this.$nextTick(() => {
@@ -57,6 +60,7 @@ function backstampPage() {
         },
         openCreateModal() {
             this.CreateBackstampModal = true;
+            this.newImages = [];
             // Select2 initialization is handled by create-shape-modal.js
         },
         initSelect2() {

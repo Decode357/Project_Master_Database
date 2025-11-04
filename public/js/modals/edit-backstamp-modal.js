@@ -6,7 +6,34 @@ document.addEventListener('alpine:init', () => {
                 this.initSelect2();
             });
         },
-        
+        handleImageUpload(event) {
+            const files = event.target.files;
+            if (files) {
+                // Add new images while checking file type and size
+                Array.from(files).forEach(file => {
+                    if (file.type.startsWith('image/')) {
+                        if (file.size <= 5 * 1024 * 1024) { // 5MB limit
+                            this.newImages.push(file);
+                        } else {
+                            showToast('Image file size must be less than 5MB', 'error');
+                        }
+                    } else {
+                        showToast('Please select only image files', 'error');
+                    }
+                });
+            }
+            event.target.value = ''; // Reset input
+        },
+
+        removeImage(index) {
+            const image = this.backstampToEdit.images[index];
+            this.deletedImages.push(image.id);
+            this.backstampToEdit.images.splice(index, 1);
+        },
+
+        removeNewImage(index) {
+            this.newImages.splice(index, 1);
+        },
         submitEditForm() {
             this.loading = true;
             this.errors = {};
@@ -16,18 +43,35 @@ document.addEventListener('alpine:init', () => {
             formData.append('_method', 'PUT');
             
             // Add all form fields
-            formData.append('backstamp_code', this.backstampToEdit.backstamp_code || '');
-            formData.append('name', this.backstampToEdit.name || '');
-            formData.append('requestor_id', this.backstampToEdit.requestor_id || '');
-            formData.append('customer_id', this.backstampToEdit.customer_id || '');
-            formData.append('status_id', this.backstampToEdit.status_id || '');
-            formData.append('in_glaze', this.backstampToEdit.in_glaze ? '1' : '0');
-            formData.append('on_glaze', this.backstampToEdit.on_glaze ? '1' : '0');
-            formData.append('under_glaze', this.backstampToEdit.under_glaze ? '1' : '0');
-            formData.append('air_dry', this.backstampToEdit.air_dry ? '1' : '0');
-            formData.append('organic', this.backstampToEdit.organic ? '1' : '0');
-            formData.append('approval_date', this.backstampToEdit.approval_date || '');
+            Object.keys(this.backstampToEdit).forEach(key => {
+                if (key !== 'images') {
+                    const value = this.backstampToEdit[key];
 
+                    // แปลง Boolean → '1' / '0'
+                    if (typeof value === 'boolean') {
+                        formData.append(key, value ? '1' : '0');
+                    } 
+                    // ถ้าเป็น null หรือ undefined → ให้เป็นค่าว่าง
+                    else if (value === null || value === undefined) {
+                        formData.append(key, '');
+                    } 
+                    // กรณีอื่น ๆ ส่งค่าปกติ
+                    else {
+                        formData.append(key, value);
+                    }
+                }
+            });
+            // Add new images
+            this.newImages.forEach((file, index) => {
+                formData.append(`new_images[${index}]`, file);
+            });
+
+            // Add deleted image IDs
+            formData.append('deleted_images', JSON.stringify(this.deletedImages));
+
+            // Add remaining images
+            formData.append('existing_images', JSON.stringify(this.backstampToEdit.images));
+            
             fetch(`/backstamp/${this.backstampToEdit.id}`, {
                 method: 'POST',
                 body: formData,
@@ -44,6 +88,8 @@ document.addEventListener('alpine:init', () => {
             .then(data => {
                 this.EditBackstampModal = false;
                 this.errors = {};
+                this.newImages = [];
+                this.deletedImages = [];
                 // Show toast notification
                 showToast(data.message, 'success');
                 

@@ -12,7 +12,8 @@ function patternPage() {
         patternToEdit: {},
         patternToView: {},
         itemCodeToDelete: '',
-
+        newImages: [],
+        deletedImages: [],
         openEditModal(pattern) {
             // แปลง approval_date format
             if (pattern.approval_date) {
@@ -23,6 +24,8 @@ function patternPage() {
             }
             
             this.patternToEdit = JSON.parse(JSON.stringify(pattern)); // clone กัน reactive bug
+            this.newImages = [];
+            this.deletedImages = [];
             this.EditPatternModal = true;
             this.$nextTick(() => {
                 let $modal = $('#EditPatternModal');
@@ -54,6 +57,7 @@ function patternPage() {
         },
         openCreateModal() {
             this.CreatePatternModal = true;
+            this.newImages = [];
             // Select2 initialization is handled by create-pattern-modal.js
         },
         initSelect2() {

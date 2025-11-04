@@ -12,7 +12,8 @@ function glazePage() {
         glazeToEdit: {},
         glazeToView: {},
         itemCodeToDelete: '',
-
+        newImages: [],
+        deletedImages: [],
         openEditModal(glaze) {
             // แปลง approval_date format
             if (glaze.approval_date) {
@@ -23,6 +24,8 @@ function glazePage() {
             }
 
             this.glazeToEdit = JSON.parse(JSON.stringify(glaze)); // clone กัน reactive bug
+            this.newImages = [];
+            this.deletedImages = [];
             this.EditGlazeModal = true;
             
             this.$nextTick(() => {  
@@ -57,6 +60,7 @@ function glazePage() {
         },
         openCreateModal() {
             this.CreateGlazeModal = true;
+            this.newImages = [];
             // Select2 initialization is handled by create-glaze-modal.js
         },
         initSelect2() {

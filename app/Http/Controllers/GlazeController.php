@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Models\{
@@ -88,11 +89,23 @@ class GlazeController extends Controller
         $data['updated_by'] = auth()->id();
 
         $glaze = Glaze::create($data);
+        // จัดการรูปภาพ
+        if ($request->hasFile('new_images')) {
+            foreach ($request->file('new_images') as $image) {
+                $fileName = $image->getClientOriginalName();
+                $filePath = $image->store('glazes', 'public');
+                
+                $glaze->images()->create([
+                    'file_name' => $fileName,
+                    'file_path' => $filePath
+                ]);
+            }
+        }
         
         return response()->json([
             'status'  => 'success',
             'message' => 'Glaze created successfully!',
-            'glaze'   => $glaze
+            'glaze'   => $glaze->load('images')
         ], 201);
     }
 
@@ -102,11 +115,34 @@ class GlazeController extends Controller
         $data['updated_by'] = auth()->id();
 
         $glaze->update($data);
+        // จัดการรูปภาพใหม่
+        if ($request->hasFile('new_images')) {
+            foreach ($request->file('new_images') as $image) {
+                $fileName = $image->getClientOriginalName();
+                $filePath = $image->store('glazes', 'public');
 
+                $glaze->images()->create([
+                    'file_name' => $fileName,
+                    'file_path' => $filePath
+                ]);
+            }
+        }
+
+        // ลบรูปภาพที่ต้องการลบ
+        if ($request->deleted_images) {
+            $deletedImages = json_decode($request->deleted_images);
+            foreach ($deletedImages as $imageId) {
+                $image = Image::find($imageId);
+                if ($image) {
+                    Storage::disk('public')->delete($image->file_path);
+                    $image->delete();
+                }
+            }
+        }
         return response()->json([
             'status'  => 'success',
             'message' => 'Glaze updated successfully!',
-            'glaze'   => $glaze
+            'glaze'   => $glaze->load('images')
         ], 200);
     }
 
@@ -115,7 +151,7 @@ class GlazeController extends Controller
         $glaze->delete();
         return response()->json([
             'status' => 'success',
-            'message' => 'Shape deleted successfully.'
+            'message' => 'Glaze deleted successfully.'
         ]);    
     }
 }

@@ -6,7 +6,34 @@ document.addEventListener('alpine:init', () => {
                 this.initSelect2();
             });
         },
-        
+        handleImageUpload(event) {
+            const files = event.target.files;
+            if (files) {
+                // Add new images while checking file type and size
+                Array.from(files).forEach(file => {
+                    if (file.type.startsWith('image/')) {
+                        if (file.size <= 5 * 1024 * 1024) { // 5MB limit
+                            this.newImages.push(file);
+                        } else {
+                            showToast('Image file size must be less than 5MB', 'error');
+                        }
+                    } else {
+                        showToast('Please select only image files', 'error');
+                    }
+                });
+            }
+            event.target.value = ''; // Reset input
+        },
+
+        removeImage(index) {
+            const image = this.glazeToEdit.images[index];
+            this.deletedImages.push(image.id);
+            this.glazeToEdit.images.splice(index, 1);
+        },
+
+        removeNewImage(index) {
+            this.newImages.splice(index, 1);
+        },
         submitEditForm() {
             this.loading = true;
             this.errors = {};
@@ -16,15 +43,21 @@ document.addEventListener('alpine:init', () => {
             formData.append('_method', 'PUT');
             
             // Add all form fields
+            Object.keys(this.glazeToEdit).forEach(key => {
+                if (key !== 'images') {
+                    formData.append(key, this.glazeToEdit[key] || '');
+                }
+            });
+            // Add new images
+            this.newImages.forEach((file, index) => {
+                formData.append(`new_images[${index}]`, file);
+            });
 
-            formData.append('glaze_code', this.glazeToEdit.glaze_code || '');
-            formData.append('status_id', this.glazeToEdit.status_id || '');
-            formData.append('fire_temp', this.glazeToEdit.fire_temp || '');
-            formData.append('approval_date', this.glazeToEdit.approval_date || '');
-            formData.append('glaze_inside_id', this.glazeToEdit.glaze_inside_id || '');
-            formData.append('glaze_outer_id', this.glazeToEdit.glaze_outer_id || '');
-            formData.append('effect_id', this.glazeToEdit.effect_id || '');
+            // Add deleted image IDs
+            formData.append('deleted_images', JSON.stringify(this.deletedImages));
 
+            // Add remaining images
+            formData.append('existing_images', JSON.stringify(this.glazeToEdit.images));
 
             fetch(`/glaze/${this.glazeToEdit.id}`, {
                 method: 'POST',
@@ -42,6 +75,8 @@ document.addEventListener('alpine:init', () => {
             .then(data => {
                 this.EditGlazeModal = false;
                 this.errors = {};
+                this.newImages = [];
+                this.deletedImages = [];
                 // Show toast notification
                 showToast(data.message, 'success');
                 

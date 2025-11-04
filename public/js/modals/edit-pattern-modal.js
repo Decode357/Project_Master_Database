@@ -6,7 +6,34 @@ document.addEventListener('alpine:init', () => {
                 this.initSelect2();
             });
         },
-        
+        handleImageUpload(event) {
+            const files = event.target.files;
+            if (files) {
+                // Add new images while checking file type and size
+                Array.from(files).forEach(file => {
+                    if (file.type.startsWith('image/')) {
+                        if (file.size <= 5 * 1024 * 1024) { // 5MB limit
+                            this.newImages.push(file);
+                        } else {
+                            showToast('Image file size must be less than 5MB', 'error');
+                        }
+                    } else {
+                        showToast('Please select only image files', 'error');
+                    }
+                });
+            }
+            event.target.value = ''; // Reset input
+        },
+
+        removeImage(index) {
+            const image = this.patternToEdit.images[index];
+            this.deletedImages.push(image.id);
+            this.patternToEdit.images.splice(index, 1);
+        },
+
+        removeNewImage(index) {
+            this.newImages.splice(index, 1);
+        },
         submitEditForm() {
             this.loading = true;
             this.errors = {};
@@ -16,19 +43,35 @@ document.addEventListener('alpine:init', () => {
             formData.append('_method', 'PUT');
             
             // Add all form fields
-            formData.append('pattern_code', this.patternToEdit.pattern_code || '');
-            formData.append('pattern_name', this.patternToEdit.pattern_name || '');
-            formData.append('status_id', this.patternToEdit.status_id || '');
-            formData.append('customer_id', this.patternToEdit.customer_id || '');
-            formData.append('requestor_id', this.patternToEdit.requestor_id || '');
-            formData.append('designer_id', this.patternToEdit.designer_id || '');
-            formData.append('approval_date', this.patternToEdit.approval_date || '');
+            Object.keys(this.patternToEdit).forEach(key => {
+                if (key !== 'images') {
+                    const value = this.patternToEdit[key];
+
+                    // แปลง Boolean → '1' / '0'
+                    if (typeof value === 'boolean') {
+                        formData.append(key, value ? '1' : '0');
+                    } 
+                    // ถ้าเป็น null หรือ undefined ให้เป็นค่าว่าง
+                    else if (value === null || value === undefined) {
+                        formData.append(key, '');
+                    } 
+                    // กรณีอื่น ๆ ส่งค่าปกติ
+                    else {
+                        formData.append(key, value);
+                    }
+                }
+            });
+            // Add new images
+            this.newImages.forEach((file, index) => {
+                formData.append(`new_images[${index}]`, file);
+            });
+
+            // Add deleted image IDs
+            formData.append('deleted_images', JSON.stringify(this.deletedImages));
+
+            // Add remaining images
+            formData.append('existing_images', JSON.stringify(this.patternToEdit.images));
             
-            // Boolean fields
-            formData.append('in_glaze', this.patternToEdit.in_glaze ? '1' : '0');
-            formData.append('on_glaze', this.patternToEdit.on_glaze ? '1' : '0');
-            formData.append('under_glaze', this.patternToEdit.under_glaze ? '1' : '0');
-            formData.append('exclusive', this.patternToEdit.exclusive ? '1' : '0');
             fetch(`/pattern/${this.patternToEdit.id}`, {
                 method: 'POST',
                 body: formData,
@@ -45,6 +88,8 @@ document.addEventListener('alpine:init', () => {
             .then(data => {
                 this.EditPatternModal = false;
                 this.errors = {};
+                this.newImages = [];
+                this.deletedImages = [];
                 // Show toast notification
                 showToast(data.message, 'success');
                 
