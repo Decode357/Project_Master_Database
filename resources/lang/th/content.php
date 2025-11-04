@@ -1,5 +1,9 @@
 <?php
 return [
+    'existing_images' => 'รูปภาพที่มีอยู่',
+    'new_images_preview' => 'ตัวอย่างรูปภาพใหม่',
+    'upload_new_images' => 'อัปโหลดรูปภาพใหม่',
+    'select_images' => 'เลือกภาพ',
     'create_history' => 'รายการที่สร้าง (30 วันที่ผ่านมา)',
     'shape_history' => 'ประวัติการอัพเดตรูปทรง',
     'glaze_history' => 'ประวัติการอัพเดตเคลือบ',

@@ -6,6 +6,35 @@ document.addEventListener('alpine:init', () => {
                 this.initSelect2();
             });
         },
+
+        handleImageUpload(event) {
+            const files = event.target.files;
+            if (files) {
+                // Add new images while checking file type and size
+                Array.from(files).forEach(file => {
+                    if (file.type.startsWith('image/')) {
+                        if (file.size <= 5 * 1024 * 1024) { // 5MB limit
+                            this.newImages.push(file);
+                        } else {
+                            showToast('Image file size must be less than 5MB', 'error');
+                        }
+                    } else {
+                        showToast('Please select only image files', 'error');
+                    }
+                });
+            }
+            event.target.value = ''; // Reset input
+        },
+
+        removeImage(index) {
+            const image = this.shapeToEdit.images[index];
+            this.deletedImages.push(image.id);
+            this.shapeToEdit.images.splice(index, 1);
+        },
+
+        removeNewImage(index) {
+            this.newImages.splice(index, 1);
+        },
         
         submitEditForm() {
             this.loading = true;
@@ -16,25 +45,22 @@ document.addEventListener('alpine:init', () => {
             formData.append('_method', 'PUT');
             
             // Add all form fields
-            formData.append('item_code', this.shapeToEdit.item_code || '');
-            formData.append('item_description_thai', this.shapeToEdit.item_description_thai || '');
-            formData.append('item_description_eng', this.shapeToEdit.item_description_eng || '');
-            formData.append('shape_type_id', this.shapeToEdit.shape_type_id || '');
-            formData.append('status_id', this.shapeToEdit.status_id || '');
-            formData.append('shape_collection_id', this.shapeToEdit.shape_collection_id || '');
-            formData.append('process_id', this.shapeToEdit.process_id || '');
-            formData.append('item_group_id', this.shapeToEdit.item_group_id || '');
-            formData.append('customer_id', this.shapeToEdit.customer_id || '');
-            formData.append('requestor_id', this.shapeToEdit.requestor_id || '');
-            formData.append('designer_id', this.shapeToEdit.designer_id || '');
-            formData.append('volume', this.shapeToEdit.volume || '');
-            formData.append('weight', this.shapeToEdit.weight || '');
-            formData.append('long_diameter', this.shapeToEdit.long_diameter || '');
-            formData.append('short_diameter', this.shapeToEdit.short_diameter || '');
-            formData.append('height_long', this.shapeToEdit.height_long || '');
-            formData.append('height_short', this.shapeToEdit.height_short || '');
-            formData.append('body', this.shapeToEdit.body || '');
-            formData.append('approval_date', this.shapeToEdit.approval_date || '');
+            Object.keys(this.shapeToEdit).forEach(key => {
+                if (key !== 'images') {
+                    formData.append(key, this.shapeToEdit[key] || '');
+                }
+            });
+
+            // Add new images
+            this.newImages.forEach((file, index) => {
+                formData.append(`new_images[${index}]`, file);
+            });
+
+            // Add deleted image IDs
+            formData.append('deleted_images', JSON.stringify(this.deletedImages));
+
+            // Add remaining images
+            formData.append('existing_images', JSON.stringify(this.shapeToEdit.images));
 
             fetch(`/shape/${this.shapeToEdit.id}`, {
                 method: 'POST',
@@ -52,6 +78,8 @@ document.addEventListener('alpine:init', () => {
             .then(data => {
                 this.EditShapeModal = false;
                 this.errors = {};
+                this.newImages = [];
+                this.deletedImages = [];
                 // Show toast notification
                 showToast(data.message, 'success');
                 

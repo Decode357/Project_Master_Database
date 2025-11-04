@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\{
     Shape, ShapeType, Status, ShapeCollection, Customer,
@@ -112,11 +112,23 @@ class ShapeController extends Controller
         $data['updated_by'] = auth()->id();
 
         $shape = Shape::create($data);
+        // จัดการรูปภาพ
+        if ($request->hasFile('new_images')) {
+            foreach ($request->file('new_images') as $image) {
+                $fileName = $image->getClientOriginalName();
+                $filePath = $image->store('shapes', 'public');
+                
+                $shape->images()->create([
+                    'file_name' => $fileName,
+                    'file_path' => $filePath
+                ]);
+            }
+        }
 
         return response()->json([
             'status' => 'success', 
             'message' => 'Shape created successfully!', 
-            'shape' => $shape
+            'shape' => $shape->load('images')
         ], 201);
     }
 
@@ -126,12 +138,36 @@ class ShapeController extends Controller
         $data['updated_by'] = auth()->id();
 
         $shape->update($data);
+        // จัดการรูปภาพใหม่
+        if ($request->hasFile('new_images')) {
+            foreach ($request->file('new_images') as $image) {
+                $fileName = $image->getClientOriginalName();
+                $filePath = $image->store('shapes', 'public');
+                
+                $shape->images()->create([
+                    'file_name' => $fileName,
+                    'file_path' => $filePath
+                ]);
+            }
+        }
+
+        // ลบรูปภาพที่ต้องการลบ
+        if ($request->deleted_images) {
+            $deletedImages = json_decode($request->deleted_images);
+            foreach ($deletedImages as $imageId) {
+                $image = Image::find($imageId);
+                if ($image) {
+                    Storage::disk('public')->delete($image->file_path);
+                    $image->delete();
+                }
+            }
+        }
 
         return response()->json([
             'status' => 'success', 
             'message' => 'Shape updated successfully!', 
-            'shape' => $shape
-        ],200);
+            'shape' => $shape->load('images')
+        ], 200);
     }
 
     public function destroyShape(Shape $shape)

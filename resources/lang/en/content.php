@@ -1,5 +1,9 @@
 <?php
 return [
+    'existing_images' => 'Existing Images',
+    'new_images_preview' => 'New Images Preview',
+    'upload_new_images' => 'Upload New Images',
+    'select_images' => 'Select Images',
     'create_history' => 'Create History (Last 30 Days)',
     'shape_history' => 'Shape Update History',
     'glaze_history' => 'Glaze Update History',
