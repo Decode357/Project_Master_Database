@@ -5,87 +5,11 @@
     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="display: none;">
 
     <!-- Modal Content -->
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-full max-w-2xl p-6 overflow-y-auto max-h-[90vh]">
+    <div x-data="shapeModal()" class="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-full max-w-2xl p-6 overflow-y-auto max-h-[90vh]">
         <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">{{ __('content.create_shape') }}</h2>
         <hr class="mb-3 border-gray-200 dark:border-gray-600">
 
-        <form @submit.prevent="submitShapeForm($event)" class="space-y-4" x-data="{
-            errors: {},
-            loading: false,
-            
-            handleImageUpload(event) {
-                const files = event.target.files;
-                if (files) {
-                    Array.from(files).forEach(file => {
-                        if (file.type.startsWith('image/')) {
-                            if (file.size <= 5 * 1024 * 1024) {
-                                this.newImages.push(file);
-                            } else {
-                                showToast('Image file size must be less than 5MB', 'error');
-                            }
-                        } else {
-                            showToast('Please select only image files', 'error');
-                        }
-                    });
-                }
-                event.target.value = '';
-            },
-            
-            removeNewImage(index) {
-                this.newImages.splice(index, 1);
-            },
-            
-            submitShapeForm(event) {
-                this.loading = true;
-                this.errors = {};
-
-                const formData = new FormData();
-                formData.append('_token', document.querySelector('meta[name=\'csrf-token\']').getAttribute('content'));
-                
-                const form = event.target;
-                const formElements = form.elements;
-                for (let element of formElements) {
-                    if (element.name && element.type !== 'submit') {
-                        formData.append(element.name, element.value || '');
-                    }
-                }
-
-                this.newImages.forEach((file, index) => {
-                    formData.append(`new_images[${index}]`, file);
-                });
-
-                fetch('/shape', {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest'
-                    }
-                })
-                .then(response => {
-                    if (response.ok) return response.json();
-                    return response.json().then(data => Promise.reject(data));
-                })
-                .then(data => {
-                    this.CreateShapeModal = false;
-                    this.errors = {};
-                    this.newImages = [];
-                    form.reset();
-                    if (typeof resetSelect2 === 'function') resetSelect2('#CreateShapeModal');
-                    showToast(data.message, 'success');
-                    setTimeout(() => window.location.reload(), 300);
-                })
-                .catch(error => {
-                    if (error.errors) {
-                        this.errors = error.errors;
-                    } else {
-                        showToast(error.message || 'เกิดข้อผิดพลาด', 'error');
-                    }
-                })
-                .finally(() => {
-                    this.loading = false;
-                });
-            }
-        }">
+        <form @submit.prevent="submitShapeForm($event)" class="space-y-4">
             @csrf
 
             <!-- Dynamic Error Display Area -->

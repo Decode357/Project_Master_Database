@@ -1,91 +1,79 @@
-/**
- * Create Shape Modal Functions
- */
-
-function submitGlazeForm() {
-    this.loading = true;
-    this.errors = {};
-
-    const formData = new FormData();
-    formData.append('_token', getCSRFToken());
-    
-    // Get form element
-    const form = document.querySelector('#CreateGlazeModal form');
-    const formElements = form.elements;
-    
-    // Add all form fields to FormData
-    for (let element of formElements) {
-        if (element.name && element.type !== 'submit') {
-            formData.append(element.name, element.value || '');
-        }
-    }
-
-    fetch('/glaze', {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest'
-        }
-    })
-    .then(response => {
-        if (response.ok) {
-            return response.json();
-        }
-        return response.json().then(data => Promise.reject(data));
-    })
-    .then(data => {
-        // Success
-        this.CreateGlazeModal = false;
-        this.errors = {};
+window.glazeModal = function () {
+    return {
+        errors: {},
+        loading: false,
         
-        // Reset form
-        form.reset();
-        resetSelect2('#CreateGlazeModal');
-
-        // Show toast notification
-        showToast(data.message, 'success');
+        handleImageUpload(event) {
+            const files = event.target.files;
+            if (files) {
+                Array.from(files).forEach(file => {
+                    if (file.type.startsWith('image/')) {
+                        if (file.size <= 5 * 1024 * 1024) {
+                            this.newImages.push(file);
+                        } else {
+                            showToast('Image file size must be less than 5MB', 'error');
+                        }
+                    } else {
+                        showToast('Please select only image files', 'error');
+                    }
+                });
+            }
+            event.target.value = '';
+        },
         
-        // Reload page after short delay
-        setTimeout(() => {
-            window.location.reload();
-        }, 300);
-    })
-    .catch(error => {
-        this.errors = handleAjaxError(error, 'บันทึกข้อมูล');
-    })
-    .finally(() => {
-        this.loading = false;
-    });
-}
+        removeNewImage(index) {
+            this.newImages.splice(index, 1);
+        },
+        
+        submitGlazeForm(event) {
+            this.loading = true;
+            this.errors = {};
 
-// Initialize Create Glaze Modal
-function initCreateGlazeModal() {
-    // Observer สำหรับดูการเปลี่ยนแปลงของ modal
-    const observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-            if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-                const modal = document.getElementById('CreateGlazeModal');
-                if (modal && modal.style.display !== 'none') {
-                    // Modal เปิด - initialize Select2
-                    setTimeout(() => {
-                        initializeSelect2('#CreateGlazeModal');
-                    }, 100);
+            const formData = new FormData();
+            formData.append('_token', document.querySelector('meta[name=\'csrf-token\']').getAttribute('content'));
+            
+            const form = event.target;
+            const formElements = form.elements;
+            for (let element of formElements) {
+                if (element.name && element.type !== 'submit') {
+                    formData.append(element.name, element.value || '');
                 }
             }
-        });
-    });
 
-    const modal = document.getElementById('CreateGlazeModal');
-    if (modal) {
-        observer.observe(modal, {
-            attributes: true,
-            attributeFilter: ['style']
-        });
-    }
-}
+            this.newImages.forEach((file, index) => {
+                formData.append(`new_images[${index}]`, file);
+            });
 
-// Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', initCreateGlazeModal);
-
-// Make functions available globally
-window.submitGlazeForm = submitGlazeForm;
+            fetch('/glaze', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => {
+                if (response.ok) return response.json();
+                return response.json().then(data => Promise.reject(data));
+            })
+            .then(data => {
+                this.CreateGlazeModal = false;
+                this.errors = {};
+                this.newImages = [];
+                form.reset();
+                if (typeof resetSelect2 === 'function') resetSelect2('#CreateGlazeModal');
+                showToast(data.message, 'success');
+                setTimeout(() => window.location.reload(), 300);
+            })
+            .catch(error => {
+                if (error.errors) {
+                    this.errors = error.errors;
+                } else {
+                    showToast(error.message || 'เกิดข้อผิดพลาด', 'error');
+                }
+            })
+            .finally(() => {
+                this.loading = false;
+            });
+        }
+    };
+};

@@ -1,96 +1,87 @@
-/**
- * Create Shape Modal Functions
- */
-
-function submitBackstampForm() {
-    this.loading = true;
-    this.errors = {};
-
-    const formData = new FormData();
-    formData.append('_token', getCSRFToken());
-    
-    // Get form element
-    const form = document.querySelector('#CreateBackstampModal form');
-    const formElements = form.elements;
-    
-    // Add all form fields to FormData
-    for (let element of formElements) {
-        if (!element.name || element.type === 'submit') continue;
-
-        if (element.type === 'checkbox') {
-            // ส่งค่า "1" ถ้าเลือก, "0" ถ้าไม่เลือก
-            formData.set(element.name, element.checked ? "1" : "0");
-        } else {
-            formData.set(element.name, element.value || '');
-        }
-    }
-
-    fetch('/backstamp', {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest'
-        }
-    })
-    .then(response => {
-        if (response.ok) {
-            return response.json();
-        }
-        return response.json().then(data => Promise.reject(data));
-    })
-    .then(data => {
-        // Success
-        this.CreateBackstampModal = false;
-        this.errors = {};
+window.backstampModal = function () {
+    return {
+        errors: {},
+        loading: false,
         
-        // Reset form
-        form.reset();
-        resetSelect2('#CreateBackstampModal');
-
-        // Show toast notification
-        showToast(data.message, 'success');
+        handleImageUpload(event) {
+            const files = event.target.files;
+            if (files) {
+                Array.from(files).forEach(file => {
+                    if (file.type.startsWith('image/')) {
+                        if (file.size <= 5 * 1024 * 1024) {
+                            this.newImages.push(file);
+                        } else {
+                            showToast('Image file size must be less than 5MB', 'error');
+                        }
+                    } else {
+                        showToast('Please select only image files', 'error');
+                    }
+                });
+            }
+            event.target.value = '';
+        },
         
-        // Reload page after short delay
-        setTimeout(() => {
-            window.location.reload();
-        }, 300);
-    })
-    .catch(error => {
-        this.errors = handleAjaxError(error, 'บันทึกข้อมูล');
-    })
-    .finally(() => {
-        this.loading = false;
-    });
-}
+        removeNewImage(index) {
+            this.newImages.splice(index, 1);
+        },
 
-// Initialize Create Backstamp Modal
-function initCreateBackstampModal() {
-    // Observer สำหรับดูการเปลี่ยนแปลงของ modal
-    const observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-            if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-                const modal = document.getElementById('CreateBackstampModal');
-                if (modal && modal.style.display !== 'none') {
-                    // Modal เปิด - initialize Select2
-                    setTimeout(() => {
-                        initializeSelect2('#CreateBackstampModal');
-                    }, 100);
+        submitBackstampForm(event) {
+            this.loading = true;
+            this.errors = {};
+
+            const formData = new FormData();
+            formData.append('_token', document.querySelector('meta[name=\'csrf-token\']').getAttribute('content'));
+            
+            const form = event.target;
+            const formElements = form.elements;
+            for (let element of formElements) {
+                if (element.name && element.type !== 'submit') {
+                    // จัดการ checkbox แยกต่างหาก
+                    if (element.type === 'checkbox') {
+                        if (element.checked) {
+                            formData.append(element.name, '1');
+                        }
+                        // ถ้าไม่ checked ก็ไม่ต้องส่งค่าไปเลย
+                    } else {
+                        formData.append(element.name, element.value || '');
+                    }
                 }
             }
-        });
-    });
 
-    const modal = document.getElementById('CreateBackstampModal');
-    if (modal) {
-        observer.observe(modal, {
-            attributes: true,
-            attributeFilter: ['style']
-        });
-    }
-}
+            this.newImages.forEach((file, index) => {
+                formData.append(`new_images[${index}]`, file);
+            });
 
-// Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', initCreateBackstampModal);
-
-// Make functions available globally
-window.submitBackstampForm = submitBackstampForm;
+            fetch('/backstamp', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => {
+                if (response.ok) return response.json();
+                return response.json().then(data => Promise.reject(data));
+            })
+            .then(data => {
+                this.CreateBackstampModal = false;
+                this.errors = {};
+                this.newImages = [];
+                form.reset();
+                if (typeof resetSelect2 === 'function') resetSelect2('#CreateBackstampModal');
+                showToast(data.message, 'success');
+                setTimeout(() => window.location.reload(), 300);
+            })
+            .catch(error => {
+                if (error.errors) {
+                    this.errors = error.errors;
+                } else {
+                    showToast(error.message || 'เกิดข้อผิดพลาด', 'error');
+                }
+            })
+            .finally(() => {
+                this.loading = false;
+            });
+        }
+    };
+};
