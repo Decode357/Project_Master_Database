@@ -327,17 +327,17 @@
                     <!-- Navigation Arrows -->
                     <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-4">
                         <button @click.stop="currentImageIndex = (currentImageIndex - 1 + glazeToView.images.length) % glazeToView.images.length"
-                                class="bg-black bg-opacity-50 text-white rounded-full p-2 hover:bg-opacity-70 transition-all">
-                            <span class="material-symbols-outlined">arrow_back</span>
+                                class="text-gray-500 hoverScale">
+                            <span class="material-symbols-outlined">Arrow_Back_iOS</span>
                         </button>
                         <button @click.stop="currentImageIndex = (currentImageIndex + 1) % glazeToView.images.length"
-                                class="bg-black bg-opacity-50 text-white rounded-full p-2 hover:bg-opacity-70 transition-all">
-                            <span class="material-symbols-outlined">arrow_forward</span>
+                                class="text-gray-500 hoverScale">
+                            <span class="material-symbols-outlined">Arrow_Forward_iOS</span>
                         </button>
                     </div>
                     
                     <!-- Image Counter -->
-                    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full">
+                    <div class="absolute bottom-3 left-1/2 -translate-x-1/2 text-white px-3 py-1 rounded-full">
                         <span x-text="currentImageIndex + 1"></span>/<span x-text="glazeToView.images.length"></span>
                     </div>
                 </div>
@@ -352,7 +352,7 @@
             
             <!-- Close button -->
             <button @click="zoomImage = false"
-                class="absolute top-4 right-4 bg-black bg-opacity-50 text-white rounded-full p-2 hover:bg-opacity-70 transition-all">
+                class="absolute top-4 right-4 text-gray-500 hoverScale">
                 <span class="material-symbols-outlined">close</span>
             </button>
         </div>
