@@ -72,9 +72,9 @@
                         @php
                             $statusText = $backstamp->status->status ?? 'Unknown';
                             $statusColor = match ($statusText) {
-                                'Pending' => 'bg-yellow-100 text-yellow-800',
-                                'Rejected' => 'bg-red-100 text-red-800',
-                                default => 'bg-gray-100 text-gray-800',
+                                'Active' => 'bg-green-100 text-green-800',
+                                'Cancel' => 'bg-red-100 text-red-800',
+                                default => 'bg-yellow-100 text-yellow-800',
                             };
                         @endphp
                         <tr class="dark:text-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 bg-white border-b border-gray-200 hover:bg-gray-50">

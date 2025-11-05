@@ -90,10 +90,9 @@
                                 $process = $shape->process->process_name ?? '-';
                                 $updatedBy = $shape->updater->name ?? '-';
                                 $statusColor = match ($status) {
-                                    'Approved' => 'bg-green-100 text-green-800',
-                                    'Pending' => 'bg-yellow-100 text-yellow-800',
-                                    'Rejected' => 'bg-red-100 text-red-800',
-                                    default => 'bg-gray-100 text-gray-800',
+                                    'Active' => 'bg-green-100 text-green-800',
+                                    'Cancel' => 'bg-red-100 text-red-800',
+                                    default => 'bg-yellow-100 text-yellow-800',
                                 };
                             @endphp
                             <!-- Table Row -->

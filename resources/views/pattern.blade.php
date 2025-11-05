@@ -61,6 +61,7 @@
                         <tr class="dark:text-gray-400 text-gray-700">
                             <th class="px-4 py-3 text-left">{{ __('content.pattern_code') }}</th>
                             <th class="px-4 py-3 text-left">{{ __('content.description') }}</th>
+                            <th class="px-4 py-3 text-center">{{ __('content.exclusive') }}</th>
                             <th class="px-4 py-3 text-left">{{ __('content.status') }}</th>
                             <th class="px-4 py-3 text-right">{{ __('content.updated_by') }}</th>
                             <th class="px-4 py-3 text-end w-[80px]">{{ __('content.action') }}</th>
@@ -72,15 +73,22 @@
                             @php
                                 $statusText = $pattern->status->status ?? 'Unknown';
                                 $statusColor = match ($statusText) {
-                                    'Pending' => 'bg-yellow-100 text-yellow-800',
-                                    'Rejected' => 'bg-red-100 text-red-800',
-                                    default => 'bg-gray-100 text-gray-800',
+                                    'Active' => 'bg-green-100 text-green-800',
+                                    'Cancel' => 'bg-red-100 text-red-800',
+                                    default => 'bg-yellow-100 text-yellow-800',
                                 };
                             @endphp
 
                             <tr class="dark:text-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 bg-white border-b border-gray-200 hover:bg-gray-50">
                                 <td class="px-4 py-3">{{ $pattern->pattern_code }}</td>
                                 <td class="px-4 py-3">{{ $pattern->pattern_name ?? '-' }}</td>
+                                <td class="px-4 py-3 text-center">
+                                    @if ($pattern->exclusive)
+                                        <span class="material-symbols-outlined text-green-500">radio_button_checked</span>
+                                    @else
+                                        <span class="material-symbols-outlined text-gray-400">radio_button_unchecked</span>
+                                    @endif
+                                </td>                                
                                 <!-- Status -->
                                 <td class="px-4 py-3">
                                     <span class="{{ $statusColor }} px-2 py-1 rounded-full text-xs font-semibold">

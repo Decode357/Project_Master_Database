@@ -25,7 +25,10 @@ class GlazeInsideOuterController extends Controller
         // Query สำหรับ Glaze Inside
         $insideQuery = GlazeInside::with('colors');
         if ($insideSearch) {
-            $insideQuery->where('glaze_inside_code', 'LIKE', "%{$insideSearch}%");
+            $insideQuery->where('glaze_inside_code', 'LIKE', "%{$insideSearch}%")
+            ->orWhereHas('colors', function($q) use ($insideSearch) {
+                $q->where('color_code', 'LIKE', "%{$insideSearch}%");
+            });
         }
         
         $glaze_insides = $insideQuery->latest()
@@ -35,7 +38,10 @@ class GlazeInsideOuterController extends Controller
         // Query สำหรับ Glaze Outer  
         $outerQuery = GlazeOuter::with('colors');
         if ($outerSearch) {
-            $outerQuery->where('glaze_outer_code', 'LIKE', "%{$outerSearch}%");
+            $outerQuery->where('glaze_outer_code', 'LIKE', "%{$outerSearch}%")
+            ->orWhereHas('colors', function($q) use ($outerSearch) {
+                $q->where('color_code', 'LIKE', "%{$outerSearch}%");
+            });
         }
         
         $glaze_outers = $outerQuery->latest()
