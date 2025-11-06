@@ -64,10 +64,9 @@
         <div class="rounded-xl shadow-md bg-white
             dark:shadow-gray-900/50 dark:bg-gray-800">
             <div class="overflow-x-auto rounded-xl">
-                <table class="w-full text-sm text-left text-gray-600
-                    dark:text-gray-400">
-                    <thead class="text-xs text-gray-500 uppercase bg-gray-50 border-b dark:border-gray-700
-                        dark:bg-gray-700 dark:text-gray-400">
+                <table class="w-full text-sm text-left">
+                    <thead class="text-xs uppercase bg-gray-50 border-b dark:border-gray-700
+                        dark:bg-gray-700 dark:text-gray-400 text-black">
                         <tr>
                             <th class="px-6 py-3">{{__('content.color_code')}}</th>
                             <th class="px-6 py-3">{{__('content.color_name')}}</th>

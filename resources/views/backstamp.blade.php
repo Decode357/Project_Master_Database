@@ -57,16 +57,16 @@
             <div class="overflow-x-auto rounded-xl">
                 <table class="min-w-full text-sm">
                     <thead class="bg-gray-50 border-b border-gray-200 uppercase text-xs
-                            dark:bg-gray-700 dark:border-gray-700 ">
-                        <tr class="dark:text-gray-400 text-gray-700">
-                        <th class="px-4 py-3 text-left">{{ __('content.backstamp_code') }}</th>
-                        <th class="px-4 py-3 text-left">{{ __('content.description') }}</th>
-                        <th class="px-4 py-3 text-center">{{ __('content.organic') }}</th>
-                        <th class="px-4 py-3 text-left">{{ __('content.status') }}</th>
-                        <th class="px-4 py-3 text-right">{{ __('content.updated_by') }}</th>
-                        <th class="px-4 py-3 text-right w-[80px]">{{ __('content.action') }}</th>
-                    </tr>
-                </thead>
+                            dark:bg-gray-700 dark:border-gray-700 dark:text-gray-400 text-black">
+                        <tr>
+                            <th class="px-4 py-3 text-left">{{ __('content.backstamp_code') }}</th>
+                            <th class="px-4 py-3 text-left">{{ __('content.description') }}</th>
+                            <th class="px-4 py-3 text-center">{{ __('content.organic') }}</th>
+                            <th class="px-4 py-3 text-left">{{ __('content.status') }}</th>
+                            <th class="px-4 py-3 text-right">{{ __('content.updated_by') }}</th>
+                            <th class="px-4 py-3 text-right w-[80px]">{{ __('content.action') }}</th>
+                        </tr>
+                    </thead>
                 <tbody>
                     @forelse ($backstamps as $backstamp)
                         @php

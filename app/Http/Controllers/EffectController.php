@@ -22,8 +22,9 @@ class EffectController extends Controller
         $query = Effect::with('colors');
         // เพิ่ม search functionality
         if ($search) {
-            $query->where(function($q) use ($search) {
-                $q->where('effect_code', 'LIKE', "%{$search}%");
+            $query->where('effect_code', 'LIKE', "%{$search}%")
+            ->orWhereHas('colors', function($q) use ($search) {
+                $q->where('color_code', 'LIKE', "%{$search}%");
             });
         }
         $effects = $query->latest()->paginate($perPage)->appends($request->query());

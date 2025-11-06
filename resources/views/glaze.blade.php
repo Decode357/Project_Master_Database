@@ -55,8 +55,8 @@
         <div class="dark:shadow-gray-900/50 dark:bg-gray-800 rounded-xl shadow-md bg-white">
             <div class="overflow-x-auto rounded-xl">
                 <table class="min-w-full text-sm">
-                    <thead class="dark:bg-gray-700 dark:border-gray-700 text-xs text-gray-500 uppercase bg-gray-50 border-b">
-                        <tr class="dark:text-gray-400 text-gray-700">
+                    <thead class="dark:bg-gray-700 dark:border-gray-700 text-xs text-black dark:text-gray-400 uppercase bg-gray-50 border-b">
+                        <tr>
                             <th class="px-4 py-3 text-left">{{ __('content.glaze_code') }}</th>
                             <th class="px-4 py-3 text-left">{{ __('content.inside_color_code') }}</th>
                             <th class="px-4 py-3 text-left">{{ __('content.outside_color_code') }}</th>

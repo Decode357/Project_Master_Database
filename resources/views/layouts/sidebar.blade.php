@@ -102,7 +102,7 @@
 
                 <!-- Shape Collection (Child) -->
                 <a href="{{ route('shape.collection.index') }}"
-                    class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium ml-6
+                    class="flex items-center gap-3 rounded-md px-2 py-2 text-sm font-medium ml-6
                     {{ request()->routeIs('shape.collection.index') 
                         ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold' 
                         : 'text-gray-600 dark:text-gray-400 hoverScale hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700' }}">
@@ -125,7 +125,7 @@
 
                 <!-- Glaze Inside/Outer (Child) -->
                 <a href="{{ route('glaze.inside.outer.index') }}"
-                    class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium ml-6
+                    class="flex items-center gap-3 rounded-md px-2 py-2 text-sm font-medium ml-6 
                     {{ request()->routeIs('glaze.inside.outer.index') 
                         ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold' 
                         : 'text-gray-600 dark:text-gray-400 hoverScale hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700' }}">
@@ -136,7 +136,7 @@
 
                 <!-- Effect (Child) -->
                 <a href="{{ route('effect.index') }}"
-                    class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium ml-6
+                    class="flex items-center gap-3 rounded-md px-2 py-2 text-sm font-medium ml-6
                     {{ request()->routeIs('effect.index') 
                         ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold' 
                         : 'text-gray-600 dark:text-gray-400 hoverScale hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700' }}">
@@ -147,7 +147,7 @@
 
                 <!-- Color (Child) -->
                 <a href="{{ route('color.index') }}"
-                    class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium ml-6
+                    class="flex items-center gap-3 rounded-md px-2 py-2 text-sm font-medium ml-6
                     {{ request()->routeIs('color.index') 
                         ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold' 
                         : 'text-gray-600 dark:text-gray-400 hoverScale hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700' }}">

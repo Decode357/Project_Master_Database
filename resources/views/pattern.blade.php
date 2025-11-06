@@ -57,8 +57,8 @@
             <div class="overflow-x-auto rounded-xl">
                 <table class="min-w-full text-sm">
                     <thead class="bg-gray-50 border-b border-gray-200 uppercase text-xs
-                            dark:bg-gray-700 dark:border-gray-700 ">    
-                        <tr class="dark:text-gray-400 text-gray-700">
+                            dark:bg-gray-700 dark:border-gray-700 dark:text-gray-400 text-black">    
+                        <tr>
                             <th class="px-4 py-3 text-left">{{ __('content.pattern_code') }}</th>
                             <th class="px-4 py-3 text-left">{{ __('content.description') }}</th>
                             <th class="px-4 py-3 text-center">{{ __('content.exclusive') }}</th>
