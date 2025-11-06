@@ -6,7 +6,8 @@ use App\Http\Controllers\{
     BackstampController, GlazeController,
     ColorController, EffectController,
     UserController, GlazeInsideOuterController,
-    ShapeCollectionController
+    ShapeCollectionController, CustomersImportController,
+    CustomersExportController,
 };
 use Illuminate\Support\Facades\Route;
 
@@ -50,7 +51,7 @@ Route::middleware(['auth'])->group(function () {
     // เมนูสำหรับ admin และ superadmin
     Route::middleware('role:admin|superadmin')->group(function () {
         // เมนูสำหรับแสดงข้อมูล
-        Route::get('/csv-import', [PageController::class, 'csvImport'])->name('csvImport')->middleware(['auth', 'role:admin|superadmin', 'permission:file import']);
+        Route::get('/csv-import', [PageController::class, 'csvImport'])->name('csvImport')->middleware('permission:file import');
         Route::get('/user', [UserController::class, 'user'])->name('user');
 
         // เมนูสำหรับเก็บข้อมูล 
@@ -87,7 +88,16 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/effect/{effect}', [EffectController::class, 'destroyEffect'])->name('effect.destroy')->middleware(['auth', 'permission:delete']);
         Route::delete('/glaze-inside/{glazeInside}', [GlazeInsideOuterController::class, 'destroyGlazeInside'])->name('glaze-inside.destroy')->middleware(['auth', 'permission:delete']);
         Route::delete('/glaze-outer/{glazeOuter}', [GlazeInsideOuterController::class, 'destroyGlazeOuter'])->name('glaze-outer.destroy')->middleware(['auth', 'permission:delete']);
-        Route::delete('/shape-collection/{shapeCollection}', [ShapeCollectionController::class, 'destroyShapeCollection'])->name('shape-collection.destroy')->middleware(['auth', 'permission:delete']);    
+        Route::delete('/shape-collection/{shapeCollection}', [ShapeCollectionController::class, 'destroyShapeCollection'])->name('shape-collection.destroy')->middleware(['auth', 'permission:delete']);   
+        
+        // เมนูสำหรับนำเข้า-ส่งออกข้อมูลลูกค้า (Customers Management)
+        Route::prefix('customers')->name('customers.')->middleware('permission:file import')->group(function () {
+            Route::get('/', [PageController::class, 'customers'])->name('index');
+            Route::post('/import', [CustomersImportController::class, 'import'])->name('import');
+            Route::get('/export', [CustomersExportController::class, 'export'])->name('export');
+            Route::get('/template', [CustomersExportController::class, 'exportTemplate'])->name('template');
+        });
+
     });
 });
 

@@ -13,7 +13,7 @@ return [
     'colors' => 'Colors',
     'effects' => 'Effects',
     'glaze_inside_outer' => 'Glaze inside/outside',
-    'csv_import' => 'CSV Import',
+    'csv_import' => 'File Import',
     'profile' => 'Profile',
     'collections' => 'Shape Collections',
     'logout' => 'Logout',
