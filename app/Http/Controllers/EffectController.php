@@ -43,10 +43,7 @@ class EffectController extends Controller
                 'required', 'string', 'max:255',
                 Rule::unique('effects', 'effect_code')->ignore($id),
             ],
-            'effect_name' => [
-                'nullable', 'string', 'max:255',
-                Rule::unique('effects', 'effect_name')->ignore($id),
-            ],
+            'effect_name' => 'nullable|string|max:255',
             'colors'      => 'nullable|array',
             'colors.*'    => 'exists:colors,id',
         ];
