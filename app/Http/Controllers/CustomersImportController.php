@@ -42,7 +42,7 @@ class CustomersImportController extends Controller
             $headers = array_map('strtolower', array_map('trim', $headers));
             
             // กรอง header ที่เป็นค่าว่าง (null หรือ '') ออก
-            $headers = array_filter($headers, function($value) { return $value !== '' && $value !== null; });
+            $headers = array_filter($headers, function($value) { return $value !== '' && $value !== null && !is_numeric($value); });
             // highlight-end
 
             // 3. ตรวจสอบว่ามี header ที่จำเป็นครบหรือไม่
@@ -69,32 +69,68 @@ class CustomersImportController extends Controller
             $import = new CustomersImport;
             Excel::import($import, $file);
 
-            // 7. จัดการกับแถวที่ล้มเหลว (หาก Import Class ใช้ SkipsOnFailure)
-            // (ในโค้ดนี้ เราจะลบส่วนนี้ออก เพราะเราจะจับที่ ValidationException)
+            // 7. เช็ค failures ที่เก็บไว้
+            $failures = $import->getFailures();
+            
+            if (!empty($failures)) {
+                $errorMessages = [];
+                $errorCount = count($failures);
+                
+                foreach ($failures as $failure) {
+                    // จำกัดแสดงแค่ 20 errors แรก
+                    if (count($errorMessages) < 20) {
+                        $errorMessages[] = sprintf(
+                            "แถว %d [%s]: %s",
+                            $failure->row(),
+                            $failure->attribute(),
+                            implode(', ', $failure->errors())
+                        );
+                    }
+                }
+                
+                // ถ้ามี error เกิน 20 ให้แจ้งเตือน
+                if ($errorCount > 20) {
+                    $errorMessages[] = "... และอีก " . ($errorCount - 20) . " ข้อผิดพลาด";
+                }
+
+                return redirect()->back()
+                    ->with('error', "พบข้อผิดพลาด {$errorCount} แถว (ต้องแก้ไขให้ถูกต้องทั้งหมดก่อน Import)")
+                    ->with('import_errors', $errorMessages);
+            }
 
             // 8. สำเร็จทั้งหมด
             return redirect()->back()
                 ->with('success', 'นำเข้าข้อมูลลูกค้าสำเร็จ!');
-                // (ไม่ควรนับ row ที่นี่ เพราะไฟล์ถูกอ่านไปแล้ว ให้ไปนับใน Import Class)
 
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
-            // 9. จับ Validation errors จาก Import Class (เช่น email ซ้ำ, name ว่าง)
+            // 9. จับ Validation errors (สำรอง - ไม่ควรมาถึงตรงนี้)
             $failures = $e->failures();
             $errorMessages = [];
+            $errorCount = 0;
             
             foreach ($failures as $failure) {
-                // $failure->row() // แถวที่เกิดปัญหา
-                // $failure->attribute() // คอลัมน์ที่เกิดปัญหา
-                // $failure->errors() // Array ของข้อผิดพลาด
-                $errorMessages[] = "แถว {$failure->row()}: " . implode(', ', $failure->errors());
+                $errorCount++;
+                
+                if ($errorCount <= 20) {
+                    $errorMessages[] = sprintf(
+                        "แถว %d [%s]: %s",
+                        $failure->row(),
+                        $failure->attribute(),
+                        implode(', ', $failure->errors())
+                    );
+                }
+            }
+            
+            if ($errorCount > 20) {
+                $errorMessages[] = "... และอีก " . ($errorCount - 20) . " ข้อผิดพลาด";
             }
 
             return redirect()->back()
-                ->with('error', 'พบข้อผิดพลาดในการ validate ข้อมูลบางแถว (ข้อมูลจะไม่ถูก Import จนกว่าจะแก้ไขทั้งหมด)')
-                ->with('import_errors', $errorMessages); // ใช้ key 'import_errors'
+                ->with('error', "พบข้อผิดพลาด {$errorCount} แถว")
+                ->with('import_errors', $errorMessages);
 
         } catch (\Exception $e) {
-            // 10. Error อื่นๆ (เช่น เชื่อมต่อ DB ไม่ได้, ฯลฯ)
+            // 10. Error อื่นๆ
             return redirect()->back()
                 ->with('error', 'เกิดข้อผิดพลาดร้ายแรง: ' . $e->getMessage());
         }

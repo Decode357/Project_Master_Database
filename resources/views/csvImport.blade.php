@@ -43,6 +43,17 @@
                 </div>
             @endif
 
+            @if(session('import_errors') && is_array(session('import_errors')))
+                <div class="mb-4 p-4 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 rounded-md max-h-96 overflow-y-auto">
+                    <h3 class="font-bold mb-2">รายละเอียดข้อผิดพลาด:</h3>
+                    <ul class="list-disc list-inside text-sm space-y-1">
+                        @foreach(session('import_errors') as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md dark:shadow-gray-900/50 space-y-6">
                 <!-- Step 1 -->
                 <div>
