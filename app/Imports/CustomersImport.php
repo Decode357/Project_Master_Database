@@ -7,11 +7,12 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
+use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Validators\Failure;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 
-class CustomersImport implements ToCollection, WithHeadingRow, SkipsOnFailure
+class CustomersImport implements ToCollection, WithHeadingRow, SkipsOnFailure, SkipsEmptyRows
 {
     private $failures = [];
     private $rowsData = [];
@@ -78,12 +79,12 @@ class CustomersImport implements ToCollection, WithHeadingRow, SkipsOnFailure
     public function customValidationMessages()
     {
         return [
-            'code.required' => 'รหัสลูกค้าจำเป็นต้องระบุ',
-            'code.max' => 'รหัสลูกค้าต้องไม่เกิน 255 ตัวอักษร',
-            'name.max' => 'ชื่อลูกค้าต้องไม่เกิน 255 ตัวอักษร',
-            'email.email' => 'รูปแบบอีเมลไม่ถูกต้อง',
-            'email.max' => 'อีเมลต้องไม่เกิน 255 ตัวอักษร',
-            'phone.max' => 'เบอร์โทรต้องไม่เกิน 20 ตัวอักษร',
+            'code.required' => __('valid.custom.code.required'),
+            'code.max' => __('valid.custom.code.max'),
+            'name.max' => __('valid.custom.name.max'),
+            'email.email' => __('valid.custom.email.email'),
+            'email.max' => __('valid.custom.email.max'),
+            'phone.max' => __('valid.custom.phone.max'),
         ];
     }
 

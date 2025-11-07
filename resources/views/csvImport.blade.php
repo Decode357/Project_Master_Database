@@ -7,10 +7,10 @@
             <!-- Header -->
             <div class="mb-8">
                 <h1 class="text-3xl font-semibold text-gray-800 dark:text-gray-100 mb-2">
-                    <i class="fas fa-database mr-2"></i>Data Import Center
+                    <i class="fas fa-database mr-2"></i>{{ __('content.data_import_center') }}
                 </h1>
                 <p class="text-gray-600 dark:text-gray-400">
-                    Import and manage your master data from CSV or Excel files.
+                    {{ __('content.import_and_manage') }}
                 </p>
             </div>
 
@@ -19,27 +19,27 @@
                 <!-- Customer Import Card -->
                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow p-6">
                     <div class="flex items-center mb-4">
-                        <div class="bg-blue-100 dark:bg-blue-900 p-3 rounded-lg">
+                        <div class="bg-green-400 dark:bg-green-400 p-3 rounded-xl">
                             <i class="fas fa-users text-blue-600 dark:text-blue-400 text-2xl"></i>
                         </div>
                         <h2 class="ml-3 text-xl font-semibold text-gray-800 dark:text-gray-100">
-                            Customers
+                            {{ __('content.customer') }}
                         </h2>
                     </div>
                     <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">
-                        Import customer data including code, name, email, and phone number.
+                        {{ __('content.customer_import_detail') }}
                     </p>
                     <button onclick="openCustomerModal()"
                         class="w-full px-4 py-2 bg-blue-600 text-white rounded-md hoverScale hover:bg-blue-700 transition
                         dark:bg-blue-500 dark:hover:bg-blue-600">
-                        <i class="fas fa-file-import mr-2"></i>Import Customers
+                        <i class="fas fa-file-import mr-2"></i>{{ __('content.import') }}
                     </button>
                 </div>
 
                 <!-- Future Import Cards -->
                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 opacity-50">
                     <div class="flex items-center mb-4">
-                        <div class="bg-gray-100 dark:bg-gray-700 p-3 rounded-lg">
+                        <div class="bg-red-400 dark:bg-red-400 p-3 rounded-xl">
                             <i class="fas fa-box text-gray-600 dark:text-gray-400 text-2xl"></i>
                         </div>
                         <h2 class="ml-3 text-xl font-semibold text-gray-800 dark:text-gray-100">
@@ -56,7 +56,7 @@
                 </div>
                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 opacity-50">
                     <div class="flex items-center mb-4">
-                        <div class="bg-gray-100 dark:bg-gray-700 p-3 rounded-lg">
+                        <div class="bg-red-400 dark:bg-red-400 p-3 rounded-xl">
                             <i class="fas fa-box text-gray-600 dark:text-gray-400 text-2xl"></i>
                         </div>
                         <h2 class="ml-3 text-xl font-semibold text-gray-800 dark:text-gray-100">
@@ -74,7 +74,7 @@
 
                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 opacity-50">
                     <div class="flex items-center mb-4">
-                        <div class="bg-gray-100 dark:bg-gray-700 p-3 rounded-lg">
+                        <div class="bg-red-400 dark:bg-red-400 p-3 rounded-xl">
                             <i class="fas fa-warehouse text-gray-600 dark:text-gray-400 text-2xl"></i>
                         </div>
                         <h2 class="ml-3 text-xl font-semibold text-gray-800 dark:text-gray-100">
@@ -91,7 +91,7 @@
                 </div>
                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 opacity-50">
                     <div class="flex items-center mb-4">
-                        <div class="bg-gray-100 dark:bg-gray-700 p-3 rounded-lg">
+                        <div class="bg-red-400 dark:bg-red-400 p-3 rounded-xl">
                             <i class="fas fa-warehouse text-gray-600 dark:text-gray-400 text-2xl"></i>
                         </div>
                         <h2 class="ml-3 text-xl font-semibold text-gray-800 dark:text-gray-100">

@@ -6,17 +6,17 @@ use Illuminate\Http\Request;
 use App\Imports\CustomersImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
-// highlight-start
 use Maatwebsite\Excel\HeadingRowImport; // 1. Import Class สำหรับอ่าน Header
-// highlight-end
 
 class CustomersImportController extends Controller
 {
-    /**
-     * Import ข้อมูลลูกค้าจากไฟล์ Excel/CSV
-     */
     public function import(Request $request)
     {
+// ขนาดไฟล์สูงสุดที่รองรับ: 10MB
+// CSV (ASCII) ≈ 105,916 records
+// CSV (ชื่อ 40 ตัวเป็นไทย) ≈ 58,579 records
+// XLSX (อังกฤษ, ประมาณ) ≈ ~35,000 – 52,000 records (ค่าใกล้เคียง ≈ 42,366 ถ้า factor 2.5)
+// XLSX (ไทย, ประมาณ) ≈ ~19,000 – 29,000 records (ค่าใกล้เคียง ≈ 24,138 ถ้า factor 2.5)
         // 1. Validate ไฟล์ที่อัปโหลด
         $validator = Validator::make($request->all(), [
             'file' => 'required|file|mimes:xlsx,xls,csv|max:10240', // max 10MB
@@ -49,16 +49,20 @@ class CustomersImportController extends Controller
             $missingHeaders = array_diff($requiredHeaders, $headers);
             if (!empty($missingHeaders)) {
                 return redirect()->back()
-                    ->with('error', 'Header ไม่ถูกต้อง! ต้องมี: ' . implode(', ', $requiredHeaders) .
-                                '. หาไม่เจอ: ' . implode(', ', $missingHeaders));
+                    ->with('error', __('valid.invalid_header', [
+                        'required' => implode(', ', $requiredHeaders),
+                        'missing' => implode(', ', $missingHeaders),
+                    ]));
             }
 
             // 4. ตรวจสอบว่า header มีเฉพาะที่กำหนดไว้หรือไม่
             $extraHeaders = array_diff($headers, $requiredHeaders);
             if (!empty($extraHeaders)) {
                 return redirect()->back()
-                    ->with('error', 'พบคอลัมน์ที่ไม่รู้จัก: ' . implode(', ', $extraHeaders) .
-                                '. กรุณาใช้เฉพาะ: ' . implode(', ', $requiredHeaders));
+                    ->with('error', __('valid.unknown_columns', [
+                        'extra' => implode(', ', $extraHeaders),
+                        'required' => implode(', ', $requiredHeaders),
+                    ]));
             }
 
             // 5. ตรวจสอบไฟล์ว่าง (ย้ายไปเช็คใน Import Class หรือใช้ WithEmptyRows concern)
@@ -80,7 +84,7 @@ class CustomersImportController extends Controller
                     // จำกัดแสดงแค่ 20 errors แรก
                     if (count($errorMessages) < 20) {
                         $errorMessages[] = sprintf(
-                            "แถว %d [%s]: %s",
+                            __('valid.row'). ' %d [%s]: %s',  // ดึงข้อความจากไฟล์ภาษา
                             $failure->row(),
                             $failure->attribute(),
                             implode(', ', $failure->errors())
@@ -90,17 +94,17 @@ class CustomersImportController extends Controller
                 
                 // ถ้ามี error เกิน 20 ให้แจ้งเตือน
                 if ($errorCount > 20) {
-                    $errorMessages[] = "... และอีก " . ($errorCount - 20) . " ข้อผิดพลาด";
+                    $errorMessages[] = __('valid.and_more', ['count' => $errorCount - 20]);
                 }
 
                 return redirect()->back()
-                    ->with('error', "พบข้อผิดพลาด {$errorCount} แถว (ต้องแก้ไขให้ถูกต้องทั้งหมดก่อน Import)")
+                    ->with('error', __('valid.found_error_count', ['count' => $errorCount]))
                     ->with('import_errors', $errorMessages);
             }
 
             // 8. สำเร็จทั้งหมด
             return redirect()->back()
-                ->with('success', 'นำเข้าข้อมูลลูกค้าสำเร็จ!');
+                ->with('success', __('valid.import_success'));
 
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             // 9. จับ Validation errors (สำรอง - ไม่ควรมาถึงตรงนี้)
@@ -113,7 +117,7 @@ class CustomersImportController extends Controller
                 
                 if ($errorCount <= 20) {
                     $errorMessages[] = sprintf(
-                        "แถว %d [%s]: %s",
+                        __('valid.row') . ' %d [%s]: %s',
                         $failure->row(),
                         $failure->attribute(),
                         implode(', ', $failure->errors())
@@ -122,17 +126,21 @@ class CustomersImportController extends Controller
             }
             
             if ($errorCount > 20) {
-                $errorMessages[] = "... และอีก " . ($errorCount - 20) . " ข้อผิดพลาด";
+                $errorMessages[] = __('valid.and_more', ['count' => $errorCount - 20]);
             }
 
-            return redirect()->back()
-                ->with('error', "พบข้อผิดพลาด {$errorCount} แถว")
-                ->with('import_errors', $errorMessages);
+            return response()->json([
+                'success' => false,
+                'message' => __('valid.found_error_count', ['count' => $errorCount]),
+                'errors' => $errorMessages
+            ]);
 
         } catch (\Exception $e) {
             // 10. Error อื่นๆ
-            return redirect()->back()
-                ->with('error', 'เกิดข้อผิดพลาดร้ายแรง: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => __('valid.critical_error') . ': ' . $e->getMessage()
+            ]);
         }
     }
 }
