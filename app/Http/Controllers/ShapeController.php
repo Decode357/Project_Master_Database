@@ -80,6 +80,54 @@ class ShapeController extends Controller
         return view('shape', array_merge($data, compact('shapes', 'perPage', 'search'), $permissions));
     }
 
+    private function handleNewSelectableData(array &$data)
+    {
+        $mapping = [
+            'process_id' => [\App\Models\Process::class, 'process_name'],
+            'item_group_id' => [\App\Models\ItemGroup::class, 'item_group_name'],
+            'requestor_id' => [\App\Models\Requestor::class, 'name'],
+            'designer_id' => [\App\Models\Designer::class, 'designer_name'],
+        ];
+        foreach ($mapping as $field => [$model, $column]) {
+            if (!empty($data[$field])) {
+                $value = $data[$field];
+                // ถ้าเป็นตัวเลข ให้เช็กว่า ID นั้นมีจริงไหม
+                if (is_numeric($value)) {
+                    $exists = $model::where('id', $value)->exists();
+                    if (!$exists) {
+                        // ถ้าไม่มีจริง ให้สร้างใหม่โดยใช้เลขนั้นเป็นชื่อ
+                        $record = $model::create([$column => (string)$value]);
+                        $data[$field] = $record->id;
+                    }
+                } else {
+                    // ถ้าไม่ใช่ตัวเลข → เป็นชื่อใหม่แน่นอน → สร้างใหม่
+                    $record = $model::create([$column => $value]);
+                    $data[$field] = $record->id;
+                }
+            }
+        }
+        // Process
+        if (!empty($data['process_id']) && !is_numeric($data['process_id'])) {
+            $process = Process::create(['process_name' => $data['process_id']]);
+            $data['process_id'] = $process->id;
+        }
+        // Item Group
+        if (!empty($data['item_group_id']) && !is_numeric($data['item_group_id'])) {
+            $itemGroup = ItemGroup::create(['item_group_name' => $data['item_group_id']]);
+            $data['item_group_id'] = $itemGroup->id;
+        }
+        // Requestor
+        if (!empty($data['requestor_id']) && !is_numeric($data['requestor_id'])) {
+            $requestor = Requestor::create(['name' => $data['requestor_id']]);
+            $data['requestor_id'] = $requestor->id;
+        }
+        // Designer
+        if (!empty($data['designer_id']) && !is_numeric($data['designer_id'])) {
+            $designer = Designer::create(['designer_name' => $data['designer_id']]);
+            $data['designer_id'] = $designer->id;
+        }
+    }
+
     private function rules($id = null)
     {
         $unique = $id ? ",$id" : '';
@@ -89,11 +137,11 @@ class ShapeController extends Controller
             'item_description_eng'  => 'nullable|string|max:255',
             'shape_type_id' => 'nullable|exists:shape_types,id',
             'status_id'     => 'nullable|exists:statuses,id',
-            'process_id'    => 'nullable|exists:processes,id',
-            'item_group_id' => 'nullable|exists:item_groups,id',
-            'requestor_id'  => 'nullable|exists:requestors,id',
+            'process_id'    => 'nullable',
+            'item_group_id' => 'nullable',
+            'requestor_id'  => 'nullable',
             'customer_id'   => 'nullable|exists:customers,id',
-            'designer_id'   => 'nullable|exists:designers,id',
+            'designer_id'   => 'nullable',
             'shape_collection_id' => 'nullable|exists:shape_collections,id',
             'volume'        => 'nullable|numeric',
             'weight'        => 'nullable|numeric',
@@ -110,7 +158,7 @@ class ShapeController extends Controller
     {
         $data = $request->validate($this->rules());
         $data['updated_by'] = auth()->id();
-
+        $this->handleNewSelectableData($data);
         $shape = Shape::create($data);
         // จัดการรูปภาพ
         if ($request->hasFile('new_images')) {
@@ -136,7 +184,7 @@ class ShapeController extends Controller
     {
         $data = $request->validate($this->rules($shape->id));
         $data['updated_by'] = auth()->id();
-
+        $this->handleNewSelectableData($data);
         $shape->update($data);
         // จัดการรูปภาพใหม่
         if ($request->hasFile('new_images')) {

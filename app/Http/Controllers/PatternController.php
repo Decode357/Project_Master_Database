@@ -67,6 +67,42 @@ class PatternController extends Controller
         return view('pattern', array_merge($data, compact('patterns', 'perPage', 'search'), $permissions));
     }
 
+    private function handleNewSelectableData(array &$data)
+    {
+        $mapping = [
+            'requestor_id' => [\App\Models\Requestor::class, 'name'],
+            'designer_id' => [\App\Models\Designer::class, 'designer_name'],
+        ];
+        foreach ($mapping as $field => [$model, $column]) {
+            if (!empty($data[$field])) {
+                $value = $data[$field];
+                // ถ้าเป็นตัวเลข ให้เช็กว่า ID นั้นมีจริงไหม
+                if (is_numeric($value)) {
+                    $exists = $model::where('id', $value)->exists();
+                    if (!$exists) {
+                        // ถ้าไม่มีจริง ให้สร้างใหม่โดยใช้เลขนั้นเป็นชื่อ
+                        $record = $model::create([$column => (string)$value]);
+                        $data[$field] = $record->id;
+                    }
+                } else {
+                    // ถ้าไม่ใช่ตัวเลข → เป็นชื่อใหม่แน่นอน → สร้างใหม่
+                    $record = $model::create([$column => $value]);
+                    $data[$field] = $record->id;
+                }
+            }
+        }
+        // Requestor
+        if (!empty($data['requestor_id']) && !is_numeric($data['requestor_id'])) {
+            $requestor = Requestor::create(['name' => $data['requestor_id']]);
+            $data['requestor_id'] = $requestor->id;
+        }
+        // Designer
+        if (!empty($data['designer_id']) && !is_numeric($data['designer_id'])) {
+            $designer = Designer::create(['designer_name' => $data['designer_id']]);
+            $data['designer_id'] = $designer->id;
+        }
+    }
+
     private function rules($id = null)
     {
         return [
@@ -75,10 +111,10 @@ class PatternController extends Controller
                 Rule::unique('patterns', 'pattern_code')->ignore($id),
             ],
             'pattern_name'   => 'nullable|string|max:255',
-            'requestor_id'   => 'nullable|exists:requestors,id',
+            'requestor_id'   => 'nullable',
             'customer_id'    => 'nullable|exists:customers,id',
             'status_id'      => 'nullable|exists:statuses,id',
-            'designer_id'    => 'nullable|exists:designers,id',
+            'designer_id'    => 'nullable',
             'in_glaze'       => 'nullable|boolean',
             'on_glaze'       => 'nullable|boolean',
             'under_glaze'    => 'nullable|boolean',
@@ -91,7 +127,7 @@ class PatternController extends Controller
     {
         $data = $request->validate($this->rules());
         $data['updated_by'] = auth()->id();
-
+        $this->handleNewSelectableData($data);
         $pattern = Pattern::create($data);
         // จัดการรูปภาพ
         if ($request->hasFile('new_images')) {
@@ -116,7 +152,7 @@ class PatternController extends Controller
     {
         $data = $request->validate($this->rules($pattern->id));
         $data['updated_by'] = auth()->id();
-
+        $this->handleNewSelectableData($data);
         $pattern->update($data);
         // จัดการรูปภาพใหม่
         if ($request->hasFile('new_images')) {

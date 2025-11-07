@@ -5,7 +5,7 @@
     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="display: none;">
 
     <!-- Modal Content -->
-    <div x-data="shapeModal()" class="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-full max-w-2xl p-6 overflow-y-auto max-h-[90vh]">
+    <div x-data="shapeModal()" class="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-full max-w-4xl p-6 overflow-y-auto max-h-[120vh]">
         <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">{{ __('content.create_shape') }}</h2>
         <hr class="mb-3 border-gray-200 dark:border-gray-600">
 
@@ -20,23 +20,20 @@
                         <li x-text="error[0] || error"></li>
                     </template>
                 </ul>
-            </div>
-
-            <!-- ITEM CODE -->
-            <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.shape_code') }}</label>
-                <input name="item_code" type="text" placeholder="{{ __('content.enter') }}{{ __('content.shape_code') }}"
-                    :class="errors.item_code ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
-                    class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400
-                        focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    required />
-                <p x-show="errors.item_code"
-                    x-text="Array.isArray(errors.item_code) ? errors.item_code[0] : errors.item_code"
-                    class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
-            </div>
-
-            <!-- Description TH & EN -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            </div>  
+            <div class="grid grid-cols-3 gap-4">
+            <!-- ITEM CODE --><!-- Description TH & EN -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.shape_code') }}</label>
+                    <input name="item_code" type="text" placeholder="{{ __('content.enter') }}{{ __('content.shape_code') }}"
+                        :class="errors.item_code ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
+                        class="mt-1 w-full border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400
+                            focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        required />
+                    <p x-show="errors.item_code"
+                        x-text="Array.isArray(errors.item_code) ? errors.item_code[0] : errors.item_code"
+                        class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
+                </div>                
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.description_th') }}</label>
                     <input name="item_description_thai" type="text" placeholder="{{ __('content.enter') }}{{ __('content.description_th') }}" value="{{ old('item_description_thai') }}"
@@ -60,7 +57,10 @@
             <!-- TYPE, STATUS, COLLECTION, PROCESS -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.type') }}</label>
+                    <div class="grid grid-cols-2 items-end">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.type') }}</label>
+                        <label class="block text-xs font-medium text-red-700 dark:text-red-300 text-end">{{__('content.select_only')}}</label>
+                    </div>
                     <select name="shape_type_id" :class="errors.shape_type_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <option value="">-</option>
@@ -76,7 +76,10 @@
                         class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.status') }}</label>
+                    <div class="grid grid-cols-2 items-end">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.status') }}</label>
+                        <label class="block text-xs font-medium text-red-700 dark:text-red-300 text-end">{{__('content.select_only')}}</label>
+                    </div>                    
                     <select name="status_id" :class="errors.status_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <option value="">-</option>
@@ -91,7 +94,10 @@
                         class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.collection') }}</label>
+                    <div class="grid grid-cols-2 items-end">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.collection_2') }}</label>
+                        <label class="block text-xs font-medium text-red-700 dark:text-red-300 text-end">{{__('content.select_only')}}</label>
+                    </div>  
                     <select name="shape_collection_id"
                         :class="errors.shape_collection_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
@@ -108,7 +114,10 @@
                         class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.process') }}</label>
+                    <div class="grid grid-cols-2 items-end">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.process') }}</label>
+                        <label class="block text-xs font-medium text-green-700 dark:text-green-300 text-end">{{__('content.can_add')}}</label>
+                    </div>  
                     <select name="process_id" :class="errors.process_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
                         <option value="">-</option>
@@ -128,7 +137,10 @@
             <!-- CUSTOMER, GROUP, DESIGNER, Requestor -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.group') }}</label>
+                    <div class="grid grid-cols-2 items-end">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.group') }}</label>
+                        <label class="block text-xs font-medium text-green-700 dark:text-green-300 text-end">{{__('content.can_add')}}</label>
+                    </div>  
                     <select name="item_group_id" :class="errors.item_group_id ? 'border-red-500' : 'border-gray-300'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2">
                         <option value="">-</option>
@@ -145,7 +157,10 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.customer') }}</label>
+                    <div class="grid grid-cols-2 items-end">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.customer') }}</label>
+                        <label class="block text-xs font-medium text-red-700 dark:text-red-300 text-end">{{__('content.select_only')}}</label>
+                    </div> 
                     <select name="customer_id" :class="errors.customer_id ? 'border-red-500' : 'border-gray-300'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2">
                         <option value="">-</option>
@@ -162,7 +177,10 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.requestor') }}</label>
+                    <div class="grid grid-cols-2 items-end">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.requestor') }}</label>
+                        <label class="block text-xs font-medium text-green-700 dark:text-green-300 text-end">{{__('content.can_add')}}</label>
+                    </div>  
                     <select name="requestor_id" :class="errors.requestor_id ? 'border-red-500' : 'border-gray-300'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2">
                         <option value="">-</option>
@@ -179,7 +197,10 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.designer') }}</label>
+                    <div class="grid grid-cols-2 items-end">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.designer') }}</label>
+                        <label class="block text-xs font-medium text-green-700 dark:text-green-300 text-end">{{__('content.can_add')}}</label>
+                    </div>  
                     <select name="designer_id" :class="errors.designer_id ? 'border-red-500' : 'border-gray-300'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2">
                         <option value="">-</option>
@@ -303,7 +324,7 @@
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                         {{ __('content.new_images_preview') }}
                     </label>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                    <div class="grid grid-cols-2 md:grid-cols-6 gap-2">
                         <template x-for="(file, index) in newImages" :key="index">
                             <div class="relative group">
                                 <img :src="URL.createObjectURL(file)" 

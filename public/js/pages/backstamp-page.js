@@ -39,6 +39,7 @@ function backstampPage() {
                     // init select2 ใหม่ทุกครั้ง
                     $this.select2({
                         dropdownParent: $modal,
+                        tags: true,
                         width: '100%'
                     });
 
@@ -66,6 +67,7 @@ function backstampPage() {
         initSelect2() {
             // Initialize any Select2 elements on page load if needed
             $('.select2').select2({
+                tags: true,
                 width: '100%'
             });
         },

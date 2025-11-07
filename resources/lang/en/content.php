@@ -1,6 +1,8 @@
 <?php
 return [
     '' => '',
+    'can_add' => 'Can be added',
+    'select_only' => 'Select Only',
     'import' => 'Import',
     'customer_import_detail' => 'Import customer data including code, name, email, and phone number.',
     'instruct_5_valid' => 'All rows must be valid before import',
@@ -77,6 +79,7 @@ return [
     'confirm_delete' => 'Confirm Delete',
     'confirm_delete_message' => 'Are you sure you want to delete this item? ',
     'collection' => 'Shape Collection',
+    'collection_2' => 'Collection',
     'collection_code' => 'Shape Collection Code',
     'collection_name' => 'Shape Collection Name',
     'create_shape' => 'Create Shape',

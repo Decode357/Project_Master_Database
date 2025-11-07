@@ -49,7 +49,10 @@
             <!-- Customer, Requestor, Status -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.customer') }}</label>
+                    <div class="grid grid-cols-2 items-end">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.customer') }}</label>
+                        <label class="block text-xs font-medium text-red-700 dark:text-red-300 text-end">{{__('content.select_only')}}</label>
+                    </div>                        
                     <select name="customer_id" :class="errors.customer_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <option value="">-</option>
@@ -63,7 +66,10 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.requestor') }}</label>
+                    <div class="grid grid-cols-2 items-end">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.requestor') }}</label>
+                        <label class="block text-xs font-medium text-green-700 dark:text-green-300 text-end">{{__('content.can_add')}}</label>
+                    </div>                     
                     <select name="requestor_id" :class="errors.requestor_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <option value="">-</option>
@@ -77,7 +83,10 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.status') }}</label>
+                    <div class="grid grid-cols-2 items-end">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.status') }}</label>
+                        <label class="block text-xs font-medium text-red-700 dark:text-red-300 text-end">{{__('content.select_only')}}</label>
+                    </div>                     
                     <select name="status_id" :class="errors.status_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <option value="">-</option>

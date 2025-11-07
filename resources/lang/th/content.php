@@ -1,6 +1,8 @@
 <?php
 return [
     '' => '',
+    'can_add' => 'เพิ่มข้อมูลได้',
+    'select_only' => 'เลือกเท่านั้น',
     'import' => 'นำเข้า',
     'customer_import_detail' => 'นำเข้าข้อมูลลูกค้ารวมถึงรหัส, ชื่อ, อีเมล และหมายเลขโทรศัพท์',
     'instruct_5_valid' => 'ทุกแถวต้องถูกต้องก่อนนำเข้า',
@@ -77,6 +79,7 @@ return [
     'confirm_delete' => 'ยืนยันการลบ',
     'confirm_delete_message' => 'คุณแน่ใจหรือไม่ว่าต้องการลบรายการนี้? ',
     'collection' => 'ชุดรูปทรง',
+    'collection_2' => 'ชุดรูปทรง',
     'collection_code' => 'รหัสชุดรูปทรง',
     'collection_name' => 'ชื่อชุดรูปทรง',
     'create_shape' => 'สร้างรูปทรง',

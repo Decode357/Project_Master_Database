@@ -59,6 +59,36 @@ class BackstampController extends Controller
         return view('backstamp', array_merge($data, compact('backstamps', 'perPage', 'search'), $permissions));
     }
 
+    private function handleNewSelectableData(array &$data)
+    {
+        $mapping = [
+            'requestor_id' => [\App\Models\Requestor::class, 'name'],
+        ];
+        foreach ($mapping as $field => [$model, $column]) {
+            if (!empty($data[$field])) {
+                $value = $data[$field];
+                // ถ้าเป็นตัวเลข ให้เช็กว่า ID นั้นมีจริงไหม
+                if (is_numeric($value)) {
+                    $exists = $model::where('id', $value)->exists();
+                    if (!$exists) {
+                        // ถ้าไม่มีจริง ให้สร้างใหม่โดยใช้เลขนั้นเป็นชื่อ
+                        $record = $model::create([$column => (string)$value]);
+                        $data[$field] = $record->id;
+                    }
+                } else {
+                    // ถ้าไม่ใช่ตัวเลข → เป็นชื่อใหม่แน่นอน → สร้างใหม่
+                    $record = $model::create([$column => $value]);
+                    $data[$field] = $record->id;
+                }
+            }
+        }
+        // Requestor
+        if (!empty($data['requestor_id']) && !is_numeric($data['requestor_id'])) {
+            $requestor = Requestor::create(['name' => $data['requestor_id']]);
+            $data['requestor_id'] = $requestor->id;
+        }
+    }
+
     private function rules($id = null)
     {
         return [
@@ -67,7 +97,7 @@ class BackstampController extends Controller
                 Rule::unique('backstamps', 'backstamp_code')->ignore($id),
             ],
             'name'           => 'nullable|string|max:255',
-            'requestor_id'   => 'nullable|exists:requestors,id',
+            'requestor_id'   => 'nullable',
             'customer_id'    => 'nullable|exists:customers,id',
             'status_id'      => 'nullable|exists:statuses,id',
             'in_glaze'       => 'nullable|boolean',
@@ -83,7 +113,7 @@ class BackstampController extends Controller
     {
         $data = $request->validate($this->rules());
         $data['updated_by'] = auth()->id();
-
+        $this->handleNewSelectableData($data);
         $backstamp = Backstamp::create($data);
         // จัดการรูปภาพ
         if ($request->hasFile('new_images')) {
@@ -108,7 +138,7 @@ class BackstampController extends Controller
     {
         $data = $request->validate($this->rules($backstamp->id));
         $data['updated_by'] = auth()->id();
-
+        $this->handleNewSelectableData($data);
         $backstamp->update($data);
         // จัดการรูปภาพใหม่
         if ($request->hasFile('new_images')) {

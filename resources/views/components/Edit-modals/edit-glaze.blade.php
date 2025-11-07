@@ -42,7 +42,10 @@
             <!-- Glaze Inside & Outside Selection -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.glaze_inside') }}</label>
+                    <div class="grid grid-cols-2 items-end">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.glaze_inside') }}</label>
+                        <label class="block text-xs font-medium text-red-700 dark:text-red-300 text-end">{{__('content.select_only')}}</label>
+                    </div>
                     <select name="glaze_inside_id" x-model="glazeToEdit.glaze_inside_id"
                         :class="errors.glaze_inside_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
@@ -58,7 +61,10 @@
                         class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.glaze_outside') }}</label>
+                    <div class="grid grid-cols-2 items-end">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.glaze_outside') }}</label>
+                        <label class="block text-xs font-medium text-red-700 dark:text-red-300 text-end">{{__('content.select_only')}}</label>
+                    </div>                     
                     <select name="glaze_outer_id" x-model="glazeToEdit.glaze_outer_id"
                         :class="errors.glaze_outer_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
@@ -78,7 +84,10 @@
             <!-- Status, Effect -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.effect') }}</label>
+                    <div class="grid grid-cols-2 items-end">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.effect') }}</label>
+                        <label class="block text-xs font-medium text-red-700 dark:text-red-300 text-end">{{__('content.select_only')}}</label>
+                    </div>                     
                     <select name="effect_id" x-model="glazeToEdit.effect_id"
                         :class="errors.effect_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
@@ -92,7 +101,10 @@
                         class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.status') }}</label>
+                    <div class="grid grid-cols-2 items-end">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.status') }}</label>
+                        <label class="block text-xs font-medium text-red-700 dark:text-red-300 text-end">{{__('content.select_only')}}</label>
+                    </div>                    
                     <select name="status_id" x-model="glazeToEdit.status_id"
                         :class="errors.status_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                         class="select2 w-full mt-1 border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
