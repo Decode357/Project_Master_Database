@@ -6,11 +6,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', config('app.name', 'Title'))</title>
 
-    <link as="style"
-        href="https://fonts.googleapis.com/css2?display=swap&family=Noto+Sans:wght@400;500;700;900&family=Public+Sans:wght@400;500;700;900"
-        onload="this.rel='stylesheet'" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-
     <!-- Theme CSS -->
     <style>
         [x-cloak] { display: none !important; }
@@ -36,7 +31,6 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-
 <body class="bg-gray-50 dark:bg-gray-900" 
     x-data="sidebarManager()" 
     x-cloak 
@@ -351,17 +345,15 @@
             </section>
         </main>
     </div>
-    <script src="{{ asset('js/sidebar-manager.js') }}"></script>
-        <!-- Add SweetAlert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- Alpine.js CDN -->
-    <script src="//unpkg.com/alpinejs" defer></script>
-    <!-- Select2 CSS & JS CDN -->
+    <!-- External Scripts only -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.5/dist/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <!-- Modal common Scripts -->
-    <script src="{{ asset('js/modals/modal-common.js') }}"></script> 
+    
+    <!-- Your Scripts -->
+    <script src="{{ asset('js/sidebar-manager.js') }}"></script>
+    <script src="{{ asset('js/modals/modal-common.js') }}"></script>
     <!-- Manager Script -->
     <script src="{{ asset('js/language-manager.js') }}"></script>
     <script src="{{ asset('js/theme-manager.js') }}"></script>
@@ -376,5 +368,4 @@
     <script src="{{ asset('js/pages/glazeInsideOuter-page.js') }}"></script>
     <script src="{{ asset('js/pages/shapeCollection.blade-page.js') }}"></script>
 </body>
-
 </html>
