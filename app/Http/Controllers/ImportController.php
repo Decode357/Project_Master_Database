@@ -46,13 +46,7 @@ class ImportController extends Controller
     }
 
     /**
-     * ฟังก์ชันหลักสำหรับ process import
-     * 
-     * @param Request $request
-     * @param array $requiredHeaders
-     * @param string $importClass
-     * @param string $type
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     * Process Import
      */
     private function processImport(Request $request, array $requiredHeaders, string $importClass, string $type, string $sessionKey = null)
     {

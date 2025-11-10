@@ -118,7 +118,7 @@
                     <li>{{ __('content.instruct_2_customer_data') }}</li>
                     <li>{!! __('content.instruct_3_code') !!}</li>
                     <li>{{ __('content.instruct_4_duplicate') }}</li>
-                    <li>{{ __('content.instruct_5_valid') }}</li>
+                    <li>{!! __('content.instruct_5_valid') !!}</li>
                 </ul>
             </div>
         </div>

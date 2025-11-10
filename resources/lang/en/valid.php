@@ -1,8 +1,11 @@
 <?php
 return [
     '' => '',
+    'file_required' => 'Please select a file to upload',
+    'file_mimes' => 'The file must be of type: xlsx, xls, csv only',
+    'file_max' => 'The file size must not exceed :max',
     'critical_error' => 'A critical error occurred: ',
-    'import_success' => 'Customer data imported successfully!',
+    'import_success' => 'Data imported successfully!',
     'found_error_count' => 'Found :count errors (please correct all before importing)',
     'and_more' => '. . . and :count more',
     'row' => 'Row',
@@ -43,6 +46,21 @@ return [
         'status' => [
             'max' => 'Status must not exceed 255 characters.',
             'not_found' => 'Status named ":name" not found in the system.',
+        ],
+        'organic' => [
+            'in' => 'Organic value must be TRUE, FALSE, 1, 0, Yes, No, ใช่, or ไม่ only.',
+        ],
+        'in_glaze' => [
+            'in' => 'In Glaze value must be TRUE, FALSE, 1, 0, Yes, No, ใช่, or ไม่ only.',
+        ],
+        'on_glaze' => [
+            'in' => 'On Glaze value must be TRUE, FALSE, 1, 0, Yes, No, ใช่, or ไม่ only.',
+        ],
+        'under_glaze' => [
+            'in' => 'Under Glaze value must be TRUE, FALSE, 1, 0, Yes, No, ใช่, or ไม่ only.',
+        ],
+        'air_dry' => [
+            'in' => 'Air Dry value must be TRUE, FALSE, 1, 0, Yes, No, ใช่, or ไม่ only.',
         ],
         'approval_date' => [
             'date' => 'Invalid date format.',

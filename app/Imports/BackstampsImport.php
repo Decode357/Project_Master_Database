@@ -29,11 +29,51 @@ class BackstampsImport implements ToCollection, WithHeadingRow, SkipsOnFailure, 
         foreach ($rows as $index => $row) {
             $rowNumber = $index + 2; // +2 เพราะ index เริ่ม 0 และแถว 1 คือ header
             
-            // Validate แต่ละแถว
+            $hasErrors = false;
+            
+            // 1. เช็ค relations ก่อน (ไม่ว่า validation จะผ่านหรือไม่)
+            $relationErrors = [];
+
+            // เช็ค requestor
+            if (!empty($row['requestor'])) {
+                $requestor = Requestor::where('name', $row['requestor'])->first();
+                if (!$requestor) {
+                    $relationErrors[] = __('valid.backst.requestor.not_found', ['name' => $row['requestor']]);
+                }
+            }
+
+            // เช็ค customer
+            if (!empty($row['customer'])) {
+                $customer = Customer::where('name', $row['customer'])->first();
+                if (!$customer) {
+                    $relationErrors[] = __('valid.backst.customer.not_found', ['name' => $row['customer']]);
+                }
+            }
+
+            // เช็ک status
+            if (!empty($row['status'])) {
+                $status = Status::where('status', $row['status'])->first();
+                if (!$status) {
+                    $relationErrors[] = __('valid.backst.status.not_found', ['name' => $row['status']]);
+                }
+            }
+
+            // ถ้ามี relation errors ให้เก็บไว้
+            if (!empty($relationErrors)) {
+                $this->failures[] = new Failure(
+                    $rowNumber,
+                    'relations',
+                    $relationErrors,
+                    $row->toArray()
+                );
+                $hasErrors = true;
+            }
+
+            // 2. เช็ค validation ทั่วไป
             $validator = Validator::make($row->toArray(), $this->rules(), $this->customValidationMessages());
             
             if ($validator->fails()) {
-                // เก็บ failures
+                // เก็บ validation failures
                 foreach ($validator->errors()->messages() as $attribute => $errors) {
                     $this->failures[] = new Failure(
                         $rowNumber,
@@ -42,46 +82,12 @@ class BackstampsImport implements ToCollection, WithHeadingRow, SkipsOnFailure, 
                         $row->toArray()
                     );
                 }
-            } else {
-                // ตรวจสอบว่า requestor, customer, status มีในระบบหรือไม่
-                $validationErrors = [];
+                $hasErrors = true;
+            }
 
-                // เช็ค requestor
-                if (!empty($row['requestor'])) {
-                    $requestor = Requestor::where('name', $row['requestor'])->first();
-                    if (!$requestor) {
-                        $validationErrors[] = __('valid.backst.requestor.not_found', ['name' => $row['requestor']]);
-                    }
-                }
-
-                // เช็ค customer
-                if (!empty($row['customer'])) {
-                    $customer = Customer::where('name', $row['customer'])->first();
-                    if (!$customer) {
-                        $validationErrors[] = __('valid.backst.customer.not_found', ['name' => $row['customer']]);
-                    }
-                }
-
-                // เช็ค status
-                if (!empty($row['status'])) {
-                    $status = Status::where('status', $row['status'])->first();
-                    if (!$status) {
-                        $validationErrors[] = __('valid.backst.status.not_found', ['name' => $row['status']]);
-                    }
-                }
-
-                // ถ้ามี validation errors ให้เก็บไว้
-                if (!empty($validationErrors)) {
-                    $this->failures[] = new Failure(
-                        $rowNumber,
-                        'relations',
-                        $validationErrors,
-                        $row->toArray()
-                    );
-                } else {
-                    // เก็บข้อมูลที่ผ่านการ validate
-                    $this->rowsData[] = $row->toArray();
-                }
+            // 3. ถ้าไม่มี error เก็บข้อมูลไว้
+            if (!$hasErrors) {
+                $this->rowsData[] = $row->toArray();
             }
         }
 
@@ -133,11 +139,11 @@ class BackstampsImport implements ToCollection, WithHeadingRow, SkipsOnFailure, 
         // แปลงจาก string
         $value = strtolower(trim($value));
         
-        if (in_array($value, ['true', 'yes', '1', 'y', 'ใช่'])) {
+        if (in_array($value, ['true', 'yes', '1', 'ใช่'])) {
             return 1;
         }
 
-        if (in_array($value, ['false', 'no', '0', 'n', 'ไม่'])) {
+        if (in_array($value, ['false', 'no', '0', 'ไม่'])) {
             return 0;
         }
 
@@ -194,11 +200,11 @@ class BackstampsImport implements ToCollection, WithHeadingRow, SkipsOnFailure, 
             'requestor' => 'nullable|max:255',
             'customer' => 'nullable|max:255',
             'status' => 'nullable|max:255',
-            'organic' => 'nullable',
-            'in_glaze' => 'nullable',
-            'on_glaze' => 'nullable',
-            'under_glaze' => 'nullable',
-            'air_dry' => 'nullable',
+            'organic' => 'nullable|in:TRUE,FALSE,true,false,1,0,yes,no,Yes,No,YES,NO,ใช่,ไม่',
+            'in_glaze' => 'nullable|in:TRUE,FALSE,true,false,1,0,yes,no,Yes,No,YES,NO,ใช่,ไม่',
+            'on_glaze' => 'nullable|in:TRUE,FALSE,true,false,1,0,yes,no,Yes,No,YES,NO,ใช่,ไม่',
+            'under_glaze' => 'nullable|in:TRUE,FALSE,true,false,1,0,yes,no,Yes,No,YES,NO,ใช่,ไม่',
+            'air_dry' => 'nullable|in:TRUE,FALSE,true,false,1,0,yes,no,Yes,No,YES,NO,ใช่,ไม่',
             'approval_date' => 'nullable|date',
         ];
     }
@@ -215,6 +221,11 @@ class BackstampsImport implements ToCollection, WithHeadingRow, SkipsOnFailure, 
             'requestor.max' => __('valid.backst.requestor.max'),
             'customer.max' => __('valid.backst.customer.max'),
             'status.max' => __('valid.backst.status.max'),
+            'organic.in' => __('valid.backst.organic.in'),
+            'in_glaze.in' => __('valid.backst.in_glaze.in'),
+            'on_glaze.in' => __('valid.backst.on_glaze.in'),
+            'under_glaze.in' => __('valid.backst.under_glaze.in'),
+            'air_dry.in' => __('valid.backst.air_dry.in'),
             'approval_date.date' => __('valid.backst.approval_date.date'),
         ];
     }
