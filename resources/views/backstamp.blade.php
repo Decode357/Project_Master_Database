@@ -70,11 +70,11 @@
                 <tbody>
                     @forelse ($backstamps as $backstamp)
                         @php
-                            $statusText = $backstamp->status->status ?? 'Unknown';
-                            $statusColor = match ($statusText) {
-                                'Active' => 'bg-green-100 text-green-800',
-                                'Cancel' => 'bg-red-100 text-red-800',
-                                default => 'bg-yellow-100 text-yellow-800',
+                            $status = $backstamp->status->status ?? 'Unknown';
+                            $statusColor = match ($status) {
+                                'Active' => 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300',
+                                'Cancel' => 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300',
+                                default => 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300',
                             };
                         @endphp
                         <tr class="dark:text-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 bg-white border-b border-gray-200 hover:bg-gray-50">
@@ -89,7 +89,7 @@
                             </td>
                             <td class="px-4 py-3">
                                 <span class="{{ $statusColor }} px-2 py-1 rounded-full text-xs font-semibold">
-                                    {{ $statusText }}
+                                    {{ $status }}
                                 </span>
                             </td>
                             <td class="px-4 py-3 text-right">{{ $backstamp->updater->name ?? '-' }}</td>

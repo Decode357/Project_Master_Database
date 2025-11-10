@@ -71,11 +71,11 @@
                     <tbody>
                         @forelse ($patterns as $pattern)
                             @php
-                                $statusText = $pattern->status->status ?? 'Unknown';
-                                $statusColor = match ($statusText) {
-                                    'Active' => 'bg-green-100 text-green-800',
-                                    'Cancel' => 'bg-red-100 text-red-800',
-                                    default => 'bg-yellow-100 text-yellow-800',
+                                $status = $pattern->status->status ?? 'Unknown';
+                                $statusColor = match ($status) {
+                                    'Active' => 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300',
+                                    'Cancel' => 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300',
+                                    default => 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300',
                                 };
                             @endphp
 
@@ -92,7 +92,7 @@
                                 <!-- Status -->
                                 <td class="px-4 py-3">
                                     <span class="{{ $statusColor }} px-2 py-1 rounded-full text-xs font-semibold">
-                                        {{ $statusText }}
+                                        {{ $status }}
                                     </span>
                                 </td>
 

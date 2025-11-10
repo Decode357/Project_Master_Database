@@ -93,9 +93,19 @@
                                     @endforeach
                                 </td>
                                 <td class="px-3 py-3">
+                                    @php
+                                        $permissionColors1 = [
+                                            'view' => 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300',
+                                            'edit' => 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300',
+                                            'delete' => 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300',
+                                            'create' => 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300',
+                                            'file import' => 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300',
+                                            'manage users' => 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300',
+                                        ];
+                                    @endphp
                                     @foreach ($user->permissions as $perm)
                                         <span
-                                            class="inline-block {{ $permissionColors[$perm->name] ?? 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300' }} text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                            class="inline-block {{ $permissionColors1[$perm->name] ?? 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300' }} text-xs font-medium px-2.5 py-0.5 rounded-full">
                                             {{ __('auth.' . $perm->name) }}
                                         </span>
                                     @endforeach

@@ -54,15 +54,6 @@ class UserController extends Controller
         // ดึง user ทั้งหมดพร้อม roles + paginate
         $users = $query->latest()->paginate($perPage)->appends($request->query());
 
-        // สีแต่ละ permission
-        $permissionColors = [
-            'view' => 'bg-yellow-100 text-yellow-800',
-            'edit' => 'bg-blue-100 text-blue-800',
-            'delete' => 'bg-red-100 text-red-800',
-            'create' => 'bg-green-100 text-green-800',
-            'file import' => 'bg-gray-100 text-gray-800',
-            'manage users' => 'bg-purple-100 text-purple-800',
-        ];
         $permissions = $this->getUserPermissions();
         $departments = Department::all();
         $requestors = Requestor::all();
@@ -72,7 +63,7 @@ class UserController extends Controller
             $user->userPermissions = $user->getAllPermissions()->pluck('name')->toArray();
         }
 
-        return view('user', compact('users', 'departments', 'requestors', 'customers', 'permissionColors', 'perPage', 'search'), $permissions);
+        return view('user', compact('users', 'departments', 'requestors', 'customers', 'perPage', 'search'), $permissions);
     }
 
     public function storeUser(Request $request)

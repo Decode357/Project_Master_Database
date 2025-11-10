@@ -156,12 +156,12 @@
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mt-2">{{__('auth.permission')}}</label>
                 @php
                     $permColors = [
-                        'view' => 'bg-yellow-100 text-yellow-800',
-                        'edit' => 'bg-blue-100 text-blue-800',
-                        'delete' => 'bg-red-100 text-red-800',
-                        'create' => 'bg-green-100 text-green-800',
-                        'file import' => 'bg-gray-100 text-gray-800',
-                        'manage users' => 'bg-purple-100 text-purple-800',
+                        'view' => 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300',
+                        'edit' => 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300',
+                        'delete' => 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300',
+                        'create' => 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300',
+                        'file import' => 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300',
+                        'manage users' => 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300',
                     ];
                 @endphp
                 <div class="flex flex-wrap gap-2 mt-1">
