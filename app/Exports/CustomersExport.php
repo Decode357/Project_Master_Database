@@ -24,10 +24,10 @@ class CustomersExport implements FromCollection, WithHeadings
     public function headings(): array
     {
         return [
-            'code',
-            'name',
-            'email',
-            'phone',
+            'Code',
+            'Name',
+            'Email',
+            'Phone',
         ];
     }
 }

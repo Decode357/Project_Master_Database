@@ -6,8 +6,8 @@ use App\Http\Controllers\{
     BackstampController, GlazeController,
     ColorController, EffectController,
     UserController, GlazeInsideOuterController,
-    ShapeCollectionController, CustomersImportController,
-    CustomersExportController,
+    ShapeCollectionController, ImportController,
+    ExportController,
 };
 use Illuminate\Support\Facades\Route;
 
@@ -93,11 +93,18 @@ Route::middleware(['auth'])->group(function () {
         // เมนูสำหรับนำเข้า-ส่งออกข้อมูลลูกค้า (Customers Management)
         Route::prefix('customers')->name('customers.')->middleware('permission:file import')->group(function () {
             Route::get('/', [PageController::class, 'customers'])->name('index');
-            Route::post('/import', [CustomersImportController::class, 'import'])->name('import');
-            Route::get('/export', [CustomersExportController::class, 'export'])->name('export');
-            Route::get('/template', [CustomersExportController::class, 'exportTemplate'])->name('template');
+            Route::post('/import', [ImportController::class, 'customer_import'])->name('import');
+            Route::get('/export', [ExportController::class, 'customer_export'])->name('export');
+            Route::get('/template', [ExportController::class, 'customer_exportTemplate'])->name('template');
         });
 
+        // เมนูสำหรับนำเข้า-ส่งออกข้อมูล Backstamp (Backstamp Management)
+        Route::prefix('backstamps')->name('backstamps.')->middleware('permission:file import')->group(function () {
+            Route::get('/', [PageController::class, 'backstamps'])->name('index');
+            Route::post('/import', [ImportController::class, 'backstamp_import'])->name('import');
+            Route::get('/export', [ExportController::class, 'backstamp_export'])->name('export');
+            Route::get('/template', [ExportController::class, 'backstamp_exportTemplate'])->name('template');
+        });
     });
 });
 

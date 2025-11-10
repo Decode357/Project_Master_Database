@@ -10,18 +10,42 @@ return [
     'invalid_header' => 'Invalid header! Required: :required. Missing: :missing',
     'custom' => [
         'code' => [
-            'required' => 'Customer code is required.',
-            'max' => 'Customer code must not exceed 255 characters.',
+            'required' => 'Code is required.',
+            'max' => 'Code must not exceed 255 characters.',
         ],
         'name' => [
-            'max' => 'Customer name must not exceed 255 characters.',
+            'max' => 'Name must not exceed 255 characters.',
         ],
         'email' => [
-            'email' => 'Invalid email format.',
+            'email' => 'Invalid Email format.',
             'max' => 'Email must not exceed 255 characters.',
         ],
         'phone' => [
-            'max' => 'Phone number must not exceed 20 characters.',
+            'max' => 'Phone must not exceed 20 characters.',
+        ],
+    ],
+    'backst' => [
+        'backstamp_code' => [
+            'required' => 'Backstamp Code is required.',
+            'max' => 'Backstamp Code must not exceed 255 characters.',
+        ],
+        'name' => [
+            'max' => 'Name must not exceed 255 characters.',
+        ],
+        'requestor' => [
+            'max' => 'Requestor must not exceed 255 characters.',
+            'not_found' => 'Requestor named ":name" not found in the system.',
+        ],
+        'customer' => [
+            'max' => 'Customer must not exceed 255 characters.',
+            'not_found' => 'Customer named ":name" not found in the system.',
+        ],
+        'status' => [
+            'max' => 'Status must not exceed 255 characters.',
+            'not_found' => 'Status named ":name" not found in the system.',
+        ],
+        'approval_date' => [
+            'date' => 'Invalid date format.',
         ],
     ],
 ];

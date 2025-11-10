@@ -15,9 +15,9 @@
             </div>
 
             <!-- Import Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">
                 <!-- Customer Import Card -->
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow p-6">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow p-6 flex flex-col">
                     <div class="flex items-center mb-4">
                         <div class="bg-green-400 dark:bg-green-400 p-3 rounded-xl">
                             <i class="fas fa-users text-blue-600 dark:text-blue-400 text-2xl"></i>
@@ -30,14 +30,34 @@
                         {{ __('content.customer_import_detail') }}
                     </p>
                     <button onclick="openCustomerModal()"
-                        class="w-full px-4 py-2 bg-blue-600 text-white rounded-md hoverScale hover:bg-blue-700 transition
+                        class="w-full px-4 py-2 bg-blue-600 text-white rounded-md hoverScale hover:bg-blue-700 transition mt-auto
+                        dark:bg-blue-500 dark:hover:bg-blue-600">
+                        <i class="fas fa-file-import mr-2"></i>{{ __('content.import') }}
+                    </button>
+                </div>
+
+                <!-- Backstamp Import Card -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow p-6 flex flex-col">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-green-400 dark:bg-green-400 p-3 rounded-xl">
+                            <i class="fas fa-users text-blue-600 dark:text-blue-400 text-2xl"></i>
+                        </div>
+                        <h2 class="ml-3 text-xl font-semibold text-gray-800 dark:text-gray-100">
+                            {{ __('content.backstamp') }}
+                        </h2>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">
+                        {{ __('content.backstamp_import_detail') }}
+                    </p>
+                    <button onclick="openBackstampModal()"
+                        class="w-full px-4 py-2 bg-blue-600 text-white rounded-md hoverScale hover:bg-blue-700 transition mt-auto
                         dark:bg-blue-500 dark:hover:bg-blue-600">
                         <i class="fas fa-file-import mr-2"></i>{{ __('content.import') }}
                     </button>
                 </div>
 
                 <!-- Future Import Cards -->
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 opacity-50">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 opacity-50 flex flex-col">
                     <div class="flex items-center mb-4">
                         <div class="bg-red-400 dark:bg-red-400 p-3 rounded-xl">
                             <i class="fas fa-box text-gray-600 dark:text-gray-400 text-2xl"></i>
@@ -50,11 +70,11 @@
                         Coming soon...
                     </p>
                     <button disabled
-                        class="w-full px-4 py-2 bg-gray-300 text-gray-500 rounded-md cursor-not-allowed">
+                        class="w-full px-4 py-2 bg-gray-300 text-gray-500 rounded-md cursor-not-allowed mt-auto">
                         <i class="fas fa-lock mr-2"></i>Coming Soon
                     </button>
                 </div>
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 opacity-50">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 opacity-50 flex flex-col">
                     <div class="flex items-center mb-4">
                         <div class="bg-red-400 dark:bg-red-400 p-3 rounded-xl">
                             <i class="fas fa-box text-gray-600 dark:text-gray-400 text-2xl"></i>
@@ -67,12 +87,12 @@
                         Coming soon...
                     </p>
                     <button disabled
-                        class="w-full px-4 py-2 bg-gray-300 text-gray-500 rounded-md cursor-not-allowed">
+                        class="w-full px-4 py-2 bg-gray-300 text-gray-500 rounded-md cursor-not-allowed mt-auto">
                         <i class="fas fa-lock mr-2"></i>Coming Soon
                     </button>
                 </div>
 
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 opacity-50">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 opacity-50 flex flex-col">
                     <div class="flex items-center mb-4">
                         <div class="bg-red-400 dark:bg-red-400 p-3 rounded-xl">
                             <i class="fas fa-warehouse text-gray-600 dark:text-gray-400 text-2xl"></i>
@@ -85,24 +105,7 @@
                         Coming soon...
                     </p>
                     <button disabled
-                        class="w-full px-4 py-2 bg-gray-300 text-gray-500 rounded-md cursor-not-allowed">
-                        <i class="fas fa-lock mr-2"></i>Coming Soon
-                    </button>
-                </div>
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 opacity-50">
-                    <div class="flex items-center mb-4">
-                        <div class="bg-red-400 dark:bg-red-400 p-3 rounded-xl">
-                            <i class="fas fa-warehouse text-gray-600 dark:text-gray-400 text-2xl"></i>
-                        </div>
-                        <h2 class="ml-3 text-xl font-semibold text-gray-800 dark:text-gray-100">
-                            Backstamps
-                        </h2>
-                    </div>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">
-                        Coming soon...
-                    </p>
-                    <button disabled
-                        class="w-full px-4 py-2 bg-gray-300 text-gray-500 rounded-md cursor-not-allowed">
+                        class="w-full px-4 py-2 bg-gray-300 text-gray-500 rounded-md cursor-not-allowed mt-auto">
                         <i class="fas fa-lock mr-2"></i>Coming Soon
                     </button>
                 </div>
@@ -112,4 +115,6 @@
 
     <!-- Include Customer Import Modal -->
     @include('components.Import-modals.import-customer')
+    <!-- Include Backstamp Import Modal -->
+    @include('components.Import-modals.import-backstamp')
 @endsection
