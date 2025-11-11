@@ -9,8 +9,8 @@ return [
     'found_error_count' => 'Found :count errors (please correct all before importing)',
     'and_more' => '. . . and :count more',
     'row' => 'Row',
-    'unknown_columns' => 'Unknown columns found: :extra. Please use only: :required',
-    'invalid_header' => 'Invalid header! Required: :required. Missing: :missing',
+    'unknown_columns' => '<strong>Unknown columns</strong><br><strong>Found:</strong> :extra. <br><strong>Please use only:</strong> :required',
+    'invalid_header' => '<strong>Invalid Header!</strong> <br><strong>Required:</strong> :required. <br><strong>Missing:</strong> :missing',
     'custom' => [
         'code' => [
             'required' => 'Code is required.',

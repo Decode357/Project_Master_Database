@@ -22,7 +22,7 @@
 
             @if(session('error')&& session('shape_import'))
                 <div class="mb-4 p-4 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 rounded-md">
-                    <i class="fas fa-exclamation-circle mr-2"></i>{{ session('error') }}
+                    <i class="fas fa-exclamation-circle mr-2"></i>{!! session('error') !!}
                 </div>
             @endif
 
@@ -60,7 +60,7 @@
             </div>
 
             <!-- Step 2: Upload File -->
-            <div class="mb-2 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+            <div class="mb-2 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg opacity-50">
                 <h4 class="text-lg font-medium text-gray-800 dark:text-gray-100 mb-2">
                     <i class="fas fa-step-forward mr-2"></i>{{ __('content.step2text') }}
                 </h4>
