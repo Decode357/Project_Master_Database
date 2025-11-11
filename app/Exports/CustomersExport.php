@@ -6,8 +6,10 @@ use App\Models\Customer;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-class CustomersExport implements FromCollection, WithHeadings
+class CustomersExport implements FromCollection, WithHeadings, WithColumnFormatting
 {
     /**
      * @return \Illuminate\Support\Collection
@@ -28,6 +30,19 @@ class CustomersExport implements FromCollection, WithHeadings
             'Name',
             'Email',
             'Phone',
+        ];
+    }
+
+    /**
+     * กำหนด format ของแต่ละ column
+     */
+    public function columnFormats(): array
+    {
+        return [
+            'A' => NumberFormat::FORMAT_TEXT, // Code
+            'B' => NumberFormat::FORMAT_TEXT, // Name
+            'C' => NumberFormat::FORMAT_TEXT, // Email
+            'D' => NumberFormat::FORMAT_TEXT, // Phone
         ];
     }
 }

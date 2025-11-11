@@ -89,18 +89,37 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/glaze-inside/{glazeInside}', [GlazeInsideOuterController::class, 'destroyGlazeInside'])->name('glaze-inside.destroy')->middleware(['auth', 'permission:delete']);
         Route::delete('/glaze-outer/{glazeOuter}', [GlazeInsideOuterController::class, 'destroyGlazeOuter'])->name('glaze-outer.destroy')->middleware(['auth', 'permission:delete']);
         Route::delete('/shape-collection/{shapeCollection}', [ShapeCollectionController::class, 'destroyShapeCollection'])->name('shape-collection.destroy')->middleware(['auth', 'permission:delete']);   
-        
+
         // เมนูสำหรับนำเข้า-ส่งออกข้อมูลลูกค้า (Customers Management)
         Route::prefix('customers')->name('customers.')->middleware('permission:file import')->group(function () {
-            Route::get('/', [PageController::class, 'customers'])->name('index');
             Route::post('/import', [ImportController::class, 'customer_import'])->name('import');
             Route::get('/export', [ExportController::class, 'customer_export'])->name('export');
             Route::get('/template', [ExportController::class, 'customer_exportTemplate'])->name('template');
         });
 
+        // เมนูสำหรับนำเข้า-ส่งออกข้อมูล Shape (Shape Management)
+        Route::prefix('shapes')->name('shapes.')->middleware('permission:file import')->group(function () {
+            Route::post('/import', [ImportController::class, 'shape_import'])->name('import');
+            Route::get('/export', [ExportController::class, 'shape_export'])->name('export');
+            Route::get('/template', [ExportController::class, 'shape_exportTemplate'])->name('template');
+        });
+
+        // เมนูสำหรับนำเข้า-ส่งออกข้อมูล Glaze (Glaze Management)
+        Route::prefix('glazes')->name('glazes.')->middleware('permission:file import')->group(function () {
+            Route::post('/import', [ImportController::class, 'glaze_import'])->name('import');
+            Route::get('/export', [ExportController::class, 'glaze_export'])->name('export');
+            Route::get('/template', [ExportController::class, 'glaze_exportTemplate'])->name('template');
+        });
+
+        // เมนูสำหรับนำเข้า-ส่งออกข้อมูล Pattern (Pattern Management)
+        Route::prefix('patterns')->name('patterns.')->middleware('permission:file import')->group(function () {
+            Route::post('/import', [ImportController::class, 'pattern_import'])->name('import');
+            Route::get('/export', [ExportController::class, 'pattern_export'])->name('export');
+            Route::get('/template', [ExportController::class, 'pattern_exportTemplate'])->name('template');
+        });
+
         // เมนูสำหรับนำเข้า-ส่งออกข้อมูล Backstamp (Backstamp Management)
         Route::prefix('backstamps')->name('backstamps.')->middleware('permission:file import')->group(function () {
-            Route::get('/', [PageController::class, 'backstamps'])->name('index');
             Route::post('/import', [ImportController::class, 'backstamp_import'])->name('import');
             Route::get('/export', [ExportController::class, 'backstamp_export'])->name('export');
             Route::get('/template', [ExportController::class, 'backstamp_exportTemplate'])->name('template');

@@ -4,8 +4,10 @@ namespace App\Exports;
 
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-class BackstampsTemplateExport implements FromArray, WithHeadings
+class BackstampsTemplateExport implements FromArray, WithHeadings, WithColumnFormatting
 {
     public function array(): array
     {
@@ -40,6 +42,21 @@ class BackstampsTemplateExport implements FromArray, WithHeadings
             'Under Glaze',
             'Air Dry',
             'Approval Date',
+        ];
+    }
+
+    /**
+     * กำหนด format ของแต่ละ column
+     */
+    public function columnFormats(): array
+    {
+        return [
+            'A' => NumberFormat::FORMAT_TEXT, // Backstamp Code
+            'B' => NumberFormat::FORMAT_TEXT, // Name
+            'C' => NumberFormat::FORMAT_TEXT, // Requestor
+            'D' => NumberFormat::FORMAT_TEXT, // Customer
+            'E' => NumberFormat::FORMAT_TEXT, // Status
+            'K' => NumberFormat::FORMAT_DATE_YYYYMMDD2, // Approval Date
         ];
     }
 }

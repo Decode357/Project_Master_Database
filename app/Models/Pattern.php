@@ -28,15 +28,12 @@ class Pattern extends Model
         'approval_date',
         'updated_by',
     ];
-
-    // ถ้า column เป็น date
-    protected $dates = [
-        'approval_date',
-        'created_at',
-        'updated_at',
-    ];
     
     protected $casts = [
+    'in_glaze' => 'boolean',
+    'on_glaze' => 'boolean',
+    'under_glaze' => 'boolean',
+    'exclusive' => 'boolean',
     'approval_date' => 'datetime',
     ];
 

@@ -6,8 +6,10 @@ use App\Models\Backstamp;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-class BackstampsExport implements FromCollection, WithHeadings, WithMapping
+class BackstampsExport implements FromCollection, WithHeadings, WithMapping, WithColumnFormatting
 {
     /**
      * @return \Illuminate\Support\Collection
@@ -47,7 +49,7 @@ class BackstampsExport implements FromCollection, WithHeadings, WithMapping
             $backstamp->on_glaze,
             $backstamp->under_glaze,
             $backstamp->air_dry,
-            $backstamp->approval_date,
+            $backstamp->approval_date ? $backstamp->approval_date->format('Y-m-d') : '',
         ];
     }
 
@@ -70,4 +72,20 @@ class BackstampsExport implements FromCollection, WithHeadings, WithMapping
             'Approval Date',
         ];
     }
+
+    /**
+     * กำหนด format ของแต่ละ column
+     */
+    public function columnFormats(): array
+    {
+        return [
+            'A' => NumberFormat::FORMAT_TEXT, // Backstamp Code
+            'B' => NumberFormat::FORMAT_TEXT, // Name
+            'C' => NumberFormat::FORMAT_TEXT, // Requestor
+            'D' => NumberFormat::FORMAT_TEXT, // Customer
+            'E' => NumberFormat::FORMAT_TEXT, // Status
+            'K' => NumberFormat::FORMAT_DATE_YYYYMMDD2, // Approval Date
+        ];
+    }
 }
+

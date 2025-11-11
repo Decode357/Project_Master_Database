@@ -14,6 +14,8 @@ use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Validators\Failure;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
+use PhpOffice\PhpSpreadsheet\Shared\Date as ExcelDate;
+use Carbon\Carbon;
 
 class BackstampsImport implements ToCollection, WithHeadingRow, SkipsOnFailure, SkipsEmptyRows
 {
@@ -30,7 +32,12 @@ class BackstampsImport implements ToCollection, WithHeadingRow, SkipsOnFailure, 
             $rowNumber = $index + 2; // +2 เพราะ index เริ่ม 0 และแถว 1 คือ header
             
             $hasErrors = false;
-            
+
+            // แปลง approval_date จาก Excel format ก่อน validate
+            if (!empty($row['approval_date'])) {
+                $row['approval_date'] = $this->parseExcelDate($row['approval_date']);
+            }
+
             // 1. เช็ค relations ก่อน (ไม่ว่า validation จะผ่านหรือไม่)
             $relationErrors = [];
 
@@ -244,5 +251,47 @@ class BackstampsImport implements ToCollection, WithHeadingRow, SkipsOnFailure, 
     public function getFailures()
     {
         return $this->failures;
+    }
+
+    /**
+     * แปลงวันที่จาก Excel ให้เป็น Y-m-d format
+     */
+    private function parseExcelDate($date)
+    {
+        if (empty($date) || is_null($date)) {
+            return null;
+        }
+
+        try {
+            // ถ้าเป็นตัวเลข (Excel Serial Date)
+            if (is_numeric($date)) {
+                // แปลง Excel serial number เป็น Unix timestamp
+                $unixDate = ExcelDate::excelToTimestamp($date);
+                return Carbon::createFromTimestamp($unixDate)->format('Y-m-d');
+            }
+
+            // ถ้าเป็น DateTime object
+            if ($date instanceof \DateTime) {
+                return $date->format('Y-m-d');
+            }
+
+            // ถ้าเป็น string ลอง parse
+            if (is_string($date)) {
+                $date = trim($date);
+                
+                // ถ้าเป็นรูปแบบ Y-m-d อยู่แล้ว
+                if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
+                    return $date;
+                }
+                
+                // ลอง parse รูปแบบอื่นๆ
+                return Carbon::parse($date)->format('Y-m-d');
+            }
+
+            return null;
+        } catch (\Exception $e) {
+            // ถ้า parse ไม่ได้ ให้คืนค่าเดิม (จะ fail validation)
+            return $date;
+        }
     }
 }

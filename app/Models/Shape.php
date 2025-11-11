@@ -10,6 +10,12 @@ class Shape extends Model
 {
     use HasFactory;
 
+    protected $table = 'shapes';
+    
+    protected $casts = [
+        'approval_date' => 'datetime',
+    ];
+
     protected $fillable = [
         'item_code',
         'item_description_thai',
