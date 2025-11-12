@@ -90,10 +90,10 @@ class CustomersImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
     public function rules(): array
     {
         return [
-            'code' => 'required|string|max:255',
-            'name' => 'nullable|string|max:255',
+            'code' => 'required|max:255',
+            'name' => 'nullable|max:255',
             'email' => 'nullable|email|max:255',
-            'phone' => 'nullable|string|max:20',
+            'phone' => 'nullable|max:20',
         ];
     }
 

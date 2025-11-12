@@ -14,28 +14,30 @@
         <!-- Modal Body -->
         <div class="mt-4">
             <!-- Alert Messages -->
-            @if(session('success')&& session('customer_import'))
-                <div class="mb-4 p-4 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded-md">
-                    <i class="fas fa-check-circle mr-2"></i>{{ session('success') }}
-                </div>
-            @endif
+            <div id="customerAlertMessages">
+                @if(session('success')&& session('customer_import'))
+                    <div class="mb-4 p-4 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded-md">
+                        <i class="fas fa-check-circle mr-2"></i>{{ session('success') }}
+                    </div>
+                @endif
 
-            @if(session('error')&& session('customer_import'))
-                <div class="mb-4 p-4 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 rounded-md">
-                    <i class="fas fa-exclamation-circle mr-2"></i>{!! session('error') !!}
-                </div>
-            @endif
+                @if(session('error')&& session('customer_import'))
+                    <div class="mb-4 p-4 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 rounded-md">
+                        <i class="fas fa-exclamation-circle mr-2"></i>{!! session('error') !!}
+                    </div>
+                @endif
 
-            @if(session('import_errors') && is_array(session('import_errors'))&& session('customer_import'))
-                <div class="mb-4 p-4 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 rounded-md max-h-60 overflow-y-auto">
-                    <h4 class="font-bold mb-2"><i class="fas fa-list mr-2"></i>{{ __('content.please_correct_errors') }}</h4>
-                    <ul class="list-disc list-inside text-sm space-y-1">
-                        @foreach(session('import_errors') as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+                @if(session('import_errors') && is_array(session('import_errors'))&& session('customer_import'))
+                    <div class="mb-4 p-4 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 rounded-md max-h-60 overflow-y-auto">
+                        <h4 class="font-bold mb-2"><i class="fas fa-list mr-2"></i>{{ __('content.please_correct_errors') }}</h4>
+                        <ul class="list-disc list-inside text-sm space-y-1">
+                            @foreach(session('import_errors') as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+            </div>
 
             <!-- Step 1: Download Template -->
             <div class="mb-2 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
@@ -97,6 +99,7 @@
                         </button>
                         <button type="button"
                             onclick="if (this.form.reportValidity()) { 
+                                document.getElementById('customerAlertMessages').classList.add('hidden');
                                 this.disabled = true; 
                                 this.innerHTML = '{{ __('content.validating') }}'; 
                                 this.form.requestSubmit(); 
