@@ -6,13 +6,12 @@ use App\Models\Customer;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
-use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Validators\Failure;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 
-class CustomersImport implements ToCollection, WithHeadingRow, SkipsOnFailure, SkipsEmptyRows
+class CustomersImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
 {
     private $failures = [];
     private $rowsData = [];
@@ -111,14 +110,6 @@ class CustomersImport implements ToCollection, WithHeadingRow, SkipsOnFailure, S
             'email.max' => __('valid.custom.email.max'),
             'phone.max' => __('valid.custom.phone.max'),
         ];
-    }
-
-    /**
-     * เก็บ failures ที่เกิดขึ้น
-     */
-    public function onFailure(Failure ...$failures)
-    {
-        // ไม่ต้องทำอะไร เพราะเราจัดการเองใน collection()
     }
 
     /**
