@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('patterns', function (Blueprint $table) {
             $table->id();
-            $table->string('pattern_code');
+            $table->string('pattern_code')->unique();
             $table->string('pattern_name')->nullable(); 
             $table->unsignedBigInteger('requestor_id')->nullable();
             $table->unsignedBigInteger('customer_id')->nullable();

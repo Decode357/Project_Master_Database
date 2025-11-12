@@ -1,4 +1,5 @@
 <?php
+// filepath: c:\laragon\www\MasterDataDemo\app\Imports\BackstampsImport.php
 
 namespace App\Imports;
 
@@ -8,7 +9,6 @@ use App\Models\Customer;
 use App\Models\Status;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use Maatwebsite\Excel\Concerns\WithValidation;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Validators\Failure;
@@ -21,6 +21,19 @@ class BackstampsImport implements ToCollection, WithHeadingRow, SkipsOnFailure, 
 {
     private $failures = [];
     private $rowsData = [];
+    
+    // Cache collections สำหรับเร่งความเร็ว
+    private $requestors;
+    private $customers;
+    private $statuses;
+
+    public function __construct()
+    {
+        // โหลดข้อมูล relations ทั้งหมดครั้งเดียว
+        $this->requestors = Requestor::pluck('id', 'name')->toArray();
+        $this->customers = Customer::pluck('id', 'name')->toArray();
+        $this->statuses = Status::pluck('id', 'status')->toArray();
+    }
 
     /**
      * เก็บข้อมูลทั้งหมดไว้ก่อน ไม่บันทึกทันที
@@ -29,8 +42,7 @@ class BackstampsImport implements ToCollection, WithHeadingRow, SkipsOnFailure, 
     {
         // วนลูปเช็ค validation ทุกแถวก่อน
         foreach ($rows as $index => $row) {
-            $rowNumber = $index + 2; // +2 เพราะ index เริ่ม 0 และแถว 1 คือ header
-            
+            $rowNumber = $index + 2;
             $hasErrors = false;
 
             // แปลง approval_date จาก Excel format ก่อน validate
@@ -38,31 +50,22 @@ class BackstampsImport implements ToCollection, WithHeadingRow, SkipsOnFailure, 
                 $row['approval_date'] = $this->parseExcelDate($row['approval_date']);
             }
 
-            // 1. เช็ค relations ก่อน (ไม่ว่า validation จะผ่านหรือไม่)
+            // 1. เช็ค relations แบบ fast lookup
             $relationErrors = [];
 
             // เช็ค requestor
-            if (!empty($row['requestor'])) {
-                $requestor = Requestor::where('name', $row['requestor'])->first();
-                if (!$requestor) {
-                    $relationErrors[] = __('valid.backst.requestor.not_found', ['name' => $row['requestor']]);
-                }
+            if (!empty($row['requestor']) && !isset($this->requestors[$row['requestor']])) {
+                $relationErrors[] = __('valid.backst.requestor.not_found', ['name' => $row['requestor']]);
             }
 
             // เช็ค customer
-            if (!empty($row['customer'])) {
-                $customer = Customer::where('name', $row['customer'])->first();
-                if (!$customer) {
-                    $relationErrors[] = __('valid.backst.customer.not_found', ['name' => $row['customer']]);
-                }
+            if (!empty($row['customer']) && !isset($this->customers[$row['customer']])) {
+                $relationErrors[] = __('valid.backst.customer.not_found', ['name' => $row['customer']]);
             }
 
-            // เช็ک status
-            if (!empty($row['status'])) {
-                $status = Status::where('status', $row['status'])->first();
-                if (!$status) {
-                    $relationErrors[] = __('valid.backst.status.not_found', ['name' => $row['status']]);
-                }
+            // เช็ค status
+            if (!empty($row['status']) && !isset($this->statuses[$row['status']])) {
+                $relationErrors[] = __('valid.backst.status.not_found', ['name' => $row['status']]);
             }
 
             // ถ้ามี relation errors ให้เก็บไว้
@@ -80,7 +83,6 @@ class BackstampsImport implements ToCollection, WithHeadingRow, SkipsOnFailure, 
             $validator = Validator::make($row->toArray(), $this->rules(), $this->customValidationMessages());
             
             if ($validator->fails()) {
-                // เก็บ validation failures
                 foreach ($validator->errors()->messages() as $attribute => $errors) {
                     $this->failures[] = new Failure(
                         $rowNumber,
@@ -100,28 +102,55 @@ class BackstampsImport implements ToCollection, WithHeadingRow, SkipsOnFailure, 
 
         // ถ้าไม่มี failures เลย ค่อยบันทึกข้อมูลทั้งหมด
         if (empty($this->failures)) {
-            foreach ($this->rowsData as $row) {
-                // หา ID จากชื่อ (เพราะ Excel เป็นชื่อ ไม่ใช่ ID)
-                $requestorId = $this->getRequestorId($row['requestor']);
-                $customerId = $this->getCustomerId($row['customer']);
-                $statusId = $this->getStatusId($row['status']);
+            $this->batchUpsert();
+        }
+    }
 
-                Backstamp::updateOrCreate(
-                    ['backstamp_code' => $row['backstamp_code']],
-                    [
-                        'name' => $row['name'] ?? null,
-                        'requestor_id' => $requestorId,
-                        'customer_id' => $customerId,
-                        'status_id' => $statusId,
-                        'organic' => $this->convertToBoolean($row['organic'] ?? null),
-                        'in_glaze' => $this->convertToBoolean($row['in_glaze'] ?? null),
-                        'on_glaze' => $this->convertToBoolean($row['on_glaze'] ?? null),
-                        'under_glaze' => $this->convertToBoolean($row['under_glaze'] ?? null),
-                        'air_dry' => $this->convertToBoolean($row['air_dry'] ?? null),
-                        'approval_date' => $row['approval_date'] ?? null,
-                    ]
-                );
-            }
+    /**
+     * Batch Upsert - บันทึกข้อมูลทั้งหมดพร้อมกัน
+     */
+    private function batchUpsert()
+    {
+        $data = [];
+        $now = now();
+        
+        foreach ($this->rowsData as $row) {
+            $data[] = [
+                'backstamp_code' => $row['backstamp_code'],
+                'name' => $row['name'] ?? null,
+                'requestor_id' => $this->requestors[$row['requestor']] ?? null,
+                'customer_id' => $this->customers[$row['customer']] ?? null,
+                'status_id' => $this->statuses[$row['status']] ?? null,
+                'organic' => $this->convertToBoolean($row['organic'] ?? null),
+                'in_glaze' => $this->convertToBoolean($row['in_glaze'] ?? null),
+                'on_glaze' => $this->convertToBoolean($row['on_glaze'] ?? null),
+                'under_glaze' => $this->convertToBoolean($row['under_glaze'] ?? null),
+                'air_dry' => $this->convertToBoolean($row['air_dry'] ?? null),
+                'approval_date' => $row['approval_date'] ?? null,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ];
+        }
+
+        // แบ่งเป็น chunks ละ 500 แถว เพื่อป้องกัน query ใหญ่เกินไป
+        foreach (array_chunk($data, 500) as $chunk) {
+            Backstamp::upsert(
+                $chunk,                                    // ข้อมูลทั้งหมด
+                ['backstamp_code'],                        // Unique key สำหรับเช็คซ้ำ
+                [                                          // ฟิลด์ที่จะ update ถ้าเจอข้อมูลเก่า
+                    'name',
+                    'requestor_id',
+                    'customer_id',
+                    'status_id',
+                    'organic',
+                    'in_glaze',
+                    'on_glaze',
+                    'under_glaze',
+                    'air_dry',
+                    'approval_date',
+                    'updated_at'
+                ]
+            );
         }
     }
 
@@ -131,10 +160,9 @@ class BackstampsImport implements ToCollection, WithHeadingRow, SkipsOnFailure, 
     private function convertToBoolean($value)
     {
         if ($value === null || $value === '') {
-            return 0; // ค่า default เป็น FALSE
+            return 0;
         }
 
-        // แปลงค่าต่างๆ เป็น boolean
         if (is_bool($value)) {
             return $value ? 1 : 0;
         }
@@ -143,57 +171,13 @@ class BackstampsImport implements ToCollection, WithHeadingRow, SkipsOnFailure, 
             return (int)$value > 0 ? 1 : 0;
         }
 
-        // แปลงจาก string
         $value = strtolower(trim($value));
         
         if (in_array($value, ['true', 'yes', '1', 'ใช่'])) {
             return 1;
         }
 
-        if (in_array($value, ['false', 'no', '0', 'ไม่'])) {
-            return 0;
-        }
-
-        return 0; // default
-    }
-
-    /**
-     * หา Requestor ID จากชื่อ
-     */
-    private function getRequestorId($name)
-    {
-        if (empty($name)) {
-            return null;
-        }
-
-        $requestor = Requestor::where('name', $name)->first();
-        return $requestor ? $requestor->id : null;
-    }
-
-    /**
-     * หา Customer ID จากชื่อ
-     */
-    private function getCustomerId($name)
-    {
-        if (empty($name)) {
-            return null;
-        }
-
-        $customer = Customer::where('name', $name)->first();
-        return $customer ? $customer->id : null;
-    }
-
-    /**
-     * หา Status ID จากชื่อ
-     */
-    private function getStatusId($status)
-    {
-        if (empty($status)) {
-            return null;
-        }
-
-        $statusModel = Status::where('status', $status)->first();
-        return $statusModel ? $statusModel->id : null;
+        return 0;
     }
 
     /**
@@ -212,7 +196,7 @@ class BackstampsImport implements ToCollection, WithHeadingRow, SkipsOnFailure, 
             'on_glaze' => 'nullable|in:TRUE,FALSE,true,false,1,0,yes,no,Yes,No,YES,NO,ใช่,ไม่',
             'under_glaze' => 'nullable|in:TRUE,FALSE,true,false,1,0,yes,no,Yes,No,YES,NO,ใช่,ไม่',
             'air_dry' => 'nullable|in:TRUE,FALSE,true,false,1,0,yes,no,Yes,No,YES,NO,ใช่,ไม่',
-            'approval_date' => 'nullable|date',
+            'approval_date' => 'nullable|date_format:Y-m-d',
         ];
     }
 
@@ -233,7 +217,7 @@ class BackstampsImport implements ToCollection, WithHeadingRow, SkipsOnFailure, 
             'on_glaze.in' => __('valid.backst.on_glaze.in'),
             'under_glaze.in' => __('valid.backst.under_glaze.in'),
             'air_dry.in' => __('valid.backst.air_dry.in'),
-            'approval_date.date' => __('valid.backst.approval_date.date'),
+            'approval_date.date_format' => __('valid.backst.approval_date.date'),
         ];
     }
 
@@ -263,34 +247,27 @@ class BackstampsImport implements ToCollection, WithHeadingRow, SkipsOnFailure, 
         }
 
         try {
-            // ถ้าเป็นตัวเลข (Excel Serial Date)
             if (is_numeric($date)) {
-                // แปลง Excel serial number เป็น Unix timestamp
                 $unixDate = ExcelDate::excelToTimestamp($date);
                 return Carbon::createFromTimestamp($unixDate)->format('Y-m-d');
             }
 
-            // ถ้าเป็น DateTime object
             if ($date instanceof \DateTime) {
                 return $date->format('Y-m-d');
             }
 
-            // ถ้าเป็น string ลอง parse
             if (is_string($date)) {
                 $date = trim($date);
                 
-                // ถ้าเป็นรูปแบบ Y-m-d อยู่แล้ว
                 if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
                     return $date;
                 }
                 
-                // ลอง parse รูปแบบอื่นๆ
                 return Carbon::parse($date)->format('Y-m-d');
             }
 
             return null;
         } catch (\Exception $e) {
-            // ถ้า parse ไม่ได้ ให้คืนค่าเดิม (จะ fail validation)
             return $date;
         }
     }

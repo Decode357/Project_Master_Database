@@ -47,16 +47,41 @@ class CustomersImport implements ToCollection, WithHeadingRow, SkipsOnFailure, S
 
         // ถ้าไม่มี failures เลย ค่อยบันทึกข้อมูลทั้งหมด
         if (empty($this->failures)) {
-            foreach ($this->rowsData as $row) {
-                Customer::updateOrCreate(
-                    ['code' => $row['code']],
-                    [
-                        'name'  => $row['name'] ?? null,
-                        'email' => $row['email'] ?? null,
-                        'phone' => $row['phone'] ?? null,
-                    ]
-                );
-            }
+            $this->batchUpsert();
+        }
+    }
+
+    /**
+     * Batch Upsert - บันทึกข้อมูลทั้งหมดพร้อมกัน
+     */
+    private function batchUpsert()
+    {
+        $data = [];
+        $now = now();
+        
+        foreach ($this->rowsData as $row) {
+            $data[] = [
+                'code' => $row['code'],
+                'name' => $row['name'] ?? null,
+                'email' => $row['email'] ?? null,
+                'phone' => $row['phone'] ?? null,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ];
+        }
+
+        // แบ่งเป็น chunks ละ 500 แถว เพื่อป้องกัน query ใหญ่เกินไป
+        foreach (array_chunk($data, 500) as $chunk) {
+            Customer::upsert(
+                $chunk,              // ข้อมูลทั้งหมด
+                ['code'],            // Unique key สำหรับเช็คซ้ำ
+                [                    // ฟิลด์ที่จะ update ถ้าเจอข้อมูลเก่า
+                    'name',
+                    'email',
+                    'phone',
+                    'updated_at'
+                ]
+            );
         }
     }
 
@@ -89,7 +114,7 @@ class CustomersImport implements ToCollection, WithHeadingRow, SkipsOnFailure, S
     }
 
     /**
-     * เก็บ failures ที่เกิดขึ้น (ไม่ได้ใช้แล้ว แต่เก็บไว้เผื่อ SkipsOnFailure ต้องการ)
+     * เก็บ failures ที่เกิดขึ้น
      */
     public function onFailure(Failure ...$failures)
     {

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('glazes', function (Blueprint $table) {
             $table->id();
-            $table->string('glaze_code');
+            $table->string('glaze_code')->unique();
             $table->unsignedBigInteger('status_id')->nullable();
             $table->integer('fire_temp')->nullable();
             $table->date('approval_date')->nullable();

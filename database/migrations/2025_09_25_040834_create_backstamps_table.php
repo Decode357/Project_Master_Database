@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('backstamps', function (Blueprint $table) {
             $table->id();
-            $table->string('backstamp_code');
+            $table->string('backstamp_code')->unique();
             $table->string('name')->nullable(); 
             $table->unsignedBigInteger('requestor_id')->nullable();
             $table->unsignedBigInteger('customer_id')->nullable();

@@ -85,7 +85,8 @@
                             <p id="backstampFileName" class="text-sm text-gray-600 dark:text-gray-300">{{ __('content.no_select_file') }}</p>
                         </div>
                         <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">
-                            <i class="fas fa-info-circle mr-1"></i>{{ __('content.supported_formats') }}
+                            <i class="fas fa-info-circle"></i>{{ __('content.supported_formats') }}
+                            <i class="fas fa-info-circle"></i><br>{!! __('content.instruct_0_time') !!}
                         </p>
                     </div>
                     <div class="flex justify-end gap-3">

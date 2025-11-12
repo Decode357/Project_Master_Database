@@ -19,6 +19,7 @@ return [
     'instruct_2_pattern_data' => 'Fill in pattern data (code, name, customer, requestor, designer, glaze application, and other details)',
     'instruct_2_backstamp_data' => 'Fill in backstamp data (code, name, requestor, customer, status, and other details)',
     'instruct_1_template' => 'Download the template or download all data first',
+    'instruct_0_time' => 'Import time depends on file size and number of records. 10,000 records may take approximately 25-40 seconds',
     'instructions' => 'Instructions:',
     'validating' => 'Validating...',
     'upload_import' => 'Upload and Import',
