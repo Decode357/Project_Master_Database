@@ -26,13 +26,15 @@ Master Data Management System เป็นระบบจัดการข้�
 - 📱 **Responsive Design** - รองรับทุกอุปกรณ์
 - 🔐 **User Authentication & Authorization** - ระบบผู้ใช้และสิทธิ์
 - 📈 **Data Relationships** - จัดการข้อมูลสัมพันธ์
+- 📤 **File Import System** - นำเข้าข้อมูลจาก Excel/CSV
 
 ### 🛠️ Technology Stack
 
 **Backend:**  
 - Laravel 10.x  
 - MySQL 8.0+  
-- Eloquent ORM  
+- Eloquent ORM
+- Maatwebsite/Laravel-Excel (Import/Export)
 
 **Frontend:**  
 - TailwindCSS  
@@ -93,6 +95,27 @@ Master Data Management System เป็นระบบจัดการข้�
     php artisan serve
     ```
 
+## 📤 File Import System
+
+ระบบรองรับการนำเข้าข้อมูลจากไฟล์ Excel (.xlsx, .xls) และ CSV เพื่อเพิ่มข้อมูลจำนวนมากพร้อมกัน
+
+### 📋 Features
+
+- ✅ **รองรับหลายรูปแบบไฟล์**: Excel (.xlsx, .xls) และ CSV
+- ✅ **Validation แบบ Real-time**: ตรวจสอบความถูกต้องของข้อมูลก่อนนำเข้า
+- ✅ **Error Handling**: แจ้งเตือนข้อผิดพลาดพร้อมรายละเอียด
+- ✅ **Preview Data**: แสดงตัวอย่างข้อมูลก่อนนำเข้า
+- ✅ **Bulk Import**: นำเข้าข้อมูลจำนวนมากได้ในครั้งเดียว
+- ✅ **Progress Tracking**: แสดงความคืบหน้าการนำเข้า
+- ✅ **Template Download**: ดาวน์โหลดไฟล์ตัวอย่างสำหรับนำเข้า
+
+### 🔧 การติดตั้งเพิ่มเติมสำหรับ Import System
+
+```bash
+# ติดตั้ง Laravel Excel Package
+composer require maatwebsite/excel
+```
+
 ## 🌐 Multi-language & Dark Mode
 
 ### เปลี่ยนภาษา
@@ -113,6 +136,7 @@ MasterDataDemo/
 ├── app/
 │   ├── Http/Controllers/     # Controllers
 │   ├── Models/              # Eloquent Models
+│   ├── Imports/             # Import Classes
 │   └── Providers/           # Service Providers
 ├── database/
 │   ├── migrations/          # Database Migrations
@@ -125,7 +149,11 @@ MasterDataDemo/
 ├── routes/
 │   ├── web.php             # Web Routes
 │   └── api.php             # API Routes
+├── storage/
+│   └── app/
+│       └── imports/        # Temporary Import Files
 └── public/                 # Public Assets
+    └── templates/          # Import Templates
 ```
 
 ## 🎯 Usage
@@ -147,6 +175,10 @@ DB_PORT=3306
 DB_DATABASE=master_data_demo
 DB_USERNAME=root
 DB_PASSWORD=
+
+# File Upload Configuration
+FILESYSTEM_DISK=local
+MAX_UPLOAD_SIZE=2048 
 ```
 
 ## 👥 Team
