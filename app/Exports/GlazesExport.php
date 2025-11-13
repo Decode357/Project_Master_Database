@@ -35,7 +35,7 @@ class GlazesExport implements FromQuery, WithHeadings, WithMapping, WithColumnFo
             $glaze->glaze_code,
             $glaze->glazeInside ? $glaze->glazeInside->glaze_inside_code : '', 
             $glaze->glazeOuter ? $glaze->glazeOuter->glaze_outer_code : '', 
-            $glaze->effect ? $glaze->effect->effect_name : '', 
+            $glaze->effect ? $glaze->effect->effect_code : '', 
             $glaze->status ? $glaze->status->status : '', 
             $glaze->fire_temp,
             $glaze->approval_date ? $glaze->approval_date->format('Y-m-d') : '',
@@ -49,11 +49,11 @@ class GlazesExport implements FromQuery, WithHeadings, WithMapping, WithColumnFo
     {
         return [
             'Glaze Code',
-            'Glaze Inside Code',
-            'Glaze Outside Code',
-            'Effect Name',
+            'Inside Code',
+            'Outside Code',
+            'Effect Code',
             'Status',
-            'Fire Temperature (°C)',   
+            'Fire Temp',   
             'Approval Date',
         ];
     }

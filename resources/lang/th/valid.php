@@ -39,8 +39,24 @@ return [
         'pattern_name' => [
             'max' => 'Pattern Name ต้องไม่เกิน 255 ตัวอักษร',
         ],
+        'glaze_code' => [
+            'required' => 'Glaze Code จำเป็นต้องระบุ',
+            'max' => 'Glaze Code ต้องไม่เกิน 255 ตัวอักษร',
+        ],
         'name' => [
             'max' => 'Name ต้องไม่เกิน 255 ตัวอักษร',
+        ],
+        'glaze_inside' => [
+            'max' => 'Glaze Inside ต้องไม่เกิน 255 ตัวอักษร',
+            'not_found' => 'ไม่พบ Glaze Inside รหัส ":name" ในระบบ',
+        ],
+        'glaze_outside' => [
+            'max' => 'Glaze Outside ต้องไม่เกิน 255 ตัวอักษร',
+            'not_found' => 'ไม่พบ Glaze Outside รหัส ":name" ในระบบ',
+        ],
+        'effect_code' => [
+            'max' => 'Effect Code ต้องไม่เกิน 255 ตัวอักษร',
+            'not_found' => 'ไม่พบ Effect รหัส ":name" ในระบบ',
         ],
         'requestor' => [
             'max' => 'Requestor ต้องไม่เกิน 255 ตัวอักษร',

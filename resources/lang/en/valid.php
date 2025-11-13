@@ -39,8 +39,24 @@ return [
         'pattern_name' => [
             'max' => 'Pattern Name must not exceed 255 characters.',
         ],
+        'glaze_code' => [
+            'required' => 'Glaze Code is required.',
+            'max' => 'Glaze Code must not exceed 255 characters.',
+        ],
         'name' => [
             'max' => 'Name must not exceed 255 characters.',
+        ],
+        'glaze_inside' => [
+            'max' => 'Glaze Inside must not exceed 255 characters.',
+            'not_found' => 'Glaze Inside code ":name" not found in the system.',
+        ],
+        'glaze_outside' => [
+            'max' => 'Glaze Outside must not exceed 255 characters.',
+            'not_found' => 'Glaze Outside code ":name" not found in the system.',
+        ],
+        'effect_code' => [
+            'max' => 'Effect Code must not exceed 255 characters.',
+            'not_found' => 'Effect code ":name" not found in the system.',
         ],
         'requestor' => [
             'max' => 'Requestor must not exceed 255 characters.',

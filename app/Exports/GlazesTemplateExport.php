@@ -27,11 +27,11 @@ class GlazesTemplateExport implements FromArray, WithHeadings, WithColumnFormatt
     {
         return [
             'Glaze Code',
-            'Glaze Inside Code',
-            'Glaze Outside Code',
-            'Effect Name',
+            'Inside Code',
+            'Outside Code',
+            'Effect Code',
             'Status',
-            'Fire Temperature (°C.)',   
+            'Fire Temp',   
             'Approval Date',
         ];
     }

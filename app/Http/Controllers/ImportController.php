@@ -69,6 +69,24 @@ class ImportController extends Controller
         $importClass = PatternsImport::class;
         return $this->processImport($request, $requiredHeaders, $importClass, 'patterns', 'pattern_import');
     }
+
+    /**
+     * Import Glazes
+     */
+    public function glaze_import(Request $request)
+    {
+        $requiredHeaders = [
+            'glaze_code',
+            'inside_code',
+            'outside_code',
+            'effect_code',
+            'status',
+            'fire_temp',
+            'approval_date'
+        ];
+        $importClass = GlazesImport::class;
+        return $this->processImport($request, $requiredHeaders, $importClass, 'glazes', 'glaze_import');
+    }
     /**
      * Process Import
      */

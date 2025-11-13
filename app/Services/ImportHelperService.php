@@ -6,7 +6,9 @@ use App\Models\Requestor;
 use App\Models\Customer;
 use App\Models\Status;
 use App\Models\Designer;
-use Illuminate\Support\Collection;
+use App\Models\GlazeInside;
+use App\Models\GlazeOuter;
+use App\Models\Effect;
 
 class ImportHelperService
 {
@@ -14,6 +16,9 @@ class ImportHelperService
     private $customersCache = [];
     private $statusesCache = [];
     private $designersCache = [];
+    private $glazeInsidesCache = [];
+    private $glazeOutersCache = [];
+    private $effectsCache = [];
 
     public function __construct()
     {
@@ -21,25 +26,50 @@ class ImportHelperService
     }
 
     /**
-     * โหลดข้อมูลทั้งหมดลง Cache - แก้ไขแล้ว
+     * โหลดข้อมูลทั้งหมดลง Cache
      */
     private function loadAllCaches(): void
     {
-        // Requestor - ใช้ name เป็น key
+        // Requestor
         $this->requestorsCache = Requestor::pluck('id', 'name')->toArray();
         
-        // Customer - ใช้ lowercase name เป็น key ✅
+        // Customer - lowercase key
         $customers = Customer::all();
         foreach ($customers as $customer) {
             $this->customersCache[strtolower($customer->name)] = $customer->id;
         }
         
-        // Status - ใช้ lowercase status เป็น key ✅
+        // Status - lowercase key
         $statuses = Status::all();
         foreach ($statuses as $status) {
             $this->statusesCache[strtolower($status->status)] = $status->id;
         }
 
+        // Designer - lowercase key
+        $designers = Designer::all();
+        foreach ($designers as $designer) {
+            $this->designersCache[strtolower($designer->designer_name)] = $designer->id;
+        }
+
+        // GlazeInside - lowercase key
+        $glazeInsides = GlazeInside::all();
+        foreach ($glazeInsides as $glazeInside) {
+            $this->glazeInsidesCache[strtolower($glazeInside->glaze_inside_code)] = $glazeInside->id;
+        }
+
+        // GlazeOuter - lowercase key
+        $glazeOuters = GlazeOuter::all();
+        foreach ($glazeOuters as $glazeOuter) {
+            $this->glazeOutersCache[strtolower($glazeOuter->glaze_outer_code)] = $glazeOuter->id;
+        }
+
+        // Effect - lowercase key
+        $effects = Effect::all();
+        foreach ($effects as $effect) {
+            $this->effectsCache[strtolower($effect->effect_code)] = $effect->id;
+        }
+
+        // Designer - lowercase key
         $designers = Designer::all();
         foreach ($designers as $designer) {
             $this->designersCache[strtolower($designer->designer_name)] = $designer->id;
@@ -79,25 +109,22 @@ class ImportHelperService
     }
 
     /**
-     * หา Requestor หรือสร้างใหม่ถ้าไม่เจอ
+     * หา Designer หรือสร้างใหม่ถ้าไม่เจอ
      */
     public function getOrCreateDesigner(string $name): int
     {
-        $name = trim($name);
+        $nameLower = strtolower(trim($name));
         
-        // เช็คใน cache ก่อน
-        if (isset($this->designersCache[$name])) {
-            return $this->designersCache[$name];
+        if (isset($this->designersCache[$nameLower])) {
+            return $this->designersCache[$nameLower];
         }
 
-        // ถ้าไม่เจอให้สร้างใหม่
         $designer = Designer::firstOrCreate(
             ['designer_name' => $name],
             ['created_at' => now(), 'updated_at' => now()]
         );
 
-        // อัพเดท cache
-        $this->designersCache[$name] = $designer->id;
+        $this->designersCache[$nameLower] = $designer->id;
 
         return $designer->id;
     }
@@ -108,7 +135,6 @@ class ImportHelperService
     public function findCustomerCaseInsensitive(string $name): ?int
     {
         $nameLower = strtolower(trim($name));
-        
         return $this->customersCache[$nameLower] ?? null;
     }
 
@@ -118,70 +144,34 @@ class ImportHelperService
     public function findStatusCaseInsensitive(string $status): ?int
     {
         $statusLower = strtolower(trim($status));
-        
         return $this->statusesCache[$statusLower] ?? null;
     }
 
     /**
-     * หา Customer หลายตัวพร้อมกัน
+     * หา GlazeInside แบบไม่สนใจตัวพิมพ์เล็ก-ใหญ่
      */
-    public function findMultipleCustomers(array $names): array
+    public function findGlazeInsideCaseInsensitive(string $glazeInside): ?int
     {
-        $results = [];
-        
-        foreach ($names as $name) {
-            $id = $this->findCustomerCaseInsensitive($name);
-            if ($id !== null) {
-                $results[$name] = $id;
-            }
-        }
-        
-        return $results;
+        $glazeInsideLower = strtolower(trim($glazeInside));
+        return $this->glazeInsidesCache[$glazeInsideLower] ?? null;
     }
 
     /**
-     * หา Status หลายตัวพร้อมกัน
+     * หา GlazeOuter แบบไม่สนใจตัวพิมพ์เล็ก-ใหญ่
      */
-    public function findMultipleStatuses(array $statuses): array
+    public function findGlazeOuterCaseInsensitive(string $glazeOuter): ?int
     {
-        $results = [];
-        
-        foreach ($statuses as $status) {
-            $id = $this->findStatusCaseInsensitive($status);
-            if ($id !== null) {
-                $results[$status] = $id;
-            }
-        }
-        
-        return $results;
+        $glazeOuterLower = strtolower(trim($glazeOuter));
+        return $this->glazeOutersCache[$glazeOuterLower] ?? null;
     }
 
     /**
-     * สร้าง Requestors หลายตัวพร้อมกัน
+     * หา Effect แบบไม่สนใจตัวพิมพ์เล็ก-ใหญ่
      */
-    public function createMultipleRequestors(array $names): array
+    public function findEffectCaseInsensitive(string $effect): ?int
     {
-        $results = [];
-        
-        foreach ($names as $name) {
-            $results[$name] = $this->getOrCreateRequestor($name);
-        }
-        
-        return $results;
-    }
-
-    /**
-     * สร้าง Designers หลายตัวพร้อมกัน
-     */
-    public function createMultipleDesigners(array $names): array
-    {
-        $results = [];
-        
-        foreach ($names as $name) {
-            $results[$name] = $this->getOrCreateDesigner($name);
-        }
-        
-        return $results;
+        $effectLower = strtolower(trim($effect));
+        return $this->effectsCache[$effectLower] ?? null;
     }
 
     /**
@@ -208,69 +198,5 @@ class ImportHelperService
         }
 
         return 0;
-    }
-
-    /**
-     * ตรวจสอบว่ามี Requestor อยู่หรือไม่
-     */
-    public function requestorExists(string $name): bool
-    {
-        return isset($this->requestorsCache[$name]);
-    }
-    
-    /**
-     * ตรวจสอบว่ามี Designer อยู่หรือไม่
-     */
-    public function designerExists(string $name): bool
-    {
-        return isset($this->designersCache[$name]);
-    }
-
-    /**
-     * ตรวจสอบว่ามี Customer อยู่หรือไม่
-     */
-    public function customerExists(string $name): bool
-    {
-        return $this->findCustomerCaseInsensitive($name) !== null;
-    }
-
-    /**
-     * ตรวจสอบว่ามี Status อยู่หรือไม่
-     */
-    public function statusExists(string $status): bool
-    {
-        return $this->findStatusCaseInsensitive($status) !== null;
-    }
-
-    /**
-     * ดึงรายชื่อ Requestors ทั้งหมด
-     */
-    public function getAllRequestors(): array
-    {
-        return array_keys($this->requestorsCache);
-    }
-
-    /**
-     * ดึงรายชื่อ Designers ทั้งหมด
-     */
-    public function getAllDesigners(): array
-    {
-        return array_keys($this->designersCache);
-    }
-
-    /**
-     * ดึงรายชื่อ Customers ทั้งหมด
-     */
-    public function getAllCustomers(): array
-    {
-        return array_keys($this->customersCache);
-    }
-
-    /**
-     * ดึงรายชื่อ Statuses ทั้งหมด
-     */
-    public function getAllStatuses(): array
-    {
-        return array_keys($this->statusesCache);
     }
 }

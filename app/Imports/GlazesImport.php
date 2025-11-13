@@ -2,7 +2,7 @@
 
 namespace App\Imports;
 
-use App\Models\Backstamp;
+use App\Models\Glaze;
 use App\Services\ImportHelperService;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Validator;
 use PhpOffice\PhpSpreadsheet\Shared\Date as ExcelDate;
 use Carbon\Carbon;
 
-class BackstampsImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
+class GlazesImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
 {
     private $failures = [];
     private $rowsData = [];
@@ -41,22 +41,6 @@ class BackstampsImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
             // 1. เช็ค relations แบบ fast lookup
             $relationErrors = [];
 
-            // เช็ค requestor - ถ้าไม่เจอให้สร้างใหม่
-            if (!empty($row['requestor'])) {
-                $requestorId = $this->importHelper->getOrCreateRequestor($row['requestor']);
-                $row['requestor_id'] = $requestorId;
-            }
-
-            // เช็ค customer (case-insensitive)
-            if (!empty($row['customer'])) {
-                $customerId = $this->importHelper->findCustomerCaseInsensitive($row['customer']);
-                if ($customerId === null) {
-                    $relationErrors[] = __('valid.err.customer.not_found', ['name' => $row['customer']]);
-                } else {
-                    $row['customer_id'] = $customerId;
-                }
-            }
-
             // เช็ค status (case-insensitive)
             if (!empty($row['status'])) {
                 $statusId = $this->importHelper->findStatusCaseInsensitive($row['status']);
@@ -64,6 +48,36 @@ class BackstampsImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
                     $relationErrors[] = __('valid.err.status.not_found', ['name' => $row['status']]);
                 } else {
                     $row['status_id'] = $statusId;
+                }
+            }
+
+            // เช็ค glaze_inside (case-insensitive)
+            if (!empty($row['inside_code'])) {
+                $insideCodeId = $this->importHelper->findGlazeInsideCaseInsensitive($row['inside_code']);
+                if ($insideCodeId === null) {
+                    $relationErrors[] = __('valid.err.glaze_inside.not_found', ['name' => $row['inside_code']]);
+                } else {
+                    $row['glaze_inside_id'] = $insideCodeId;
+                }
+            }
+
+            // เช็ค glaze_outside (case-insensitive)
+            if (!empty($row['outside_code'])) {
+                $outsideCodeId = $this->importHelper->findGlazeOuterCaseInsensitive($row['outside_code']);
+                if ($outsideCodeId === null) {
+                    $relationErrors[] = __('valid.err.glaze_outside.not_found', ['name' => $row['outside_code']]);
+                } else {
+                    $row['glaze_outer_id'] = $outsideCodeId;
+                }
+            }
+
+            // เช็ค effect (case-insensitive)
+            if (!empty($row['effect_code'])) {
+                $effectId = $this->importHelper->findEffectCaseInsensitive($row['effect_code']);
+                if ($effectId === null) {
+                    $relationErrors[] = __('valid.err.effect_code.not_found', ['name' => $row['effect_code']]);
+                } else {
+                    $row['effect_id'] = $effectId;
                 }
             }
 
@@ -115,16 +129,12 @@ class BackstampsImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
         
         foreach ($this->rowsData as $row) {
             $data[] = [
-                'backstamp_code' => $row['backstamp_code'],
-                'name' => $row['name'] ?? null,
-                'requestor_id' => $row['requestor_id'] ?? null,
-                'customer_id' => $row['customer_id'] ?? null,
+                'glaze_code' => $row['glaze_code'],
+                'glaze_inside_id' => $row['glaze_inside_id'] ?? null,
+                'glaze_outer_id' => $row['glaze_outer_id'] ?? null,
+                'effect_id' => $row['effect_id'] ?? null,
                 'status_id' => $row['status_id'] ?? null,
-                'organic' => $this->importHelper->convertToBoolean($row['organic'] ?? null),
-                'in_glaze' => $this->importHelper->convertToBoolean($row['in_glaze'] ?? null),
-                'on_glaze' => $this->importHelper->convertToBoolean($row['on_glaze'] ?? null),
-                'under_glaze' => $this->importHelper->convertToBoolean($row['under_glaze'] ?? null),
-                'air_dry' => $this->importHelper->convertToBoolean($row['air_dry'] ?? null),
+                'fire_temp' => $row['fire_temp'],
                 'approval_date' => $row['approval_date'] ?? null,
                 'created_at' => $now,
                 'updated_at' => $now,
@@ -133,19 +143,15 @@ class BackstampsImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
 
         // แบ่งเป็น chunks ละ 500 แถว เพื่อป้องกัน query ใหญ่เกินไป
         foreach (array_chunk($data, 500) as $chunk) {
-            Backstamp::upsert(
+            Glaze::upsert(
                 $chunk,
-                ['backstamp_code'],
+                ['glaze_code'],
                 [
-                    'name',
-                    'requestor_id',
-                    'customer_id',
+                    'glaze_inside_id',
+                    'glaze_outer_id',
+                    'effect_id',
                     'status_id',
-                    'organic',
-                    'in_glaze',
-                    'on_glaze',
-                    'under_glaze',
-                    'air_dry',
+                    'fire_temp',
                     'approval_date',
                     'updated_at'
                 ]
@@ -167,16 +173,12 @@ class BackstampsImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
     public function rules(): array
     {
         return [
-            'backstamp_code' => 'required|max:255',
-            'name' => 'nullable|max:255',
-            'requestor' => 'nullable|max:255',
-            'customer' => 'nullable|max:255',
+            'glaze_code' => 'required|max:255',
+            'glaze_inside_code' => 'nullable|max:255',
+            'glaze_outer_code' => 'nullable|max:255',
+            'effect_code' => 'nullable|max:255',
             'status' => 'nullable|max:255',
-            'organic' => 'nullable|in:TRUE,FALSE,true,false,1,0,yes,no,Yes,No,YES,NO,ใช่,ไม่',
-            'in_glaze' => 'nullable|in:TRUE,FALSE,true,false,1,0,yes,no,Yes,No,YES,NO,ใช่,ไม่',
-            'on_glaze' => 'nullable|in:TRUE,FALSE,true,false,1,0,yes,no,Yes,No,YES,NO,ใช่,ไม่',
-            'under_glaze' => 'nullable|in:TRUE,FALSE,true,false,1,0,yes,no,Yes,No,YES,NO,ใช่,ไม่',
-            'air_dry' => 'nullable|in:TRUE,FALSE,true,false,1,0,yes,no,Yes,No,YES,NO,ใช่,ไม่',
+            'fire_temp' => 'nullable|max:255',
             'approval_date' => 'nullable|date_format:Y-m-d',
         ];
     }
@@ -187,17 +189,12 @@ class BackstampsImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
     public function customValidationMessages()
     {
         return [
-            'backstamp_code.required' => __('valid.err.backstamp_code.required'),
-            'backstamp_code.max' => __('valid.err.backstamp_code.max'),
-            'name.max' => __('valid.err.name.max'),
-            'requestor.max' => __('valid.err.requestor.max'),
-            'customer.max' => __('valid.err.customer.max'),
+            'glaze_code.required' => __('valid.err.glaze_code.required'),
+            'glaze_inside_code.max' => __('valid.err.glaze_inside_code.max'),
+            'glaze_outer_code.max' => __('valid.err.glaze_outer_code.max'),
+            'effect_code.max' => __('valid.err.effect_code.max'),
             'status.max' => __('valid.err.status.max'),
-            'organic.in' => __('valid.err.organic.in'),
-            'in_glaze.in' => __('valid.err.in_glaze.in'),
-            'on_glaze.in' => __('valid.err.on_glaze.in'),
-            'under_glaze.in' => __('valid.err.under_glaze.in'),
-            'air_dry.in' => __('valid.err.air_dry.in'),
+            'fire_temp.max' => __('valid.err.fire_temp.max'),
             'approval_date.date_format' => __('valid.err.approval_date.date'),
         ];
     }
