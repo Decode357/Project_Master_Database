@@ -27,10 +27,17 @@ return [
             'max' => 'Phone ต้องไม่เกิน 20 ตัวอักษร',
         ],
     ],
-    'backst' => [
+    'err' => [
         'backstamp_code' => [
             'required' => 'Backstamp Code จำเป็นต้องระบุ',
             'max' => 'Backstamp Code ต้องไม่เกิน 255 ตัวอักษร',
+        ],
+        'pattern_code' => [
+            'required' => 'Pattern Code จำเป็นต้องระบุ',
+            'max' => 'Pattern Code ต้องไม่เกิน 255 ตัวอักษร',
+        ],
+        'pattern_name' => [
+            'max' => 'Pattern Name ต้องไม่เกิน 255 ตัวอักษร',
         ],
         'name' => [
             'max' => 'Name ต้องไม่เกิน 255 ตัวอักษร',
@@ -42,6 +49,10 @@ return [
         'customer' => [
             'max' => 'Customer ต้องไม่เกิน 255 ตัวอักษร',
             'not_found' => 'ไม่พบ Customer ชื่อ ":name" ในระบบ',
+        ],
+        'designer' => [
+            'max' => 'Designer ต้องไม่เกิน 255 ตัวอักษร',
+            'not_found' => 'ไม่พบ Designer ชื่อ ":name" ในระบบ',
         ],
         'status' => [
             'max' => 'Status ต้องไม่เกิน 255 ตัวอักษร',
@@ -61,6 +72,9 @@ return [
         ],
         'air_dry' => [
             'in' => 'ค่า Air Dry ต้องเป็น TRUE, FALSE, 1, 0, Yes, No, ใช่, หรือ ไม่ เท่านั้น',
+        ],
+        'exclusive' => [
+            'in' => 'ค่า Exclusive ต้องเป็น TRUE, FALSE, 1, 0, Yes, No, ใช่, หรือ ไม่ เท่านั้น',
         ],
         'approval_date' => [
             'date' => 'รูปแบบวันที่ไม่ถูกต้อง',

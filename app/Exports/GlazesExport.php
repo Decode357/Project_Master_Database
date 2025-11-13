@@ -3,18 +3,18 @@
 namespace App\Exports;
 
 use App\Models\Glaze;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-class GlazesExport implements FromCollection, WithHeadings, WithMapping, WithColumnFormatting
+class GlazesExport implements FromQuery, WithHeadings, WithMapping, WithColumnFormatting
 {
     /**
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Database\Query\Builder
      */
-    public function collection()
+    public function query()
     {
         // ใช้ชื่อ relationship ที่ถูกต้อง (camelCase)
         return Glaze::with(['glazeInside', 'glazeOuter', 'effect', 'status'])
@@ -26,12 +26,9 @@ class GlazesExport implements FromCollection, WithHeadings, WithMapping, WithCol
                 'status_id',
                 'fire_temp',
                 'approval_date'
-            )->get();
+            );
     }
 
-    /**
-     * Map ข้อมูลแต่ละแถว
-     */
     public function map($glaze): array
     {
         return [

@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Requestor;
 use App\Models\Customer;
 use App\Models\Status;
+use App\Models\Designer;
 use Illuminate\Support\Collection;
 
 class ImportHelperService
@@ -12,6 +13,7 @@ class ImportHelperService
     private $requestorsCache = [];
     private $customersCache = [];
     private $statusesCache = [];
+    private $designersCache = [];
 
     public function __construct()
     {
@@ -36,6 +38,11 @@ class ImportHelperService
         $statuses = Status::all();
         foreach ($statuses as $status) {
             $this->statusesCache[strtolower($status->status)] = $status->id;
+        }
+
+        $designers = Designer::all();
+        foreach ($designers as $designer) {
+            $this->designersCache[strtolower($designer->designer_name)] = $designer->id;
         }
     }
 
@@ -69,6 +76,30 @@ class ImportHelperService
         $this->requestorsCache[$name] = $requestor->id;
 
         return $requestor->id;
+    }
+
+    /**
+     * หา Requestor หรือสร้างใหม่ถ้าไม่เจอ
+     */
+    public function getOrCreateDesigner(string $name): int
+    {
+        $name = trim($name);
+        
+        // เช็คใน cache ก่อน
+        if (isset($this->designersCache[$name])) {
+            return $this->designersCache[$name];
+        }
+
+        // ถ้าไม่เจอให้สร้างใหม่
+        $designer = Designer::firstOrCreate(
+            ['designer_name' => $name],
+            ['created_at' => now(), 'updated_at' => now()]
+        );
+
+        // อัพเดท cache
+        $this->designersCache[$name] = $designer->id;
+
+        return $designer->id;
     }
 
     /**
@@ -140,6 +171,20 @@ class ImportHelperService
     }
 
     /**
+     * สร้าง Designers หลายตัวพร้อมกัน
+     */
+    public function createMultipleDesigners(array $names): array
+    {
+        $results = [];
+        
+        foreach ($names as $name) {
+            $results[$name] = $this->getOrCreateDesigner($name);
+        }
+        
+        return $results;
+    }
+
+    /**
      * แปลงค่าเป็น Boolean (0 หรือ 1)
      */
     public function convertToBoolean($value): int
@@ -172,6 +217,14 @@ class ImportHelperService
     {
         return isset($this->requestorsCache[$name]);
     }
+    
+    /**
+     * ตรวจสอบว่ามี Designer อยู่หรือไม่
+     */
+    public function designerExists(string $name): bool
+    {
+        return isset($this->designersCache[$name]);
+    }
 
     /**
      * ตรวจสอบว่ามี Customer อยู่หรือไม่
@@ -195,6 +248,14 @@ class ImportHelperService
     public function getAllRequestors(): array
     {
         return array_keys($this->requestorsCache);
+    }
+
+    /**
+     * ดึงรายชื่อ Designers ทั้งหมด
+     */
+    public function getAllDesigners(): array
+    {
+        return array_keys($this->designersCache);
     }
 
     /**

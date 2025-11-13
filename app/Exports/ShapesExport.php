@@ -3,18 +3,18 @@
 namespace App\Exports;
 
 use App\Models\Shape;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-class ShapesExport implements FromCollection, WithHeadings, WithMapping, WithColumnFormatting
+class ShapesExport implements FromQuery, WithHeadings, WithMapping, WithColumnFormatting
 {
     /**
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Database\Query\Builder
      */
-    public function collection()
+    public function query()
     {
         return Shape::with([
                 'shapeType', 
@@ -46,7 +46,7 @@ class ShapesExport implements FromCollection, WithHeadings, WithMapping, WithCol
                 'height_short',
                 'body',
                 'approval_date',
-            )->get();
+            );
     }
 
     /**

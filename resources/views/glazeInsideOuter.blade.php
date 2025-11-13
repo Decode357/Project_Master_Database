@@ -107,22 +107,20 @@
                                                 @endforelse
                                             </div>
                                         </td>
-                                        <td class="px-4 py-3 text-right">
-                                            <div class="flex justify-end gap-1">
-                                                @if ($hasEdit)
-                                                    <button @click="openEditInsideModal({{ $glaze_inside->toJson() }})"
-                                                        class="text-blue-600 hover:text-blue-700 p-1">
-                                                        <span class="material-symbols-outlined">edit</span>
-                                                    </button>
-                                                @endif
-                                                @if ($hasDelete)
-                                                    <button
-                                                        @click="DeleteGlazeInsideModal = true; glazeInsideIdToDelete = {{ $glaze_inside->id }}; itemCodeToDelete = '{{ $glaze_inside->glaze_inside_code }}'"
-                                                        class="text-red-500 hover:text-red-700">
-                                                        <span class="material-symbols-outlined">delete</span>
-                                                    </button>
-                                                @endif
-                                            </div>
+                                        <td class="px-4 py-3 text-right space-x-2">
+                                            @if ($hasEdit)
+                                                <button @click="openEditInsideModal({{ $glaze_inside->toJson() }})"
+                                                    class="text-blue-600 hover:text-blue-700">
+                                                    <span class="material-symbols-outlined">edit</span>
+                                                </button>
+                                            @endif
+                                            @if ($hasDelete)
+                                                <button
+                                                    @click="DeleteGlazeInsideModal = true; glazeInsideIdToDelete = {{ $glaze_inside->id }}; itemCodeToDelete = '{{ $glaze_inside->glaze_inside_code }}'"
+                                                    class="text-red-500 hover:text-red-700">
+                                                    <span class="material-symbols-outlined">delete</span>
+                                                </button>
+                                            @endif
                                         </td>
                                     </tr>
                                 @empty
@@ -245,22 +243,20 @@
                                                 @endforelse
                                             </div>
                                         </td>
-                                        <td class="px-4 py-3 text-right">
-                                            <div class="flex justify-end gap-1">
-                                                @if ($hasEdit)
-                                                    <button @click="openEditOuterModal({{ $glaze_outer->toJson() }})"
-                                                        class="text-blue-600 hover:text-blue-700 p-1">
-                                                        <span class="material-symbols-outlined">edit</span>
-                                                    </button>
-                                                @endif
-                                                @if ($hasDelete)
-                                                    <button
-                                                        @click="DeleteGlazeOuterModal = true; glazeOuterIdToDelete = {{ $glaze_outer->id }}; itemCodeToDelete = '{{ $glaze_outer->glaze_outer_code }}'"
-                                                        class="text-red-500 hover:text-red-700 p-1">
-                                                        <span class="material-symbols-outlined">delete</span>
-                                                    </button>
-                                                @endif
-                                            </div>
+                                        <td class="px-4 py-3 text-right space-x-2">
+                                            @if ($hasEdit)
+                                                <button @click="openEditOuterModal({{ $glaze_outer->toJson() }})"
+                                                    class="text-blue-600 hover:text-blue-700">
+                                                    <span class="material-symbols-outlined">edit</span>
+                                                </button>
+                                            @endif
+                                            @if ($hasDelete)
+                                                <button
+                                                    @click="DeleteGlazeOuterModal = true; glazeOuterIdToDelete = {{ $glaze_outer->id }}; itemCodeToDelete = '{{ $glaze_outer->glaze_outer_code }}'"
+                                                    class="text-red-500 hover:text-red-700">
+                                                    <span class="material-symbols-outlined">delete</span>
+                                                </button>
+                                            @endif
                                         </td>
                                     </tr>
                                 @empty

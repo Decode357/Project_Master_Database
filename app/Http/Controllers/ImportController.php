@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Imports\CustomersImport;
 use App\Imports\BackstampsImport;
+use App\Imports\PatternsImport;
+use App\Imports\ShapesImport;
+use App\Imports\GlazesImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\HeadingRowImport;
@@ -45,6 +48,27 @@ class ImportController extends Controller
         return $this->processImport($request, $requiredHeaders, $importClass, 'backstamps', 'backstamp_import');
     }
 
+    /**
+     * Import Patterns
+     */
+    public function pattern_import(Request $request)
+    {
+        $requiredHeaders = [
+            'pattern_code',
+            'pattern_name',
+            'status',
+            'customer',
+            'requestor',
+            'designer',
+            'in_glaze',
+            'on_glaze',
+            'under_glaze',
+            'exclusive',
+            'approval_date'
+        ];
+        $importClass = PatternsImport::class;
+        return $this->processImport($request, $requiredHeaders, $importClass, 'patterns', 'pattern_import');
+    }
     /**
      * Process Import
      */

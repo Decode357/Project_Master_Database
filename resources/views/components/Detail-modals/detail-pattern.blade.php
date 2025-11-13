@@ -22,7 +22,7 @@
                 <h2 class="text-2xl font-bold" x-text="patternToView?.pattern_code || '{{ __('content.details') }} {{ __('content.pattern') }}'"></h2>
                 <p class="text-green-100 dark:text-green-200 text-sm mt-1" x-text="patternToView?.pattern_name || '{{ __('content.details') }} {{ __('content.pattern') }}'"></p>
             </div>
-            <template x-if="patternToView?.exclusive === 1">
+            <template x-if="patternToView?.exclusive === true">
                 <div class="flex gap-2 bg-red-500 px-4 py-2 rounded-full shadow-md shadow-red-700/70 items-center">
                     <span class="text-3xl material-symbols-outlined text-white">
                         Loyalty
@@ -184,10 +184,10 @@
                                 <label class="text-gray-700 dark:text-gray-300">
                                     {{ __('content.exclusive') }}:
                                 </label>
-                                <template x-if="patternToView?.exclusive === 1">
+                                <template x-if="patternToView?.exclusive === true">
                                     <span class="material-symbols-outlined text-green-600 dark:text-green-400">check</span>
                                 </template>
-                                <template x-if="patternToView?.exclusive === 0">
+                                <template x-if="patternToView?.exclusive === false">
                                     <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">close</span>
                                 </template>
                             </div>
@@ -200,10 +200,10 @@
                                 <label class="text-gray-700 dark:text-gray-300">
                                     {{ __('content.in_glaze') }}:
                                 </label>
-                                <template x-if="patternToView?.in_glaze === 1">
+                                <template x-if="patternToView?.in_glaze === true">
                                     <span class="material-symbols-outlined text-green-600 dark:text-green-400">check</span>
                                 </template>
-                                <template x-if="patternToView?.in_glaze === 0">
+                                <template x-if="patternToView?.in_glaze === false">
                                     <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">close</span>
                                 </template>
                             </div>
@@ -216,10 +216,10 @@
                                 <label class="text-gray-700 dark:text-gray-300">
                                     {{ __('content.on_glaze') }}:
                                 </label>
-                                <template x-if="patternToView?.on_glaze === 1">
+                                <template x-if="patternToView?.on_glaze === true">
                                     <span class="material-symbols-outlined text-green-600 dark:text-green-400">check</span>
                                 </template>
-                                <template x-if="patternToView?.on_glaze === 0">
+                                <template x-if="patternToView?.on_glaze === false">
                                     <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">close</span>
                                 </template>
                             </div>
@@ -232,10 +232,10 @@
                                 <label class="text-gray-700 dark:text-gray-300">
                                     {{ __('content.under_glaze') }}:
                                 </label>
-                                <template x-if="patternToView?.under_glaze === 1">
+                                <template x-if="patternToView?.under_glaze === true">
                                     <span class="material-symbols-outlined text-green-600 dark:text-green-400">check</span>
                                 </template>
-                                <template x-if="patternToView?.under_glaze === 0">
+                                <template x-if="patternToView?.under_glaze === false">
                                     <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">close</span>
                                 </template>
                             </div>

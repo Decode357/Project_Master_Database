@@ -66,24 +66,44 @@
                     <thead class="text-xs uppercase bg-gray-50 border-b dark:border-gray-700
                         dark:bg-gray-700 dark:text-gray-400 text-black">
                         <tr>
-                            <th class="px-3 py-3 w-[180px]">{{ __('content.name') }}</th>
-                            <th class="px-3 py-3 w-[240px]">{{ __('content.email') }}</th>
-                            <th class="px-3 py-3 w-[180px]">{{ __('auth.role') }}</th>
-                            <th class="px-3 py-3 w-[436px]">{{ __('auth.permission') }}</th>
-                            <th class="px-3 py-3">{{ __('content.department') }}</th>
-                            <th class="px-3 py-3">{{ __('content.requestor') }}</th>
-                            <th class="px-3 py-3">{{ __('content.customer') }}</th>
-                            <th class="px-3 py-3 text-right max-w-[80px]">{{ __('content.action') }}</th>
+                            <th class="px-4 py-3">{{ __('content.name') }}</th>
+                            <th class="px-4 py-3">{{ __('content.email') }}</th>
+                            <th class="px-4 py-3">{{ __('auth.role') }}</th>
+                            <th class="px-4 py-3">{{ __('auth.permission') }}</th>
+                            <th class="px-4 py-3 text-right max-w-[80px]">{{ __('content.action') }}</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         @forelse ($users as $user)
-                            <tr class="bg-white border-b max-h-[60px] hover:bg-gray-50
+                            <tr class="bg-white border-b hover:bg-gray-50
                                 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                                <td class="px-3 py-3 font-medium text-gray-900 dark:text-gray-100">{{ Str::limit($user->name, 20) }}</td>
-                                <td class="px-3 py-3 font-medium text-gray-900 dark:text-gray-100">{{ Str::limit($user->email, 30) }}</td>
-                                <td class="px-3 py-3">
+                                <td class="px-4 py-3 font-medium text-gray-900 dark:text-gray-100">
+                                    {{ Str::limit($user->name, 20) }}
+                                    @if ($user->department != null)
+                                        <span
+                                            class="inline-block bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full
+                                            dark:bg-green-900 dark:text-green-300 ml-2">
+                                            {{ $user->department?->name ?? '' }}
+                                        </span>
+                                    @endif 
+                                    @if ($user->requestor != null)
+                                        <span
+                                            class="inline-block bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded-full
+                                            dark:bg-yellow-900 dark:text-yellow-300 ml-2">
+                                            {{ $user->requestor?->name ?? '' }}
+                                        </span>
+                                    @endif
+                                    @if ($user->customer != null)
+                                        <span
+                                            class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full
+                                            dark:bg-blue-900 dark:text-blue-300 ml-2">
+                                            {{ $user->customer?->name ?? '' }}
+                                        </span>
+                                    @endif
+                                </td>
+                                <td class="px-4 py-3 font-medium text-gray-900 dark:text-gray-100">{{ Str::limit($user->email, 30) }}</td>
+                                <td class="px-4 py-3">
                                     @foreach ($user->roles as $role)
                                         <span
                                             class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full
@@ -92,7 +112,7 @@
                                         </span>
                                     @endforeach
                                 </td>
-                                <td class="px-3 py-3">
+                                <td class="px-4 py-3">
                                     @php
                                         $permissionColors1 = [
                                             'view' => 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300',
@@ -110,9 +130,6 @@
                                         </span>
                                     @endforeach
                                 </td>
-                                <td class="px-3 py-3 dark:text-gray-300">{{ $user->department?->name ?? '' }}</td>
-                                <td class="px-3 py-3 dark:text-gray-300">{{ $user->requestor?->name ?? '' }}</td>
-                                <td class="px-3 py-3 dark:text-gray-300">{{ $user->customer?->name ?? '' }}</td>
                                 @php
                                     $currentUser = Auth::user();
                                     $currentRole = $currentUser->roles->pluck('name')->first();
@@ -120,7 +137,7 @@
                                 @endphp
  
                                 @if ($hasManageUser&& ($currentRole === 'superadmin' || $rowRole !== 'superadmin') && $user->id !== auth()->id())
-                                    <td class="text-right space-x-2 max-w-[80px]">
+                                    <td class="px-4 py-3 text-right space-x-2 max-w-[80px]">
                                         <button @click="openEditModal({{ $user->toJson() }})"
                                             class="text-blue-600 hover:text-blue-700">
                                             <span class="material-symbols-outlined">edit</span>
@@ -129,7 +146,7 @@
                                         <button
                                             @click="DeleteUserModal = true; userIdToDelete = {{ $user->id }}; userNameToDelete = '{{ $user->name }}'"
                                             class="text-red-500 hover:text-red-700">
-                                            <span class="material-symbols-outlined mr-2">delete</span>
+                                            <span class="material-symbols-outlined">delete</span>
                                         </button>
                                     </td>
                                 @else

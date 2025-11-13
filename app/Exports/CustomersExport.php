@@ -3,21 +3,20 @@
 namespace App\Exports;
 
 use App\Models\Customer;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-class CustomersExport implements FromCollection, WithHeadings, WithColumnFormatting
+class CustomersExport implements FromQuery, WithHeadings, WithColumnFormatting
 {
     /**
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Database\Query\Builder
      */
-    public function collection()
+    public function query()
     {
-        // เลือกเฉพาะคอลัมน์ที่ต้องการ
-        return Customer::select('code', 'name', 'email', 'phone')->get();
+        return Customer::select('code', 'name', 'email', 'phone');
     }
 
     /**

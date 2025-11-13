@@ -27,10 +27,17 @@ return [
             'max' => 'Phone must not exceed 20 characters.',
         ],
     ],
-    'backst' => [
+    'err' => [
         'backstamp_code' => [
             'required' => 'Backstamp Code is required.',
             'max' => 'Backstamp Code must not exceed 255 characters.',
+        ],
+        'pattern_code' => [
+            'required' => 'Pattern Code is required.',
+            'max' => 'Pattern Code must not exceed 255 characters.',
+        ],
+        'pattern_name' => [
+            'max' => 'Pattern Name must not exceed 255 characters.',
         ],
         'name' => [
             'max' => 'Name must not exceed 255 characters.',
@@ -42,6 +49,10 @@ return [
         'customer' => [
             'max' => 'Customer must not exceed 255 characters.',
             'not_found' => 'Customer named ":name" not found in the system.',
+        ],
+        'designer' => [
+            'max' => 'Designer must not exceed 255 characters.',
+            'not_found' => 'Designer named ":name" not found in the system.',
         ],
         'status' => [
             'max' => 'Status must not exceed 255 characters.',
@@ -61,6 +72,9 @@ return [
         ],
         'air_dry' => [
             'in' => 'Air Dry value must be TRUE, FALSE, 1, 0, Yes, No, ใช่, or ไม่ only.',
+        ],
+        'exclusive' => [
+            'in' => 'Exclusive value must be TRUE, FALSE, 1, 0, Yes, No, ใช่, or ไม่ only.',
         ],
         'approval_date' => [
             'date' => 'Invalid date format.',

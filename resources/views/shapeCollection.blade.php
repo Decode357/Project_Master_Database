@@ -65,9 +65,9 @@
                     <thead class="text-xs uppercase bg-gray-50 border-b dark:border-gray-700
                         dark:bg-gray-700 dark:text-gray-400 text-black">
                         <tr>
-                            <th class="px-6 py-3">{{ __('content.collection_code') }}</th>
-                            <th class="px-6 py-3">{{ __('content.collection_name') }}</th>
-                            <th class="px-6 py-3 text-right">{{ __('content.action') }}</th>
+                            <th class="px-4 py-3">{{ __('content.collection_code') }}</th>
+                            <th class="px-4 py-3">{{ __('content.collection_name') }}</th>
+                            <th class="px-4 py-3 text-right">{{ __('content.action') }}</th>
                         </tr>
                     </thead>
 
@@ -75,9 +75,9 @@
                         @forelse ($shapeCollections as $collection)
                             <tr class="bg-white border-b hover:bg-gray-50 
                                 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                                    <td class="px-6 py-4 font-medium text-gray-900 dark:text-gray-100">{{ $collection->collection_code }}</td>
-                                    <td class="px-6 py-4 font-medium text-gray-900 dark:text-gray-100">{{ $collection->collection_name ?? '-' }}</td>
-                                <td class="px-6 py-4 text-right space-x-2">
+                                    <td class="px-4 py-3 font-medium text-gray-900 dark:text-gray-100">{{ $collection->collection_code }}</td>
+                                    <td class="px-4 py-3 font-medium text-gray-900 dark:text-gray-100">{{ $collection->collection_name ?? '-' }}</td>
+                                <td class="px-4 py-3 text-right space-x-2">
                                     @if ($hasEdit)
                                         <button @click="openEditModal({{ $collection->toJson() }})"
                                                 class="text-blue-600 hover:text-blue-700">
@@ -94,7 +94,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="px-6 py-4 text-sm text-gray-500 text-center
+                                <td colspan="5" class="px-4 py-3 text-sm text-gray-500 text-center
                                     dark:text-gray-400">
                                     @if(request('search'))
                                         {{ __('content.not_found') }} "{{ request('search') }}".

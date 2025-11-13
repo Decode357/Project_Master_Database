@@ -3,20 +3,19 @@
 namespace App\Exports;
 
 use App\Models\Backstamp;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-class BackstampsExport implements FromCollection, WithHeadings, WithMapping, WithColumnFormatting
+class BackstampsExport implements FromQuery, WithHeadings, WithMapping, WithColumnFormatting
 {
     /**
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Database\Query\Builder
      */
-    public function collection()
+    public function query()
     {
-        // ดึงข้อมูลพร้อม relations
         return Backstamp::with(['requestor', 'customer', 'status'])
             ->select(
                 'backstamp_code', 
@@ -30,7 +29,7 @@ class BackstampsExport implements FromCollection, WithHeadings, WithMapping, Wit
                 'under_glaze',
                 'air_dry',
                 'approval_date'
-            )->get();
+            );
     }
 
     /**
@@ -41,9 +40,9 @@ class BackstampsExport implements FromCollection, WithHeadings, WithMapping, Wit
         return [
             $backstamp->backstamp_code,
             $backstamp->name,
-            $backstamp->requestor ? $backstamp->requestor->name : '', // ชื่อ requestor แทน id
-            $backstamp->customer ? $backstamp->customer->name : '', // ชื่อ customer แทน id
-            $backstamp->status ? $backstamp->status->status : '', // ชื่อ status แทน id
+            $backstamp->requestor ? $backstamp->requestor->name : '',
+            $backstamp->customer ? $backstamp->customer->name : '',
+            $backstamp->status ? $backstamp->status->status : '',
             $backstamp->organic,
             $backstamp->in_glaze,
             $backstamp->on_glaze,
@@ -88,4 +87,3 @@ class BackstampsExport implements FromCollection, WithHeadings, WithMapping, Wit
         ];
     }
 }
-

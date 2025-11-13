@@ -3,18 +3,18 @@
 namespace App\Exports;
 
 use App\Models\Pattern;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-class PatternsExport implements FromCollection, WithHeadings, WithMapping, WithColumnFormatting
+class PatternsExport implements FromQuery, WithHeadings, WithMapping, WithColumnFormatting
 {
     /**
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Database\Query\Builder
      */
-    public function collection()
+    public function query()
     {
         // ใช้ชื่อ relationship ที่ถูกต้อง (camelCase)
         return Pattern::with(['status', 'customer', 'requestor', 'designer'])
@@ -30,7 +30,7 @@ class PatternsExport implements FromCollection, WithHeadings, WithMapping, WithC
                 'under_glaze',
                 'exclusive',
                 'approval_date',
-            )->get();
+            );
     }
 
     /**
@@ -60,9 +60,9 @@ class PatternsExport implements FromCollection, WithHeadings, WithMapping, WithC
     {
         return [
             'Pattern Code',
-            'Name',
+            'Pattern Name',
             'Status',
-            'Customer Name',
+            'Customer',
             'Requestor',
             'Designer',
             'In Glaze',

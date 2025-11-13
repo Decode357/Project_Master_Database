@@ -68,22 +68,22 @@
                     <thead class="text-xs uppercase bg-gray-50 border-b dark:border-gray-700
                         dark:bg-gray-700 dark:text-gray-400 text-black">
                         <tr>
-                            <th class="px-6 py-3">{{__('content.color_code')}}</th>
-                            <th class="px-6 py-3">{{__('content.color_name')}}</th>
-                            <th class="px-6 py-3">{{__('content.customer')}}</th>
-                            <th class="px-6 py-3 text-right">{{__('content.action')}}</th>
+                            <th class="px-4 py-3">{{__('content.color_code')}}</th>
+                            <th class="px-4 py-3">{{__('content.color_name')}}</th>
+                            <th class="px-4 py-3">{{__('content.customer')}}</th>
+                            <th class="px-4 py-3 text-right">{{__('content.action')}}</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($colors as $color)
                             <tr class="bg-white border-b hover:bg-gray-50
                                 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                                <td class="px-6 py-4 font-medium text-gray-900 dark:text-gray-100">{{ $color->color_code }}</td>
-                                <td class="px-6 py-4 font-medium text-gray-900 dark:text-gray-100">{{ $color->color_name ?? '-' }}</td>
-                                <td class="px-6 py-4 dark:text-gray-300">
+                                <td class="px-4 py-3 font-medium text-gray-900 dark:text-gray-100">{{ $color->color_code }}</td>
+                                <td class="px-4 py-3 font-medium text-gray-900 dark:text-gray-100">{{ $color->color_name ?? '-' }}</td>
+                                <td class="px-4 py-3 dark:text-gray-300">
                                     {{ $color->customer ? $color->customer->name : '-' }}
                                 </td>
-                                <td class="px-6 py-4 text-right space-x-2">
+                                <td class="px-4 py-3 text-right space-x-2">
                                     @if ($hasEdit)
                                         <button @click="openEditModal({{ $color->toJson() }})"
                                                 class="text-blue-600 hover:text-blue-700">

@@ -77,7 +77,8 @@
                 <a href="{{ route('dashboard') }}"
                     class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium 
                     {{ request()->routeIs('dashboard') 
-                        ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold scale-110' 
+                        ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold scale-105
+                        ' 
                         : 'text-gray-700 dark:text-gray-300 hoverScale hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-gray-100' }}">
                     <span class="material-symbols-outlined text-lg">home</span>
                     <span>{{ __('sidebar.dashboard') }}</span>
@@ -88,7 +89,8 @@
                 <a href="{{ route('shape.index') }}"
                     class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium 
                     {{ request()->routeIs('shape.index') 
-                        ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold scale-110' 
+                        ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold scale-105
+                        ' 
                         : 'text-gray-700 dark:text-gray-300 hoverScale hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-gray-100' }}">
                     <span class="material-symbols-outlined text-lg">shapes</span>
                     <span>{{ __('sidebar.shapes') }}</span>
@@ -98,7 +100,8 @@
                 <a href="{{ route('shape.collection.index') }}"
                     class="flex items-center gap-3 rounded-md px-2 py-2 text-sm font-medium ml-6
                     {{ request()->routeIs('shape.collection.index') 
-                        ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold' 
+                        ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold scale-105
+                        ' 
                         : 'text-gray-600 dark:text-gray-400 hoverScale hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700' }}">
                     <span class="w-0.5 h-4 bg-gray-300 dark:bg-gray-600 rounded"></span>
                     <span class="material-symbols-outlined text-base">collections_bookmark</span>
@@ -111,7 +114,8 @@
                 <a href="{{ route('glaze.index') }}"
                     class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium 
                     {{ request()->routeIs('glaze.index') 
-                        ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold scale-110' 
+                        ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold scale-105
+                        ' 
                         : 'text-gray-700 dark:text-gray-300 hoverScale hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-gray-100' }}">
                     <span class="material-symbols-outlined text-lg">water_drop</span>
                     <span>{{ __('sidebar.glazes') }}</span>
@@ -121,7 +125,8 @@
                 <a href="{{ route('glaze.inside.outer.index') }}"
                     class="flex items-center gap-3 rounded-md px-2 py-2 text-sm font-medium ml-6 
                     {{ request()->routeIs('glaze.inside.outer.index') 
-                        ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold' 
+                        ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold scale-105
+                        ' 
                         : 'text-gray-600 dark:text-gray-400 hoverScale hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700' }}">
                     <span class="w-0.5 h-4 bg-gray-300 dark:bg-gray-600 rounded"></span>
                     <span class="material-symbols-outlined text-base">opacity</span>
@@ -132,7 +137,8 @@
                 <a href="{{ route('effect.index') }}"
                     class="flex items-center gap-3 rounded-md px-2 py-2 text-sm font-medium ml-6
                     {{ request()->routeIs('effect.index') 
-                        ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold' 
+                        ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold scale-105
+                        ' 
                         : 'text-gray-600 dark:text-gray-400 hoverScale hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700' }}">
                     <span class="w-0.5 h-4 bg-gray-300 dark:bg-gray-600 rounded"></span>
                     <span class="material-symbols-outlined text-base">auto_awesome</span>
@@ -143,7 +149,8 @@
                 <a href="{{ route('color.index') }}"
                     class="flex items-center gap-3 rounded-md px-2 py-2 text-sm font-medium ml-6
                     {{ request()->routeIs('color.index') 
-                        ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold' 
+                        ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold scale-105
+                        ' 
                         : 'text-gray-600 dark:text-gray-400 hoverScale hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700' }}">
                     <span class="w-0.5 h-4 bg-gray-300 dark:bg-gray-600 rounded"></span>
                     <span class="material-symbols-outlined text-base">palette</span>
@@ -154,7 +161,8 @@
                 <a href="{{ route('pattern.index') }}"
                     class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium
                     {{ request()->routeIs('pattern.index') 
-                        ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold scale-110' 
+                        ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold scale-105
+                        ' 
                         : 'text-gray-700 dark:text-gray-300 hoverScale hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-gray-100' }}">
                     <span class="material-symbols-outlined text-lg">border_color</span>
                     <span>{{ __('sidebar.patterns') }}</span>
@@ -163,7 +171,8 @@
                 <a href="{{ route('backstamp.index') }}"
                     class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium 
                     {{ request()->routeIs('backstamp.index') 
-                        ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold scale-110' 
+                        ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold scale-105
+                        ' 
                         : 'text-gray-700 dark:text-gray-300 hoverScale hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-gray-100' }}">
                     <span class="material-symbols-outlined text-lg">verified</span>
                     <span>{{ __('sidebar.backstamps') }}</span>
@@ -186,7 +195,8 @@
                     <a href="{{ route('user') }}"
                         class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium 
                     {{ request()->routeIs('user') 
-                        ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold scale-110' 
+                        ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold scale-105
+                        ' 
                         : 'text-gray-700 dark:text-gray-300 hoverScale hover:bg-gray-100 dark:hover:bg-gray-700' }}">
                         <span class="material-symbols-outlined text-lg">group</span>
                         <span>{{ __('sidebar.user_management') }}</span>
@@ -196,7 +206,8 @@
                         <a href="{{ route('csvImport') }}"
                             class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium
                     {{ request()->routeIs('csvImport') 
-                        ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold scale-110' 
+                        ? 'bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400 font-semibold scale-105
+                        ' 
                         : 'text-gray-700 dark:text-gray-300 hoverScale hover:bg-gray-100 dark:hover:bg-gray-700' }}">
                             <span class="material-symbols-outlined text-lg">cloud_upload</span>
                             <span>{{ __('sidebar.csv_import') }}</span>

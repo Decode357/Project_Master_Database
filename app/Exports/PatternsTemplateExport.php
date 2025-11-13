@@ -33,9 +33,9 @@ class PatternsTemplateExport implements FromArray, WithHeadings, WithColumnForma
     {
         return [
             'Pattern Code',
-            'Name',
+            'Pattern Name',
             'Status',
-            'Customer Name',
+            'Customer',
             'Requestor',
             'Designer',
             'In Glaze',

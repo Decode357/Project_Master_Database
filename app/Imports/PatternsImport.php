@@ -2,7 +2,7 @@
 
 namespace App\Imports;
 
-use App\Models\Backstamp;
+use App\Models\Pattern;
 use App\Services\ImportHelperService;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Validator;
 use PhpOffice\PhpSpreadsheet\Shared\Date as ExcelDate;
 use Carbon\Carbon;
 
-class BackstampsImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
+class PatternsImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
 {
     private $failures = [];
     private $rowsData = [];
@@ -45,6 +45,12 @@ class BackstampsImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
             if (!empty($row['requestor'])) {
                 $requestorId = $this->importHelper->getOrCreateRequestor($row['requestor']);
                 $row['requestor_id'] = $requestorId;
+            }
+
+            // เช็ค designer - ถ้าไม่เจอให้สร้างใหม่
+            if (!empty($row['designer'])) {
+                $designerId = $this->importHelper->getOrCreateDesigner($row['designer']);
+                $row['designer_id'] = $designerId;
             }
 
             // เช็ค customer (case-insensitive)
@@ -115,16 +121,16 @@ class BackstampsImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
         
         foreach ($this->rowsData as $row) {
             $data[] = [
-                'backstamp_code' => $row['backstamp_code'],
-                'name' => $row['name'] ?? null,
-                'requestor_id' => $row['requestor_id'] ?? null,
-                'customer_id' => $row['customer_id'] ?? null,
+                'pattern_code' => $row['pattern_code'],
+                'pattern_name' => $row['pattern_name'] ?? null,
                 'status_id' => $row['status_id'] ?? null,
-                'organic' => $this->importHelper->convertToBoolean($row['organic'] ?? null),
+                'customer_id' => $row['customer_id'] ?? null,
+                'requestor_id' => $row['requestor_id'] ?? null,
+                'designer_id' => $row['designer_id'] ?? null,
                 'in_glaze' => $this->importHelper->convertToBoolean($row['in_glaze'] ?? null),
                 'on_glaze' => $this->importHelper->convertToBoolean($row['on_glaze'] ?? null),
                 'under_glaze' => $this->importHelper->convertToBoolean($row['under_glaze'] ?? null),
-                'air_dry' => $this->importHelper->convertToBoolean($row['air_dry'] ?? null),
+                'exclusive' => $this->importHelper->convertToBoolean($row['exclusive'] ?? null),
                 'approval_date' => $row['approval_date'] ?? null,
                 'created_at' => $now,
                 'updated_at' => $now,
@@ -133,19 +139,19 @@ class BackstampsImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
 
         // แบ่งเป็น chunks ละ 500 แถว เพื่อป้องกัน query ใหญ่เกินไป
         foreach (array_chunk($data, 500) as $chunk) {
-            Backstamp::upsert(
+            Pattern::upsert(
                 $chunk,
-                ['backstamp_code'],
+                ['pattern_code'],
                 [
-                    'name',
-                    'requestor_id',
-                    'customer_id',
+                    'pattern_name',
                     'status_id',
-                    'organic',
+                    'customer_id',
+                    'requestor_id',
+                    'designer_id',
                     'in_glaze',
                     'on_glaze',
                     'under_glaze',
-                    'air_dry',
+                    'exclusive',
                     'approval_date',
                     'updated_at'
                 ]
@@ -167,16 +173,16 @@ class BackstampsImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
     public function rules(): array
     {
         return [
-            'backstamp_code' => 'required|max:255',
-            'name' => 'nullable|max:255',
-            'requestor' => 'nullable|max:255',
-            'customer' => 'nullable|max:255',
+            'pattern_code' => 'required|max:255',
+            'pattern_name' => 'nullable|max:255',
             'status' => 'nullable|max:255',
-            'organic' => 'nullable|in:TRUE,FALSE,true,false,1,0,yes,no,Yes,No,YES,NO,ใช่,ไม่',
+            'customer' => 'nullable|max:255',
+            'requestor' => 'nullable|max:255',
+            'designer' => 'nullable|max:255',
             'in_glaze' => 'nullable|in:TRUE,FALSE,true,false,1,0,yes,no,Yes,No,YES,NO,ใช่,ไม่',
             'on_glaze' => 'nullable|in:TRUE,FALSE,true,false,1,0,yes,no,Yes,No,YES,NO,ใช่,ไม่',
             'under_glaze' => 'nullable|in:TRUE,FALSE,true,false,1,0,yes,no,Yes,No,YES,NO,ใช่,ไม่',
-            'air_dry' => 'nullable|in:TRUE,FALSE,true,false,1,0,yes,no,Yes,No,YES,NO,ใช่,ไม่',
+            'exclusive' => 'nullable|in:TRUE,FALSE,true,false,1,0,yes,no,Yes,No,YES,NO,ใช่,ไม่',
             'approval_date' => 'nullable|date_format:Y-m-d',
         ];
     }
@@ -187,17 +193,17 @@ class BackstampsImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
     public function customValidationMessages()
     {
         return [
-            'backstamp_code.required' => __('valid.err.backstamp_code.required'),
-            'backstamp_code.max' => __('valid.err.backstamp_code.max'),
-            'name.max' => __('valid.err.name.max'),
-            'requestor.max' => __('valid.err.requestor.max'),
-            'customer.max' => __('valid.err.customer.max'),
+            'pattern_code.required' => __('valid.err.pattern_code.required'),
+            'pattern_code.max' => __('valid.err.pattern_code.max'),
+            'pattern_name.max' => __('valid.err.pattern_name.max'),
             'status.max' => __('valid.err.status.max'),
-            'organic.in' => __('valid.err.organic.in'),
+            'customer.max' => __('valid.err.customer.max'),
+            'requestor.max' => __('valid.err.requestor.max'),
+            'designer.max' => __('valid.err.designer.max'),
             'in_glaze.in' => __('valid.err.in_glaze.in'),
             'on_glaze.in' => __('valid.err.on_glaze.in'),
             'under_glaze.in' => __('valid.err.under_glaze.in'),
-            'air_dry.in' => __('valid.err.air_dry.in'),
+            'exclusive.in' => __('valid.err.exclusive.in'),
             'approval_date.date_format' => __('valid.err.approval_date.date'),
         ];
     }

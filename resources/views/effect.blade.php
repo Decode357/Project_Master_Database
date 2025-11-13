@@ -65,10 +65,10 @@
                     <thead class="text-xs uppercase bg-gray-50 border-b dark:border-gray-700
                         dark:bg-gray-700 dark:text-gray-400 text-black">
                         <tr>
-                            <th class="px-6 py-3">{{ __('content.effect_code') }}</th>
-                            <th class="px-6 py-3">{{ __('content.description') }}</th>
-                            <th class="px-6 py-3">{{ __('sidebar.colors') }}</th>
-                            <th class="px-6 py-3 text-right">{{ __('content.action') }}</th>
+                            <th class="px-4 py-3">{{ __('content.effect_code') }}</th>
+                            <th class="px-4 py-3">{{ __('content.description') }}</th>
+                            <th class="px-4 py-3">{{ __('sidebar.colors') }}</th>
+                            <th class="px-4 py-3 text-right">{{ __('content.action') }}</th>
                         </tr>
                     </thead>
 
@@ -76,9 +76,9 @@
                         @forelse ($effects as $effect)
                             <tr class="bg-white border-b hover:bg-gray-50 
                                 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                                <td class="px-6 py-4 font-medium text-gray-900 dark:text-gray-100">{{ $effect->effect_code }}</td>
-                                <td class="px-6 py-4 font-medium text-gray-900 dark:text-gray-100">{{ $effect->effect_name ?? '-' }}</td>
-                                <td class="px-6 py-4">
+                                <td class="px-4 py-3 font-medium text-gray-900 dark:text-gray-100">{{ $effect->effect_code }}</td>
+                                <td class="px-4 py-3 font-medium text-gray-900 dark:text-gray-100">{{ $effect->effect_name ?? '-' }}</td>
+                                <td class="px-4 py-3">
                                     <div class="flex gap-2 flex-wrap">
                                         @forelse ($effect->colors ?? [] as $color)
                                             <span class="text-sm text-gray-700 dark:text-gray-300">
@@ -89,7 +89,7 @@
                                         @endforelse
                                     </div>
                                 </td>
-                                <td class="px-6 py-4 text-right space-x-2">
+                                <td class="px-4 py-3 text-right space-x-2">
                                     @if ($hasEdit)
                                         <button @click="openEditModal({{ $effect->toJson() }})"
                                                 class="text-blue-600 hover:text-blue-700">
@@ -106,7 +106,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="px-6 py-4 text-sm text-gray-500 text-center
+                                <td colspan="5" class="px-4 py-3 text-sm text-gray-500 text-center
                                     dark:text-gray-400">
                                     @if(request('search'))
                                         {{ __('content.not_found') }} "{{ request('search') }}".
