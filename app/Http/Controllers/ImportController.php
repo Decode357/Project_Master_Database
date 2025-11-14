@@ -194,7 +194,7 @@ class ImportController extends Controller
         foreach ($failures as $failure) {
             if (count($errorMessages) < 20) {
                 $errorMessages[] = sprintf(
-                    __('valid.row') . ' %d [%s]: %s',
+                    __('valid.row') . ' %d %s: %s',
                     $failure->row(),
                     $failure->attribute(),
                     implode(', ', $failure->errors())

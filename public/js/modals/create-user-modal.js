@@ -59,7 +59,7 @@ function submitUserForm() {
         
         // Reset form
         form.reset();
-        resetSelect2('#CreateUserModal');
+        resetSelect2('#CreateUserForm');
         
         // Show toast notification
         showToast(data.message, 'success');
@@ -85,9 +85,24 @@ function initCreateUserModal() {
             if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
                 const modal = document.querySelector('[x-show="CreateUserModal"]');
                 if (modal && modal.style.display !== 'none') {
-                    // Modal เปิด - initialize Select2 และ sync กับ Alpine
+                    // Modal เปิด - initialize Select2 พร้อม tags: true
                     setTimeout(() => {
-                        initializeSelect2('#CreateUserForm');
+                        // ✅ Destroy old instances first
+                        $('#CreateUserForm .select2').each(function() {
+                            if ($(this).hasClass('select2-hidden-accessible')) {
+                                $(this).select2('destroy');
+                            }
+                        });
+                        
+                        // ✅ Init with tags: true
+                        $('#CreateUserForm .select2').each(function() {
+                            const $this = $(this);
+                            $this.select2({
+                                tags: true,
+                                width: '100%',
+                                dropdownParent: $this.closest('.fixed')
+                            });
+                        });
                         
                         // Sync Select2 กับ Alpine.js
                         $('#CreateUserForm .select2').on('change', function() {
@@ -97,7 +112,7 @@ function initCreateUserModal() {
                             
                             if (fieldName && alpineData.newUser) {
                                 alpineData.newUser[fieldName] = value;
-                                console.log(`Updated ${fieldName}: ${value}`);
+                                console.log(`✅ Updated ${fieldName}: ${value}`);
                             }
                         });
                     }, 100);

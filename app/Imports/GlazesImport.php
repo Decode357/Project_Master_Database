@@ -85,7 +85,7 @@ class GlazesImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
             if (!empty($relationErrors)) {
                 $this->failures[] = new Failure(
                     $rowNumber,
-                    'relations',
+                    '',
                     $relationErrors,
                     $row->toArray()
                 );
@@ -99,7 +99,7 @@ class GlazesImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
                 foreach ($validator->errors()->messages() as $attribute => $errors) {
                     $this->failures[] = new Failure(
                         $rowNumber,
-                        $attribute,
+                        '',
                         $errors,
                         $row->toArray()
                     );

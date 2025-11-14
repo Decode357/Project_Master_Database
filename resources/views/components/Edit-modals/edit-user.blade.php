@@ -6,7 +6,7 @@
     x-transition.opacity
     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" 
     style="display: none;">
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-full max-w-lg p-6" 
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-full max-w-xl p-6" 
         x-data="{
             ...editUserModal(),
             errors: {},
@@ -88,7 +88,10 @@
             <!-- Department / Requestor / Customer -->
             <div class="flex flex-row gap-4">
                 <div class="flex-1">
-                    <label class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">{{__('content.department')}}</label>
+                    <div class="grid grid-cols-2 items-end">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.requestor') }}</label>
+                        <label class="block text-xs font-medium text-green-700 dark:text-green-300 text-end">{{__('content.can_add')}}</label>                    
+                    </div>                    
                     <select name="department_id" x-model="userToEdit.department_id" 
                             :class="errors.department_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                             class="select2 w-full border rounded px-2 py-1 dark:bg-gray-700 dark:text-gray-100">
@@ -101,7 +104,10 @@
                 </div>
 
                 <div class="flex-1">
-                    <label class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">{{__('content.requestor')}}</label>
+                    <div class="grid grid-cols-2 items-end">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.requestor') }}</label>
+                        <label class="block text-xs font-medium text-green-700 dark:text-green-300 text-end">{{__('content.can_add')}}</label>                    
+                    </div>
                     <select name="requestor_id" x-model="userToEdit.requestor_id" 
                             :class="errors.requestor_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                             class="select2 w-full border rounded px-2 py-1 dark:bg-gray-700 dark:text-gray-100">
@@ -114,7 +120,10 @@
                 </div>
 
                 <div class="flex-1">
-                    <label class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">{{__('content.customer')}}</label>
+                    <div class="grid grid-cols-2 items-end">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.customer') }}</label>
+                        <label class="block text-xs font-medium text-red-700 dark:text-red-300 text-end">{{__('content.select_only')}}</label>
+                    </div>      
                     <select name="customer_id" x-model="userToEdit.customer_id" 
                             :class="errors.customer_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                             class="select2 w-full border rounded px-2 py-1 dark:bg-gray-700 dark:text-gray-100">

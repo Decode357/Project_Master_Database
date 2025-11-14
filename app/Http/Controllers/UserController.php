@@ -66,6 +66,42 @@ class UserController extends Controller
         return view('user', compact('users', 'departments', 'requestors', 'customers', 'perPage', 'search'), $permissions);
     }
 
+    private function handleNewSelectableData(array &$data)
+    {
+        $mapping = [
+            'requestor_id' => [\App\Models\Requestor::class, 'name'],
+            'department_id' => [\App\Models\Department::class, 'name'],
+        ];
+        foreach ($mapping as $field => [$model, $column]) {
+            if (!empty($data[$field])) {
+                $value = $data[$field];
+                // ถ้าเป็นตัวเลข ให้เช็กว่า ID นั้นมีจริงไหม
+                if (is_numeric($value)) {
+                    $exists = $model::where('id', $value)->exists();
+                    if (!$exists) {
+                        // ถ้าไม่มีจริง ให้สร้างใหม่โดยใช้เลขนั้นเป็นชื่อ
+                        $record = $model::create([$column => (string)$value]);
+                        $data[$field] = $record->id;
+                    }
+                } else {
+                    // ถ้าไม่ใช่ตัวเลข → เป็นชื่อใหม่แน่นอน → สร้างใหม่
+                    $record = $model::create([$column => $value]);
+                    $data[$field] = $record->id;
+                }
+            }
+        }
+        // Requestor
+        if (!empty($data['requestor_id']) && !is_numeric($data['requestor_id'])) {
+            $requestor = Requestor::create(['name' => $data['requestor_id']]);
+            $data['requestor_id'] = $requestor->id;
+        }
+        // Department
+        if (!empty($data['department_id']) && !is_numeric($data['department_id'])) {
+            $department = Department::create(['name' => $data['department_id']]);
+            $data['department_id'] = $department->id;
+        }
+    }
+
     public function storeUser(Request $request)
     {
         $data = $request->validate([
@@ -74,14 +110,15 @@ class UserController extends Controller
             'password'    => 'required|string|min:6',
             'role'        => 'nullable|string|in:user,admin,superadmin', // เปลี่ยนเป็น nullable
             'permissions' => 'array',
-            'department_id' => 'nullable|exists:departments,id',
-            'requestor_id'  => 'nullable|exists:requestors,id',
+            'department_id' => 'nullable',
+            'requestor_id'  => 'nullable',
             'customer_id'   => 'nullable|exists:customers,id',
         ]);
 
         // ถ้าไม่ได้ส่ง role มา ให้ default เป็น 'user'
         $role = $data['role'] ?? 'user';
-
+        // จัดการข้อมูล selectable fields ที่อาจเป็นข้อมูลใหม่
+        $this->handleNewSelectableData($data);
         // สร้าง user ก่อน
         $user = User::create([
                 'name'          => $data['name'],
@@ -136,8 +173,8 @@ class UserController extends Controller
             'role' => 'required|in:user,admin,superadmin',
             'permissions' => 'nullable|array',
             'permissions.*' => 'string',
-            'department_id' => 'nullable|exists:departments,id',
-            'requestor_id' => 'nullable|exists:requestors,id',
+            'department_id' => 'nullable',
+            'requestor_id' => 'nullable',
             'customer_id' => 'nullable|exists:customers,id',
         ]);
 
@@ -154,7 +191,8 @@ class UserController extends Controller
         if (!empty($data['password'])) {
             $updateData['password'] = Hash::make($data['password']);
         }
-
+        // จัดการข้อมูล selectable fields ที่อาจเป็นข้อมูลใหม่
+        $this->handleNewSelectableData($updateData);
         $user->update($updateData);
 
         // อัปเดต role และ permissions

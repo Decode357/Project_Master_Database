@@ -9,8 +9,8 @@ return [
     'found_error_count' => 'พบข้อผิดพลาด :count รายการ (ต้องแก้ไขให้ถูกต้องทั้งหมดก่อนนำเข้า)',
     'and_more' => '. . . และอีก :count รายการ',
     'row' => 'แถว',
-    'unknown_columns' => '<strong>คอลัมน์ที่ไม่รู้จัก</strong><br><strong>พบ:</strong> :extra. <br><strong>โปรดใช้เฉพาะ:</strong> :required',
-    'invalid_header' => '<strong>Header ไม่ถูกต้อง!</strong> <br><strong>ต้องมี:</strong> :required. <br><strong>หาไม่เจอ:</strong> :missing',
+    'unknown_columns' => '<strong><u>คอลัมน์ที่ไม่รู้จัก</strong><br><strong>พบ:</u></strong> :extra. <br><strong><u>โปรดใช้เฉพาะ:</u></strong> :required',
+    'invalid_header' => '<strong><u>Header ไม่ถูกต้อง!</strong> <br><strong>ต้องมี:</u></strong> :required. <br><u><strong>หาไม่เจอ:</u></strong> :missing',
     'custom' => [
         'code' => [
             'required' => 'Code จำเป็นต้องระบุ',

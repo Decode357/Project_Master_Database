@@ -3,7 +3,7 @@
 
 <div x-show="CreateUserModal" x-transition.opacity
     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="display: none;">
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-full max-w-lg p-6">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-full max-w-xl p-6">
         <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">{{__('content.create_user')}}</h2>
         <hr class="mb-3 border-gray-200 dark:border-gray-600">
 
@@ -40,6 +40,7 @@
                 <input type="text" name="name" placeholder="{{__('content.enter')}}{{__('content.username')}}"
                     class="mt-1 w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     required />
+                <p x-show="errors.name" x-text="errors.name ? (Array.isArray(errors.name) ? errors.name[0] : errors.name) : ''" class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
             </div>
 
             <!-- Email -->
@@ -48,6 +49,7 @@
                 <input type="email" name="email" placeholder="{{__('content.enter')}}{{__('content.email')}}"
                     class="mt-1 w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     required />
+                <p x-show="errors.email" x-text="errors.email ? (Array.isArray(errors.email) ? errors.email[0] : errors.email) : ''" class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
             </div>
 
             <!-- Password -->
@@ -61,38 +63,51 @@
                     <span x-show="!show" class="material-symbols-outlined">visibility</span>
                     <span x-show="show" class="material-symbols-outlined">visibility_off</span>
                 </button>
+                <p x-show="errors.password" x-text="errors.password ? (Array.isArray(errors.password) ? errors.password[0] : errors.password) : ''" class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
             </div>
 
             <!-- Department / Requestor / Customer -->
             <div class="flex flex-row gap-4">
                 <div class="flex-1">
-                    <label class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">{{__('content.department')}}</label>
+                    <div class="grid grid-cols-2 items-end">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.department') }}</label>
+                        <label class="block text-xs font-medium text-green-700 dark:text-green-300 text-end">{{__('content.can_add')}}</label>                 
+                    </div>
                     <select name="department_id" x-model="newUser.department_id" class="select2 w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded px-2 py-1">
                         <option value="">-</option>
                         @foreach ($departments as $dep)
                             <option value="{{ $dep->id }}">{{ $dep->name }}</option>
                         @endforeach
                     </select>
+                    <p x-show="errors.department_id" x-text="errors.department_id ? (Array.isArray(errors.department_id) ? errors.department_id[0] : errors.department_id) : ''" class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
                 </div>
 
                 <div class="flex-1">
-                    <label class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">{{__('content.requestor')}}</label>
+                    <div class="grid grid-cols-2 items-end">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.requestor') }}</label>
+                        <label class="block text-xs font-medium text-green-700 dark:text-green-300 text-end">{{__('content.can_add')}}</label>                 
+                    </div>                    
                     <select name="requestor_id" x-model="newUser.requestor_id" class="select2 w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded px-2 py-1">
                         <option value="">-</option>
                         @foreach ($requestors as $req)
                             <option value="{{ $req->id }}">{{ $req->name }}</option>
                         @endforeach
                     </select>
+                    <p x-show="errors.requestor_id" x-text="errors.requestor_id ? (Array.isArray(errors.requestor_id) ? errors.requestor_id[0] : errors.requestor_id) : ''" class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
                 </div>
 
                 <div class="flex-1">
-                    <label class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">{{__('content.customer')}}</label>
+                    <div class="grid grid-cols-2 items-end">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.customer') }}</label>
+                        <label class="block text-xs font-medium text-red-700 dark:text-red-300 text-end">{{__('content.select_only')}}</label>
+                    </div>                    
                     <select name="customer_id" x-model="newUser.customer_id" class="select2 w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded px-2 py-1">
                         <option value="">-</option>
                         @foreach ($customers as $cust)
                             <option value="{{ $cust->id }}">{{ $cust->name }}</option>
                         @endforeach
                     </select>
+                    <p x-show="errors.customer_id" x-text="errors.customer_id ? (Array.isArray(errors.customer_id) ? errors.customer_id[0] : errors.customer_id) : ''" class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
                 </div>
             </div>
 
