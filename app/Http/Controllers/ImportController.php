@@ -26,6 +26,36 @@ class ImportController extends Controller
     }
 
     /**
+     * Import Shapes
+     */
+    public function shape_import(Request $request)
+    {
+        $requiredHeaders = [
+            'item_code',
+            'description_thai',
+            'description_eng',
+            'type',
+            'status',
+            'collection_code',
+            'customer',
+            'item_group',
+            'process',
+            'designer',
+            'requestor',
+            'volume',
+            'weight',
+            'long_diameter',
+            'short_diameter',
+            'height_long',
+            'height_short',
+            'body',
+            'approval_date',
+        ];
+        $importClass = ShapesImport::class;
+        return $this->processImport($request, $requiredHeaders, $importClass, 'shapes', 'shape_import');
+    }
+
+    /**
      * Import Backstamps
      */
     public function backstamp_import(Request $request)
@@ -44,7 +74,6 @@ class ImportController extends Controller
             'approval_date'
         ];
         $importClass = BackstampsImport::class;
-        
         return $this->processImport($request, $requiredHeaders, $importClass, 'backstamps', 'backstamp_import');
     }
 

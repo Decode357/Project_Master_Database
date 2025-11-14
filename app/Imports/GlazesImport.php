@@ -136,6 +136,7 @@ class GlazesImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
                 'status_id' => $row['status_id'] ?? null,
                 'fire_temp' => $row['fire_temp'],
                 'approval_date' => $row['approval_date'] ?? null,
+                'updated_by' => auth()->id() ?? null,
                 'created_at' => $now,
                 'updated_at' => $now,
             ];
@@ -153,6 +154,7 @@ class GlazesImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
                     'status_id',
                     'fire_temp',
                     'approval_date',
+                    'updated_by',
                     'updated_at'
                 ]
             );

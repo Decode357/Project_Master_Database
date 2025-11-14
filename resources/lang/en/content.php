@@ -12,7 +12,7 @@ return [
     'instruct_6_boolean' => 'Boolean fields (e.g., on_glaze, air_dry, organic) must be TRUE, FALSE, 1, 0, Yes, No, ใช่, or ไม่ only. Leaving them blank will default to false',
     'instruct_5_valid' => 'All rows must be valid before import and <strong>no empty rows are allowed</strong>',
     'instruct_4_duplicate' => 'You can edit the entire data file and re-upload it. Duplicate codes will update the existing records',
-    'instruct_3_code' => 'Code is <strong>required</strong>, other fields are optional',
+    'instruct_3_code' => 'Code of the first column is <strong>required</strong>, other fields are optional',
     'instruct_2_customer_data' => 'Fill in customer data (code, name, email, phone)',
     'instruct_2_shape_data' => 'Fill in shape data (code, description, type, collection, and other details)',
     'instruct_2_glaze_data' => 'Fill in glaze data (code, name, outside color code, effect code, firing temperature, and other details)',

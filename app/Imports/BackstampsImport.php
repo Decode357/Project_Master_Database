@@ -126,6 +126,7 @@ class BackstampsImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
                 'under_glaze' => $this->importHelper->convertToBoolean($row['under_glaze'] ?? null),
                 'air_dry' => $this->importHelper->convertToBoolean($row['air_dry'] ?? null),
                 'approval_date' => $row['approval_date'] ?? null,
+                'updated_by' => auth()->id() ?? null,
                 'created_at' => $now,
                 'updated_at' => $now,
             ];
@@ -147,6 +148,7 @@ class BackstampsImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
                     'under_glaze',
                     'air_dry',
                     'approval_date',
+                    'updated_by',
                     'updated_at'
                 ]
             );

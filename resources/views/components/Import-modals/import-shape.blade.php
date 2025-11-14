@@ -62,7 +62,7 @@
             </div>
 
             <!-- Step 2: Upload File -->
-            <div class="mb-2 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg opacity-50">
+            <div class="mb-2 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
                 <h4 class="text-lg font-medium text-gray-800 dark:text-gray-100 mb-2">
                     <i class="fas fa-step-forward mr-2"></i>{{ __('content.step2text') }}
                 </h4>

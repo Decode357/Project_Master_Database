@@ -19,7 +19,7 @@
                 <!-- Shape Import Card -->
                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow p-6 flex flex-col">
                     <div class="flex items-center mb-4">
-                        <div class="bg-yellow-400 dark:bg-yellow-400 p-3 rounded-xl">
+                        <div class="bg-green-400 dark:bg-green-400 p-3 rounded-xl">
                             <i class="fas fa-users text-blue-600 dark:text-blue-400 text-2xl"></i>
                         </div>
                         <h2 class="ml-3 text-xl font-semibold text-gray-800 dark:text-gray-100">

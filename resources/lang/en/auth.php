@@ -29,5 +29,10 @@ return [
     'delete_account' => 'Delete Account',
     'delete_account_description' => 'Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.',
     'delete_confirmation' => 'Are you sure you want to delete your account?',
-    'delete_account_permanent' => 'Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.'
+    'delete_account_permanent' => 'Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.',
+    
+    // Login validation messages
+    'failed' => 'email or password is incorrect.',
+    'password_incorrect' => 'The provided password is incorrect.',
+    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 ];

@@ -28,10 +28,13 @@ return [
         ],
     ],
     'err' => [
+        // Backstamp
         'backstamp_code' => [
             'required' => 'Backstamp Code is required.',
             'max' => 'Backstamp Code must not exceed 255 characters.',
         ],
+        
+        // Pattern
         'pattern_code' => [
             'required' => 'Pattern Code is required.',
             'max' => 'Pattern Code must not exceed 255 characters.',
@@ -39,13 +42,78 @@ return [
         'pattern_name' => [
             'max' => 'Pattern Name must not exceed 255 characters.',
         ],
+        
+        // Glaze
         'glaze_code' => [
             'required' => 'Glaze Code is required.',
             'max' => 'Glaze Code must not exceed 255 characters.',
         ],
+        'inside_code' => [
+            'max' => 'Inside Code must not exceed 255 characters.',
+        ],
+        'outside_code' => [
+            'max' => 'Outside Code must not exceed 255 characters.',
+        ],
+        'fire_temp' => [
+            'max' => 'Fire Temperature must not exceed 255 characters.',
+        ],
+        
+        // Shape
+        'item_code' => [
+            'required' => 'Item Code is required.',
+            'max' => 'Item Code must not exceed 255 characters.',
+        ],
+        'description_thai' => [
+            'max' => 'Description Thai must not exceed 255 characters.',
+        ],
+        'description_eng' => [
+            'max' => 'Description English must not exceed 255 characters.',
+        ],
+        'type' => [
+            'max' => 'Type must not exceed 255 characters.',
+        ],
+        'collection_code' => [
+            'max' => 'Collection Code must not exceed 255 characters.',
+        ],
+        'customer_name' => [
+            'max' => 'Customer Name must not exceed 255 characters.',
+        ],
+        'item_group' => [
+            'max' => 'Item Group must not exceed 255 characters.',
+        ],
+        'process' => [
+            'max' => 'Process must not exceed 255 characters.',
+        ],
+        
+        // Numeric fields
+        'volume' => [
+            'numeric' => 'Volume must be a number.',
+        ],
+        'weight' => [
+            'numeric' => 'Weight must be a number.',
+        ],
+        'long_diameter' => [
+            'numeric' => 'Long Diameter must be a number.',
+        ],
+        'short_diameter' => [
+            'numeric' => 'Short Diameter must be a number.',
+        ],
+        'height_long' => [
+            'numeric' => 'Height Long must be a number.',
+        ],
+        'height_short' => [
+            'numeric' => 'Height Short must be a number.',
+        ],
+        'body' => [
+            'numeric' => 'Body must be a number.',
+        ],
+        
+        // Common fields
         'name' => [
             'max' => 'Name must not exceed 255 characters.',
         ],
+        
+        // Relations
         'glaze_inside' => [
             'max' => 'Glaze Inside must not exceed 255 characters.',
             'not_found' => 'Glaze Inside code ":name" not found in the system.',
@@ -72,8 +140,18 @@ return [
         ],
         'status' => [
             'max' => 'Status must not exceed 255 characters.',
-            'not_found' => 'Status named ":name" not found in the system.',
+            'not_found' => 'Status ":name" not found in the system.',
         ],
+        'shape_type' => [
+            'max' => 'Shape Type must not exceed 255 characters.',
+            'not_found' => 'Shape Type ":name" not found in the system.',
+        ],
+        'shape_collection' => [
+            'max' => 'Shape Collection must not exceed 255 characters.',
+            'not_found' => 'Shape Collection ":name" not found in the system.',
+        ],
+        
+        // Boolean fields
         'organic' => [
             'in' => 'Organic value must be TRUE, FALSE, 1, 0, Yes, No, ใช่, or ไม่ only.',
         ],
@@ -92,6 +170,8 @@ return [
         'exclusive' => [
             'in' => 'Exclusive value must be TRUE, FALSE, 1, 0, Yes, No, ใช่, or ไม่ only.',
         ],
+        
+        // Date
         'approval_date' => [
             'date' => 'Invalid date format.',
         ],
