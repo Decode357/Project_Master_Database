@@ -150,6 +150,12 @@
                                 <span class="material-symbols-outlined text-sm mr-1">info</span>
                                 {{ __('content.information') }}
                             </button>
+                            <button @click="activeTab = 'customer_details'"
+                                :class="activeTab === 'customer_details' ? 'border-green-500 text-green-600 dark:text-green-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
+                                class="whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm transition-all">
+                                <span class="material-symbols-outlined text-sm mr-1">Patient_List</span>
+                                {{ __('content.customer_details') }}
+                            </button>
                         </nav>
                     </div>
 
@@ -257,7 +263,9 @@
                                 <label class="text-gray-700 dark:text-gray-300">
                                     {{ __('content.customer') }}:
                                 </label>
-                                <span class="text-gray-900 dark:text-gray-100" x-text="patternToView?.customer?.name || '-'"></span>
+                                <span class="text-gray-900 dark:text-gray-100 hoverScale hover:text-blue-600 hover:dark:text-blue-400" @click="activeTab = 'customer_details'" style="cursor: pointer;" 
+                                    x-text="patternToView?.customer?.name || '-'">
+                                </span>
                             </div>
                             
                             <!-- Designer -->
@@ -277,6 +285,45 @@
                                 </label>
                                 <span class="text-gray-900 dark:text-gray-100" x-text="patternToView?.requestor?.name || '-'"></span>
                             </div>
+                        </div>
+                        <!-- Customer Detail -->
+                        <div x-show="activeTab === 'customer_details'" class="h-full overflow-y-auto overflow-x-visible flex flex-col gap-1 font-lg text-lg">
+                            <!-- Code -->
+                            <div class="flex flex-row gap-2 items-center">
+                                <span class="material-symbols-outlined text-base text-blue-600 dark:text-blue-400">Qr_Code_2</span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.code') }}:
+                                </label>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="patternToView?.customer?.code || '-'"></span>
+                            </div>
+                            <hr class=" border-gray-300 dark:border-gray-600">
+                            <!-- Name -->
+                            <div class="flex flex-row gap-2 items-center">
+                                <span class="material-symbols-outlined text-base text-blue-600 dark:text-blue-400">Signature</span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.name') }}:
+                                </label>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="patternToView?.customer?.name || '-'"></span>
+                            </div>
+                            <hr class=" border-gray-300 dark:border-gray-600">
+                            <!-- Email -->
+                            <div class="flex flex-row gap-2 items-center">
+                                <span class="material-symbols-outlined text-base text-blue-600 dark:text-blue-400">Mail</span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.email') }}:
+                                </label>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="patternToView?.customer?.email || '-'"></span>
+                            </div>
+                            <hr class=" border-gray-300 dark:border-gray-600">
+                            <!-- Phone -->
+                            <div class="flex flex-row gap-2 items-center">
+                                <span class="material-symbols-outlined text-base text-blue-600 dark:text-blue-400">call</span>
+                                <label class="text-gray-700 dark:text-gray-300">
+                                    {{ __('content.phone') }}:
+                                </label>
+                                <span class="text-gray-900 dark:text-gray-100" x-text="patternToView?.customer?.phone || '-'"></span>
+                            </div>
+                            <hr class=" border-gray-300 dark:border-gray-600">
                         </div>
                     </div>
                 </div>
