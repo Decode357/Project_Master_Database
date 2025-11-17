@@ -12,14 +12,14 @@ class GlazesTemplateExport implements FromArray, WithHeadings, WithColumnFormatt
     public function array(): array
     {
         return [
-            ['L2', 
-            'GIS725', 
-            'GOS230', 
-            'Spray', 
-            'Active',
-            '1230',   
-            '2024-01-01'
-            ]
+            // ['L2', 
+            // 'GIS725', 
+            // 'GOS230', 
+            // 'Spray', 
+            // 'Active',
+            // '1230',   
+            // '2024-01-01'
+            // ]
         ];
     }
 

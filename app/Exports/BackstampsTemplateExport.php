@@ -13,17 +13,17 @@ class BackstampsTemplateExport implements FromArray, WithHeadings, WithColumnFor
     {
         return [
             [
-                'A12', 
-                'Azure Gold', 
-                'Leo', 
-                'IKEA', 
-                'Active', 
-                'No', 
-                'TRUE', 
-                'No', 
-                'TRUE', 
-                'No', 
-                '2024-01-01'
+                // 'A12', 
+                // 'Azure Gold', 
+                // 'Leo', 
+                // 'IKEA', 
+                // 'Active', 
+                // 'No', 
+                // 'TRUE', 
+                // 'No', 
+                // 'TRUE', 
+                // 'No', 
+                // '2024-01-01'
             ]
         ];
     }

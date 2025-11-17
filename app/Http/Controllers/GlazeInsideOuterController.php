@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Models\{GlazeInside,GlazeOuter,Color};
 
 class GlazeInsideOuterController extends Controller
@@ -67,10 +68,23 @@ class GlazeInsideOuterController extends Controller
                 'required',
                 'string',
                 'max:255',
-                "unique:{$table},{$field}," . ($id ?? 'NULL') . ",id",
+                Rule::unique($table, $field)->ignore($id),
             ],
             'colors'   => 'nullable|array',
             'colors.*' => 'exists:colors,id',
+        ];
+    }
+
+    private function messages($type = 'outer')
+    {
+        $field = $type === 'outer' ? 'glaze_outer_code' : 'glaze_inside_code';
+        
+        return [
+            "{$field}.required" => __("controller.validation.{$field}.required"),
+            "{$field}.unique" => __("controller.validation.{$field}.unique"),
+            "{$field}.max" => __("controller.validation.{$field}.max"),
+            'colors.array' => __('controller.validation.colors.array'),
+            'colors.*.exists' => __('controller.validation.colors.*.exists'),
         ];
     }
 
@@ -79,21 +93,22 @@ class GlazeInsideOuterController extends Controller
         $glazeOuter->delete();
         return response()->json([
             'status' => 'success',
-            'message' => 'Outside Color successfully.'
+            'message' => __('controller.glaze_outer.deleted')
         ]);
     }
+
     public function destroyGlazeInside(GlazeInside $glazeInside)
     {
         $glazeInside->delete();
         return response()->json([
             'status' => 'success',
-            'message' => 'Inside Color deleted successfully.'
+            'message' => __('controller.glaze_inside.deleted')
         ]);
     }
 
     public function storeGlazeInside(Request $request)
     {
-        $validated = $request->validate($this->rules('inside'));
+        $validated = $request->validate($this->rules('inside'), $this->messages('inside'));
 
         $glazeInside = GlazeInside::create([
             'glaze_inside_code' => $validated['glaze_inside_code'],
@@ -101,17 +116,20 @@ class GlazeInsideOuterController extends Controller
             'updated_by' => auth()->id(),
         ]);
 
-        // Sync colors if provided
         if (isset($validated['colors'])) {
             $glazeInside->colors()->sync($validated['colors']);
         }
 
-        return response()->json(['message' => 'Glaze Inside created successfully'], 201);
+        return response()->json([
+            'status' => 'success',
+            'message' => __('controller.glaze_inside.created'),
+            'glazeInside' => $glazeInside->load('colors')
+        ], 201);
     }
 
     public function storeGlazeOuter(Request $request)
     {
-        $validated = $request->validate($this->rules('outer'));
+        $validated = $request->validate($this->rules('outer'), $this->messages('outer'));
 
         $glazeOuter = GlazeOuter::create([
             'glaze_outer_code' => $validated['glaze_outer_code'],
@@ -119,49 +137,58 @@ class GlazeInsideOuterController extends Controller
             'updated_by' => auth()->id(),
         ]);
 
-        // Sync colors if provided
         if (isset($validated['colors'])) {
             $glazeOuter->colors()->sync($validated['colors']);
         }
 
-        return response()->json(['message' => 'Glaze Outer created successfully'], 201);
+        return response()->json([
+            'status' => 'success',
+            'message' => __('controller.glaze_outer.created'),
+            'glazeOuter' => $glazeOuter->load('colors')
+        ], 201);
     }
     
     public function updateGlazeInside(Request $request, GlazeInside $glazeInside)
     {
-        $validated = $request->validate($this->rules('inside', $glazeInside->id));
+        $validated = $request->validate($this->rules('inside', $glazeInside->id), $this->messages('inside'));
 
         $glazeInside->update([
             'glaze_inside_code' => $validated['glaze_inside_code'],
             'updated_by' => auth()->id(),
         ]);
 
-        // Sync colors if provided
         if (isset($validated['colors'])) {
             $glazeInside->colors()->sync($validated['colors']);
         } else {
             $glazeInside->colors()->detach();
         }
 
-        return response()->json(['message' => 'Glaze Inside updated successfully'], 200);
+        return response()->json([
+            'status' => 'success',
+            'message' => __('controller.glaze_inside.updated'),
+            'glazeInside' => $glazeInside->load('colors')
+        ], 200);
     }
 
     public function updateGlazeOuter(Request $request, GlazeOuter $glazeOuter)
     {
-        $validated = $request->validate($this->rules('outer', $glazeOuter->id));
+        $validated = $request->validate($this->rules('outer', $glazeOuter->id), $this->messages('outer'));
 
         $glazeOuter->update([
             'glaze_outer_code' => $validated['glaze_outer_code'],
             'updated_by' => auth()->id(),
         ]);
 
-        // Sync colors if provided
         if (isset($validated['colors'])) {
             $glazeOuter->colors()->sync($validated['colors']);
         } else {
             $glazeOuter->colors()->detach();
         }
 
-        return response()->json(['message' => 'Glaze Outer updated successfully'], 200);
+        return response()->json([
+            'status' => 'success',
+            'message' => __('controller.glaze_outer.updated'),
+            'glazeOuter' => $glazeOuter->load('colors')
+        ], 200);
     }
 }

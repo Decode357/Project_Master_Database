@@ -40,44 +40,54 @@ class ColorController extends Controller
     private function rules()
     {
         return [
-            'color_code' => 'required|string|max:255',
+            'color_code'  => 'required|string|max:255',
             'color_name'  => 'nullable|string|max:255',
             'customer_id' => 'nullable|exists:customers,id',
         ];
     }
 
+    private function messages()
+    {
+        return [
+            'color_code.required' => __('controller.validation.color_code.required'),
+            'color_code.max' => __('controller.validation.color_code.max'),
+            'color_name.max' => __('controller.validation.color_name.max'),
+            'customer_id.exists' => __('controller.validation.customer_id.exists'),
+        ];
+    }
+
     public function storeColor(Request $request)
     {
-        $data = $request->validate($this->rules());
+        $data = $request->validate($this->rules(), $this->messages());
 
         $color = Color::create($data);
 
         return response()->json([
             'status'  => 'success',
-            'message' => 'Color created successfully!',
-            'color'   => $color
+            'message' => __('controller.color.created'),
+            'color'   => $color->load('customer')
         ], 201);
     }
 
     public function updateColor(Request $request, Color $color)
     {
-        $data = $request->validate($this->rules());
+        $data = $request->validate($this->rules(), $this->messages());
 
         $color->update($data);
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Color updated successfully!',
-            'color' => $color
+            'message' => __('controller.color.updated'),
+            'color' => $color->load('customer')
         ], 200);
     }
     
     public function destroyColor(Color $color)
     {
         $color->delete();
-                return response()->json([
+        return response()->json([
             'status' => 'success',
-            'message' => 'Color deleted successfully.'
+            'message' => __('controller.color.deleted')
         ]);
     }
 }

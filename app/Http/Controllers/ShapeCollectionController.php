@@ -50,24 +50,36 @@ class ShapeCollectionController extends Controller
         ];
     }
 
+    private function messages()
+    {
+        return [
+            'collection_code.required' => __('controller.validation.collection_code.required'),
+            'collection_code.unique' => __('controller.validation.collection_code.unique'),
+            'collection_code.max' => __('controller.validation.collection_code.max'),
+            'collection_name.unique' => __('controller.validation.collection_name.unique'),
+            'collection_name.max' => __('controller.validation.collection_name.max'),
+        ];
+    }
+
     public function storeShapeCollection(Request $request)
     { 
-        $data = $request->validate($this->rules());
+        $data = $request->validate($this->rules(), $this->messages());
 
         $shapeCollection = ShapeCollection::create([
             'collection_code' => $data['collection_code'],
             'collection_name' => $data['collection_name'],
         ]);
+        
         return response()->json([
             'status'  => 'success',
-            'message' => 'Shape Collection created successfully!',
+            'message' => __('controller.shape_collection.created'),
             'shapeCollection'  => $shapeCollection
         ], 201);
     }
 
     public function updateShapeCollection(Request $request, ShapeCollection $shapeCollection)
     {
-        $data = $request->validate($this->rules($shapeCollection->id));
+        $data = $request->validate($this->rules($shapeCollection->id), $this->messages());
 
         $shapeCollection->update([
             'collection_code' => $data['collection_code'],
@@ -76,7 +88,7 @@ class ShapeCollectionController extends Controller
 
         return response()->json([
             'status'  => 'success',
-            'message' => 'Shape Collection updated successfully!',
+            'message' => __('controller.shape_collection.updated'),
             'shapeCollection'  => $shapeCollection
         ], 200);
     }
@@ -86,7 +98,7 @@ class ShapeCollectionController extends Controller
         $shapeCollection->delete();
         return response()->json([
             'status' => 'success',
-            'message' => 'Shape Collection deleted successfully.'
+            'message' => __('controller.shape_collection.deleted')
         ]);
     }
 }

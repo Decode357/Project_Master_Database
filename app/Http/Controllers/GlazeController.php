@@ -83,12 +83,28 @@ class GlazeController extends Controller
         ];
     }
 
+    private function messages()
+    {
+        return [
+            'glaze_code.required' => __('controller.validation.glaze_code.required'),
+            'glaze_code.unique' => __('controller.validation.glaze_code.unique'),
+            'glaze_code.max' => __('controller.validation.glaze_code.max'),
+            'status_id.exists' => __('controller.validation.status_id.exists'),
+            'fire_temp.integer' => __('controller.validation.fire_temp.integer'),
+            'approval_date.date' => __('controller.validation.approval_date.date'),
+            'glaze_inside_id.exists' => __('controller.validation.glaze_inside_id.exists'),
+            'glaze_outer_id.exists' => __('controller.validation.glaze_outer_id.exists'),
+            'effect_id.exists' => __('controller.validation.effect_id.exists'),
+        ];
+    }
+
     public function storeGlaze(Request $request)
     {
-        $data = $request->validate($this->rules());
+        $data = $request->validate($this->rules(), $this->messages());
         $data['updated_by'] = auth()->id();
 
         $glaze = Glaze::create($data);
+        
         // จัดการรูปภาพ
         if ($request->hasFile('new_images')) {
             foreach ($request->file('new_images') as $image) {
@@ -104,17 +120,18 @@ class GlazeController extends Controller
         
         return response()->json([
             'status'  => 'success',
-            'message' => 'Glaze created successfully!',
+            'message' => __('controller.glaze.created'),
             'glaze'   => $glaze->load('images')
         ], 201);
     }
 
     public function updateGlaze(Request $request, Glaze $glaze)
     {
-        $data = $request->validate($this->rules($glaze->id));
+        $data = $request->validate($this->rules($glaze->id), $this->messages());
         $data['updated_by'] = auth()->id();
 
         $glaze->update($data);
+        
         // จัดการรูปภาพใหม่
         if ($request->hasFile('new_images')) {
             foreach ($request->file('new_images') as $image) {
@@ -139,9 +156,10 @@ class GlazeController extends Controller
                 }
             }
         }
+        
         return response()->json([
             'status'  => 'success',
-            'message' => 'Glaze updated successfully!',
+            'message' => __('controller.glaze.updated'),
             'glaze'   => $glaze->load('images')
         ], 200);
     }
@@ -151,7 +169,7 @@ class GlazeController extends Controller
         $glaze->delete();
         return response()->json([
             'status' => 'success',
-            'message' => 'Glaze deleted successfully.'
+            'message' => __('controller.glaze.deleted')
         ]);    
     }
 }

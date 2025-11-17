@@ -154,12 +154,36 @@ class ShapeController extends Controller
         ];
     }
 
+    private function messages()
+    {
+        return [
+            'item_code.required' => __('controller.validation.item_code.required'),
+            'item_code.unique' => __('controller.validation.item_code.unique'),
+            'item_code.max' => __('controller.validation.item_code.max'),
+            'item_description_thai.max' => __('controller.validation.item_description_thai.max'),
+            'item_description_eng.max' => __('controller.validation.item_description_eng.max'),
+            'shape_type_id.exists' => __('controller.validation.shape_type_id.exists'),
+            'status_id.exists' => __('controller.validation.status_id.exists'),
+            'customer_id.exists' => __('controller.validation.customer_id.exists'),
+            'shape_collection_id.exists' => __('controller.validation.shape_collection_id.exists'),
+            'volume.numeric' => __('controller.validation.volume.numeric'),
+            'weight.numeric' => __('controller.validation.weight.numeric'),
+            'long_diameter.numeric' => __('controller.validation.long_diameter.numeric'),
+            'short_diameter.numeric' => __('controller.validation.short_diameter.numeric'),
+            'height_long.numeric' => __('controller.validation.height_long.numeric'),
+            'height_short.numeric' => __('controller.validation.height_short.numeric'),
+            'body.numeric' => __('controller.validation.body.numeric'),
+            'approval_date.date' => __('controller.validation.approval_date.date'),
+        ];
+    }
+
     public function storeShape(Request $request)
     {
-        $data = $request->validate($this->rules());
+        $data = $request->validate($this->rules(), $this->messages());
         $data['updated_by'] = auth()->id();
         $this->handleNewSelectableData($data);
         $shape = Shape::create($data);
+        
         // จัดการรูปภาพ
         if ($request->hasFile('new_images')) {
             foreach ($request->file('new_images') as $image) {
@@ -175,17 +199,18 @@ class ShapeController extends Controller
 
         return response()->json([
             'status' => 'success', 
-            'message' => 'Shape created successfully!', 
+            'message' => __('controller.shape.created'), 
             'shape' => $shape->load('images')
         ], 201);
     }
 
     public function updateShape(Request $request, Shape $shape)
     {
-        $data = $request->validate($this->rules($shape->id));
+        $data = $request->validate($this->rules($shape->id), $this->messages());
         $data['updated_by'] = auth()->id();
         $this->handleNewSelectableData($data);
         $shape->update($data);
+        
         // จัดการรูปภาพใหม่
         if ($request->hasFile('new_images')) {
             foreach ($request->file('new_images') as $image) {
@@ -213,7 +238,7 @@ class ShapeController extends Controller
 
         return response()->json([
             'status' => 'success', 
-            'message' => 'Shape updated successfully!', 
+            'message' => __('controller.shape.updated'), 
             'shape' => $shape->load('images')
         ], 200);
     }
@@ -223,7 +248,7 @@ class ShapeController extends Controller
         $shape->delete();
         return response()->json([
             'status' => 'success',
-            'message' => 'Shape deleted successfully.'
+            'message' => __('controller.shape.deleted')
         ]);
     }
 }

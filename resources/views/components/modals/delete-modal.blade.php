@@ -25,11 +25,11 @@
         <div class="flex justify-end gap-3">
             <button @click="{{ $show }} = false"
                 class="px-4 py-2 bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hoverScale hover:bg-gray-300 dark:hover:bg-gray-500">
-                Cancel
+                {{__('content.cancel')}}
             </button>
             <button type="button" @click="$event.target.disabled = true; {{ $deleteFunction }}()"
                 class="px-4 py-2 rounded-md bg-red-600 text-white hoverScale hover:bg-red-700">
-                Delete
+                {{__('content.delete')}}
             </button>
         </div>
     </div>

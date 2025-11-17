@@ -12,7 +12,7 @@ class CustomersTemplateExport implements FromArray, WithHeadings, WithColumnForm
     public function array(): array
     {
         return [
-            ['CUST001', 'Example Customer', 'example@email.com', '0812345678']
+            // ['CUST001', 'Example Customer', 'example@email.com', '0812345678']
         ];
     }
 

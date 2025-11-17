@@ -118,17 +118,35 @@ class PatternController extends Controller
             'in_glaze'       => 'nullable|boolean',
             'on_glaze'       => 'nullable|boolean',
             'under_glaze'    => 'nullable|boolean',
-            'exclusive'     => 'nullable|boolean',
+            'exclusive'      => 'nullable|boolean',
             'approval_date'  => 'nullable|date',
+        ];
+    }
+
+    private function messages()
+    {
+        return [
+            'pattern_code.required' => __('controller.validation.pattern_code.required'),
+            'pattern_code.unique' => __('controller.validation.pattern_code.unique'),
+            'pattern_code.max' => __('controller.validation.pattern_code.max'),
+            'pattern_name.max' => __('controller.validation.pattern_name.max'),
+            'customer_id.exists' => __('controller.validation.customer_id.exists'),
+            'status_id.exists' => __('controller.validation.status_id.exists'),
+            'in_glaze.boolean' => __('controller.validation.in_glaze.boolean'),
+            'on_glaze.boolean' => __('controller.validation.on_glaze.boolean'),
+            'under_glaze.boolean' => __('controller.validation.under_glaze.boolean'),
+            'exclusive.boolean' => __('controller.validation.exclusive.boolean'),
+            'approval_date.date' => __('controller.validation.approval_date.date'),
         ];
     }
 
     public function storePattern(Request $request)
     {
-        $data = $request->validate($this->rules());
+        $data = $request->validate($this->rules(), $this->messages());
         $data['updated_by'] = auth()->id();
         $this->handleNewSelectableData($data);
         $pattern = Pattern::create($data);
+        
         // จัดการรูปภาพ
         if ($request->hasFile('new_images')) {
             foreach ($request->file('new_images') as $image) {
@@ -141,19 +159,21 @@ class PatternController extends Controller
                 ]);
             }
         }
+        
         return response()->json([
             'status'  => 'success',
-            'message' => 'Pattern created successfully!',
+            'message' => __('controller.pattern.created'),
             'pattern' => $pattern->load('images')
         ], 201);
     }
 
     public function updatePattern(Request $request, Pattern $pattern)
     {
-        $data = $request->validate($this->rules($pattern->id));
+        $data = $request->validate($this->rules($pattern->id), $this->messages());
         $data['updated_by'] = auth()->id();
         $this->handleNewSelectableData($data);
         $pattern->update($data);
+        
         // จัดการรูปภาพใหม่
         if ($request->hasFile('new_images')) {
             foreach ($request->file('new_images') as $image) {
@@ -178,9 +198,10 @@ class PatternController extends Controller
                 }
             }
         }
+        
         return response()->json([
             'status'  => 'success',
-            'message' => 'Pattern updated successfully!',
+            'message' => __('controller.pattern.updated'),
             'pattern' => $pattern->load('images')
         ], 200);
     }
@@ -190,7 +211,7 @@ class PatternController extends Controller
         $pattern->delete();
         return response()->json([
             'status' => 'success',
-            'message' => 'User deleted successfully.'
+            'message' => __('controller.pattern.deleted')
         ]);
     }
 }

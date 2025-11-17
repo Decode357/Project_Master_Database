@@ -104,17 +104,36 @@ class BackstampController extends Controller
             'on_glaze'       => 'nullable|boolean',
             'under_glaze'    => 'nullable|boolean',
             'air_dry'        => 'nullable|boolean',
-            'organic'         => 'nullable|boolean',
+            'organic'        => 'nullable|boolean',
             'approval_date'  => 'nullable|date',
+        ];
+    }
+
+    private function messages()
+    {
+        return [
+            'backstamp_code.required' => __('controller.validation.backstamp_code.required'),
+            'backstamp_code.unique' => __('controller.validation.backstamp_code.unique'),
+            'backstamp_code.max' => __('controller.validation.backstamp_code.max'),
+            'name.max' => __('controller.validation.name.max'),
+            'customer_id.exists' => __('controller.validation.customer_id.exists'),
+            'status_id.exists' => __('controller.validation.status_id.exists'),
+            'in_glaze.boolean' => __('controller.validation.in_glaze.boolean'),
+            'on_glaze.boolean' => __('controller.validation.on_glaze.boolean'),
+            'under_glaze.boolean' => __('controller.validation.under_glaze.boolean'),
+            'air_dry.boolean' => __('controller.validation.air_dry.boolean'),
+            'organic.boolean' => __('controller.validation.organic.boolean'),
+            'approval_date.date' => __('controller.validation.approval_date.date'),
         ];
     }
 
     public function storeBackstamp(Request $request)
     {
-        $data = $request->validate($this->rules());
+        $data = $request->validate($this->rules(), $this->messages());
         $data['updated_by'] = auth()->id();
         $this->handleNewSelectableData($data);
         $backstamp = Backstamp::create($data);
+        
         // จัดการรูปภาพ
         if ($request->hasFile('new_images')) {
             foreach ($request->file('new_images') as $image) {
@@ -127,19 +146,21 @@ class BackstampController extends Controller
                 ]);
             }
         }
+        
         return response()->json([
             'status'    => 'success',
-            'message'   => 'Backstamp created successfully!',
+            'message'   => __('controller.backstamp.created'),
             'backstamp' => $backstamp->load('images')
         ], 201);
     }
 
     public function updateBackstamp(Request $request, Backstamp $backstamp)
     {
-        $data = $request->validate($this->rules($backstamp->id));
+        $data = $request->validate($this->rules($backstamp->id), $this->messages());
         $data['updated_by'] = auth()->id();
         $this->handleNewSelectableData($data);
         $backstamp->update($data);
+        
         // จัดการรูปภาพใหม่
         if ($request->hasFile('new_images')) {
             foreach ($request->file('new_images') as $image) {
@@ -164,11 +185,12 @@ class BackstampController extends Controller
                 }
             }
         }
+        
         return response()->json([
             'status'    => 'success',
-            'message'   => 'Backstamp updated successfully.',
+            'message'   => __('controller.backstamp.updated'),
             'backstamp' => $backstamp->load('images'),
-        ],200);
+        ], 200);
     }
 
     public function destroyBackstamp(Backstamp $backstamp)
@@ -176,7 +198,7 @@ class BackstampController extends Controller
         $backstamp->delete();
         return response()->json([
             'status' => 'success',
-            'message' => 'Backstamp deleted successfully.'
+            'message' => __('controller.backstamp.deleted')
         ]);
     }
 }

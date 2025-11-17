@@ -102,18 +102,50 @@ class UserController extends Controller
         }
     }
 
-    public function storeUser(Request $request)
+    private function rules($userId = null)
     {
-        $data = $request->validate([
-            'name'        => 'required|string|max:255',
-            'email'       => 'required|email|unique:users,email',
-            'password'    => 'required|string|min:6',
-            'role'        => 'nullable|string|in:user,admin,superadmin', // เปลี่ยนเป็น nullable
-            'permissions' => 'array',
+        // ถ้าเป็น update (มี userId) ใช้ sometimes|nullable|string|min:6
+        // sometimes จะ validate ก็ต่อเมื่อ field นี้มีอยู่ใน request และไม่เป็น null/empty
+        $passwordRule = $userId 
+            ? 'sometimes|nullable|string|min:6'  // update: validate เฉพาะเมื่อมีค่าและไม่ว่าง
+            : 'required|string|min:6';            // create: required
+
+        return [
+            'name'          => 'required|string|max:255',
+            'email'         => 'required|email|unique:users,email,' . $userId,
+            'password'      => $passwordRule,
+            'role'          => 'nullable|string|in:user,admin,superadmin',
+            'permissions'   => 'nullable|array',
+            'permissions.*' => 'string',
             'department_id' => 'nullable',
             'requestor_id'  => 'nullable',
             'customer_id'   => 'nullable|exists:customers,id',
-        ]);
+        ];
+    }
+
+    private function messages()
+    {
+        return [
+            'name.required' => __('controller.validation.name.required'),
+            'name.max' => __('controller.validation.name.max'),
+            'email.required' => __('controller.validation.email.required'),
+            'email.email' => __('controller.validation.email.email'),
+            'email.unique' => __('controller.validation.email.unique'),
+            'password.required' => __('controller.validation.password.required'),
+            'password.min' => __('controller.validation.password.min'),
+            'role.required' => __('controller.validation.role.required'),
+            'role.in' => __('controller.validation.role.in'),
+            'permissions.array' => __('controller.validation.permissions.array'),
+            'permissions.*.string' => __('controller.validation.permissions.*.string'),
+            'department_id.exists' => __('controller.validation.department_id.exists'),
+            'requestor_id.exists' => __('controller.validation.requestor_id.exists'),
+            'customer_id.exists' => __('controller.validation.customer_id.exists'),
+        ];
+    }
+
+    public function storeUser(Request $request)
+    {
+        $data = $request->validate($this->rules(), $this->messages());
 
         // ถ้าไม่ได้ส่ง role มา ให้ default เป็น 'user'
         $role = $data['role'] ?? 'user';
@@ -121,13 +153,13 @@ class UserController extends Controller
         $this->handleNewSelectableData($data);
         // สร้าง user ก่อน
         $user = User::create([
-                'name'          => $data['name'],
-                'email'         => $data['email'],
-                'password'      => Hash::make($data['password']),
-                'department_id' => $data['department_id'] ?? null,
-                'requestor_id'  => $data['requestor_id'] ?? null,
-                'customer_id'   => $data['customer_id'] ?? null,
-            ]);
+            'name'          => $data['name'],
+            'email'         => $data['email'],
+            'password'      => Hash::make($data['password']),
+            'department_id' => $data['department_id'] ?? null,
+            'requestor_id'  => $data['requestor_id'] ?? null,
+            'customer_id'   => $data['customer_id'] ?? null,
+        ]);
 
         // Assign role
         $user->assignRole($role);
@@ -147,7 +179,7 @@ class UserController extends Controller
 
         return response()->json([
             'status'  => 'success',
-            'message' => 'User created successfully!',
+            'message' => __('controller.user.created'),
             'user'    => $user
         ], 201);
     }
@@ -160,23 +192,13 @@ class UserController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'User deleted successfully.'
+            'message' => __('controller.user.deleted')
         ]);
     }
 
     public function updateUser(Request $request, User $user)
     {
-        $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'password' => 'nullable|string|min:8', // เปลี่ยนเป็น nullable
-            'role' => 'required|in:user,admin,superadmin',
-            'permissions' => 'nullable|array',
-            'permissions.*' => 'string',
-            'department_id' => 'nullable',
-            'requestor_id' => 'nullable',
-            'customer_id' => 'nullable|exists:customers,id',
-        ]);
+        $data = $request->validate($this->rules($user->id), $this->messages());
 
         // อัพเดทข้อมูลพื้นฐาน
         $updateData = [
@@ -196,14 +218,15 @@ class UserController extends Controller
         $user->update($updateData);
 
         // อัปเดต role และ permissions
-        $user->syncRoles([$data['role']]);
+        $role = $data['role'] ?? 'user';
+        $user->syncRoles([$role]);
 
         $permissionsToAssign = $data['permissions'] ?? [];
         if (!in_array('view', $permissionsToAssign)) {
             $permissionsToAssign[] = 'view';
         }
 
-        if ($data['role'] === 'superadmin') {
+        if ($role === 'superadmin') {
             $allPermissions = Permission::pluck('name')->toArray();
             $permissionsToAssign = array_unique(array_merge($permissionsToAssign, $allPermissions));
         }
@@ -212,7 +235,7 @@ class UserController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'User updated successfully!',
+            'message' => __('controller.user.updated'),
             'user' => $user->load(['roles', 'department', 'requestor', 'customer'])
         ]);
     }

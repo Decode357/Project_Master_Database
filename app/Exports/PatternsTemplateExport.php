@@ -13,19 +13,19 @@ class PatternsTemplateExport implements FromArray, WithHeadings, WithColumnForma
     public function array(): array
     {
         return [
-            [
-            '85PM', 
-            'Example Pattern', 
-            'Active', 
-            'IKEA', 
-            'John Doe', 
-            'Jane Smith', 
-            'Yes', 
-            'No', 
-            'No', 
-            'Yes', 
-            '2024-01-01'
-            ]
+            // [
+            // '85PM', 
+            // 'Example Pattern', 
+            // 'Active', 
+            // 'IKEA', 
+            // 'John Doe', 
+            // 'Jane Smith', 
+            // 'Yes', 
+            // 'No', 
+            // 'No', 
+            // 'Yes', 
+            // '2024-01-01'
+            // ]
         ];
     }
 

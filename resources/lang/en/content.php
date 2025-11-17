@@ -139,6 +139,7 @@ return [
     'save' => 'Save',
     'saving' => 'Saving...',
     'cancel' => 'Cancel',
+    'delete' => 'Delete',
     'close' => 'Close',
     'effect' => 'Effect',
     'pattern_name' => 'Pattern Name',

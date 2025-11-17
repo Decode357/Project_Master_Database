@@ -7,7 +7,8 @@ use Illuminate\Validation\Rule;
 use App\Models\{Effect, Color};
 
 class EffectController extends Controller
-{    public function effectindex(Request $request)
+{    
+    public function effectindex(Request $request)
     {
         // รับค่า perPage จาก request หรือใช้ default 10
         $perPage = $request->get('per_page', 10);
@@ -49,9 +50,21 @@ class EffectController extends Controller
         ];
     }
 
+    private function messages()
+    {
+        return [
+            'effect_code.required' => __('controller.validation.effect_code.required'),
+            'effect_code.unique' => __('controller.validation.effect_code.unique'),
+            'effect_code.max' => __('controller.validation.effect_code.max'),
+            'effect_name.max' => __('controller.validation.effect_name.max'),
+            'colors.array' => __('controller.validation.colors.array'),
+            'colors.*.exists' => __('controller.validation.colors.*.exists'),
+        ];
+    }
+
     public function storeEffect(Request $request)
     { 
-        $data = $request->validate($this->rules());
+        $data = $request->validate($this->rules(), $this->messages());
 
         $effect = Effect::create([
             'effect_code' => $data['effect_code'],
@@ -66,14 +79,14 @@ class EffectController extends Controller
 
         return response()->json([
             'status'  => 'success',
-            'message' => 'Effect created successfully!',
+            'message' => __('controller.effect.created'),
             'effect'  => $effect
         ], 201);
     }
 
     public function updateEffect(Request $request, Effect $effect)
     {
-        $data = $request->validate($this->rules($effect->id));
+        $data = $request->validate($this->rules($effect->id), $this->messages());
 
         $effect->update([
             'effect_code' => $data['effect_code'],
@@ -90,7 +103,7 @@ class EffectController extends Controller
 
         return response()->json([
             'status'  => 'success',
-            'message' => 'Effect updated successfully!',
+            'message' => __('controller.effect.updated'),
             'effect'  => $effect
         ], 200);
     }
@@ -100,8 +113,7 @@ class EffectController extends Controller
         $effect->delete();
         return response()->json([
             'status' => 'success',
-            'message' => 'Effect deleted successfully.'
+            'message' => __('controller.effect.deleted')
         ]);
     }
-
 }

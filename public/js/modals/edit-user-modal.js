@@ -13,6 +13,12 @@ function submitEditForm() {
     // Add all form fields
     formData.append('name', this.userToEdit.name || '');
     formData.append('email', this.userToEdit.email || '');
+
+    // ⭐ เพิ่ม password เฉพาะเมื่อมีค่าและไม่ว่างเปล่า
+    if (this.userToEdit.password && this.userToEdit.password.trim() !== '') {
+        formData.append('password', this.userToEdit.password);
+    }
+
     formData.append('role', this.role || 'user');
     formData.append('department_id', this.userToEdit.department_id || '');
     formData.append('requestor_id', this.userToEdit.requestor_id || '');

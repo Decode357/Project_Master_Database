@@ -70,19 +70,33 @@
                 <p x-show="errors.email" x-text="errors.email ? (Array.isArray(errors.email) ? errors.email[0] : errors.email) : ''" class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
             </div>
 
-            <!-- Password (Optional) -->
-            <div x-data="{ show: false }" class="relative">
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.password')}} <span class="text-gray-400 dark:text-gray-500 text-xs">{{__('content.leave_blank')}}</span></label>
-                <input :type="show ? 'text' : 'password'" name="password" x-model="userToEdit.password"
-                    :class="errors.password ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
-                    class="mt-1 w-full border rounded-md px-3 py-2 pr-10 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="{{__('content.enter')}}{{__('content.new_password_optional')}}" />
-                <button type="button" @click="show = !show"
-                    class="absolute inset-y-0 right-0 flex items-center pr-3 mt-6 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
-                    <span x-show="!show" class="material-symbols-outlined">visibility</span>
-                    <span x-show="show" class="material-symbols-outlined">visibility_off</span>
-                </button>
-                <p x-show="errors.password" x-text="errors.password ? (Array.isArray(errors.password) ? errors.password[0] : errors.password) : ''" class="text-red-500 dark:text-red-400 text-xs mt-1"></p>
+            <!-- Password (Optional -->
+            <div x-data="{ show: false }" class="w-full">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    {{__('content.password')}}
+                    <span class="text-gray-400 dark:text-gray-500 text-xs">{{__('content.leave_blank')}}</span>
+                </label>
+
+                <div :class="['mt-1 flex items-center rounded-md border', errors.password ? 'border-red-500' : 'border-gray-300 dark:border-gray-600', 'dark:bg-gray-700']">
+                    <input 
+                        :type="show ? 'text' : 'password'"
+                        name="password"
+                        x-model="userToEdit.password"
+                        placeholder="{{__('content.enter')}}{{__('content.new_password_optional')}}"
+                        class="w-full bg-transparent px-3 py-2 border-none outline-none focus:ring-0 dark:text-gray-100 dark:placeholder-gray-400"
+                    />
+
+                    <button type="button" @click="show = !show"
+                        class="h-full flex items-center px-3 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+                        <span x-show="!show" class="material-symbols-outlined">visibility</span>
+                        <span x-show="show" class="material-symbols-outlined">visibility_off</span>
+                    </button>
+                </div>
+
+                <p x-show="errors.password"
+                x-text="errors.password ? (Array.isArray(errors.password) ? errors.password[0] : errors.password) : ''"
+                class="text-red-500 dark:text-red-400 text-xs mt-1">
+                </p>
             </div>
 
             <!-- Department / Requestor / Customer -->
