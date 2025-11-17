@@ -53,13 +53,18 @@
 
             <!-- 👤 Customer -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('content.customer') }}</label>
+                <div class="grid grid-cols-2 items-end">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.customer') }}</label>
+                    <label class="block text-xs font-medium text-red-700 dark:text-red-300 text-end">{{__('content.select_only')}}</label>
+                </div>                 
                 <select name="customer_id" x-model="colorToEdit.customer_id"
                     :class="errors.customer_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                     class="select2 w-full mt-1 border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                     <option value="">-</option>
                     @foreach ($customers as $customer)
-                        <option value="{{ $customer->id }}">{{ $customer->name }}</option>
+                        <option value="{{ $customer->id }}">
+                            {{ $customer->code }} : {{ $customer->name }}
+                        </option>
                     @endforeach
                 </select>
                 <p x-show="errors.customer_id"

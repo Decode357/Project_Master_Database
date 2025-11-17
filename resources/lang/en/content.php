@@ -9,6 +9,7 @@ return [
     'shape_import_detail' => 'Import shape data including code, description, type, collection, and other details.',
     'glaze_import_detail' => 'Import glaze data including code, name, outside color code, effect code, firing temperature, and other details.',
     'pattern_import_detail' => 'Import pattern data including code, name, customer, requestor, designer, glaze application, and other details.',
+    'instruct_7_decimal' => 'Decimal fields (e.g., volume, weight, long_diameter) can have up to 2 decimal places only. values with more will be rounded',
     'instruct_6_boolean' => 'Boolean fields (e.g., on_glaze, air_dry, organic) must be TRUE, FALSE, 1, 0, Yes, No, ใช่, or ไม่ only. Leaving them blank will default to false',
     'instruct_5_valid' => 'All rows must be valid before import and <strong>no empty rows are allowed</strong>',
     'instruct_4_duplicate' => 'You can edit the entire data file and re-upload it. Duplicate codes will update the existing records',
