@@ -5,7 +5,7 @@
     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="display: none;">
 
     <!-- Modal Content -->
-    <div x-data="shapeModal()" class="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-full max-w-4xl p-6 overflow-y-auto max-h-[120vh]">
+    <div x-data="shapeModal()" class="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-full max-w-4xl p-6 overflow-y-auto max-h-[90vh]">
         <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">{{ __('content.create_shape') }}</h2>
         <hr class="mb-3 border-gray-200 dark:border-gray-600">
 

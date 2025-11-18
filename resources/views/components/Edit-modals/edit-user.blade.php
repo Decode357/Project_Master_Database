@@ -103,7 +103,7 @@
             <div class="flex flex-row gap-4">
                 <div class="flex-1">
                     <div class="grid grid-cols-2 items-end">
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.requestor') }}</label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.department') }}</label>
                         <label class="block text-xs font-medium text-green-700 dark:text-green-300 text-end">{{__('content.can_add')}}</label>                    
                     </div>                    
                     <select name="department_id" x-model="userToEdit.department_id" 

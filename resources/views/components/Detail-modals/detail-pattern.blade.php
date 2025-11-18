@@ -15,8 +15,9 @@
     <!-- Modal Content -->
     <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-6xl mx-4 relative overflow-visible h-[90vh] flex flex-col">
         
-        <!-- Header -->
-        <div class="bg-gradient-to-r from-green-600 to-green-800 dark:from-green-700 dark:to-green-900 text-white p-6 flex gap-5 rounded-t-2xl">
+        <!-- Header with Exclusive Badge -->
+        <div class="bg-gradient-to-r text-white p-6 flex gap-5 rounded-t-2xl"
+            :class="patternToView?.exclusive === true ? 'from-red-600 to-green-800 dark:from-red-700 dark:to-green-900' : 'from-green-600 to-green-800 dark:from-green-700 dark:to-green-900'">
             <div>
                 <h2 class="text-2xl font-bold" x-text="patternToView?.pattern_code || '{{ __('content.details') }} {{ __('content.pattern') }}'"></h2>
                 <p class="text-green-100 dark:text-green-200 text-sm mt-1" x-text="patternToView?.pattern_name || '{{ __('content.details') }} {{ __('content.pattern') }}'"></p>
@@ -30,124 +31,33 @@
                 </div>
             </template>                
             <button @click="PatternDetailModal = false"
-                class="text-white ml-auto hover:bg-white hover:bg-opacity-20 rounded-full p-2 transition-all">
+                class="text-white ml-auto hoverScale">
                 <span class="material-symbols-outlined text-2xl">close</span>
             </button>
         </div>
 
         <!-- Content Area -->
-        <div class="flex-1 overflow-visible">
-            <!-- Image and Information Section -->
+        <div class="flex-1 overflow-y-auto">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 p-6 h-full">
                 
-                <!-- Image Section -->
+                <!-- Left Column -->
                 <div class="lg:col-span-1 flex flex-col">
-                    <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4 flex-shrink-0">
-                        <div class="relative">
-                            <!-- Main Image Display -->
-                            <template x-if="patternToView?.images?.length > 0">
-                                <div>
-                                    <img :src="`{{ asset('storage') }}/${patternToView.images[currentImageIndex].file_path}`" 
-                                        :alt="patternToView.images[currentImageIndex].file_name"
-                                        class="rounded-lg shadow-lg cursor-zoom-in mx-auto h-64 md:h-80 object-contain w-full"
-                                        @click="zoomImage = true">
-                                    
-                                    <!-- Image Navigation -->
-                                    <div class="flex justify-between items-center mt-3">
-                                        <button @click="currentImageIndex = (currentImageIndex - 1 + patternToView.images.length) % patternToView.images.length"
-                                                class="bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-full p-1 hover:bg-gray-300 dark:hover:bg-gray-500">
-                                            <span class="material-symbols-outlined mt-1">arrow_back</span>
-                                        </button>
-                                        
-                                        <span class="text-sm text-gray-500 dark:text-gray-400">
-                                            <span x-text="currentImageIndex + 1"></span>/<span x-text="patternToView.images.length"></span>
-                                        </span>
-                                        
-                                        <button @click="currentImageIndex = (currentImageIndex + 1) % patternToView.images.length"
-                                                class="bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-full p-1 hover:bg-gray-300 dark:hover:bg-gray-500">
-                                            <span class="material-symbols-outlined mt-1">arrow_forward</span>
-                                        </button>
-                                    </div>
-                                    
-                                    <!-- Thumbnails -->
-                                    <div class="flex gap-1 px-2 py-2 overflow-x-auto pb-2">                                        
-                                        <template x-for="(image, index) in patternToView.images" :key="index">
-                                            <img :src="`{{ asset('storage') }}/${image.file_path}`" 
-                                                :alt="`Thumbnail ${index + 1}`"
-                                                class="h-12 w-12 object-cover rounded cursor-pointer"
-                                                :class="currentImageIndex === index ? 'ring-2 ring-green-500' : ''"
-                                                @click="currentImageIndex = index">
-                                        </template>
-                                    </div>
-                                </div>
-                            </template>
-                            
-                            <template x-if="!patternToView?.images?.length">
-                                <div class="bg-gray-200 dark:bg-gray-600 rounded-lg flex items-center justify-center h-48">
-                                    <div class="text-center text-gray-500 dark:text-gray-400">
-                                        <span class="material-symbols-outlined text-6xl mb-2 block">image</span>
-                                        <p>{{ __('content.no_images_available') }}</p>
-                                    </div>
-                                </div>
-                            </template>
-                        </div>
-                    </div>
-
-                    <!-- Status & Process Badge -->
-                    <div class="my-2 flex justify-center items-center gap-6 border border-gray-200 dark:border-gray-600 rounded-lg p-2">
-                        <!-- Status -->
-                        <template x-if="patternToView?.status">
-                            <div class="flex flex-col items-center">
-                                <label class="text-gray-700 dark:text-gray-300 font-semibold mb-1">{{ __('content.status') }}</label>
-                                <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium"
-                                    :class="{
-                                        'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300': patternToView.status.status === 'Active',
-                                        'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300': patternToView.status.status === 'Cancel',
-                                        'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300': patternToView.status.status !== 'Active' && patternToView.status.status !== 'Cancel'
-                                    }">
-                                    <span class="w-2 h-2 rounded-full mr-2"
-                                        :class="{
-                                            'bg-green-500': patternToView.status.status === 'Active',
-                                            'bg-red-500': patternToView.status.status === 'Cancel',
-                                            'bg-yellow-500': patternToView.status.status !== 'Active' && patternToView.status.status !== 'Cancel'
-                                        }"></span>
-                                    <span x-text="patternToView.status.status"></span>
-                                </span>
-                            </div>
-                        </template>
-
-                        <!-- Process -->
-                        <template x-if="patternToView?.process">
-                            <div class="flex flex-col items-center">
-                                <label class="text-gray-700 dark:text-gray-300 font-semibold mb-1">{{ __('content.process') }}</label>
-                                <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200">
-                                    <span class="w-2 h-2 rounded-full mr-2 bg-yellow-500"></span>
-                                    <span x-text="patternToView.process.process_name"></span>
-                                </span>
-                            </div>
-                        </template>
-                    </div>
-
-                    <!-- Last Updated Info -->
-                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                        <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center">
-                            <span class="material-symbols-outlined mr-2">history</span>
-                            {{ __('content.update_information') }}
-                        </h4>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                            <div>
-                                <p class="text-gray-600 dark:text-gray-400">{{ __('content.update_by') }}:</p>
-                                <p class="font-medium text-gray-900 dark:text-gray-100 break-words" x-text="patternToView?.updater?.name || 'System'"></p>
-                            </div>
-                            <div>
-                                <p class="text-gray-600 dark:text-gray-400">{{ __('content.update_at') }}:</p>
-                                <p class="font-medium text-gray-900 dark:text-gray-100" x-text="patternToView?.updated_at ? new Date(patternToView.updated_at).toLocaleString('th-TH') : '-'"></p>
-                            </div>
-                        </div>
-                    </div>
+                    @include('components.Detail-modals.partials.image-section', [
+                        'item' => 'patternToView',
+                        'ringColor' => 'ring-green-500'
+                    ])
+                    
+                    @include('components.Detail-modals.partials.status-section', [
+                        'item' => 'patternToView',
+                        'showProcess' => false
+                    ])
+                    
+                    @include('components.Detail-modals.partials.update-info', [
+                        'item' => 'patternToView'
+                    ])
                 </div>
 
-                <!-- Tabs Content -->
+                <!-- Right Column - Your existing tabs content -->
                 <div class="lg:col-span-2 flex flex-col overflow-visible">
                     
                     <!-- Tab Navigation -->
@@ -339,61 +249,15 @@
             </div>
         </div>
 
-        <!-- Footer -->
-        <div class="bg-gray-50 dark:bg-gray-700 px-6 py-4 flex justify-between items-center border-t border-gray-200 dark:border-gray-600 flex-shrink-0 rounded-b-2xl">
-            <div class="text-sm text-gray-500 dark:text-gray-400">
-                <span class="material-symbols-outlined text-sm mr-1">schedule</span>
-                {{ __('content.created_at') }}: <span x-text="patternToView?.created_at ? new Date(patternToView.created_at).toLocaleDateString('th-TH') : '-'"></span>
-            </div>
-            <button @click="PatternDetailModal = false"
-                class="bg-gray-500 dark:bg-gray-600 hover:bg-green-600 dark:hover:bg-green-500 text-white py-2 px-6 rounded-lg transition-all duration-200 hoverScale">
-                {{ __('content.close') }}
-            </button>
-        </div>
+        @include('components.Detail-modals.partials.footer', [
+            'item' => 'patternToView',
+            'modalName' => 'PatternDetailModal',
+            'buttonColor' => 'green'
+        ])
     </div>
 
-    <!-- Zoom Image Modal -->
-    <div x-show="zoomImage" x-transition.opacity
-        class="fixed inset-0 bg-black bg-opacity-95 flex items-center justify-center z-60"
-        @click.self="zoomImage = false">
-        <div class="relative max-h-[95vh] max-w-[95vw]">
-            <template x-if="patternToView?.images?.length > 0">
-                <div class="relative">
-                    <img :src="`{{ asset('storage') }}/${patternToView.images[currentImageIndex].file_path}`" 
-                        :alt="patternToView.pattern_code"
-                        class="max-h-[80vh] max-w-[95vw] object-contain rounded-lg shadow-2xl">
-                        
-                    <!-- Navigation Arrows -->
-                    <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-4">
-                        <button @click.stop="currentImageIndex = (currentImageIndex - 1 + patternToView.images.length) % patternToView.images.length"
-                                class="text-gray-500 hoverScale">
-                            <span class="material-symbols-outlined">Arrow_Back_iOS</span>
-                        </button>
-                        <button @click.stop="currentImageIndex = (currentImageIndex + 1) % patternToView.images.length"
-                                class="text-gray-500 hoverScale">
-                            <span class="material-symbols-outlined">Arrow_Forward_iOS</span>
-                        </button>
-                    </div>
-                    
-                    <!-- Image Counter -->
-                    <div class="absolute bottom-3 left-1/2 -translate-x-1/2 text-white px-3 py-1 rounded-full">
-                        <span x-text="currentImageIndex + 1"></span>/<span x-text="patternToView.images.length"></span>
-                    </div>
-                </div>
-            </template>
-            
-            <template x-if="!patternToView?.images?.length">
-                <div class="bg-white dark:bg-gray-800 rounded-lg p-8 text-center">
-                    <span class="material-symbols-outlined text-6xl text-gray-400 mb-4 block">image</span>
-                    <p class="text-gray-600 dark:text-gray-300">{{ __('content.no_images_available') }}</p>
-                </div>
-            </template>
-            
-            <!-- Close button -->
-            <button @click="zoomImage = false"
-                class="absolute top-4 right-4 text-gray-500 hoverScale">
-                <span class="material-symbols-outlined">close</span>
-            </button>
-        </div>
-    </div>
+    @include('components.Detail-modals.partials.zoom-modal', [
+        'item' => 'patternToView',
+        'itemCode' => 'pattern_code'
+    ])
 </div>

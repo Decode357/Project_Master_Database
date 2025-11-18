@@ -15,6 +15,14 @@ function shapePage() {
         newImages: [],
         deletedImages: [],
         openEditModal(shape) {
+            // แปลง approval_date format
+            if (shape.approval_date) {
+                const date = new Date(shape.approval_date);
+                if (!isNaN(date.getTime())) {
+                    shape.approval_date = date.toISOString().split('T')[0];
+                }
+            }
+            
             this.shapeToEdit = JSON.parse(JSON.stringify(shape)); // clone กัน reactive bug
             this.newImages = [];
             this.deletedImages = [];

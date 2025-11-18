@@ -22,6 +22,7 @@ class Backstamp extends Model
         'air_dry',
         'approval_date',
         'updated_by',
+        'created_at',
     ];
 
     protected $casts = [

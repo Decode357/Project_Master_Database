@@ -37,6 +37,7 @@ class Shape extends Model
         'body',
         'approval_date',
         'updated_by',
+        'created_at',
     ];
 
     // ✅ ฟังก์ชันช่วย format ตัวเลข

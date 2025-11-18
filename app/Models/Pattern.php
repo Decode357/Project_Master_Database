@@ -27,6 +27,7 @@ class Pattern extends Model
         'under_glaze',
         'approval_date',
         'updated_by',
+        'created_at',
     ];
     
     protected $casts = [

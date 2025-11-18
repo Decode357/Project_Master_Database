@@ -6,7 +6,6 @@ class ChartManager {
     }
 
     init() {
-        // รอให้ DOM โหลดเสร็จ
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => this.setup());
         } else {
@@ -15,19 +14,15 @@ class ChartManager {
     }
 
     setup() {
-        // รอให้ Chart.js โหลดเสร็จ
         this.waitForChart();
-        // ติดตาม theme changes
         this.observeThemeChanges();
     }
 
     waitForChart() {
         const checkChart = () => {
             if (typeof Chart !== 'undefined') {
-                console.log('✅ Chart.js loaded, creating chart...');
                 this.createChart();
             } else {
-                console.log('⏳ Waiting for Chart.js...');
                 setTimeout(checkChart, 100);
             }
         };
@@ -49,7 +44,6 @@ class ChartManager {
 
     getThemeColors() {
         this.isDarkMode = document.documentElement.classList.contains('dark');
-        console.log('🎨 Current theme:', this.isDarkMode ? 'dark' : 'light');
         
         return {
             text: this.isDarkMode ? '#e5e7eb' : '#374151',
@@ -61,26 +55,16 @@ class ChartManager {
 
     createChart() {
         const ctx = document.getElementById('productChart');
-        if (!ctx) {
-            console.error('❌ Canvas element not found!');
-            return;
-        }
+        if (!ctx) return;
 
         const data = this.getChartData();
-        if (!data) {
-            console.error('❌ Chart data not found!');
-            return;
-        }
+        if (!data) return;
 
         const colors = this.getThemeColors();
 
-        // ลบ chart เก่าถ้ามี
         if (this.chart) {
-            console.log('🗑️ Destroying previous chart');
             this.chart.destroy();
         }
-        
-        console.log('📊 Creating new chart...');
 
         this.chart = new Chart(ctx, {
             type: 'line',
@@ -184,25 +168,21 @@ class ChartManager {
                         cornerRadius: 8,
                         callbacks: {
                             title: function(context) {
-                                return  LANG.date + ': ' + context[0].label;
+                                return LANG.date + ': ' + context[0].label;
                             }
                         }
                     }
                 }
             }
         });
-
-        console.log('✅ Chart created successfully!');
     }
 
     observeThemeChanges() {
-        // ใช้ MutationObserver เพื่อติดตาม class changes บน html element
         const observer = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
                 if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
                     const newIsDark = document.documentElement.classList.contains('dark');
                     if (newIsDark !== this.isDarkMode) {
-                        console.log('🌙 Theme changed to:', newIsDark ? 'dark' : 'light');
                         setTimeout(() => this.createChart(), 100);
                     }
                 }
@@ -214,21 +194,15 @@ class ChartManager {
             attributeFilter: ['class']
         });
 
-        // ฟัง custom events หากมี
         window.addEventListener('themeChanged', () => {
-            console.log('🎨 Custom theme event received');
             this.createChart();
         });
-
-        console.log('👀 Theme observer setup complete');
     }
 
-    // Method สำหรับ manual refresh
     refresh() {
         this.createChart();
     }
 
-    // Method สำหรับทำลาย chart
     destroy() {
         if (this.chart) {
             this.chart.destroy();
@@ -237,5 +211,4 @@ class ChartManager {
     }
 }
 
-// สร้าง instance และเก็บไว้ใน global scope
 window.chartManager = new ChartManager();

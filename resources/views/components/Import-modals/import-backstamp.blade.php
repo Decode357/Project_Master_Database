@@ -7,7 +7,7 @@
                 <i class="fas fa-file-import mr-2"></i>{{ __('content.backstamp_data_import') }}
             </h3>
             <button onclick="closeBackstampModal()" class="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
-                <i class="fas fa-times text-xl"></i>
+                <span class="material-symbols-outlined text-2xl hoverScale">close</span>
             </button>
         </div>
 
@@ -69,9 +69,9 @@
                 <form action="{{ route('backstamps.import') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
                     @csrf
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <p class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                             {{ __('content.select_file') }} (CSV/Excel)
-                        </label>
+                        </p>
                         <div class="flex space-y-2 flex-row items-center gap-4">
                             <label class="inline-block px-4 py-2 bg-blue-600 text-white rounded-md cursor-pointer hoverScale hover:bg-blue-700 transition dark:bg-blue-500 dark:hover:bg-blue-600">
                                 <i class="fas fa-file-upload"></i> {{ __('content.select_file') }}
@@ -92,11 +92,6 @@
                         </p>
                     </div>
                     <div class="flex justify-end gap-3">
-                        <button type="button" onclick="closeBackstampModal()"
-                            class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition
-                            dark:bg-gray-600 dark:text-gray-300 dark:hover:bg-gray-500 hoverScale">
-                            <i class="fas fa-times"></i>{{ __('content.cancel') }}
-                        </button>
                         <button type="button"
                             onclick="if (this.form.reportValidity()) { 
                                 document.getElementById('backstampAlertMessages').classList.add('hidden');
