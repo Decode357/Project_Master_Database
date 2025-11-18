@@ -5,7 +5,6 @@
     x-data="{ 
         zoomImage: false, 
         activeTab: 'info',
-        showDebug: false,
         currentImageIndex: 0,
         get currentImage() {
             return this.shapeToView?.images && this.shapeToView.images.length > 0 
@@ -91,8 +90,18 @@
                         <template x-if="shapeToView?.status">
                             <div class="flex flex-col items-center">
                                 <label class="text-gray-700 dark:text-gray-300 font-semibold mb-1">{{ __('content.status') }}</label>
-                                <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200">
-                                    <span class="w-2 h-2 rounded-full mr-2 bg-yellow-500"></span>
+                                <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium"
+                                    :class="{
+                                        'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300': shapeToView.status.status === 'Active',
+                                        'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300': shapeToView.status.status === 'Cancel',
+                                        'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300': shapeToView.status.status !== 'Active' && shapeToView.status.status !== 'Cancel'
+                                    }">
+                                    <span class="w-2 h-2 rounded-full mr-2"
+                                        :class="{
+                                            'bg-green-500': shapeToView.status.status === 'Active',
+                                            'bg-red-500': shapeToView.status.status === 'Cancel',
+                                            'bg-yellow-500': shapeToView.status.status !== 'Active' && shapeToView.status.status !== 'Cancel'
+                                        }"></span>
                                     <span x-text="shapeToView.status.status"></span>
                                 </span>
                             </div>
@@ -102,8 +111,8 @@
                         <template x-if="shapeToView?.process">
                             <div class="flex flex-col items-center">
                                 <label class="text-gray-700 dark:text-gray-300 font-semibold mb-1">{{ __('content.process') }}</label>
-                                <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200">
-                                    <span class="w-2 h-2 rounded-full mr-2 bg-yellow-500"></span>
+                                <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">
+                                    <span class="w-2 h-2 rounded-full mr-2 bg-blue-500"></span>
                                     <span x-text="shapeToView.process.process_name"></span>
                                 </span>
                             </div>
@@ -263,100 +272,137 @@
                                 <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.requestor?.name || '-'"></span>
                             </div>
                         </div>
-                        <!-- Specification Image -->
-                        <div x-show="activeTab === 'specification'" class="flex justify-center mb-4 hoverScale150"   style="transform-origin: bottom left;" >
-                            <div class="bg-white p-1 py-3 inline-block shadow-sm rounded-lg">
-                                <img src="{{ asset('images/speci.png') }}" 
-                                    alt="speci" 
-                                    class="mx-auto w-auto">
-                            </div> 
-                        </div>
+
                         <!-- Specification Tab -->
-                        <div x-show="activeTab === 'specification'" class="h-full overflow-y-auto overflow-x-visible flex flex-col gap-1 font-lg text-lg">
-                            <!-- Volume -->
-                            <div class="flex flex-row gap-2 items-center">
-                                <span class="material-symbols-outlined text-base text-blue-600 dark:text-blue-400">water_drop</span>
-                                <label class="text-gray-700 dark:text-gray-300">
-                                    {{ __('content.volume') }}:
-                                </label>
-                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.volume || '-'"></span>
-                                <label class="text-gray-400 dark:text-gray-500">
-                                    {{ __('content.cc_full') }}
-                                </label>
+                        <div x-show="activeTab === 'specification'" class="h-full overflow-y-auto overflow-x-visible">
+                            <div class="grid grid-cols-2 lg:grid-cols-2 gap-6">
+                                
+                                <!-- Left Side - Specification Data -->
+                                <div class="flex flex-col gap-1 font-lg text-lg">
+                                    <!-- Volume -->
+                                    <div class="flex flex-col items-start">
+                                        <div class="flex flex-row gap-1 items-center">
+                                            <span class="material-symbols-outlined text-base text-blue-600 dark:text-blue-400">water_drop</span>
+                                            <label class="text-gray-700 dark:text-gray-300">
+                                                {{ __('content.volume') }}:
+                                            </label>
+                                            <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.volume || '-'"></span>
+                                        </div>
+                                        <label class="text-gray-400 dark:text-gray-500 text-sm ml-6">
+                                            {{ __('content.cc_full') }}
+                                        </label>
+                                    </div>          
+                                    <hr class="border-gray-300 dark:border-gray-600">
+                                    
+                                    <!-- Weight -->
+                                    <div class="flex flex-col items-start">
+                                        <div class="flex flex-row gap-1 items-center">
+                                            <span class="material-symbols-outlined text-base text-purple-600 dark:text-purple-400">scale</span>
+                                            <label class="text-gray-700 dark:text-gray-300">
+                                                {{ __('content.weight') }}:
+                                            </label>
+                                            <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.weight || '-'"></span>
+                                        </div>
+                                        <label class="text-gray-400 dark:text-gray-500 text-sm ml-6">
+                                            {{ __('content.g_full') }}
+                                        </label>
+                                    </div>
+                                    <hr class="border-gray-300 dark:border-gray-600">
+                                    
+                                    <!-- Long Diameter -->
+                                    <div class="flex flex-col items-start">
+                                        <div class="flex flex-row gap-1 items-center">
+                                            <span class="material-symbols-outlined text-base text-green-600 dark:text-green-400">straighten</span>
+                                            <label class="text-gray-700 dark:text-gray-300">
+                                                {{ __('content.long_diameter') }}:
+                                            </label>
+                                            <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.long_diameter || '-'"></span>
+                                        </div>
+                                        <label class="text-gray-400 dark:text-gray-500 text-sm ml-6">
+                                            {{ __('content.mm_full') }}
+                                        </label>
+                                    </div>
+                                    <hr class="border-gray-300 dark:border-gray-600">
+                                    
+                                    <!-- Short Diameter -->
+                                    <div class="flex flex-col items-start">
+                                        <div class="flex flex-row gap-1 items-center">
+                                            <span class="material-symbols-outlined text-base text-orange-600 dark:text-orange-400">width</span>
+                                            <label class="text-gray-700 dark:text-gray-300">
+                                                {{ __('content.short_diameter') }}:
+                                            </label>
+                                            <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.short_diameter || '-'"></span>
+                                        </div>
+                                        <label class="text-gray-400 dark:text-gray-500 text-sm ml-6">
+                                            {{ __('content.mm_full') }}
+                                        </label>
+                                    </div>
+                                    <hr class="border-gray-300 dark:border-gray-600">
+                                    
+                                    <!-- Height Long -->
+                                    <div class="flex flex-col items-start">
+                                        <div class="flex flex-row gap-1 items-center">
+                                            <span class="material-symbols-outlined text-base text-red-600 dark:text-red-400">height</span>
+                                            <label class="text-gray-700 dark:text-gray-300">
+                                                {{ __('content.height_long') }}:
+                                            </label>
+                                            <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.height_long || '-'"></span>
+                                        </div>
+                                        <label class="text-gray-400 dark:text-gray-500 text-sm ml-6">
+                                            {{ __('content.mm_full') }}
+                                        </label>
+                                    </div>
+                                    <hr class="border-gray-300 dark:border-gray-600">
+                                    
+                                    <!-- Height Short -->
+                                    <div class="flex flex-col items-start">
+                                        <div class="flex flex-row gap-1 items-center">
+                                            <span class="material-symbols-outlined text-base text-pink-600 dark:text-pink-400">expand</span>
+                                            <label class="text-gray-700 dark:text-gray-300">
+                                                {{ __('content.height_short') }}:
+                                            </label>
+                                            <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.height_short || '-'"></span>
+                                        </div>
+                                        <label class="text-gray-400 dark:text-gray-500 text-sm ml-6">
+                                            {{ __('content.mm_full') }}
+                                        </label>
+                                    </div>
+                                    <hr class="border-gray-300 dark:border-gray-600">
+                                    
+                                    <!-- Body -->
+                                    <div class="flex flex-col items-start">
+                                        <div class="flex flex-row gap-1 items-center">
+                                            <span class="material-symbols-outlined text-base text-teal-600 dark:text-teal-400">width_full</span>
+                                            <label class="text-gray-700 dark:text-gray-300">
+                                                {{ __('content.body') }}:
+                                            </label>
+                                            <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.body || '-'"></span>
+                                        </div>
+                                        <label class="text-gray-400 dark:text-gray-500 text-sm ml-6">
+                                            {{ __('content.mm_full') }}
+                                        </label>
+                                    </div>
+                                    <hr class="border-gray-300 dark:border-gray-600">
+                                </div>
+                                
+                                <!-- Right Side - Specification Image -->
+                                <div class="flex items-center justify-center">
+                                    <div class="w-full h-full flex items-center justify-center">
+                                        <template x-if="shapeToView?.item_group?.item_group_name">
+                                            <img :src="`{{ asset('images') }}/${shapeToView.item_group.item_group_name}.jpg`"
+                                                alt="Specification Diagram" 
+                                                class="max-w-full max-h-full object-contain rounded"
+                                                onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'text-center text-gray-500 dark:text-gray-400\'><span class=\'material-symbols-outlined text-6xl mb-2 block\'>image</span><p>{{ __('content.no_images_available') }}</p></div>'">
+                                        </template>
+                                        <template x-if="!shapeToView?.item_group?.item_group_name">
+                                            <div class="text-center text-gray-500 dark:text-gray-400">
+                                                <span class="material-symbols-outlined text-6xl mb-2 block">image</span>
+                                                <p>{{ __('content.no_images_available') }}</p>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>                 
                             </div>
-                            <hr class=" border-gray-300 dark:border-gray-600">
-                            <!-- Weight -->
-                            <div class="flex flex-row gap-2 items-center">
-                                <span class="material-symbols-outlined text-base text-purple-600 dark:text-purple-400">scale</span>
-                                <label class="text-gray-700 dark:text-gray-300">
-                                    {{ __('content.weight') }}:
-                                </label>
-                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.weight || '-'"></span>
-                                <label class="text-gray-400 dark:text-gray-500">
-                                    {{ __('content.g_full') }}
-                                </label>
-                            </div>
-                            <hr class=" border-gray-300 dark:border-gray-600">
-                            <!-- Long Diameter -->
-                            <div class="flex flex-row gap-2 items-center">
-                                <span class="material-symbols-outlined text-base text-green-600 dark:text-green-400">straighten</span>
-                                <label class="text-gray-700 dark:text-gray-300">
-                                    {{ __('content.long_diameter') }}:
-                                </label>
-                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.long_diameter || '-'"></span>
-                                <label class="text-gray-400 dark:text-gray-500">
-                                    {{ __('content.mm_full') }}
-                                </label>
-                            </div>
-                            <hr class=" border-gray-300 dark:border-gray-600">
-                            <!-- Short Diameter -->
-                            <div class="flex flex-row gap-2 items-center">
-                                <span class="material-symbols-outlined text-base text-orange-600 dark:text-orange-400">width</span>
-                                <label class="text-gray-700 dark:text-gray-300">
-                                    {{ __('content.short_diameter') }}:
-                                </label>
-                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.short_diameter || '-'"></span>
-                                <label class="text-gray-400 dark:text-gray-500">
-                                    {{ __('content.mm_full') }}
-                                </label>
-                            </div>
-                            <hr class=" border-gray-300 dark:border-gray-600">
-                            <!-- Height Long -->
-                            <div class="flex flex-row gap-2 items-center">
-                                <span class="material-symbols-outlined text-base text-red-600 dark:text-red-400">height</span>
-                                <label class="text-gray-700 dark:text-gray-300">
-                                    {{ __('content.height_long') }}:
-                                </label>
-                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.height_long || '-'"></span>
-                                <label class="text-gray-400 dark:text-gray-500">
-                                    {{ __('content.mm_full') }}
-                                </label>
-                            </div>
-                            <hr class=" border-gray-300 dark:border-gray-600">
-                            <!-- Height Short -->
-                            <div class="flex flex-row gap-2 items-center">
-                                <span class="material-symbols-outlined text-base text-pink-600 dark:text-pink-400">expand</span>
-                                <label class="text-gray-700 dark:text-gray-300">
-                                    {{ __('content.height_short') }}:
-                                </label>
-                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.height_short || '-'"></span>
-                                <label class="text-gray-400 dark:text-gray-500">
-                                    {{ __('content.mm_full') }}
-                                </label>
-                            </div>
-                            <hr class=" border-gray-300 dark:border-gray-600">
-                            <!-- Body -->
-                            <div class="flex flex-row gap-2 items-center">
-                                <span class="material-symbols-outlined text-base text-teal-600 dark:text-teal-400">width_full</span>
-                                <label class="text-gray-700 dark:text-gray-300">
-                                    {{ __('content.body') }}:
-                                </label>
-                                <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.body || '-'"></span>
-                                <label class="text-gray-400 dark:text-gray-500">
-                                    {{ __('content.mm_full') }}
-                                </label>
-                            </div>
-                            <hr class=" border-gray-300 dark:border-gray-600">
                         </div>
                         <!-- Customer Detail -->
                         <div x-show="activeTab === 'customer_details'" class="h-full overflow-y-auto overflow-x-visible flex flex-col gap-1 font-lg text-lg">
@@ -414,20 +460,6 @@
             </button>
         </div>
     </div>
-    <!-- Debug Panel - กดปุ่ม F2 เพื่อเปิด/ปิด -->
-    <div x-show="showDebug" 
-        class="fixed top-2 right-2 bg-black bg-opacity-90 text-green-400 p-4 rounded text-xs font-mono  flex flex-row"
-        @keydown.window.f2.prevent="showDebug = !showDebug">
-        <div class="flex justify-between items-center mb-2">
-            <button @click="showDebug = false" class="text-white hover:text-red-400">✕</button>
-        </div>
-        <div class="overflow-auto flex-1" style="max-height: calc(90vh - 40px);">
-            <pre x-text="JSON.stringify(shapeToView.images, null, 2)" class="whitespace-pre-wrap"></pre>
-        </div>
-        <div class="overflow-auto flex-1" style="max-height: calc(90vh - 40px);">
-            <pre x-text="JSON.stringify(shapeToView, null, 2)" class="whitespace-pre-wrap"></pre>
-        </div>
-    </div> 
     <!-- Zoom Image Modal -->
     <div x-show="zoomImage" x-transition.opacity
         class="fixed inset-0 bg-black bg-opacity-95 flex items-center justify-center z-60"

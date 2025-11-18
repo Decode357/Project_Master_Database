@@ -5,7 +5,6 @@
     x-data="{ 
         zoomImage: false, 
         activeTab: 'info',
-        showDebug: false,
         currentImageIndex: 0,
         get currentImage() {
             return this.glazeToView?.images && this.glazeToView.images.length > 0 
@@ -91,8 +90,18 @@
                         <template x-if="glazeToView?.status">
                             <div class="flex flex-col items-center">
                                 <label class="text-gray-700 dark:text-gray-300 font-semibold mb-1">{{ __('content.status') }}</label>
-                                <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-green-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200">
-                                    <span class="w-2 h-2 rounded-full mr-2 bg-yellow-500"></span>
+                                <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium"
+                                    :class="{
+                                        'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300': glazeToView.status.status === 'Active',
+                                        'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300': glazeToView.status.status === 'Cancel',
+                                        'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300': glazeToView.status.status !== 'Active' && glazeToView.status.status !== 'Cancel'
+                                    }">
+                                    <span class="w-2 h-2 rounded-full mr-2"
+                                        :class="{
+                                            'bg-green-500': glazeToView.status.status === 'Active',
+                                            'bg-red-500': glazeToView.status.status === 'Cancel',
+                                            'bg-yellow-500': glazeToView.status.status !== 'Active' && glazeToView.status.status !== 'Cancel'
+                                        }"></span>
                                     <span x-text="glazeToView.status.status"></span>
                                 </span>
                             </div>
@@ -297,19 +306,6 @@
                 class="bg-gray-500 dark:bg-gray-600 hover:bg-purple-600 dark:hover:bg-purple-500 text-white py-2 px-6 rounded-lg transition-all duration-200 hoverScale">
                 {{ __('content.close') }}
             </button>
-        </div>
-    </div>
-
-    <!-- Debug Panel - กดปุ่ม F3 เพื่อเปิด/ปิด -->
-    <div x-show="showDebug" 
-        class="fixed top-2 right-2 bg-black bg-opacity-90 text-green-400 p-4 rounded text-xs font-mono max-w-2xl"
-        @keydown.window.f2.prevent="showDebug = !showDebug">
-        <div class="flex justify-between items-center mb-2">
-            <span>Debug: Glaze Data (Press F3 to close)</span>
-            <button @click="showDebug = false" class="text-white hover:text-red-400">✕</button>
-        </div>
-        <div class="overflow-auto" style="max-height: calc(90vh - 40px);">
-            <pre x-text="JSON.stringify(glazeToView, null, 2)" class="whitespace-pre-wrap"></pre>
         </div>
     </div>
 
