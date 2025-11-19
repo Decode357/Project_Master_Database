@@ -303,7 +303,7 @@
                                 
                                 <!-- Right Side - Specification Image -->
                                 <div class="flex items-center justify-center">
-                                    <div class="w-full h-full flex items-center justify-center">
+                                    <div class="w-full h-full flex items-center justify-center flex-col">
                                         <template x-if="shapeToView?.item_group?.item_group_name">
                                             <img :src="`{{ asset('images') }}/${shapeToView.item_group.item_group_name}.jpg`"
                                                 alt="Specification Diagram" 
@@ -316,6 +316,7 @@
                                                 <p>{{ __('content.no_images_available') }}</p>
                                             </div>
                                         </template>
+                                        <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.item_group?.item_group_name"></span>
                                     </div>
                                 </div>                 
                             </div>

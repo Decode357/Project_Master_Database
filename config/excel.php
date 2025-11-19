@@ -51,7 +51,7 @@ return [
             'include_separator_line' => false,
             'excel_compatibility'    => false,
             'output_encoding'        => '',
-            'test_auto_detect'       => true,
+            'test_auto_detect'       => false,
         ],
 
         /*
@@ -125,11 +125,12 @@ return [
         |
         */
         'csv'          => [
-            'delimiter'        => null,
+            'delimiter'        => ',',
             'enclosure'        => '"',
             'escape_character' => '\\',
             'contiguous'       => false,
             'input_encoding'   => 'UTF-8',
+            'test_auto_detect' => false, // ปิด auto detect เพื่อความเร็ว
         ],
 
         /*
@@ -245,7 +246,7 @@ return [
         | Drivers: memory|illuminate|batch
         |
         */
-        'driver'      => 'memory',
+        'driver'      => 'memory', // ใช้ memory แทน illuminate
 
         /*
         |--------------------------------------------------------------------------
