@@ -37,6 +37,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [PageController::class, 'dashboard'])
         ->middleware('verified')
         ->name('dashboard');
+    
+    // เพิ่ม route สำหรับดึงข้อมูล chart
+    Route::get('/dashboard/chart-data', [PageController::class, 'getChartData'])
+        ->middleware('verified')
+        ->name('dashboard.chartData');
 
     // เมนูทั่วไปสำหรับทุก role
     Route::get('/shape', [ShapeController::class, 'shapeindex'])->name('shape.index');

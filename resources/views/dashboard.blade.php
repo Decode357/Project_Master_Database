@@ -43,8 +43,21 @@
         </div>
     </div>
 
-    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md md:col-span-2 mb-2 ">
-        <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{__('content.create_history')}}</h2>
+    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md md:col-span-2 mb-2">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{__('content.create_history')}}</h2>
+            <div>
+                <label class="text-sm text-gray-700 dark:text-gray-300 mr-2">{{ __('content.period') }}:</label>
+                <select id="chart-period" class="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white rounded-lg px-6 py-1.5 text-sm">
+                    <option value="7">{{ __('content.last7Days') }}</option>
+                    <option value="30" selected>{{ __('content.last30Days') }}</option>
+                    <option value="60">{{ __('content.last60Days') }}</option>
+                    <option value="90">{{ __('content.last90Days') }}</option>
+                    <option value="180">{{ __('content.last6Months') }}</option>
+                    <option value="365">{{ __('content.lastYear') }}</option>
+                </select>
+            </div>
+        </div>
         <div class="w-full" style="height: 220px; position: relative;">
             <canvas id="productChart"></canvas>
         </div>

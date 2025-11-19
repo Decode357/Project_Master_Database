@@ -255,4 +255,94 @@ class PageController extends Controller
     public function csvImport() {
         return view('csvImport');
     }
+
+    public function getChartData(Request $request)
+    {
+        $days = $request->get('days', 30);
+        $days = min(max((int)$days, 1), 365); // จำกัด 1-365 วัน
+
+        // กำหนด interval ตามจำนวนวัน
+        $interval = 1;
+        if ($days == 60) {
+            $interval = 2; // แสดงทุก 2 วัน
+        } elseif ($days == 90) {
+            $interval = 3; // แสดงทุก 3 วัน
+        } elseif ($days == 180) {
+            $interval = 6; // แสดงทุก 6 วัน
+        } elseif ($days == 365) {
+            $interval = 12; // แสดงทุก 12 วัน
+        }
+
+        $today = Carbon::today();
+        $start = $today->copy()->subDays($days - 1);
+
+        // นับจำนวนที่ถูกสร้างในแต่ละวัน
+        $shapeCountsByDate = Shape::whereBetween('created_at', [$start->startOfDay(), $today->endOfDay()])
+            ->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as count'))
+            ->groupBy('date')
+            ->orderBy('date')
+            ->pluck('count', 'date')
+            ->toArray();
+
+        $patternCountsByDate = Pattern::whereBetween('created_at', [$start->startOfDay(), $today->endOfDay()])
+            ->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as count'))
+            ->groupBy('date')
+            ->orderBy('date')
+            ->pluck('count', 'date')
+            ->toArray();
+
+        $backstampCountsByDate = Backstamp::whereBetween('created_at', [$start->startOfDay(), $today->endOfDay()])
+            ->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as count'))
+            ->groupBy('date')
+            ->orderBy('date')
+            ->pluck('count', 'date')
+            ->toArray();
+
+        $glazeCountsByDate = Glaze::whereBetween('created_at', [$start->startOfDay(), $today->endOfDay()])
+            ->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as count'))
+            ->groupBy('date')
+            ->orderBy('date')
+            ->pluck('count', 'date')
+            ->toArray();
+
+        $dates = [];
+        $shapeCounts = [];
+        $patternCounts = [];
+        $backstampCounts = [];
+        $glazeCounts = [];
+
+        // รวมข้อมูลตาม interval
+        for ($i = 0; $i < $days; $i += $interval) {
+            $totalShape = 0;
+            $totalPattern = 0;
+            $totalBackstamp = 0;
+            $totalGlaze = 0;
+            
+            // รวมข้อมูลของวันใน interval
+            for ($j = 0; $j < $interval && ($i + $j) < $days; $j++) {
+                $d = $start->copy()->addDays($i + $j);
+                $key = $d->format('Y-m-d');
+                
+                $totalShape += $shapeCountsByDate[$key] ?? 0;
+                $totalPattern += $patternCountsByDate[$key] ?? 0;
+                $totalBackstamp += $backstampCountsByDate[$key] ?? 0;
+                $totalGlaze += $glazeCountsByDate[$key] ?? 0;
+            }
+            
+            $d = $start->copy()->addDays($i);
+            $dates[] = $d->format('d/m');
+            $shapeCounts[] = $totalShape;
+            $patternCounts[] = $totalPattern;
+            $backstampCounts[] = $totalBackstamp;
+            $glazeCounts[] = $totalGlaze;
+        }
+
+        return response()->json([
+            'dates' => $dates,
+            'shapeCounts' => $shapeCounts,
+            'patternCounts' => $patternCounts,
+            'backstampCounts' => $backstampCounts,
+            'glazeCounts' => $glazeCounts,
+        ]);
+    }
 }

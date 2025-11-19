@@ -1,5 +1,5 @@
 <!-- Last Updated Info -->
-<div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+<div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 mt-2">
     <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center">
         <span class="material-symbols-outlined mr-2">history</span>
         {{ __('content.update_information') }}

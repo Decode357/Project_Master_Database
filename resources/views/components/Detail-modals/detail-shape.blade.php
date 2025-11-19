@@ -19,7 +19,12 @@
         <div class="bg-gradient-to-r from-blue-600 to-blue-800 dark:from-blue-700 dark:to-blue-900 text-white p-6 flex justify-between items-center flex-shrink-0 rounded-t-2xl">
             <div>
                 <h2 class="text-2xl font-bold" x-text="shapeToView?.item_code || '{{ __('content.details') }} {{ __('content.shape') }}'"></h2>
-                <p class="text-blue-100 dark:text-blue-200 text-sm mt-1" x-text="shapeToView?.item_description_thai || '{{ __('content.details') }} {{ __('content.shape') }}'"></p>
+                <p class="text-blue-100 dark:text-blue-200 text-sm mt-1"
+                    x-text="[
+                        shapeToView?.item_description_thai,
+                        shapeToView?.item_description_eng
+                    ].filter(Boolean).join(' | ') || '{{ __('content.details') }} {{ __('content.shape') }}'">
+                </p>
             </div>
             <button @click="ShapeDetailModal = false"
                 class="text-white ml-auto hoverScale">
