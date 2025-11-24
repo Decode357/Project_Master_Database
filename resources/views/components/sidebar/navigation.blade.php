@@ -31,6 +31,8 @@
         <hr class="my-2 border-gray-300 dark:border-gray-600" />
         <span class="text-center text-sm text-gray-400 dark:text-gray-500">{{ __('sidebar.admin_console') }}</span>
 
+        <x-sidebar.nav-item route="item.group.index" icon="workspaces" :label="__('sidebar.shape_groups')" />
+        <x-sidebar.nav-item route="customer.index" icon="business" :label="__('sidebar.customers')" />
         <x-sidebar.nav-item route="user" icon="group" :label="__('sidebar.user_management')" />
 
         @if ($hasFileImport)

@@ -84,5 +84,6 @@
     <script src="{{ asset('js/pages/user-page.js') }}"></script>
     <script src="{{ asset('js/pages/glazeInsideOuter-page.js') }}"></script>
     <script src="{{ asset('js/pages/shapeCollection.blade-page.js') }}"></script>
+    <script src="{{ asset('js/pages/customer-page.js') }}"></script>
 </body>
 </html>

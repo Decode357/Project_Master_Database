@@ -8,6 +8,8 @@ return [
     'glazes' => 'เคลือบ',
     'patterns' => 'ลวดลาย',
     'backstamps' => 'ตราประทับด้านหลัง',
+    'customers' => 'ลูกค้า',
+    'shape_groups' => 'กลุ่มรูปทรง (Indev)',
     'admin_console' => 'ผู้ดูแลระบบเท่านั้น',
     'user_management' => 'จัดการผู้ใช้',
     'colors' => 'สี',

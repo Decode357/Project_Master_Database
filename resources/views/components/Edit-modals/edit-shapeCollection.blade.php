@@ -30,7 +30,6 @@
                     <div class="flex gap-2 items-center">
                         <!-- input text -->
                         <input name="collection_code" type="text" x-model="shapeCollectionToEdit.collection_code"
-                            maxlength="15"
                             :class="errors.collection_code ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
                             class="mt-1 flex-1 border rounded-md px-3 py-2 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500"
                             placeholder="{{ __('content.enter') }}{{ __('content.collection_code') }}" required />

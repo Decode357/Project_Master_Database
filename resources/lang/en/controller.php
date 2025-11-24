@@ -54,7 +54,27 @@ return [
     'profile' => [
         'updated' => 'Profile updated successfully!',
     ],
+    'customer' => [
+        'created' => 'Customer created successfully!',
+        'updated' => 'Customer updated successfully!',
+        'deleted' => 'Customer deleted successfully',
+    ],
     'validation' => [
+        'customer_code' => [
+            'required' => 'Customer code is required',
+            'unique' => 'This customer code already exists',
+            'max' => 'Customer code must not exceed :max characters',
+        ],        
+        'customer_name' => [
+            'max' => 'Customer name must not exceed :max characters',
+        ],
+        'customer_email' => [
+            'email' => 'Invalid email format',
+            'max' => 'Customer email must not exceed :max characters',
+        ],
+        'customer_phone' => [
+            'max' => 'Customer phone must not exceed :max characters',
+        ],
         'item_code' => [
             'required' => 'Item code is required',
             'unique' => 'This item code already exists',

@@ -7,7 +7,7 @@ use App\Http\Controllers\{
     ColorController, EffectController,
     UserController, GlazeInsideOuterController,
     ShapeCollectionController, ImportController,
-    ExportController,
+    ExportController,CustomerController,ItemGroupController
 };
 use Illuminate\Support\Facades\Route;
 
@@ -58,6 +58,8 @@ Route::middleware(['auth'])->group(function () {
         // เมนูสำหรับแสดงข้อมูล
         Route::get('/csv-import', [PageController::class, 'csvImport'])->name('csvImport')->middleware('permission:file import');
         Route::get('/user', [UserController::class, 'user'])->name('user');
+        Route::get('/customer', [CustomerController::class, 'customerindex'])->name('customer.index');
+        Route::get('/item-group', [ItemGroupController::class, 'itemGroupindex'])->name('item.group.index');
 
         // เมนูสำหรับเก็บข้อมูล 
         Route::post('/user', [UserController::class, 'storeUser'])->name('user.store')->middleware(['auth', 'role:admin|superadmin', 'permission:manage users']);
@@ -70,6 +72,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/glaze-inside', [GlazeInsideOuterController::class, 'storeGlazeInside'])->name('glaze-inside.store')->middleware(['auth', 'role:admin|superadmin', 'permission:create']);
         Route::post('/glaze-outer', [GlazeInsideOuterController::class, 'storeGlazeOuter'])->name('glaze-outer.store')->middleware(['auth', 'role:admin|superadmin', 'permission:create']);
         Route::post('/shape-collection', [ShapeCollectionController::class, 'storeShapeCollection'])->name('shape-collection.store')->middleware(['auth', 'role:admin|superadmin', 'permission:create']);
+        Route::post('/customer', [CustomerController::class, 'storeCustomer'])->name('customer.store')->middleware(['auth', 'role:admin|superadmin', 'permission:create']);
 
         // เมนูสำหรับแก้ไขข้อมูล
         Route::put('/user/{user}', [UserController::class, 'updateUser'])->name('user.update')->middleware(['auth', 'permission:manage users']);
@@ -82,6 +85,7 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/glaze-inside/{glazeInside}', [GlazeInsideOuterController::class, 'updateGlazeInside'])->name('glaze-inside.update')->middleware(['auth', 'permission:edit']); 
         Route::put('/glaze-outer/{glazeOuter}', [GlazeInsideOuterController::class, 'updateGlazeOuter'])->name('glaze-outer.update')->middleware(['auth', 'permission:edit']);
         Route::put('/shape-collection/{shapeCollection}', [ShapeCollectionController::class, 'updateShapeCollection'])->name('shape-collection.update')->middleware(['auth', 'permission:edit']);
+        Route::put('/customer/{customer}', [CustomerController::class, 'updateCustomer'])->name('customer.update')->middleware(['auth', 'permission:edit']);
 
         // เมนูสำหรับลบข้อมูล
         Route::delete('/user/{user}', [UserController::class, 'destroyUser'])->name('user.destroy')->middleware(['auth', 'permission:manage users']);
@@ -93,7 +97,8 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/effect/{effect}', [EffectController::class, 'destroyEffect'])->name('effect.destroy')->middleware(['auth', 'permission:delete']);
         Route::delete('/glaze-inside/{glazeInside}', [GlazeInsideOuterController::class, 'destroyGlazeInside'])->name('glaze-inside.destroy')->middleware(['auth', 'permission:delete']);
         Route::delete('/glaze-outer/{glazeOuter}', [GlazeInsideOuterController::class, 'destroyGlazeOuter'])->name('glaze-outer.destroy')->middleware(['auth', 'permission:delete']);
-        Route::delete('/shape-collection/{shapeCollection}', [ShapeCollectionController::class, 'destroyShapeCollection'])->name('shape-collection.destroy')->middleware(['auth', 'permission:delete']);   
+        Route::delete('/shape-collection/{shapeCollection}', [ShapeCollectionController::class, 'destroyShapeCollection'])->name('shape-collection.destroy')->middleware(['auth', 'permission:delete']); 
+        Route::delete('/customer/{customer}', [CustomerController::class, 'destroyCustomer'])->name('customer.destroy')->middleware(['auth', 'permission:delete']);
 
         // เมนูสำหรับนำเข้า-ส่งออกข้อมูลลูกค้า (Customers Management)
         Route::prefix('customers')->name('customers.')->middleware('permission:file import')->group(function () {
