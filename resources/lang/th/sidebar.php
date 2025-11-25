@@ -9,7 +9,7 @@ return [
     'patterns' => 'ลวดลาย',
     'backstamps' => 'ตราประทับด้านหลัง',
     'customers' => 'ลูกค้า',
-    'shape_groups' => 'กลุ่มรูปทรง (Indev)',
+    'item_group' => 'กลุ่มสินค้า',
     'admin_console' => 'ผู้ดูแลระบบเท่านั้น',
     'user_management' => 'จัดการผู้ใช้',
     'colors' => 'สี',
@@ -19,4 +19,5 @@ return [
     'collections' => 'คอลเลคชันรูปทรง',
     'profile' => 'โปรไฟล์',
     'logout' => 'ออกจากระบบ',
+    'user' => 'ผู้ใช้',
 ];

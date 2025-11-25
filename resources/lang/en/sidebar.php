@@ -9,7 +9,7 @@ return [
     'patterns' => 'Patterns',
     'backstamps' => 'Backstamps',
     'customers' => 'Customers',
-    'shape_groups' => 'Shape Groups (Indev)',
+    'item_group' => 'Item Groups',
     'admin_console' => 'Admin only',
     'user_management' => 'User Management',
     'colors' => 'Colors',

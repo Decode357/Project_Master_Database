@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('item_groups', function (Blueprint $table) {
             $table->id();
             $table->string('item_group_name')->unique(); // column item_group_name
+            $table->string('image')->nullable(); // column image
             $table->timestamps();
         });
     }

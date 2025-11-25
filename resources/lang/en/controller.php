@@ -59,7 +59,22 @@ return [
         'updated' => 'Customer updated successfully!',
         'deleted' => 'Customer deleted successfully',
     ],
+    'item_group' => [
+        'created' => 'Item Group created successfully!',
+        'updated' => 'Item Group updated successfully!',
+        'deleted' => 'Item Group deleted successfully',
+    ],
     'validation' => [
+        'image' => [
+            'image' => 'The file must be an image.',
+            'mimes' => 'The image must be a file of type: jpeg, jpg, png, gif.',
+            'max' => 'The image size must not exceed 2MB.',
+        ],
+        'item_group_name' => [
+            'required' => 'Item group name is required',
+            'unique' => 'This item group name already exists',
+            'max' => 'Item group name must not exceed :max characters',
+        ],
         'customer_code' => [
             'required' => 'Customer code is required',
             'unique' => 'This customer code already exists',
@@ -157,6 +172,9 @@ return [
         ],
         'department_id' => [
             'exists' => 'Selected department is invalid',
+        ],
+        'item_group_id' => [
+            'exists' => 'Selected item group is invalid',
         ],
         'air_dry' => [
             'boolean' => 'Air Dry must be true or false',

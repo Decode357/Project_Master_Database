@@ -111,11 +111,6 @@ class ShapeController extends Controller
             $process = Process::create(['process_name' => $data['process_id']]);
             $data['process_id'] = $process->id;
         }
-        // Item Group
-        if (!empty($data['item_group_id']) && !is_numeric($data['item_group_id'])) {
-            $itemGroup = ItemGroup::create(['item_group_name' => $data['item_group_id']]);
-            $data['item_group_id'] = $itemGroup->id;
-        }
         // Requestor
         if (!empty($data['requestor_id']) && !is_numeric($data['requestor_id'])) {
             $requestor = Requestor::create(['name' => $data['requestor_id']]);
@@ -138,7 +133,7 @@ class ShapeController extends Controller
             'shape_type_id' => 'nullable|exists:shape_types,id',
             'status_id'     => 'nullable|exists:statuses,id',
             'process_id'    => 'nullable',
-            'item_group_id' => 'nullable',
+            'item_group_id' => 'nullable|exists:item_groups,id',
             'requestor_id'  => 'nullable',
             'customer_id'   => 'nullable|exists:customers,id',
             'designer_id'   => 'nullable',
@@ -164,6 +159,7 @@ class ShapeController extends Controller
             'item_description_eng.max' => __('controller.validation.item_description_eng.max'),
             'shape_type_id.exists' => __('controller.validation.shape_type_id.exists'),
             'status_id.exists' => __('controller.validation.status_id.exists'),
+            'item_group_id.exists' => __('controller.validation.item_group_id.exists'),
             'customer_id.exists' => __('controller.validation.customer_id.exists'),
             'shape_collection_id.exists' => __('controller.validation.shape_collection_id.exists'),
             'volume.numeric' => __('controller.validation.volume.numeric'),

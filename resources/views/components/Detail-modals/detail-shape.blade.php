@@ -304,21 +304,28 @@
                                 <!-- Right Side - Specification Image -->
                                 <div class="flex items-center justify-center">
                                     <div class="w-full h-full flex items-center justify-center flex-col">
-                                        <template x-if="shapeToView?.item_group?.item_group_name">
-                                            <img :src="`{{ asset('images') }}/${shapeToView.item_group.item_group_name}.jpg`"
-                                                alt="Specification Diagram" 
-                                                class="max-w-full max-h-full object-contain rounded"
-                                                onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'text-center text-gray-500 dark:text-gray-400\'><span class=\'material-symbols-outlined text-6xl mb-2 block\'>image</span><p>{{ __('content.no_images_available') }}</p></div>'">
+                                        <template x-if="shapeToView?.item_group?.image">
+                                            <img :src="`{{ asset('images/itemGroup') }}/${shapeToView.item_group.image}`"
+                                                :alt="shapeToView.item_group.item_group_name || 'Specification Diagram'" 
+                                                class="max-w-full max-h-full object-contain rounded shadow-lg"
+                                                onerror="this.onerror=null; this.src='{{ asset('images/itemGroup/default.png') }}'; this.classList.remove('shadow-lg');">
                                         </template>
-                                        <template x-if="!shapeToView?.item_group?.item_group_name">
+                                        <template x-if="!shapeToView?.item_group?.image && shapeToView?.item_group?.item_group_name">
                                             <div class="text-center text-gray-500 dark:text-gray-400">
                                                 <span class="material-symbols-outlined text-6xl mb-2 block">image</span>
                                                 <p>{{ __('content.no_images_available') }}</p>
                                             </div>
                                         </template>
-                                        <span class="text-gray-900 dark:text-gray-100" x-text="shapeToView?.item_group?.item_group_name"></span>
+                                        <template x-if="!shapeToView?.item_group">
+                                            <div class="text-center text-gray-500 dark:text-gray-400">
+                                                <span class="material-symbols-outlined text-6xl mb-2 block">image</span>
+                                                <p>{{ __('content.no_images_available') }}</p>
+                                            </div>
+                                        </template>
+                                        <span class="text-gray-900 dark:text-gray-100 mt-2 font-medium" 
+                                            x-text="shapeToView?.item_group?.item_group_name || ''"></span>
                                     </div>
-                                </div>                 
+                                </div>                
                             </div>
                         </div>
                         <!-- Customer Detail -->

@@ -136,7 +136,7 @@
                 <div>
                     <div class="grid grid-cols-2 items-end">
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{__('content.group') }}</label>
-                        <label class="block text-xs font-medium text-green-700 dark:text-green-300 text-end">{{__('content.can_add')}}</label>
+                        <label class="block text-xs font-medium text-red-700 dark:text-red-300 text-end">{{__('content.select_only')}}</label>
                     </div>                      
                     <select name="item_group_id" x-model="shapeToEdit.item_group_id"
                         :class="errors.item_group_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'"
