@@ -114,6 +114,10 @@ return [
         ],
         
         // Relations
+        'item_group' => [
+            'max' => 'Item Group ต้องไม่เกิน 255 ตัวอักษร',
+            'not_found' => 'ไม่พบ Item Group ชื่อ ":name" ในระบบ',
+        ],
         'glaze_inside' => [
             'max' => 'Glaze Inside ต้องไม่เกิน 255 ตัวอักษร',
             'not_found' => 'ไม่พบ Glaze Inside รหัส ":name" ในระบบ',

@@ -114,6 +114,10 @@ return [
         ],
         
         // Relations
+        'item_group' => [
+            'max' => 'Item Group must not exceed 255 characters.',
+            'not_found' => 'Item Group ":name" not found in the system.',
+        ],
         'glaze_inside' => [
             'max' => 'Glaze Inside must not exceed 255 characters.',
             'not_found' => 'Glaze Inside code ":name" not found in the system.',

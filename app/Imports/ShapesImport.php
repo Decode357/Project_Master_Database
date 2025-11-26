@@ -71,11 +71,6 @@ class ShapesImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
                 }
             }
 
-            // เช็ค item_group - ถ้าไม่เจอให้สร้างใหม่
-            if (!empty($row['item_group'])) {
-                $itemGroupId = $this->importHelper->getOrCreateItemGroup($row['item_group']);
-                $row['item_group_id'] = $itemGroupId;
-            }
             // เช็ค requestor - ถ้าไม่เจอให้สร้างใหม่
             if (!empty($row['process'])) {
                 $processId = $this->importHelper->getOrCreateProcess($row['process']);
@@ -92,6 +87,16 @@ class ShapesImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
             if (!empty($row['designer'])) {
                 $designerId = $this->importHelper->getOrCreateDesigner($row['designer']);
                 $row['designer_id'] = $designerId;
+            }
+
+            // เช็ค item_group (case-insensitive)
+            if (!empty($row['item_group'])) {
+                $itemGroupId = $this->importHelper->findItemGroupCaseInsensitive($row['item_group']);
+                if ($itemGroupId === null) {
+                    $relationErrors[] = __('valid.err.item_group.not_found', ['name' => $row['item_group']]);
+                } else {
+                    $row['item_group_id'] = $itemGroupId;
+                }
             }
 
             // เช็ค customer (case-insensitive)
@@ -163,7 +168,6 @@ class ShapesImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
                 'process_id' => $row['process_id'] ?? null,
                 'designer_id' => $row['designer_id'] ?? null,
                 'requestor_id' => $row['requestor_id'] ?? null,
-                'updated_by' => auth()->id() ?? null,
                 'volume' => $row['volume'] ?? null,
                 'weight' => $row['weight'] ?? null,
                 'long_diameter' => $row['long_diameter'] ?? null,

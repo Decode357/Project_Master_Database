@@ -230,28 +230,6 @@ class ImportHelperService
     }
 
     /**
-     * หา ItemGroup หรือสร้างใหม่ถ้าไม่เจอ
-     */
-    public function getOrCreateItemGroup(string $name): int
-    {
-        $this->loadItemGroupsCache();
-        $nameLower = strtolower(trim($name));
-        
-        if (isset($this->itemGroupsCache[$nameLower])) {
-            return $this->itemGroupsCache[$nameLower];
-        }
-
-        $itemGroup = ItemGroup::firstOrCreate(
-            ['item_group_name' => $name],
-            ['created_at' => now(), 'updated_at' => now()]
-        );
-
-        $this->itemGroupsCache[$nameLower] = $itemGroup->id;
-
-        return $itemGroup->id;
-    }
-
-    /**
      * หา Process หรือสร้างใหม่ถ้าไม่เจอ
      */
     public function getOrCreateProcess(string $name): int
@@ -273,6 +251,16 @@ class ImportHelperService
         return $process->id;
     }
 
+    /** 
+    * หา ItemGroup แบบไม่สนใจตัวพิมพ์เล็ก-ใหญ่
+    */
+    public function findItemGroupCaseInsensitive(string $name): ?int
+    {
+        $this->loadItemGroupsCache();
+        $nameLower = strtolower(trim($name));
+        return $this->itemGroupsCache[$nameLower] ?? null;
+    }
+    
     /**
      * หา Customer แบบไม่สนใจตัวพิมพ์เล็ก-ใหญ่
      */

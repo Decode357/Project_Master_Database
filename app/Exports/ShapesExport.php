@@ -60,7 +60,7 @@ class ShapesExport implements FromQuery, WithHeadings, WithMapping, WithColumnFo
             $shape->item_description_eng,
             $shape->shapeType ? $shape->shapeType->name : '', 
             $shape->status ? $shape->status->status : '', 
-            $shape->shapeCollection ? $shape->shapeCollection->collection_code : '', 
+            $shape->shapeCollection ? $shape->shapeCollection->collection_code . "\t" : '', 
             $shape->customer ? $shape->customer->name : '', 
             $shape->itemGroup ? $shape->itemGroup->item_group_name : '', 
             $shape->process ? $shape->process->process_name : '', 
