@@ -212,7 +212,7 @@ class PageController extends Controller
         $data = $request->validate([
             'name'          => 'required|string|max:255',
             'email'         => 'required|email|max:255',
-            'password'      => 'nullable|string|min:8',
+            'password'      => 'nullable|string|min:6',
             'role'          => 'required|string|in:user,admin,superadmin',
             'permissions'   => 'nullable|array',
             'department_id' => 'nullable|exists:departments,id',

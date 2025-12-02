@@ -113,7 +113,7 @@
                             <!-- Inside Color -->
                             <div class="flex flex-row gap-2 items-center">
                                 <span class="material-symbols-outlined text-base text-indigo-600 dark:text-indigo-400">Format_Color_Fill</span>
-                                <label class="text-gray-700 dark:text-gray-300 font-medium">
+                                <label class="text-gray-700 dark:text-gray-300">
                                     {{ __('content.inside_color') }}:
                                 </label>
                                 <template x-if="glazeToView?.glaze_inside?.colors?.length > 0">
@@ -146,7 +146,7 @@
                             <!-- Outside Color -->
                             <div class="flex flex-row gap-2 items-center">
                                 <span class="material-symbols-outlined text-base text-pink-600 dark:text-pink-400">Format_Color_Fill</span>
-                                <label class="text-gray-700 dark:text-gray-300 font-medium">
+                                <label class="text-gray-700 dark:text-gray-300">
                                     {{ __('content.outside_color') }}:
                                 </label>
                                 <template x-if="glazeToView?.glaze_outer?.colors?.length > 0">
@@ -190,7 +190,7 @@
                             <!-- Effect Color -->
                             <div class="flex flex-row gap-2 items-center">
                                 <span class="material-symbols-outlined text-base text-blue-600 dark:text-blue-400">Format_Color_Fill</span>
-                                <label class="text-gray-700 dark:text-gray-300 font-medium">
+                                <label class="text-gray-700 dark:text-gray-300">
                                     {{ __('content.effect_color') }}:
                                 </label>
                                 <template x-if="glazeToView?.effect?.colors?.length > 0">
