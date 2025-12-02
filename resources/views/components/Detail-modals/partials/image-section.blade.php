@@ -4,10 +4,72 @@
         <!-- Main Image Display -->
         <template x-if="{{ $item }}?.images?.length > 0">
             <div>
-                <img :src="`{{ asset('storage') }}/${ {{ $item }}.images[currentImageIndex].file_path}`" 
-                    :alt="{{ $item }}.images[currentImageIndex].file_name"
-                    class="rounded-lg shadow-lg cursor-zoom-in mx-auto h-64 md:h-80 object-contain w-full"
-                    @click="zoomImage = true">
+                <div class="relative">
+                    <img :src="`{{ asset('storage') }}/${ {{ $item }}.images[currentImageIndex].file_path}`" 
+                        :alt="{{ $item }}.images[currentImageIndex].file_name"
+                        class="rounded-lg shadow-lg cursor-zoom-in mx-auto h-64 md:h-80 object-contain w-full"
+                        @click="zoomImage = true">
+                    
+                    <!-- Download Button -->
+                    @php
+                        $buttonColor = 'text-gray-700 dark:text-gray-300';
+                        if (isset($fileNameFormat)) {
+                            switch($fileNameFormat) {
+                                case 'shape':
+                                    $buttonColor = 'text-blue-600';
+                                    break;
+                                case 'glaze':
+                                    $buttonColor = 'text-purple-600';
+                                    break;
+                                case 'pattern':
+                                    $buttonColor = 'text-green-600';
+                                    break;
+                                case 'backstamp':
+                                    $buttonColor = 'text-orange-600';
+                                    break;
+                            }
+                        }
+                    @endphp
+                    
+                    <button @click="
+                        const link = document.createElement('a');
+                        const imageIndex = currentImageIndex + 1;
+                        let fileName = '';
+                        const ext = {{ $item }}.images[currentImageIndex].file_path.split('.').pop();
+                        
+                        @if(isset($fileNameFormat) && $fileNameFormat === 'shape')
+                            const itemCode = {{ $item }}.item_code || 'shape';
+                            const descEng = {{ $item }}.item_description_eng || '';
+                            fileName = descEng ? `${itemCode}_${descEng}_${imageIndex}.${ext}` : `${itemCode}_${imageIndex}.${ext}`;
+                        @elseif(isset($fileNameFormat) && $fileNameFormat === 'glaze')
+                            const glazeCode = {{ $item }}.glaze_code || 'glaze';
+                            fileName = `${glazeCode}_${imageIndex}.${ext}`;
+                        @elseif(isset($fileNameFormat) && $fileNameFormat === 'pattern')
+                            const patternCode = {{ $item }}.pattern_code || 'pattern';
+                            const patternName = {{ $item }}.pattern_name || '';
+                            fileName = patternName ? `${patternCode}_${patternName}_${imageIndex}.${ext}` : `${patternCode}_${imageIndex}.${ext}`;
+                        @elseif(isset($fileNameFormat) && $fileNameFormat === 'backstamp')
+                            const backstampCode = {{ $item }}.backstamp_code || 'backstamp';
+                            const backstampName = {{ $item }}.name || '';
+                            fileName = backstampName ? `${backstampCode}_${backstampName}_${imageIndex}.${ext}` : `${backstampCode}_${imageIndex}.${ext}`;
+                        @else
+                            const itemCode = {{ $item }}.{{ $itemCode ?? 'item_code' }} || 'image';
+                            const descEng = {{ $item }}.item_description_eng || {{ $item }}.description_eng || {{ $item }}.name || '';
+                            fileName = descEng ? `${itemCode}_${descEng}_${imageIndex}.${ext}` : `${itemCode}_${imageIndex}.${ext}`;
+                        @endif
+                        
+                        fileName = fileName.replace(/[^a-zA-Z0-9._-]/g, '_');
+                        link.href = `{{ asset('storage') }}/${ {{ $item }}.images[currentImageIndex].file_path}`;
+                        link.download = fileName;
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    "
+                        class="absolute top-2 right-2 transition-all hoverScale {{ $buttonColor }}"
+                        title="{{ __('content.download_images') }}">
+                        <span class="material-symbols-outlined !text-4xl">download</span>
+                    </button>
+                </div>
                 
                 <!-- Image Navigation -->
                 <div class="flex justify-between items-center mt-3">

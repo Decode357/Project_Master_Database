@@ -35,7 +35,8 @@
                 <div class="lg:col-span-1 flex flex-col">
                     @include('components.Detail-modals.partials.image-section', [
                         'item' => 'glazeToView',
-                        'ringColor' => 'ring-purple-500'
+                        'ringColor' => 'ring-purple-500',
+                        'fileNameFormat' => 'glaze',
                     ])
                     
                     @include('components.Detail-modals.partials.status-section', [

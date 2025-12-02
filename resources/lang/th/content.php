@@ -1,6 +1,7 @@
 <?php
 return [
     '' => '',
+    'download_images' => 'ดาวน์โหลดรูปภาพ',
     'can_add' => 'เพิ่มข้อมูลได้',
     'select_only' => 'เลือกเท่านั้น',
     'import' => 'นำเข้า',

@@ -40,7 +40,8 @@
                 <div class="lg:col-span-1 flex flex-col">
                     @include('components.Detail-modals.partials.image-section', [
                         'item' => 'shapeToView',
-                        'ringColor' => 'ring-blue-500'
+                        'ringColor' => 'ring-blue-500',
+                        'fileNameFormat' => 'shape',
                     ])
                     
                     @include('components.Detail-modals.partials.status-section', [

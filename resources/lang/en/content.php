@@ -1,6 +1,7 @@
 <?php
 return [
     '' => '',
+    'download_images' => 'Download Images', 
     'can_add' => 'Can be added',
     'select_only' => 'Select Only',
     'import' => 'Import',

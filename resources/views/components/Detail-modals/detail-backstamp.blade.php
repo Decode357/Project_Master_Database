@@ -35,7 +35,8 @@
                 <div class="lg:col-span-1 flex flex-col">
                     @include('components.Detail-modals.partials.image-section', [
                         'item' => 'backstampToView',
-                        'ringColor' => 'ring-orange-500'
+                        'ringColor' => 'ring-orange-500',
+                        'fileNameFormat' => 'backstamp',
                     ])
                     
                     @include('components.Detail-modals.partials.status-section', [

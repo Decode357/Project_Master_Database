@@ -44,7 +44,8 @@
                 <div class="lg:col-span-1 flex flex-col">
                     @include('components.Detail-modals.partials.image-section', [
                         'item' => 'patternToView',
-                        'ringColor' => 'ring-green-500'
+                        'ringColor' => 'ring-green-500',
+                        'fileNameFormat' => 'pattern',
                     ])
                     
                     @include('components.Detail-modals.partials.status-section', [
