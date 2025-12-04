@@ -10,9 +10,13 @@ function itemGroupPage() {
         itemGroupIdToDelete: null,
         itemGroupToEdit: {},
         itemCodeToDelete: '',
+        deleteImage: false,
+        currentImage: null,
+        imagePreview: null,
 
         openEditModal(itemGroup) {
             this.itemGroupToEdit = JSON.parse(JSON.stringify(itemGroup));
+            this.imagePreview = null;
             this.EditItemGroupModal = true;
             this.deleteImage = false;
             this.currentImage = this.itemGroupToEdit.image;

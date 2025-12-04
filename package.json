@@ -18,6 +18,10 @@
     "dependencies": {
         "@fontsource/noto-sans": "^5.2.10",
         "@fontsource/public-sans": "^5.2.7",
-        "@material-symbols/font-400": "^0.39.1"
+        "@material-symbols/font-400": "^0.39.1",
+        "chart.js": "^4.5.1",
+        "jquery": "^3.7.1",
+        "select2": "^4.1.0-rc.0",
+        "sweetalert2": "^11.26.3"
     }
 }

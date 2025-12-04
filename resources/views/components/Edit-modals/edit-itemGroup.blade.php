@@ -86,7 +86,7 @@
                         {{ __("content.existing_images") }}
                     </label>
                     <div class="relative inline-block">
-                    <img :src="'{{ asset('images/itemGroup') }}/' + currentImage"
+                    <img :src="currentImage ? '{{ asset('images/itemGroup') }}/' + currentImage : '{{ asset('images/itemGroup/default.png') }}'"
                         alt="Current Image"
                         class="w-32 h-32 object-cover rounded-lg border border-gray-300 dark:border-gray-600">
                         <button type="button" @click="removeCurrentImage"
