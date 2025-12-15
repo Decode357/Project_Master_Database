@@ -29,7 +29,7 @@
     <!-- Static Background -->
     <div class="fixed inset-0 w-full h-full z-0 overflow-hidden">
         <img src="{{ asset('images/Background.gif') }}" 
-            alt="Background" 
+            alt="Background"
             class="w-full h-full object-cover" loading="lazy">
         <div class="absolute inset-0 bg-black/40"></div>
     </div>
@@ -39,10 +39,13 @@
     <div class="relative z-10 min-h-screen flex items-center justify-center p-6 fade-in">
         <div class="w-full sm:max-w-md px-6 py-8 bg-gray-100 shadow-2xl rounded-lg text-center">
             <!-- Logo แทนตัวอักษร -->
-            <div class="mb-6">
+            <div>
                 <img src="{{ asset('images/PatraLogo.png') }}" 
                     alt="PATRA - We make good life possible" 
                     class="mx-auto h-16 w-auto">
+                <p class="text-gray-700 mt-3">
+                    <strong>Product Master Database</strong>
+                </p>
             </div>
             <div>
                 {{ $slot }}

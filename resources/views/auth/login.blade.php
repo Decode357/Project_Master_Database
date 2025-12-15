@@ -6,7 +6,7 @@
         @csrf
 
         <!-- Email Address -->
-        <div class="mt-4 text-left">
+        <div class="text-left">
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
